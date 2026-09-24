@@ -37,7 +37,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
   const [doorType, setDoorType] = useState('center_open'); // center_open, side_open, automatic_glass
 
   // Selected Package Tier
-  const [selectedPackage, setSelectedPackage] = useState('smart'); // basic, comfort, smart, media, premium, zenta_flagship
+  const [selectedPackage, setSelectedPackage] = useState('smart'); // basic, comfort, smart, media, premium, best_flagship
 
   // Selectable Custom Individual Options (category states)
   const [selectedOptions, setSelectedOptions] = useState({
@@ -144,8 +144,8 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
       desc: '골드/브론즈 인테리어, 별빛 천장 및 천연 대리석 마감'
     },
     {
-      id: 'zenta_flagship',
-      name: 'ZENTA FLAGSHIP',
+      id: 'best_flagship',
+      name: 'BEST FLAGSHIP',
       badge: '최고급 플래그십',
       priceVnd: 195000000,
       spec: 'PREMIUM + AI 스마트 관제 + 커스텀 인테리어',
