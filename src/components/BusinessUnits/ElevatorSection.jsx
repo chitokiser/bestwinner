@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ArrowUpRight, 
   ShieldCheck, 
@@ -15,6 +15,8 @@ import {
   CheckCircle,
   Sparkles,
   ChevronRight,
+  ChevronLeft,
+  ArrowRight,
   ExternalLink,
   Zap,
   PhoneCall,
@@ -29,6 +31,47 @@ import {
 export default function ElevatorSection({ t, onOpenCalculator }) {
   const [activeTab, setActiveTab] = useState('home350');
   const [activeSubTab, setActiveSubTab] = useState('overview'); // 'overview' | 'parts' | 'alliance'
+  const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
+
+  const elevatorHeroImages = [
+    { 
+      src: '/images/elevator/1.png', 
+      title: 'BEST WINNER Premium Home Elevator', 
+      desc: '한국 거창승강기밸리 기술 × 베트남 하노이 3,000m² 직영 공장',
+      tag: 'FLAGSHIP VILLA & RESIDENTIAL'
+    },
+    { 
+      src: '/images/elevator/2.png', 
+      title: 'Minimal PIT Retrofit Elevator System', 
+      desc: '최소 PIT(300mm~) & 단상 220V 지원으로 기존 주택 리모델링 완벽 대응',
+      tag: 'RETROFIT & RESTRUCTURING'
+    },
+    { 
+      src: '/images/elevator/3.png', 
+      title: 'Luxury Stainless & Mirror Cabin Finish', 
+      desc: 'Champagne Gold, Rose Gold Mirror 커스텀 카 인테리어 마감',
+      tag: 'CUSTOM CABIN INTERIOR'
+    },
+    { 
+      src: '/images/elevator/4.png', 
+      title: 'Commercial & High-Capacity Freight Series', 
+      desc: '근생 빌딩, 오피스, 호텔 및 공장/물류 전용 화물 승강기 라인업',
+      tag: 'COMMERCIAL & INDUSTRIAL'
+    },
+    { 
+      src: '/images/elevator/5.png', 
+      title: 'Smart Safety & Emergency ARD System', 
+      desc: '정전 시 최우선 층 비상 구출(ARD) 및 24시간 스마트 관제 DB',
+      tag: 'SMART SAFETY & MONITORING'
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentHeroSlide((prev) => (prev + 1) % elevatorHeroImages.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [elevatorHeroImages.length]);
 
   // Elevator Parts Lifecycle Data extracted from official document
   const partsLifecycle = [
@@ -135,6 +178,90 @@ export default function ElevatorSection({ t, onOpenCalculator }) {
     <section id="elevator" className="py-16 bg-navy-900/60 relative border-t border-navy-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
+        {/* Dynamic Elevator Hero Image Slider Showcase (1.png ~ 5.png) */}
+        <div className="relative min-h-[420px] sm:min-h-[480px] rounded-3xl overflow-hidden mb-14 border border-gold-500/40 shadow-2xl flex items-center bg-navy-900">
+          {/* Rotating Background Images */}
+          {elevatorHeroImages.map((slide, idx) => (
+            <div
+              key={idx}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                currentHeroSlide === idx ? 'opacity-85 sm:opacity-75 scale-105' : 'opacity-0 scale-100'
+              } transition-transform duration-7000 ease-linear`}
+            >
+              <img 
+                src={slide.src} 
+                alt={slide.title}
+                className="w-full h-full object-cover object-center"
+              />
+            </div>
+          ))}
+
+          {/* Gradient Overlay for Readable Text */}
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-950/95 via-navy-950/80 to-navy-950/30"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-navy-950/60"></div>
+
+          {/* Hero Banner Text Content */}
+          <div className="relative z-10 p-6 sm:p-12 max-w-3xl space-y-4">
+            <div className="inline-flex items-center space-x-2 bg-gold-500/20 text-gold-300 px-3.5 py-1.5 rounded-full text-xs font-bold border border-gold-500/40 backdrop-blur-md">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>{elevatorHeroImages[currentHeroSlide].tag} — BEST WINNER ELEVATOR</span>
+            </div>
+
+            <h1 className="text-3xl sm:text-5xl font-black text-white leading-tight break-keep">
+              {elevatorHeroImages[currentHeroSlide].title}
+            </h1>
+
+            <p className="text-sm sm:text-xl font-bold text-gold-300 leading-snug break-keep">
+              {elevatorHeroImages[currentHeroSlide].desc}
+            </p>
+
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-normal break-keep">
+              한국 거창승강기밸리 및 조은엘리베이터 기술 협력, 하노이 3,000m² 직영 공장의 Cabin 제작, 그리고 7년간 180대 이상의 시공 레퍼런스를 자랑합니다.
+            </p>
+
+            <div className="pt-2 flex flex-wrap gap-3">
+              <button
+                onClick={onOpenCalculator}
+                className="bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:from-gold-300 hover:to-gold-400 text-navy-950 font-black px-6 py-3.5 rounded-xl shadow-gold-glow transition-all text-xs sm:text-sm flex items-center justify-center space-x-2"
+              >
+                <Calculator className="w-4 h-4 stroke-[2.5]" />
+                <span>4층·350kg 기준 4억VND 실시간 견적 시스템 →</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Slide Controls & Indicators */}
+          <div className="absolute bottom-6 right-6 z-20 flex items-center space-x-3">
+            <div className="flex space-x-1.5">
+              {elevatorHeroImages.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentHeroSlide(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    currentHeroSlide === idx ? 'w-8 bg-gold-400' : 'w-2 bg-slate-500/50 hover:bg-slate-300'
+                  }`}
+                />
+              ))}
+            </div>
+            <div className="flex space-x-1 ml-2">
+              <button
+                onClick={() => setCurrentHeroSlide((prev) => (prev - 1 + elevatorHeroImages.length) % elevatorHeroImages.length)}
+                className="p-2 rounded-lg bg-navy-900/80 text-slate-300 hover:text-white border border-gold-500/30 transition-colors"
+                title="이전 슬라이드"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setCurrentHeroSlide((prev) => (prev + 1) % elevatorHeroImages.length)}
+                className="p-2 rounded-lg bg-navy-900/80 text-slate-300 hover:text-white border border-gold-500/30 transition-colors"
+                title="다음 슬라이드"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <div className="space-y-3">
