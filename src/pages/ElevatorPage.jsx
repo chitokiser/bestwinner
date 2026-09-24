@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import ElevatorSection from '../components/BusinessUnits/ElevatorSection';
 import ElevatorCalculator from '../components/BusinessUnits/ElevatorCalculator';
 import ContactUs from '../components/ContactUs';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Calculator, Download } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Calculator, Download, BookOpen } from 'lucide-react';
 
 export default function ElevatorPage({ t }) {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
+  const [defaultSubTab, setDefaultSubTab] = useState('overview');
 
   return (
     <div className="pt-6">
@@ -31,11 +32,22 @@ export default function ElevatorPage({ t }) {
                 BEST WINNER ELEVATOR VN
               </h1>
               <p className="text-sm text-slate-300 mt-2 max-w-2xl">
-                한국 거창승강기밸리 기술 네트워크 × 베트남 하노이 3,000m² 직영 공장 연계 7년 180대+ 준공 실적 프리미엄 승강기.
+                한국 거창승강기밸리 기술 네트워크 × LGRIS 글로벌 카탈로그 라이브러리 × 베트남 하노이 3,000m² 직영 공장 180대+ 준공 실적.
               </p>
             </div>
             
-            <div className="mt-4 md:mt-0 flex space-x-3">
+            <div className="mt-4 md:mt-0 flex flex-wrap gap-2.5">
+              <button
+                onClick={() => {
+                  setDefaultSubTab('library');
+                  const el = document.getElementById('elevator');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="bg-gold-500 hover:bg-gold-400 text-navy-950 text-xs font-extrabold px-4 py-2.5 rounded-xl flex items-center shadow-gold-glow transition-transform hover:scale-[1.02]"
+              >
+                <BookOpen className="w-4 h-4 mr-1.5" />
+                <span>LGRIS 기술 라이브러리</span>
+              </button>
               <Link 
                 to="/business/parking" 
                 className="bg-navy-800 hover:bg-navy-700 text-slate-200 text-xs font-semibold px-4 py-2.5 rounded-xl border border-navy-700 flex items-center"
@@ -51,6 +63,7 @@ export default function ElevatorPage({ t }) {
       {/* Elevator Product Showcase */}
       <ElevatorSection 
         t={t} 
+        defaultSubTab={defaultSubTab}
         onOpenCalculator={() => {
           const el = document.getElementById('calculator');
           if (el) el.scrollIntoView({ behavior: 'smooth' });

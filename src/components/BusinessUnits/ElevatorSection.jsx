@@ -25,13 +25,21 @@ import {
   Gauge,
   HelpCircle,
   Settings,
-  ShieldAlert
+  ShieldAlert,
+  BookOpen,
+  FileText,
+  Search,
+  FolderDown,
+  FileCode,
+  Check
 } from 'lucide-react';
 
-export default function ElevatorSection({ t, onOpenCalculator }) {
+export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) {
   const [activeTab, setActiveTab] = useState('home350');
-  const [activeSubTab, setActiveSubTab] = useState('overview'); // 'overview' | 'parts' | 'alliance'
+  const [activeSubTab, setActiveSubTab] = useState(defaultSubTab || 'overview'); // 'overview' | 'library' | 'parts' | 'alliance'
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
+  const [libraryCategory, setLibraryCategory] = useState('all');
+  const [librarySearch, setLibrarySearch] = useState('');
 
   const elevatorHeroImages = [
     { 
@@ -88,6 +96,137 @@ export default function ElevatorSection({ t, onOpenCalculator }) {
     { part: "주행 가이드 레일 (Guide Rail)", cat: "승강로 / 피트", cycle: "20 년", role: "정밀 절삭 가이드레일로 수직 이동 유도", priceVnd: "175.000~ /m" },
     { part: "유압/스프링 완충기 (Buffer)", cat: "승강로 / 피트", cycle: "15 년", role: "최하층 오버슈트 시 충격 흡수 유압 완충", priceVnd: "380.000~" }
   ];
+
+  // Official LGRIS (SUZHOU LG ELEVATOR CO., LTD.) Global Technical Library Data
+  const lgrisLibraryData = {
+    partnerInfo: {
+      name: "SUZHOU LG ELEVATOR CO., LTD. (LGRIS ELEVATOR)",
+      role: "공식 글로벌 승강기 종합 공급 거래처 (Global Alliance Partner)",
+      location: "Jiangsu Province, China (Qidu Town, Wujiang District, Suzhou)",
+      certifications: ["CE Mark", "ISO 9001 Quality", "ISO 14001 Environmental", "EN81 Elevator Safety"],
+      website: "https://www.lgriselevator.com",
+      desc: "SUZHOU LG ELEVATOR(LGRIS)는 승객용, 전망용, 가정용, 화물용 엘리베이터 및 에스컬레이터 전 제품군을 생산·수출하는 국제 승강기 전문 기업으로, BEST WINNER ELEVATOR VN과 긴밀한 파트너십을 맺고 글로벌 스펙 카탈로그 및 완제품/부품 공급 네트워크를 전개합니다."
+    },
+    products: [
+      {
+        id: "passenger",
+        modelCode: "LGRIS-P1000 / BEST PASSENGER",
+        title: "LGRIS Passenger Elevator Series (승객용 엘리베이터)",
+        category: "passenger",
+        catLabel: "Passenger Elevator",
+        speed: "1.0 m/s ~ 4.0 m/s (고속/중속 선택)",
+        capacity: "450 kg ~ 1,600 kg (6인승 ~ 21인승)",
+        machineType: "MRL (기계실 없는 타입) & Small MR (소형 기계실)",
+        img: "/images/elevator/1.png",
+        summary: "고효율 VVVF 재생 인버터 및 영구자석 동기권상기(PM Gearless Machine) 탑재 승객용 에코 솔루션",
+        features: [
+          "VVVF Energy Regen Inverter 탑재로 표준 운행 대비 전력 감축 최대 35%",
+          "128채널 적외선 3D 멀티빔 센서 적용으로 손끼임 완전 차단 안전 구동",
+          "최첨단 마이크로컴퓨터 스마트 그룹 제어 시스템 (Group Control System)",
+          "초저소음 48dB(A) 수평 운행 착상 정밀 기술"
+        ],
+        downloads: [
+          { title: "LGRIS Passenger Elevator Catalog 2026.pdf", size: "4.2 MB", type: "PDF Spec" },
+          { title: "Passenger Elevator Standard Hoistway & Pit Layout.dwg", size: "8.5 MB", type: "CAD Plan" }
+        ]
+      },
+      {
+        id: "panoramic",
+        modelCode: "LGRIS-OBS 360 / BEST PANORAMIC",
+        title: "LGRIS Panoramic Glass Elevator Series (전망용 / 누드 엘리베이터)",
+        category: "panoramic",
+        catLabel: "Panoramic Elevator",
+        speed: "1.0 m/s ~ 2.5 m/s",
+        capacity: "630 kg ~ 1,350 kg (8인승 ~ 18인승)",
+        machineType: "Circular / Semi-Circular / Square 3-Side Glass",
+        img: "/images/elevator/3.png",
+        summary: "180°~360° 파노라마 투명 이중 강화유리와 럭셔리 무드 조명이 어우러진 최고급 시그니처 전망 엘리베이터",
+        features: [
+          "이중 구조 안전 접합 강화유리(Laminated Safety Glass)로 100% 시야 확보",
+          "건축 외관 브랜딩을 극대화하는 커스텀 RGB/LED 엠비언트 하이라이트",
+          "Champagne Gold, Rose Gold Mirror Hairline 고급 스테인리스 프레임",
+          "5성급 호텔, 대형 럭셔리 몰, 하이엔드 펜트하우스 시공"
+        ],
+        downloads: [
+          { title: "LGRIS Panoramic Glass Elevator Brochure.pdf", size: "5.1 MB", type: "PDF Spec" },
+          { title: "Panoramic Glass Hoistway Civil Engineering Spec.dwg", size: "9.2 MB", type: "CAD Plan" }
+        ]
+      },
+      {
+        id: "home",
+        modelCode: "LGRIS-VILLA 350 / BEST HOME",
+        title: "LGRIS Home & Villa Elevator Series (가정용 / 빌라 엘리베이터)",
+        category: "home",
+        catLabel: "Home & Villa Elevator",
+        speed: "0.4 m/s ~ 1.0 m/s",
+        capacity: "250 kg ~ 400 kg (3인승 ~ 5인승)",
+        machineType: "Ultra-Low Pit (최소 300mm PIT & Single Phase 220V)",
+        img: "/images/elevator/2.png",
+        summary: "바닥 굴착이 어려운 기존 주택 리모델링 및 타운하우스에 최적화된 최소 PIT & 가정용 단상 220V 전원 승강기",
+        features: [
+          "최소 PIT 깊이 300mm / 오버헤드 2800mm 최첨단 컴팩트 설계",
+          "별도 고압전력 증설 없이 가정용 단상 220V 전원으로 즉시 운행",
+          "정전 시 최우선 층 자동 이송 및 문열림 비상구출운전(ARD) 기본 탑재",
+          "무소음 벨트 밸런서 및 기어리스 PM 동기모터 적용"
+        ],
+        downloads: [
+          { title: "LGRIS Villa & Home Elevator Specification.pdf", size: "3.8 MB", type: "PDF Spec" },
+          { title: "Villa Home Elevator Retrofit Civil Drawings.dwg", size: "6.7 MB", type: "CAD Plan" }
+        ]
+      },
+      {
+        id: "freight",
+        modelCode: "LGRIS-CARGO 3000 / BEST INDUSTRIAL",
+        title: "LGRIS Heavy Cargo & Industrial Elevator Series (화물 / 공장 승강기)",
+        category: "freight",
+        catLabel: "Freight Elevator",
+        speed: "0.5 m/s ~ 1.0 m/s",
+        capacity: "1,000 kg ~ 5,000 kg+ (1톤 ~ 5톤 대형 중화물)",
+        machineType: "Heavy Duty Side/Center Opening & Vertical Bi-parting Door",
+        img: "/images/elevator/4.png",
+        summary: "지게차 직접 진입을 견디는 고강도 바닥 프레임 및 베트남 KCN 공단 특화 방청 갤버나이즈 화물 승강기",
+        features: [
+          "지게차(Forklift) 진입 충격을 견디는 강철 체커 플레이트 바닥",
+          "고습도·진동·부식 환경에 특화된 갈바나이즈드 세이프티 가드",
+          "인버터 인칭(Inching) 착상 제어로 화물 입출고 시 0.1mm 수평 유지",
+          "LG전자 하이퐁 공장, 드림텍 박닌 공장 대형 산업단지 레퍼런스"
+        ],
+        downloads: [
+          { title: "LGRIS Industrial Heavy Cargo Catalog.pdf", size: "6.0 MB", type: "PDF Spec" },
+          { title: "Heavy Cargo Hoistway Structural Loading Drawings.dwg", size: "11.4 MB", type: "CAD Plan" }
+        ]
+      },
+      {
+        id: "escalator",
+        modelCode: "LGRIS-ESC 35° / LGRIS-WALK 12°",
+        title: "LGRIS Commercial Escalator & Moving Sidewalk Series (에스컬레이터 & 무빙워크)",
+        category: "escalator",
+        catLabel: "Escalator & Moving Sidewalk",
+        speed: "0.5 m/s (Smart Variable Speed)",
+        capacity: "9,000 ~ 13,500 passengers / hour",
+        machineType: "Escalator 30°/35° & Moving Sidewalk 10°/12°",
+        img: "/images/elevator/5.png",
+        summary: "대형 마트, 공항, 지하철, 복합 쇼핑몰을 위한 VVVF 스마트 정지/출발 자동 에너지 절감 에스컬레이터",
+        features: [
+          "승객 미탑승 시 대기 모드로 자동 변속되는 스마트 오토 센서",
+          "슬림형 고강도 트러스 프레임 & LED 안티클립 핸드레일",
+          "스텝 빗판 손끼임 방지 멀티 세이프티 클러치 브레이크",
+          "IP55 실내외 옥외형 방수/방진 스텝 조립체"
+        ],
+        downloads: [
+          { title: "LGRIS Escalator & Moving Sidewalk Technical Specs.pdf", size: "7.5 MB", type: "PDF Spec" },
+          { title: "Commercial Escalator Installation Structural Layout.dwg", size: "10.1 MB", type: "CAD Plan" }
+        ]
+      }
+    ],
+    documents: [
+      { id: 1, title: "BEST WINNER × LGRIS 2026 Global Elevator Catalog", size: "12.8 MB", type: "PDF Spec", version: "v2026.1", tag: "공식 종합 카탈로그" },
+      { id: 2, title: "QCVN 32:2018/BLDTBXH National Technical Regulation on Elevator Safety", size: "2.4 MB", type: "PDF Standard", version: "QCVN 32", tag: "베트남 안전 규격" },
+      { id: 3, title: "Standard Villa Hoistway & Pit Civil CAD Drawings Pack", size: "15.3 MB", type: "CAD (.DWG)", version: "CAD v3.0", tag: "건축 도면 팩" },
+      { id: 4, title: "LGRIS ARD Automatic Emergency Rescue Device Manual & Wiring", size: "3.1 MB", type: "PDF Manual", version: "v1.4", tag: "비상구출 매뉴얼" },
+      { id: 5, title: "Elevator Component Maintenance Lifecycle Matrix (Standard Replacement)", size: "1.8 MB", type: "PDF Matrix", version: "v2.0", tag: "유지보수 매뉴얼" }
+    ]
+  };
 
   // Comprehensive Elevator Model Data
   const elevatorData = {
@@ -309,10 +448,11 @@ export default function ElevatorSection({ t, onOpenCalculator }) {
           ))}
         </div>
 
-        {/* Navigation Sub-Tabs (Overview / Specs / Parts Lifecycle / Korea Alliance) */}
+        {/* Navigation Sub-Tabs (Overview / Library / Parts Lifecycle / Korea Alliance) */}
         <div className="flex space-x-2 border-b border-navy-800 pb-3 mb-10 overflow-x-auto">
           {[
             { id: 'overview', name: '핵심 라인업 & 사양', icon: Layers },
+            { id: 'library', name: '📚 LGRIS 엘리베이터 기술 라이브러리 & 카탈로그', icon: BookOpen },
             { id: 'parts', name: '부품 표준 교체주기 & 유지관리 (QCVN)', icon: FileSpreadsheet },
             { id: 'alliance', name: '한국 거창승강기밸리 얼라이언스', icon: Building2 },
           ].map((tab) => {
@@ -492,7 +632,237 @@ export default function ElevatorSection({ t, onOpenCalculator }) {
           </div>
         )}
 
-        {/* SUB-TAB 2: Parts Lifecycle & Maintenance Table (Extracted Data) */}
+        {/* SUB-TAB 2: LGRIS Global Elevator Technical Library & Product Catalog */}
+        {activeSubTab === 'library' && (
+          <div className="space-y-10">
+            {/* LGRIS Global Partner Header Banner */}
+            <div className="glass-card-gold p-6 sm:p-8 rounded-3xl border border-gold-500/40 space-y-6">
+              <div className="flex flex-col md:flex-row justify-between md:items-center gap-6">
+                <div className="space-y-2">
+                  <div className="inline-flex items-center space-x-2 bg-gold-500/20 text-gold-300 px-3.5 py-1 rounded-full text-xs font-bold border border-gold-500/30">
+                    <BookOpen className="w-3.5 h-3.5" />
+                    <span>LGRIS (SUZHOU LG ELEVATOR) × BEST WINNER VN</span>
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-black text-white">
+                    {lgrisLibraryData.partnerInfo.name}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gold-300 font-semibold">
+                    {lgrisLibraryData.partnerInfo.role} | {lgrisLibraryData.partnerInfo.location}
+                  </p>
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
+                    {lgrisLibraryData.partnerInfo.desc}
+                  </p>
+                </div>
+
+                <div className="flex flex-col space-y-2 flex-shrink-0">
+                  <a
+                    href={lgrisLibraryData.partnerInfo.website}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold px-5 py-3 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-gold-glow transition-transform hover:scale-[1.02]"
+                  >
+                    <span>LGRIS 공식 홈페이지 (lgriselevator.com)</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                  <div className="flex flex-wrap gap-1.5 justify-center md:justify-start">
+                    {lgrisLibraryData.partnerInfo.certifications.map((cert, idx) => (
+                      <span key={idx} className="bg-navy-950 text-slate-300 text-[10px] px-2.5 py-1 rounded-md border border-navy-800 font-mono">
+                        ✓ {cert}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Category Filter & Keyword Search Controls */}
+            <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 pb-4 border-b border-navy-800">
+              {/* Category Filter Tabs */}
+              <div className="flex items-center space-x-1.5 overflow-x-auto pb-2 md:pb-0">
+                {[
+                  { id: 'all', label: '전체 보기 (All)' },
+                  { id: 'passenger', label: '승객용 (Passenger)' },
+                  { id: 'panoramic', label: '전망용 (Panoramic Glass)' },
+                  { id: 'home', label: '가정용/빌라 (Home Villa)' },
+                  { id: 'freight', label: '화물/공장 (Freight Cargo)' },
+                  { id: 'escalator', label: '에스컬레이터 (Escalator)' }
+                ].map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setLibraryCategory(cat.id)}
+                    className={`px-3.5 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all ${
+                      libraryCategory === cat.id
+                        ? 'bg-gold-500 text-navy-950 shadow-md'
+                        : 'bg-navy-900 text-slate-400 hover:text-white border border-navy-800'
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Keyword Search Input */}
+              <div className="relative min-w-[240px]">
+                <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="모델명, 스펙, 라인업 검색..."
+                  value={librarySearch}
+                  onChange={(e) => setLibrarySearch(e.target.value)}
+                  className="w-full bg-navy-900 border border-navy-700 text-white text-xs rounded-xl pl-9 pr-4 py-2.5 focus:outline-none focus:border-gold-500 transition-colors"
+                />
+              </div>
+            </div>
+
+            {/* Product Catalog Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {lgrisLibraryData.products
+                .filter((p) => {
+                  const matchesCat = libraryCategory === 'all' || p.category === libraryCategory;
+                  const matchesQuery = librarySearch === '' ||
+                    p.title.toLowerCase().includes(librarySearch.toLowerCase()) ||
+                    p.modelCode.toLowerCase().includes(librarySearch.toLowerCase()) ||
+                    p.summary.toLowerCase().includes(librarySearch.toLowerCase());
+                  return matchesCat && matchesQuery;
+                })
+                .map((product) => (
+                  <div key={product.id} className="glass-card rounded-3xl p-6 border border-navy-700 hover:border-gold-500/40 transition-all flex flex-col justify-between space-y-6">
+                    <div className="space-y-4">
+                      {/* Product Header & Image */}
+                      <div className="relative h-48 sm:h-56 rounded-2xl overflow-hidden border border-navy-800 bg-navy-900">
+                        <img 
+                          src={product.img} 
+                          alt={product.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent"></div>
+                        <div className="absolute top-3 left-3 bg-navy-950/80 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-mono text-gold-400 border border-gold-500/30">
+                          {product.modelCode}
+                        </div>
+                        <div className="absolute bottom-3 left-3 right-3 text-white">
+                          <span className="text-[10px] font-bold text-gold-300 uppercase tracking-widest block">{product.catLabel}</span>
+                          <h4 className="text-lg font-black leading-snug">{product.title}</h4>
+                        </div>
+                      </div>
+
+                      {/* Specs Badges Grid */}
+                      <div className="grid grid-cols-3 gap-2 text-center text-[11px]">
+                        <div className="bg-navy-950 p-2.5 rounded-xl border border-navy-800">
+                          <span className="text-slate-400 block text-[10px]">운행 속도</span>
+                          <span className="font-bold text-gold-400">{product.speed}</span>
+                        </div>
+                        <div className="bg-navy-950 p-2.5 rounded-xl border border-navy-800">
+                          <span className="text-slate-400 block text-[10px]">적재 용량</span>
+                          <span className="font-bold text-gold-400">{product.capacity}</span>
+                        </div>
+                        <div className="bg-navy-950 p-2.5 rounded-xl border border-navy-800">
+                          <span className="text-slate-400 block text-[10px]">구동 구조</span>
+                          <span className="font-bold text-gold-400">{product.machineType}</span>
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        {product.summary}
+                      </p>
+
+                      {/* Feature Bullet List */}
+                      <div className="space-y-1.5 border-t border-navy-800 pt-3">
+                        {product.features.map((feat, idx) => (
+                          <div key={idx} className="flex items-start space-x-2 text-xs text-slate-300">
+                            <Check className="w-3.5 h-3.5 text-gold-400 mt-0.5 flex-shrink-0" />
+                            <span>{feat}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Download Buttons Section */}
+                    <div className="pt-4 border-t border-navy-800 space-y-2">
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">기술 자료 & CAD 도면 다운로드</span>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {product.downloads.map((dl, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            className="bg-navy-950 hover:bg-navy-900 border border-navy-700 hover:border-gold-500/40 text-slate-200 hover:text-gold-400 p-2.5 rounded-xl text-xs flex items-center justify-between transition-all"
+                            onClick={() => {
+                              alert(`[${dl.title}] (용량: ${dl.size}) 다운로드 요청이 접수되었습니다. 기술 지원팀에서 팩스/이메일로 자료를 발송해 드립니다.`);
+                            }}
+                          >
+                            <div className="flex items-center space-x-2 truncate">
+                              <FileText className="w-3.5 h-3.5 text-gold-400 flex-shrink-0" />
+                              <span className="truncate text-[11px]">{dl.title}</span>
+                            </div>
+                            <span className="text-[10px] font-mono text-slate-400 bg-navy-900 px-1.5 py-0.5 rounded border border-navy-800 ml-1 flex-shrink-0">
+                              {dl.type}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            {/* Official Technical Document Downloads Hub Table */}
+            <div className="glass-card rounded-3xl p-6 sm:p-8 border border-navy-700 space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <h4 className="text-xl font-bold text-white flex items-center space-x-2">
+                    <FolderDown className="w-5 h-5 text-gold-400" />
+                    <span>LGRIS 공식 통합 기술 자료실 (Download Center)</span>
+                  </h4>
+                  <p className="text-xs text-slate-300 mt-1">
+                    베트남 승강기 국가 안전 규정(QCVN 32), 건축 승강로 표준 CAD 도면, 비상 구출 회로도 및 종합 카탈로그
+                  </p>
+                </div>
+              </div>
+
+              <div className="overflow-x-auto rounded-2xl border border-navy-800">
+                <table className="w-full text-left border-collapse text-xs">
+                  <thead className="bg-navy-950 text-gold-400 font-bold border-b border-navy-800">
+                    <tr>
+                      <th className="p-4">자료명 (Document Title)</th>
+                      <th className="p-4">구분 (Category)</th>
+                      <th className="p-4 text-center">버전 (Version)</th>
+                      <th className="p-4 text-center">파일 용량</th>
+                      <th className="p-4 text-right">다운로드</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-navy-800/80 bg-navy-900/50">
+                    {lgrisLibraryData.documents.map((doc) => (
+                      <tr key={doc.id} className="hover:bg-navy-800/50 transition-colors">
+                        <td className="p-4 font-bold text-white flex items-center space-x-2">
+                          <FileCode className="w-4 h-4 text-gold-400 flex-shrink-0" />
+                          <span>{doc.title}</span>
+                        </td>
+                        <td className="p-4 text-slate-300">
+                          <span className="bg-gold-500/10 text-gold-400 px-2.5 py-1 rounded-full text-[11px] border border-gold-500/30 font-semibold">
+                            {doc.tag}
+                          </span>
+                        </td>
+                        <td className="p-4 text-center font-mono text-slate-400">{doc.version}</td>
+                        <td className="p-4 text-center font-mono text-chrome-300">{doc.size}</td>
+                        <td className="p-4 text-right">
+                          <button
+                            onClick={() => {
+                              alert(`[${doc.title}] 다운로드가 시작되었습니다.`);
+                            }}
+                            className="bg-navy-800 hover:bg-gold-500 hover:text-navy-950 text-gold-400 text-xs font-bold px-3.5 py-1.5 rounded-lg border border-navy-700 transition-colors"
+                          >
+                            다운로드 ↓
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* SUB-TAB 3: Parts Lifecycle & Maintenance Table (Extracted Data) */}
         {activeSubTab === 'parts' && (
           <div className="space-y-8">
             <div className="space-y-2">
