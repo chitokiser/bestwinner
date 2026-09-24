@@ -41,7 +41,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
 
   // Selectable Custom Individual Options (category states)
   const [selectedOptions, setSelectedOptions] = useState({
-    // 1. 안전 옵션
+    // 1. 안전 옵션 (기본 포함 항목 true, 유상 옵션 false)
     cctv: true,
     intercom: true,
     ard: true,
@@ -51,46 +51,46 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
     fire_alarm: false,
     earthquake_alarm: false,
     ups_power: false,
-    remote_fault_alert: true,
+    remote_fault_alert: false,
 
     // 2. 냉방·공기 관련
-    ac_unit: true,
-    ceiling_blower: true,
+    ac_unit: false,
+    ceiling_blower: false,
     air_purifier: false,
     deodorizer: false,
     vent_fan: true,
     temp_humidity_sensor: false,
 
     // 3. 디스플레이·미디어 옵션
-    lcd_display: true,
+    lcd_display: false,
     touch_screen: false,
-    info_weather_time: true,
-    qr_display: true,
-    wifi: true,
-    bt_speaker: true,
+    info_weather_time: false,
+    qr_display: false,
+    wifi: false,
+    bt_speaker: false,
     glass_led_video: false,
 
     // 4. 유리·인테리어 옵션
     tempered_glass: false,
     tint_glass: false,
     smart_glass: false,
-    mirror_stainless: true,
-    gold_bronze_finish: true,
+    mirror_stainless: false,
+    gold_bronze_finish: false,
     wood_panel: false,
-    marble_tile: true,
-    indirect_rgb_light: true,
+    marble_tile: false,
+    indirect_rgb_light: false,
     starlight_ceiling: false,
 
     // 5. 스마트홈 연동
-    smartphone_app: true,
-    nfc_rfid_card: true,
+    smartphone_app: false,
+    nfc_rfid_card: false,
     face_fingerprint_id: false,
-    smarthome_interlock: true,
+    smarthome_interlock: false,
 
     // 6. 고급 편의 옵션
-    auto_light_voice: true,
-    multilingual_guide: true,
-    music_bluetooth: true,
+    auto_light_voice: false,
+    multilingual_guide: false,
+    music_bluetooth: false,
     usb_wireless_charge: false,
     aroma_diffuser: false,
     folding_chair_child_btn: false
@@ -611,13 +611,13 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
                 {/* VND Calculation Line Item Breakdown */}
                 <div className="p-4 rounded-xl bg-navy-900/80 border border-navy-800 space-y-2 text-xs">
                   <div className="flex justify-between text-slate-300">
-                    <span>• 350kg 3스톱 기본가:</span>
-                    <span className="font-mono text-white">350.000.000 VNĐ</span>
+                    <span>• 350kg 4층 표준 기본가:</span>
+                    <span className="font-mono text-white">400.000.000 VNĐ</span>
                   </div>
-                  {prices.floorsAddVnd > 0 && (
+                  {prices.floorsAddVnd !== 0 && (
                     <div className="flex justify-between text-slate-300">
-                      <span>• 추가 층수 (+{floors - 3}층):</span>
-                      <span className="font-mono text-gold-300">+{prices.floorsAddVnd.toLocaleString('vi-VN')} VNĐ</span>
+                      <span>• 층수 조정 ({prices.floorsAddVnd > 0 ? '+' : ''}{floors - 4}층):</span>
+                      <span className="font-mono text-gold-300">{prices.floorsAddVnd > 0 ? '+' : ''}{prices.floorsAddVnd.toLocaleString('vi-VN')} VNĐ</span>
                     </div>
                   )}
                   {prices.capacityAddVnd > 0 && (
