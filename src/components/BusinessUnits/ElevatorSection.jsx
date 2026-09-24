@@ -228,8 +228,8 @@ export default function ElevatorSection({ t, onOpenCalculator }) {
                 <div className="lg:col-span-4 flex justify-center lg:justify-end">
                   <div className="p-5 rounded-2xl bg-navy-950/90 border border-gold-500/30 space-y-3 w-full max-w-sm text-center">
                     <span className="text-xs text-slate-400 uppercase tracking-wider block">표준 기본 출하가</span>
-                    <div className="text-2xl font-black gold-gradient-text">350.000.000 VNĐ</div>
-                    <p className="text-[11px] text-slate-300">350kg (4-5인) / 3층 기본 / 24개월 직영 무상 보증</p>
+                    <div className="text-2xl font-black gold-gradient-text">400.000.000 VNĐ</div>
+                    <p className="text-[11px] text-slate-300">350kg (4-5인) / 4층 표준 (4개 정차층) / 12개월(1년) 직영 무상 보증</p>
                     <button
                       onClick={onOpenCalculator}
                       className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold py-2.5 rounded-xl text-xs shadow-gold-glow"

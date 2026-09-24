@@ -364,7 +364,7 @@ export const translations = {
       cabinLabel: "캐빈 인테리어 스타일:",
       doorLabel: "도어 구동 방식:",
       estimatedPrice: "예상 기계 & 설치 비용:",
-      includes: "포함 내역: 안전 검사, 운반비, 24개월 무상 A/S",
+      includes: "포함 내역: 안전 검사, 운반비, 12개월(1년) 무상 A/S",
       bookSurvey: "무료 현장 실측 예약하기",
       downloadQuote: "견적서 다운로드 (PDF)",
       modalTitle: "무료 현장 실측 & 상세 견적서 신청",

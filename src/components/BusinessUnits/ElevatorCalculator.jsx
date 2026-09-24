@@ -31,13 +31,13 @@ import {
 } from 'lucide-react';
 
 export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
-  const [floors, setFloors] = useState(4); // 3 ~ 12 stops
-  const [capacity, setCapacity] = useState('350'); // 350, 450, 630, 1000
-  const [cabinStyle, setCabinStyle] = useState('luxury_gold'); // stainless, luxury_gold, glass_panoramic
+  const [floors, setFloors] = useState(4); // 3 ~ 12 stops (Default: 4 stops / 4층)
+  const [capacity, setCapacity] = useState('350'); // 350, 450, 630, 1000 (Default: 350kg)
+  const [cabinStyle, setCabinStyle] = useState('stainless'); // stainless, luxury_gold, glass_panoramic
   const [doorType, setDoorType] = useState('center_open'); // center_open, side_open, automatic_glass
 
   // Selected Package Tier
-  const [selectedPackage, setSelectedPackage] = useState('smart'); // basic, comfort, smart, media, premium, best_flagship
+  const [selectedPackage, setSelectedPackage] = useState('basic'); // basic, comfort, smart, media, premium, best_flagship
 
   // Selectable Custom Individual Options (category states)
   const [selectedOptions, setSelectedOptions] = useState({
@@ -115,7 +115,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
       id: 'comfort',
       name: 'COMFORT',
       badge: '쾌적형',
-      priceVnd: 25000000,
+      priceVnd: 15000000,
       spec: 'BASIC + 전용 에어컨 + 환기 시스템',
       desc: '동남아 고온 다습 기후 대응 엘리베이터 전용 에어컨 및 공기 순환'
     },
@@ -123,7 +123,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
       id: 'smart',
       name: 'SMART',
       badge: '인기 추천',
-      priceVnd: 55000000,
+      priceVnd: 35000000,
       spec: 'COMFORT + 내장 CCTV + 스마트폰 연동',
       desc: '보안 CCTV 및 스마트폰 원격 호출/상태 관제 연동'
     },
@@ -131,7 +131,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
       id: 'media',
       name: 'MEDIA',
       badge: '미디어형',
-      priceVnd: 85000000,
+      priceVnd: 55000000,
       spec: 'SMART + LCD 10인치 + Wi-Fi',
       desc: '디지털 디스플레이, 날씨/시간 정보 및 무선 Wi-Fi 구축'
     },
@@ -139,7 +139,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
       id: 'premium',
       name: 'PREMIUM',
       badge: '럭셔리형',
-      priceVnd: 135000000,
+      priceVnd: 85000000,
       spec: 'MEDIA + 고급 유리/스마트글라스 + 대리석',
       desc: '골드/브론즈 인테리어, 별빛 천장 및 천연 대리석 마감'
     },
@@ -147,7 +147,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
       id: 'best_flagship',
       name: 'BEST FLAGSHIP',
       badge: '최고급 플래그십',
-      priceVnd: 195000000,
+      priceVnd: 125000000,
       spec: 'PREMIUM + AI 스마트 관제 + 커스텀 인테리어',
       desc: '플래그십 럭셔리 마감, 스마트 센서 패키지 및 24/7 전용 원격 관제'
     }
@@ -238,26 +238,26 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
 
   // Calculate Comprehensive Real VND Price
   const calculateVndPrice = () => {
-    let baseVnd = 350000000; // Base 350kg 3-stop (3.5억 VND)
+    let baseVnd = 400000000; // Base 350kg 4-stop standard home elevator (4.0억 VND 기준)
 
     // Extra Capacity
     let capacityAddVnd = 0;
-    if (capacity === '450') capacityAddVnd = 65000000;
-    if (capacity === '630') capacityAddVnd = 140000000;
-    if (capacity === '1000') capacityAddVnd = 280000000;
+    if (capacity === '450') capacityAddVnd = 35000000;
+    if (capacity === '630') capacityAddVnd = 80000000;
+    if (capacity === '1000') capacityAddVnd = 160000000;
 
-    // Extra Floors over 3 stops
-    const extraFloors = Math.max(0, floors - 3);
-    const floorsAddVnd = extraFloors * 35000000;
+    // Extra or fewer Floors over/under 4 stops (4층 정차 기준)
+    const floorsDiff = floors - 4;
+    const floorsAddVnd = floorsDiff * 30000000;
 
     // Cabin Finish
     let cabinAddVnd = 0;
-    if (cabinStyle === 'luxury_gold') cabinAddVnd = 45000000;
-    if (cabinStyle === 'glass_panoramic') cabinAddVnd = 95000000;
+    if (cabinStyle === 'luxury_gold') cabinAddVnd = 20000000;
+    if (cabinStyle === 'glass_panoramic') cabinAddVnd = 50000000;
 
     // Door Type
     let doorAddVnd = 0;
-    if (doorType === 'automatic_glass') doorAddVnd = 40000000;
+    if (doorType === 'automatic_glass') doorAddVnd = 25000000;
 
     // Selected Package Price
     const pkgObj = packages.find(p => p.id === selectedPackage) || packages[0];
@@ -312,7 +312,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+        <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
           <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-gold-400 uppercase tracking-widest bg-gold-500/10 px-3.5 py-1.5 rounded-full border border-gold-500/30">
             <Calculator className="w-3.5 h-3.5" />
             <span>BEST WINNER ELEVATOR VN SMART CONFIGURATOR</span>
@@ -321,8 +321,63 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
             승강기 패키지 & 커스텀 옵션 자동 견적
           </h2>
           <p className="text-sm sm:text-base text-slate-300">
-            6대 패키지 상품과 스마트 미디어·스마트홈·인테리어 옵션을 조합하여 베트남 동화(VND) 견적을 실시간으로 산출해 드립니다.
+            베트남 4층/350kg 표준 기준(4억 VND)을 바탕으로 패키지 상품과 미디어·스마트홈 옵션을 실시간 산출합니다.
           </p>
+        </div>
+
+        {/* 2026년 베트남 현지 4층·350kg 가정용 엘리베이터 시장 공개 견적 비교표 */}
+        <div className="bg-navy-900/90 border border-gold-500/30 rounded-2xl p-5 sm:p-6 mb-12 shadow-xl">
+          <div className="flex items-center space-x-2 mb-3">
+            <Info className="w-5 h-5 text-gold-400 flex-shrink-0" />
+            <h3 className="text-base sm:text-lg font-extrabold text-gold-300">
+              2026년 베트남 현지 시장 기준 4층(4개 정차층) / 350kg 가정용 엘리베이터 시세 비교
+            </h3>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs sm:text-sm text-left text-slate-300 border-collapse">
+              <thead className="text-xs uppercase bg-navy-800 text-gold-400 border-b border-navy-700">
+                <tr>
+                  <th className="px-4 py-3 font-extrabold">구성 (Configuration)</th>
+                  <th className="px-4 py-3 font-extrabold">예상 시장 가격 (VND)</th>
+                  <th className="px-4 py-3 font-extrabold">특징 및 시장 입지</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-navy-800">
+                <tr className="hover:bg-navy-800/40">
+                  <td className="px-4 py-3 font-semibold text-white">중국산 / 보급형</td>
+                  <td className="px-4 py-3 text-slate-300 font-mono">250 ~ 300백만 VND (2.5억 ~ 3.0억)</td>
+                  <td className="px-4 py-3 text-slate-400">초저가 단순 보급형 부품 위주</td>
+                </tr>
+                <tr className="hover:bg-navy-800/40">
+                  <td className="px-4 py-3 font-semibold text-white">중국산 + 현지 제작/조립</td>
+                  <td className="px-4 py-3 text-slate-300 font-mono">280 ~ 350백만 VND (2.8억 ~ 3.5억)</td>
+                  <td className="px-4 py-3 text-slate-400">현지 프레임 조립 마감</td>
+                </tr>
+                <tr className="hover:bg-navy-800/40">
+                  <td className="px-4 py-3 font-semibold text-white">중급형 (인버터·고급 제어반 등)</td>
+                  <td className="px-4 py-3 text-slate-300 font-mono">320 ~ 400백만 VND (3.2억 ~ 4.0억)</td>
+                  <td className="px-4 py-3 text-slate-400">범용 인버터 및 고급 제어반 적용</td>
+                </tr>
+                <tr className="bg-gold-500/15 border-l-4 border-gold-400 font-bold">
+                  <td className="px-4 py-3 text-gold-300 flex items-center space-x-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-gold-400 flex-shrink-0" />
+                    <span>고급형 / 한국 부품 적용 (BEST winner 기준)</span>
+                  </td>
+                  <td className="px-4 py-3 text-gold-400 font-mono text-sm sm:text-base">380 ~ 500백만 VND (4억 VND 기준)</td>
+                  <td className="px-4 py-3 text-gold-300 font-semibold">K-Tech 핵심 부품 + 베트남 현지 직영 맞춤 제작 (표준 4.0억 VND)</td>
+                </tr>
+                <tr className="hover:bg-navy-800/40">
+                  <td className="px-4 py-3 font-semibold text-white">수입 완제품</td>
+                  <td className="px-4 py-3 text-slate-300 font-mono">600백만 VND 이상 (6.0억 VND 이상)</td>
+                  <td className="px-4 py-3 text-slate-400">해외 직수입 완성품 (A/S 부품 수급 고비용)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="mt-3.5 pt-3 border-t border-navy-800 flex flex-col sm:flex-row justify-between items-start sm:items-center text-[11px] sm:text-xs text-slate-400 gap-2">
+            <span>* BEST winner Group: **4층(4개 정차층) / 350kg 기준 4억 VND (400,000,000 VND)** 표준 출하가 적용</span>
+            <span className="text-gold-400 font-semibold">• 무상 A/S 및 보증 기간: 1년(12개월) 직영 무상 서비스 제공</span>
+          </div>
         </div>
 
 
@@ -585,7 +640,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
                   )}
                   <div className="flex justify-between text-slate-300 pt-2 border-t border-navy-800 font-bold">
                     <span className="text-gold-400">• 무상 A/S & 서비스:</span>
-                    <span className="text-emeraldGreen-400">24개월 직영 보증 포함</span>
+                    <span className="text-emeraldGreen-400">12개월(1년) 직영 무상 보증 포함</span>
                   </div>
                 </div>
 
@@ -673,13 +728,13 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
                   </thead>
                   <tbody className="divide-y divide-navy-800/80">
                     <tr>
-                      <td className="p-3 text-slate-200">기본 승강기 패키지 (350kg / 3스톱 표준)</td>
-                      <td className="p-3 text-right font-mono text-white">350.000.000 VNĐ</td>
+                      <td className="p-3 text-slate-200">기본 승강기 패키지 (350kg / 4스톱 4층 표준)</td>
+                      <td className="p-3 text-right font-mono text-white">400.000.000 VNĐ</td>
                     </tr>
-                    {prices.floorsAddVnd > 0 && (
+                    {prices.floorsAddVnd !== 0 && (
                       <tr>
-                        <td className="p-3 text-slate-200">추가 층수 옵션 (+{floors - 3}층 @ 35.000.000 VNĐ)</td>
-                        <td className="p-3 text-right font-mono text-gold-300">+{prices.floorsAddVnd.toLocaleString('vi-VN')} VNĐ</td>
+                        <td className="p-3 text-slate-200">층수 조정 옵션 ({prices.floorsAddVnd > 0 ? '+' : ''}{floors - 4}층 @ 30.000.000 VNĐ)</td>
+                        <td className="p-3 text-right font-mono text-gold-300">{prices.floorsAddVnd > 0 ? '+' : ''}{prices.floorsAddVnd.toLocaleString('vi-VN')} VNĐ</td>
                       </tr>
                     )}
                     {prices.capacityAddVnd > 0 && (
@@ -710,8 +765,8 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
 
               <div className="p-4 bg-navy-900/60 rounded-xl border border-navy-800 text-[11px] text-slate-300 space-y-1">
                 <p className="font-bold text-gold-400">• 무상 보증 및 스마트 관제 서비스 조건:</p>
-                <p>- 한국 거창승강기밸리 주요 제어 부품 및 베트남 직영 하노이 공장 제작 Cabin</p>
-                <p>- 24개월 직영 무상 A/S 보증 및 24시간 긴급 출동 관제 DB 시스템 포함</p>
+                <p>- 한국 기술력 핵심 제어 부품 및 베트남 직영 하노이 공장 제작 Cabin (4층/350kg 4억 VND 표준 기준)</p>
+                <p>- 12개월(1년) 직영 무상 A/S 보증 및 24시간 긴급 출동 관제 DB 시스템 포함</p>
               </div>
             </div>
 
