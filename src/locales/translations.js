@@ -83,7 +83,7 @@ export const translations = {
           name: "BEST winner interior Vn (인테리어)",
           desc: "Thiết kế & Thi công nội thất cao cấp cho Biệt thự, Townhouse và Không gian Thương mại.",
           highlight: "Thiết kế không gian đồng bộ hài hòa với Cabin Thang máy & Hạ tầng an toàn.",
-          img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+          img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
           features: [
             "Bộ sưu tập thiết kế Modern, Luxury & Wood/Glass tinh tế",
             "Phối cảnh 3D trực quan & Thư viện mẫu vật liệu thực tế",
@@ -96,7 +96,7 @@ export const translations = {
           name: "BEST winner elevator Vn (엘리베이터)",
           desc: "Giải pháp Thang máy Gia đình, Thương mại & Công nghiệp với công nghệ truyền động tiên tiến.",
           highlight: "Dòng sản phẩm chủ lực BEST Home 350 dành riêng cho Townhouse & Villa 3-7 tầng.",
-          img: "https://images.unsplash.com/photo-1546484475-7f7bd55792da?auto=format&fit=crop&w=800&q=80",
+          img: "/images/elevator/elevator_cabin.jpg",
           features: [
             "BEST Home 350 (350kg / 3-7 tầng) - Tiết kiệm diện tích hố PIT",
             "Thang thương mại (450-1000kg) & Thang tải hàng công nghiệp (1000-3000kg+)",
@@ -109,7 +109,7 @@ export const translations = {
           name: "BEST winner AI Smart Parking System Vn (AI 스마트파킹)",
           desc: "Hệ thống Quản lý Bãi đỗ xe Thông minh ứng dụng AI Nhận diện Biển số (LPR) & Cổng Rào tự động.",
           highlight: "Giải pháp hạ tầng đỗ xe tối ưu cho Khu đô thị, Tòa nhà Văn phòng & Trung tâm Thương mại.",
-          img: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=800&q=80",
+          img: "https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=800&q=80",
           features: [
             "AI Camera LPR chính xác 99.8% & Thanh chắn Barrier tốc độ cao",
             "Hệ thống Dẫn đường đỗ xe LED & Quản lý vị trí trống realtime",
@@ -122,7 +122,7 @@ export const translations = {
           name: "BEST winner Firefighting materials Vn (소방자재)",
           desc: "Cung cấp Vật liệu & Hệ thống PCCC đạt chuẩn Quy chuẩn Kỹ thuật Việt Nam (QCVN / TCVN).",
           highlight: "Tư vấn hồ sơ thẩm duyệt và cung cấp vật liệu PCCC đáp ứng các tiêu chuẩn kiểm định mới nhất.",
-          img: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=800&q=80",
+          img: "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=800&q=80",
           features: [
             "Hệ thống Báo cháy tự động & Bình chữa cháy tiêu chuẩn kiểm định",
             "Vật liệu ngăn cháy, sơn chống cháy & cửa chống cháy chuyên dụng",
@@ -135,7 +135,7 @@ export const translations = {
           name: "BEST winner Waterproofing Vn (방수재)",
           desc: "Công nghệ Chống thấm Chuyên sâu thích ứng với Khí hậu Nhiệt đới Gió mùa Việt Nam.",
           highlight: "Chống thấm hố PIT thang máy, Mái, Tầng hầm & Tường ngoài - Bảo hành tới 10 năm.",
-          img: "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=800&q=80",
+          img: "/images/waterproofing/k1_overview_product.png",
           features: [
             "Vật liệu Chống thấm gốc Polyurethane, Crystalline & Màng khò",
             "Công nghệ Chống thấm hố PIT Thang máy không lo rò rỉ nước",
@@ -289,7 +289,7 @@ export const translations = {
           name: "BEST winner interior Vn (인테리어)",
           desc: "주택, 빌라, 타운하우스 및 상업 공간 맞춤형 공간 Design & 고급 인테리어 시공.",
           highlight: "승강기 Cabin 및 소방/방수 설비와 완벽하게 조화를 이루는 통합 공간 설계.",
-          img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+          img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
           features: [
             "모던, 럭셔리, 우드/유리 감성의 맞춤형 디자인 라이브러리",
             "3D 가상 공간 프리뷰 & 실물 실가공 자재 샘플 안내",
@@ -302,7 +302,7 @@ export const translations = {
           name: "BEST winner elevator Vn (엘리베이터)",
           desc: "홈/상업/산업용 승강기 제조·설치 및 24시간 직영 A/S 스마트 승강기 DB 구축.",
           highlight: "주력 모델 BEST Home 350 (350kg/3~7층 타운하우스·빌라 전용 특화).",
-          img: "https://images.unsplash.com/photo-1546484475-7f7bd55792da?auto=format&fit=crop&w=800&q=80",
+          img: "/images/elevator/elevator_cabin.jpg",
           features: [
             "BEST Home 350 (350kg / 3-7층) - 최소 피트 깊이 설계",
             "상업용 (450-1000kg) & 화물/산업용 승강기 (1000-3000kg+)",
@@ -315,7 +315,7 @@ export const translations = {
           name: "BEST winner AI Smart Parking System Vn (AI 스마트파킹)",
           desc: "AI 번호판 인식(LPR), 스마트 차단기, 주차 유도 및 자동 정산 통합 IT 솔루션.",
           highlight: "타운하우스 단지, 빌딩, 주상복합 대상 무인 관제 스마트 주차 인프라.",
-          img: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=800&q=80",
+          img: "https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=800&q=80",
           features: [
             "AI 번호판 인식률 99.8% & 초고속 스마트 차단기",
             "실시간 주차 위치 유도 LED & 잔여 면수 관제",
@@ -328,7 +328,7 @@ export const translations = {
           name: "BEST winner Firefighting materials Vn (소방자재)",
           desc: "베트남 소방 법규(QCVN / TCVN)를 준수하는 고품질 소방 자재 및 감지/소화 시스템.",
           highlight: "엄격해진 베트남 소방 인허가 및 검사 기준을 충족하는 검증된 자재 납품.",
-          img: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=800&q=80",
+          img: "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=800&q=80",
           features: [
             "자동 화재 탐지 설비 & 검정 소화 장비 공급",
             "내화 자재, 방화 도료 & 특수 방화문 솔루션",
@@ -341,7 +341,7 @@ export const translations = {
           name: "BEST winner Waterproofing Vn (방수재)",
           desc: "고온 다습하고 우기가 긴 베트남 기후 특성에 최적화된 전문 방수 공법 & 자재.",
           highlight: "승강기 PIT, 옥상, 지하층, 외벽 전문 방수 시공 - 최대 10년 보증.",
-          img: "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=800&q=80",
+          img: "/images/waterproofing/k1_overview_product.png",
           features: [
             "폴리우레탄, 결정체 증식형 & 개량 아스팔트 시트 방수",
             "승강기 PIT 누수 차단 전문 특수 주입 공법",
@@ -495,7 +495,7 @@ export const translations = {
           name: "BEST winner interior Vn (Interior)",
           desc: "Bespoke architectural space design and interior fit-out for residential villas, townhouses, and commercial spaces.",
           highlight: "Harmonized spatial design seamlessly integrating with elevator cabins & safety infrastructure.",
-          img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+          img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
           features: [
             "Modern, Luxury & Wood/Glass aesthetic design libraries",
             "Interactive 3D space preview & physical material samples",
@@ -508,7 +508,7 @@ export const translations = {
           name: "BEST winner elevator Vn (Elevator)",
           desc: "Residential, commercial & industrial elevator manufacturing, installation, and 24/7 direct A/S.",
           highlight: "Flagship BEST Home 350 model tailored for 3-7 floor townhouses & private villas.",
-          img: "https://images.unsplash.com/photo-1546484475-7f7bd55792da?auto=format&fit=crop&w=800&q=80",
+          img: "/images/elevator/elevator_cabin.jpg",
           features: [
             "BEST Home 350 (350kg / 3-7 floors) - Low PIT depth design",
             "Commercial (450-1000kg) & Industrial Cargo elevators (1000-3000kg+)",
@@ -521,7 +521,7 @@ export const translations = {
           name: "BEST winner AI Smart Parking System Vn (AI Smart Parking)",
           desc: "AI License Plate Recognition (LPR), smart barriers, parking guidance, and unattended billing systems.",
           highlight: "Unattended smart parking management for residential complexes, office towers, and malls.",
-          img: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=800&q=80",
+          img: "https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=800&q=80",
           features: [
             "99.8% AI LPR accuracy & high-speed barrier gates",
             "Real-time parking spot guidance LEDs & occupancy software",
@@ -534,7 +534,7 @@ export const translations = {
           name: "BEST winner Firefighting materials Vn (Firefighting Materials)",
           desc: "High-quality fire safety equipment and detection systems compliant with Vietnam QCVN / TCVN regulations.",
           highlight: "Certified materials meeting Vietnam's updated fire inspection & approval standards.",
-          img: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=800&q=80",
+          img: "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=800&q=80",
           features: [
             "Automatic fire detection systems & certified extinguishers",
             "Fire-retardant coating, fireproof doors & specialized materials",
@@ -547,7 +547,7 @@ export const translations = {
           name: "BEST winner Waterproofing Vn (Waterproofing)",
           desc: "Advanced waterproofing engineered specifically for Vietnam's humid tropical climate and heavy rains.",
           highlight: "Elevator PIT, rooftop, basement, and exterior wall waterproofing with up to 10-year warranty.",
-          img: "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=800&q=80",
+          img: "/images/waterproofing/k1_overview_product.png",
           features: [
             "Polyurethane, Crystalline & Modified Asphalt Membrane waterproofing",
             "Elevator PIT specialized leak sealing technique",
