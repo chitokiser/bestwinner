@@ -241,7 +241,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
     ],
     partners: [
       {
-        name: "조은엘리베이터 (JOEUN ELEVATOR)",
+        name: "좋은엘리베이터 (JOEUN ELEVATOR)",
         role: "핵심 기술 협력 & 정밀 제어 시스템 공급",
         desc: "한국 승강기 전문 기술력 및 설계 노하우 공유, 베트남 시장 공동 전개",
         website: "https://joeunel.com"
@@ -355,7 +355,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
             </p>
 
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-normal break-keep">
-              한국 거창승강기밸리 및 조은엘리베이터 기술 협력, 하노이 3,000m² 직영 공장의 Cabin 제작, 그리고 7년간 180대 이상의 시공 레퍼런스를 자랑합니다.
+              한국 거창승강기밸리 및 좋은엘리베이터 기술 협력, 하노이 3,000m² 직영 공장의 Cabin 제작, 그리고 7년간 180대 이상의 시공 레퍼런스를 자랑합니다.
             </p>
 
             <div className="pt-2 flex flex-wrap gap-3">
@@ -419,7 +419,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
               "{elevatorData.slogan}"
             </p>
             <p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
-              한국 거창승강기밸리 및 조은엘리베이터의 정밀 승강기 엔지니어링 기술과 베트남 하노이 3,000m² 직영 공장의 Cabin 제작, 그리고 7년간 180대 이상의 시공 레퍼런스를 보유한 베트남 대표 프리미엄 승강기 솔루션입니다.
+              한국 거창승강기밸리 및 좋은엘리베이터의 정밀 승강기 엔지니어링 기술과 베트남 하노이 3,000m² 직영 공장의 Cabin 제작, 그리고 7년간 180대 이상의 시공 레퍼런스를 보유한 베트남 대표 프리미엄 승강기 솔루션입니다.
             </p>
           </div>
 
