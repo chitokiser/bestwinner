@@ -3,10 +3,14 @@
 @tailwind utilities;
 
 @layer base {
-  body {
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
     background-color: #040914;
     color: #F8FAFC;
     font-family: 'Plus Jakarta Sans', sans-serif;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   /* Custom Scrollbar */

@@ -191,10 +191,35 @@ export default function Header({ currentLang, setLang, t, onOpenGoogleAuth, user
 
       {/* Mobile Menu Drawer */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-navy-950 border-b border-navy-800 px-4 pt-3 pb-6 space-y-3">
+        <div className="md:hidden bg-navy-950 border-b border-navy-800 px-4 pt-3 pb-6 space-y-4 shadow-2xl">
+          
+          {/* Mobile Language Switcher */}
+          <div className="flex items-center justify-between pb-3 border-b border-navy-800">
+            <span className="text-xs font-bold text-slate-400 flex items-center">
+              <Globe className="w-3.5 h-3.5 text-gold-400 mr-1.5" />
+              Language / 언어
+            </span>
+            <div className="flex space-x-1">
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => setLang(lang.code)}
+                  className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all min-h-[36px] flex items-center space-x-1 ${
+                    currentLang === lang.code 
+                      ? 'bg-gold-500 text-navy-950 shadow-sm' 
+                      : 'bg-navy-900 text-slate-300 border border-navy-800 hover:border-gold-500/30'
+                  }`}
+                >
+                  <span>{lang.flag}</span>
+                  <span className="uppercase">{lang.code}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
           <button
             onClick={() => handleNavClick('/')}
-            className="w-full text-left px-3 py-2 text-sm font-bold text-slate-200 hover:bg-navy-900 rounded-lg"
+            className="w-full text-left px-3 py-3 text-sm font-bold text-slate-200 hover:bg-navy-900 rounded-xl min-h-[44px] flex items-center"
           >
             {t.nav.home}
           </button>
@@ -205,7 +230,7 @@ export default function Header({ currentLang, setLang, t, onOpenGoogleAuth, user
               <button
                 key={bu.id}
                 onClick={() => handleNavClick(bu.path)}
-                className="block text-xs text-slate-300 hover:text-gold-400 py-1 font-semibold"
+                className="block w-full text-left text-xs text-slate-300 hover:text-gold-400 py-2 font-semibold min-h-[40px] flex items-center"
               >
                 • {bu.name}
               </button>
@@ -215,7 +240,7 @@ export default function Header({ currentLang, setLang, t, onOpenGoogleAuth, user
           <div className="pt-2">
             <button
               onClick={() => { setIsMobileMenuOpen(false); onOpenGoogleAuth(); }}
-              className="w-full bg-white text-navy-950 font-black py-3 rounded-xl shadow-md flex justify-center items-center text-sm space-x-2"
+              className="w-full bg-white text-navy-950 font-black py-3.5 rounded-xl shadow-md flex justify-center items-center text-sm space-x-2 min-h-[48px]"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>

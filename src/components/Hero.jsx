@@ -67,28 +67,28 @@ export default function Hero({ t, onOpenCalculator }) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 my-auto w-full">
         {/* Main Hero Copy */}
-        <div className="max-w-3xl space-y-6">
+        <div className="max-w-3xl space-y-5 sm:space-y-6">
           
           {/* Catchphrase Pill */}
-          <div className="inline-flex items-center space-x-2.5 bg-navy-900/90 border border-gold-500/30 rounded-full px-4 py-1.5 shadow-md">
-            <span className="w-2 h-2 rounded-full bg-gold-400 animate-pulse"></span>
-            <span className="text-xs sm:text-sm font-bold text-gold-300 tracking-wide">
+          <div className="inline-flex items-center space-x-2 bg-navy-900/90 border border-gold-500/30 rounded-full px-3.5 py-1.5 shadow-md max-w-full">
+            <span className="w-2 h-2 rounded-full bg-gold-400 animate-pulse flex-shrink-0"></span>
+            <span className="text-[11px] sm:text-sm font-bold text-gold-300 tracking-wide break-keep leading-tight">
               "{t.hero.catchphrase}"
             </span>
           </div>
 
           {/* Clean Main Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight break-keep">
             BEST winner Group <span className="gold-gradient-text">Vietnam</span>
           </h1>
 
           {/* Sub-headline */}
-          <p className="text-lg sm:text-xl font-bold text-chrome-200">
+          <p className="text-base sm:text-xl font-bold text-chrome-200 leading-snug break-keep">
             베트남 대표 통합 주택·건설·스마트 인프라 솔루션
           </p>
 
           {/* Concise Description */}
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl font-normal">
+          <p className="text-slate-300 text-xs sm:text-base leading-relaxed max-w-2xl font-normal break-keep">
             한국의 정밀 기술력과 베트남 현지 맞춤 제작 시스템의 완벽한 조화로 공간의 가치를 완성합니다.
           </p>
 
@@ -96,7 +96,7 @@ export default function Hero({ t, onOpenCalculator }) {
           <div className="pt-2 flex flex-wrap gap-4 items-center">
             <button
               onClick={onOpenCalculator}
-              className="bg-gradient-to-r from-gold-400 to-gold-600 hover:from-gold-300 hover:to-gold-500 text-navy-950 font-extrabold px-6 py-3.5 rounded-xl shadow-gold-glow transition-all transform hover:-translate-y-0.5 flex items-center space-x-2.5 text-sm"
+              className="w-full sm:w-auto bg-gradient-to-r from-gold-400 to-gold-600 hover:from-gold-300 hover:to-gold-500 text-navy-950 font-extrabold px-6 py-3.5 rounded-xl shadow-gold-glow transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-2.5 text-sm min-h-[48px]"
             >
               <Calculator className="w-4 h-4 stroke-[2.5]" />
               <span>{t.hero.ctaCalculator}</span>
@@ -105,17 +105,17 @@ export default function Hero({ t, onOpenCalculator }) {
           </div>
 
           {/* Trust Highlights */}
-          <div className="pt-3 flex flex-wrap items-center gap-6 text-xs text-slate-400 border-t border-navy-800/80">
+          <div className="pt-3 flex flex-wrap items-center gap-3 sm:gap-6 text-xs text-slate-400 border-t border-navy-800/80 break-keep">
             <div className="flex items-center space-x-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emeraldGreen-400" />
+              <CheckCircle2 className="w-4 h-4 text-emeraldGreen-400 flex-shrink-0" />
               <span>One-Stop B2B/B2C</span>
             </div>
             <div className="flex items-center space-x-1.5">
-              <ShieldCheck className="w-4 h-4 text-gold-400" />
+              <ShieldCheck className="w-4 h-4 text-gold-400 flex-shrink-0" />
               <span>Korean Safety Standards</span>
             </div>
             <div className="flex items-center space-x-1.5">
-              <Clock className="w-4 h-4 text-blue-400" />
+              <Clock className="w-4 h-4 text-blue-400 flex-shrink-0" />
               <span>24/7 Direct A/S Response</span>
             </div>
           </div>
@@ -141,36 +141,36 @@ export default function Hero({ t, onOpenCalculator }) {
             <div className="flex items-center space-x-1 ml-2">
               <button
                 onClick={handlePrevSlide}
-                className="p-1 rounded bg-navy-900 text-slate-400 hover:text-white transition-colors"
+                className="p-2 rounded-lg bg-navy-900 text-slate-400 hover:text-white transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
               >
-                <ChevronLeft className="w-3.5 h-3.5" />
+                <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={handleNextSlide}
-                className="p-1 rounded bg-navy-900 text-slate-400 hover:text-white transition-colors"
+                className="p-2 rounded-lg bg-navy-900 text-slate-400 hover:text-white transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
               >
-                <ChevronRight className="w-3.5 h-3.5" />
+                <ChevronRight className="w-4 h-4" />
               </button>
             </div>
           </div>
 
-          {/* Clean 4 Key Statistics Metrics */}
-          <div className="grid grid-cols-4 gap-6 text-center">
-            <div>
-              <span className="text-base sm:text-lg font-extrabold text-gold-400">7+</span>
-              <span className="text-[11px] text-slate-400 block font-medium">{t.hero.stats.years}</span>
+          {/* Clean 4 Key Statistics Metrics (2x2 Grid on mobile for optimum clarity) */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center w-full md:w-auto">
+            <div className="bg-navy-900/60 p-3 sm:p-0 rounded-xl border sm:border-none border-navy-800">
+              <span className="text-lg sm:text-xl font-extrabold text-gold-400 block">7+</span>
+              <span className="text-[11px] text-slate-400 block font-medium mt-0.5">{t.hero.stats.years}</span>
             </div>
-            <div>
-              <span className="text-base sm:text-lg font-extrabold text-chrome-200">500+</span>
-              <span className="text-[11px] text-slate-400 block font-medium">{t.hero.stats.projects}</span>
+            <div className="bg-navy-900/60 p-3 sm:p-0 rounded-xl border sm:border-none border-navy-800">
+              <span className="text-lg sm:text-xl font-extrabold text-chrome-200 block">500+</span>
+              <span className="text-[11px] text-slate-400 block font-medium mt-0.5">{t.hero.stats.projects}</span>
             </div>
-            <div>
-              <span className="text-base sm:text-lg font-extrabold text-emeraldGreen-400">5</span>
-              <span className="text-[11px] text-slate-400 block font-medium">{t.hero.stats.divisions}</span>
+            <div className="bg-navy-900/60 p-3 sm:p-0 rounded-xl border sm:border-none border-navy-800">
+              <span className="text-lg sm:text-xl font-extrabold text-emeraldGreen-400 block">5</span>
+              <span className="text-[11px] text-slate-400 block font-medium mt-0.5">{t.hero.stats.divisions}</span>
             </div>
-            <div>
-              <span className="text-base sm:text-lg font-extrabold text-gold-400">24/7</span>
-              <span className="text-[11px] text-slate-400 block font-medium">{t.hero.stats.support}</span>
+            <div className="bg-navy-900/60 p-3 sm:p-0 rounded-xl border sm:border-none border-navy-800">
+              <span className="text-lg sm:text-xl font-extrabold text-gold-400 block">24/7</span>
+              <span className="text-[11px] text-slate-400 block font-medium mt-0.5">{t.hero.stats.support}</span>
             </div>
           </div>
 

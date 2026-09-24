@@ -103,10 +103,10 @@ export default function BusinessCardsSection({ t }) {
             <Sparkles className="w-3.5 h-3.5 text-gold-400" />
             <span>{t.cardsSection.badge}</span>
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white break-keep">
             {t.cardsSection.title}
           </h2>
-          <p className="text-sm sm:text-base text-slate-300">
+          <p className="text-sm sm:text-base text-slate-300 break-keep">
             {t.cardsSection.subtitle}
           </p>
         </div>
@@ -148,21 +148,21 @@ export default function BusinessCardsSection({ t }) {
 
                   {/* Card Content Body */}
                   <div className="p-6 space-y-4">
-                    <h3 className="text-xl font-extrabold text-white group-hover:text-gold-300 transition-colors">
+                    <h3 className="text-xl font-extrabold text-white group-hover:text-gold-300 transition-colors break-keep">
                       {card.name}
                     </h3>
-                    <p className="text-xs text-slate-300 leading-relaxed">
+                    <p className="text-xs text-slate-300 leading-relaxed break-keep">
                       {card.desc}
                     </p>
 
-                    <div className="p-3 rounded-xl bg-navy-900/90 border border-chrome-400/20 text-[11px] text-chrome-200 font-medium italic">
+                    <div className="p-3 rounded-xl bg-navy-900/90 border border-chrome-400/20 text-[11px] text-chrome-200 font-medium italic break-keep">
                       💡 {card.highlight}
                     </div>
 
                     {/* Features checklist */}
                     <div className="space-y-2 pt-1">
                       {card.features.map((feat, idx) => (
-                        <div key={idx} className="flex items-start space-x-2 text-xs text-slate-200">
+                        <div key={idx} className="flex items-start space-x-2 text-xs text-slate-200 break-keep">
                           <CheckCircle2 className="w-3.5 h-3.5 text-gold-400 flex-shrink-0 mt-0.5" />
                           <span>{feat}</span>
                         </div>
@@ -178,7 +178,7 @@ export default function BusinessCardsSection({ t }) {
                       e.stopPropagation();
                       handleCardClick(card.path);
                     }}
-                    className={`w-full py-3.5 rounded-xl font-bold text-xs shadow-md transition-transform group-hover:scale-[1.02] flex items-center justify-center space-x-2 border border-chrome-300/30 ${card.btnColor}`}
+                    className={`w-full py-3.5 rounded-xl font-bold text-xs shadow-md transition-transform group-hover:scale-[1.02] flex items-center justify-center space-x-2 border border-chrome-300/30 min-h-[44px] ${card.btnColor}`}
                   >
                     <span>{t.cardsSection.cardCta}</span>
                     <ArrowRight className="w-4 h-4 stroke-[2.5]" />

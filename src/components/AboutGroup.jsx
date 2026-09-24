@@ -37,10 +37,10 @@ export default function AboutGroup({ t }) {
           <span className="text-xs font-bold text-gold-400 tracking-widest uppercase bg-navy-800/80 px-3 py-1 rounded-full border border-gold-500/30">
             {about.subtitle}
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white break-keep">
             {about.title}
           </h2>
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+          <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal break-keep">
             {about.philosophy}
           </p>
         </div>
@@ -59,10 +59,10 @@ export default function AboutGroup({ t }) {
                   <div className="w-12 h-12 rounded-xl bg-navy-800 border border-gold-500/30 flex items-center justify-center mb-5 group-hover:bg-gold-500 group-hover:text-navy-950 transition-colors">
                     <CardIcon className="w-6 h-6 text-gold-400 group-hover:text-navy-950 transition-colors" />
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-gold-300 transition-colors">
+                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-gold-300 transition-colors break-keep">
                     {card.title}
                   </h3>
-                  <p className="text-xs text-slate-300 leading-relaxed">
+                  <p className="text-xs text-slate-300 leading-relaxed break-keep">
                     {card.desc}
                   </p>
                 </div>
@@ -76,7 +76,7 @@ export default function AboutGroup({ t }) {
         </div>
 
         {/* Integrated Synergy Banner */}
-        <div className="mt-16 glass-card-gold rounded-3xl p-8 sm:p-10 border border-gold-500/40 relative overflow-hidden">
+        <div className="mt-16 glass-card-gold rounded-3xl p-6 sm:p-10 border border-gold-500/40 relative overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-8 space-y-4">
@@ -84,10 +84,10 @@ export default function AboutGroup({ t }) {
                 <Layers className="w-3.5 h-3.5" />
                 <span>One-Stop Integrated Synergy</span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white break-keep">
                 {about.synergyTitle}
               </h3>
-              <p className="text-sm text-slate-300 leading-relaxed max-w-3xl">
+              <p className="text-sm text-slate-300 leading-relaxed max-w-3xl break-keep">
                 {about.synergyDesc}
               </p>
             </div>
@@ -95,8 +95,8 @@ export default function AboutGroup({ t }) {
             <div className="lg:col-span-4 flex justify-center lg:justify-end">
               <div className="p-6 rounded-2xl bg-navy-950/90 border border-gold-500/30 space-y-3 w-full max-w-xs text-center">
                 <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Group Turnkey Pipeline</p>
-                <div className="text-lg font-extrabold gold-gradient-text">Single Contract • Unified Warranty</div>
-                <p className="text-[11px] text-slate-300">
+                <div className="text-lg font-extrabold gold-gradient-text break-keep">Single Contract • Unified Warranty</div>
+                <p className="text-[11px] text-slate-300 break-keep">
                   승강기 + 인테리어 + AI주차 + 소방 + 방수 통합 관리 파이프라인
                 </p>
               </div>
