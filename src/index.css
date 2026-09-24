@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #040914;
+    color: #F8FAFC;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #040914;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #182B52;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #E2E8F0;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(15, 29, 56, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card-gold {
+    background: rgba(20, 25, 38, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+  }
+
+  /* Metallic Silver Chrome Glass Card */
+  .glass-card-chrome {
+    background: rgba(18, 26, 43, 0.85);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(226, 232, 240, 0.35);
+    box-shadow: 0 0 25px rgba(226, 232, 240, 0.08);
+  }
+
+  .glass-header {
+    background: rgba(4, 9, 20, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.15);
+  }
+
+  .gold-gradient-text {
+    background: linear-gradient(135deg, #FFF5CC 0%, #D4AF37 50%, #B89220 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Metallic Chrome Silver Gradient Text */
+  .chrome-gradient-text {
+    background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 35%, #94A3B8 65%, #F8FAFC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Metallic Gold-Chrome Mixed Text */
+  .gold-chrome-gradient-text {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F5E296 30%, #D4AF37 60%, #E2E8F0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gold-border-glow {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+  }
+
+  .chrome-border-glow {
+    box-shadow: 0 0 20px rgba(226, 232, 240, 0.25);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.02); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s infinite ease-in-out;
+}

@@ -1,0 +1,338 @@
+=== SHEET: 엘리베이터 ===
+THANG MÁY 엘리베이터 |  |  |  |  |  | 
+Loại 
+구분 | Phân loại 
+분류 | Các bộ phận bảo trì thang máy 
+승강기 유지관리 부품 | Đơn vị
+단위 | Giá
+가격 | Chu kì thay thế
+교체주기  | KHÁC
+비고 
+Kỹ thuật viên 
+máy móc
+( phòng máy )
+기계류 공간 (기계실) | Bảng 
+điều
+khiển 
+제어반 | A. Rơle
+가.릴레이 | EA | 150000 | 4Năm
+4년  | 
+ |  | A. Công tắc
+가.스위치 | EA | 150000 | 4Năm
+4년  | 
+ |  | A. Công tắc tơ điện từ
+가.전자접촉기 | EA | 150000 | 4Năm
+4년  | 
+ |  | B. Nguồn điện khẩn cấp
+나.비상정원공급장치 | EA | 450000 | 5Năm
+5년  | 
+ |  | C. Thiết bị gọi khẩn cấp
+다.비상통화장치 | EA | 950000 | 5Năm
+5년  | 
+ |  | D. Bảng mạch in
+라.인쇄회로기판 | EA | 1600000 | 7Năm
+7년  | 
+ |  | E. Các thiết bị chuyển đổi công suất như biến tần
+마.인버터 등 전력변환장치 | EA | 3800000 | 7Năm
+7년  | 
+ |  | F. Hệ thống vận hành cứu hộ tự động
+바.자동구출운전장치 | EA | 1700000 | 7Năm
+7년  | 
+ |  | G. Bảng điều khiển (đề cập đến một sản phẩm hoàn chỉnh
+trong đó toàn bộ thành phần được lắp ráp)
+사.제어반 (구성품 전체가 조립된 완성품을 말한다) | EA | 7600000 | 15Năm
+15년  | 
+ |  | F. Hệ thống phanh tái tạo 
+회생제동장치 | EA | 1800000 | 5Năm
+5년  | 
+ | Bộ
+điều
+khiển
+구동기 | A. Trình điều khiển (đề cập đến một sản phẩm hoàn chỉnh 
+trong đó toàn bộ thành phần được lắp ráp)
+가.구동기 (구성품 전체가 조림된 완성품을 말한다) | EA | 11500000 | 15Năm
+15년  | 
+ |  | B. Bánh răng (bộ giảm tốc) 
+나.기어 (감속기) | EA | 4500000 | 10Năm
+10년   | 
+ |  | C. Bộ giới hạn lưu lượng van cao su
+다.럽처밸브.유량제한기 | EA | 1050000 | 15Năm
+15년  | 
+ |  | D. Phương tiện chống bụi
+라.방진수단 | EA | 75000 | 8Năm
+8년   | 
+ |  | E. Các đơn vị thủy lực và các phụ kiện 
+마. 유압 유니트 및 그 부속품 | EA | 5900000 | 15Năm
+15년  | 
+ |  | F. Động cơ điện
+바. 전동기 | EA | 1600000 | 10Năm
+10년  | 
+ |  | G. Phanh cơ điện và các phụ kiện
+사. 전자기계 브레이크 및 그 부속품 | EA | 1850000 | 7Năm
+7년   | 
+ | Ròng rọc  | A. Ròng rọc kéo
+가. 견인 도르래 | EA | 1250000 | 5Năm
+5년  | 
+ |  | B. Ròng rọc
+나. 폴리(Pulley) | EA | 560000 | 7Năm
+7년   | 
+ | ehfmfo
+안전장치 | A. Phương tiện ngăn chặn việc mở cửa và các phụ kiện 
+가. 개문출발방지수단 및 그 부속품 | EA | 1500000 | 7Năm
+7년  | 
+ |  | B. Bộ điều chỉnh tốc độ
+나 고속조절기 | EA | 650000 | 15Năm
+15년  | 
+ |  | C. Phương tiện ngăn chặn chạy quá tốc độ và các phụ
+kiện của nó
+다. 상승과속방지수단 및 그 부속품 | EA | 2600000 | 10Năm
+10년  | 
+ |  | D. Phương tiện liên kết các thiết bị an toàn chống rơi
+라 추락방지안전장치 연계수단 | EA | 1800000 | 15Năm\
+15년  | 
+Vận tải
+운반구(카)  | Bên trong
+내부  | A. Nút đăng ký, mở, đóng
+가 등록. 열림. 닫힘 버튼 | EA | 25000 |  | Tiêu thụ
+소모품
+ |  | B. Thiết bị gọi khẩn cấp
+나. 비상통화장치 | EA | 950000 | 5Năm
+5년  | 
+ |  | C. Báo vị trí 
+다. 위치표시기 | EA | 170000 | 5Năm
+5년  | 
+ |  | D. Hệ thống vận hành sơ tán hỏa hoạn 
+라. 소방. 피난운전장치 | EA | 65000 | 9Năm
+9년  | 
+ | Cửa
+출입문  | A. Thiết bị đóng cửa an toàn
+가. 문닫힘 안전장치 | EA | 550000 | 5Năm
+5년  | 
+ |  | B. Cửa ra vào (đề cập đến thành phần trong đó toàn bộ
+thành phần được lắp ráp)
+나. 출입문(구성품 전체가 조립된 완성품을 말한다) | EA | 1950000 | 10Năm
+10년  | 
+ |  | C. Phương tiện dẫn đường cửa ra vào
+다. 출입문 안내수단 | EA | 210000 | 3Năm
+3년  | 
+ |  | D. Thiết bị đóng cửa và các phụ kiện
+라. 출입문 개폐장치 및 그 부속품 | EA | 210000 | 3Năm
+3년  | 
+ |  | E. Khóa cửa 
+마. 출입문 잠금장치 | EA | 95000 | 3Năm
+3년  | 
+ | Phần trên
+và
+phần dưới 
+상.하부 | A. Thiết bị phát hiện quá tải
+가. 과부하감지장치 | EA | 130000 | 4Năm
+4년  | 
+ |  | B. Công tắc tơ điện từ chuyển đổi Rơle
+나. 릴레이. 스위치. 전자접촉기 | EA | 50000 | 4Năm
+4년  | 
+ |  | C. Phương tiện chống bụi
+다. 방진수단 | EA | 40000 | 8Năm
+8년  | 
+ |  | D. Tấm bảo vệ phía trước 
+라. 앞 보호판(Apron) | EA | 110000 | 15Năm
+15년  | 
+ |  | E. Phương tiện hướng dẫn cảng vận tải 
+마. 운반구(카) 안내수단 | EA | 150000 | 5Năm
+5년  | 
+ |  | F. DL chuyển cáp 
+바. 이동케이블 | EA | 20000 | 8Năm
+8년  | 
+ |  | G. Thiết bị an toàn chống rơi và các phụ kiện 
+사. 추락방지안전장치 및 그 부속품 | EA | 1800000 | 15Năm
+15년  | 
+Vận thăng 
+승강로 | Vận thăng
+승강로  | A. Đường ray hướng dẫn lái xe  và các phụ kiện
+가. 주행안내 레일 및 그 부속품 | EA | 175000 | 20Năm
+20년  | 
+ |  | B. Dây điều khiển tốc độ
+나. 과속조절기 로프 | EA | 3500 | 5Năm
+5년  | 
+ |  | C. Thiết bị phát hiện vị trí 
+다. 위치검출장치 | EA | 180000 | 5Năm
+5년  | 
+ |  | D. Thiết bị treo (dây thừng, dây lưng v.v.) và các phụ kiện
+라. 메다는 장치9로프, 벨트 등) 및 그 부속품 | EA | 4500 | 5Năm
+5년  | 
+ | Không 
+gian con
+하부공간(피트) | A. Thiết bị căng dây điều chỉnh tốc độ
+가 과속조절기 로프 인장장치 | EA | 280000 | 10Năm
+10년  | 
+ |  | B. Hệ thống thoát nước 
+나. 배수장치 | EA | _ | _ | Phần thi công
+건축부분
+ |  | C. Giảm xóc
+다. 완충기 | EA | 380000 | 15Năm
+15년  | 
+Nền tảng
+승강장  | Nền tảng
+승강장 | A. Thiết bị gọi khẩn cấp
+가. 비상통화장치 | EA | 950000 | 5Năm
+5년  | 
+ |  | B. Báo vị trí 
+나. 위치표시기 | EA | 170000 | 5Năm
+5년  | 
+ |  | C. Hệ thống vận hành sơ tán hỏa hoạn 
+다. 소방. 피난 운전장치 | EA | 50000 | 10Năm
+10년  | 
+ |  | D. Nút gọi
+라. 호출버튼 | EA | 25000 |  | Tiêu thụ
+소모품
+ | Cửa 
+출입문 | A. Thiết bị an toàn đóng cửa 
+가. 문닫힘 안전장치 | EA | 160000 | 5Năm
+5년  | 
+ |  | B. Cửa ra vào (đề cập đến thành phần trong đó toàn bộ
+thành phần được lắp ráp)
+출입문(구성품 전체가 조립된 완성품을 말한다) | EA | 1150000 | 10Năm
+10년  | 
+ |  | C. Phương tiện dẫn đường cửa ra vào (bao gồm cả thiết bị
+ngăn chặn khởi hành)
+다. 출입문 안내수단(이탈방지장치를 포함한다) | EA | 85000 | 3Năm
+3년  | 
+ |  | D. Thiết bị đóng mở và các phụ kiện
+라. 출입문 개폐장치 및 그 부속품 | EA | 85000 | 3Năm
+3년  | 
+ |  | E. Khóa cửa 
+마. 출입문 잠금장치 | EA | 65000 | 3Năm
+3년  | 
+
+=== SHEET: 에스컬레리터 ===
+THANG CUỐN 에스컬레리터 |  |  |  |  |  |  |  | 
+Loại
+구분 | Phân loại
+분류 | Các bộ phận để bảo trì thang máy 
+승강기 유지관리 부품 | Đơn vị
+단위 | Giá
+가격 | Chu kì thay thế
+교체주시   | KHÁC 
+비고 |  | 
+Kỹ thuật viên 
+máy móc
+( phòng máy )
+기계류 공간(기계실) | Bảng 
+điều
+khiển 
+제어반 | A. Rơle
+가. 릴레이 | EA | 250000 | 4Năm
+4년  |  |  | 
+ |  | A. Công tắc
+가. 스위치 | EA | 250000 | 4Năm
+4년  |  |  | 
+ |  | A. Công tắc tơ điện từ
+가 전자접촉기 | EA | 250000 | 4Năm
+4년  |  |  | 
+ |  | B. Bảng mạch in
+나. 인쇄회로기판 | EA | 1850000 | 7Năm
+7년  |  |  | 
+ |  | C. Các thiết bị chuyển đổi công suất như biến tần
+다. 인버터 등 전력변환장치 | EA | 4500000 | 7Năm
+7년  |  |  | 
+ |  | D. Tiếp nhiên liệu tự động
+라. 자동급유징치 | EA | 1200000 | 5Năm
+5년  |  |  | 
+ |  | E. Bảng điều khiển (đề cập đến một sản phẩm hoàn chỉnh
+trong đó toàn bộ thành phần được lắp ráp)
+마 제어반(구성품 전체가 조립된 완성품을 말한다) | EA | 8500000 | 10Năm
+10년  |  |  | 
+ | Bộ
+điều
+khiển
+구동기 | A. Trình điều khiển, bánh răng xích dẫn động và các phụ kiện 
+가. 구동기, 종동 체인기어 및 그 부속품 | EA | 2500000 | 10Năm
+10년  |  |  | 
+ |  | B. Chuỗi ổ đĩa
+나. 구동체인 | EA | 1100000 | 3Năm
+3년  |  |  | 
+ |  | C. Bánh răng (bộ giảm tốc)
+다. 기어(감속기) | EA | 16000000 | 10Năm
+10년  |  |  | 
+ |  | D. Ngăn chặn ngược tốc độ và các phụ kiện
+마. 과속역행방지 및 그 부속품 | EA | 7500000 | 7Năm
+7년  |  |  | 
+ |  | E. Phanh cơ điện và các phụ kiện 
+바 전자기계 브레이크 및 그 부속품 | EA | 1500000 | 5Năm
+5년  |  |  | 
+ |  | F. Động cơ điện
+바. 전동기 | EA | 6800000 | 10Năm
+10년  |  |  | 
+ | Ròng rọc 
+도르래 | A. Ròng rọc kéo
+견인 도르래 | EA | _ | _ |  |  | 
+ |  | B. Ròng rọc
+나. 폴리(Pulley) | EA | _ | _ |  |  | 
+ | Thiết bị
+an toàn 
+안전장치 | A. Phương tiện ngăn chặn việc mở cửa và các phụ kiện 
+가. 개문출발방지수단 및 그 부속품 | EA | _ | _ |  |  | 
+ |  | B. Bộ điều chỉnh tốc độ
+나. 과속조절기 | EA | _ | _ |  |  | 
+ |  | C. Phương tiện ngăn chặn chạy quá tốc độ và các phụ
+kiện của nó
+다. 상승과속방지수단 및 그 부속품 | EA | _ | _ |  |  | 
+ |  | D. Phương tiện liên kết các thiết bị an toàn chống rơi
+라. 추락방지안전장치 연계수단 | EA | _ | _ |  |  | 
+Bàn chân
+발판  | Ván bước
+디딤판 | A. Phân định ranh giới
+가. 디딤판 경계틀(Demarcation) | EA | 35000 | _ | Tiêu thụ
+소모품 |  | 
+ |  | B. Máy chạy bộ và các phụ kiện
+나. 디딤판 및 그 부속품 | EA | 750000 | 7Năm
+7년  |  |  | 
+ |  | C. Xích ván bước 
+다. 디딤판 체인 | EA | 650000 | 7Năm
+7년  |  |  | 
+ | Tay vịn 
+난간 | A. Tay vịn
+가. 난간 | EA | 860000 | 15Năm
+15년  |  |  | 
+ |  | B. Sàn lan can 
+나. 난간데크 | EA | 380000 | 10Năm
+10년  |  |  | 
+ |  | C. Váy bên Gurad
+다. 측면 끼임방지판(Skirt guard) | EA | 630000 | 10Năm
+10년  |  |  | 
+ |  | D. Thiết bị ngăm chặn bẫy váy bên (bộ làm lệch váy)
+라. 측면 끼임방지장치(Skirt deflector) | EA | 120000 | 7Năm
+7년  |  |  | 
+ |  | E. Tấm ngoại thất và nội thất 
+마. 외부, 내부패널 | EA | 150000 | 10Năm
+10년  |  |  | 
+ |  | F. Xử lý
+바. 손잡이 | EA | 180000 | 5Năm
+5년  |  |  | 
+ |  | G. Xử lý ổ đĩa
+사. 손잡이 구동장치 | EA | 950000 | 5Năm
+5년  |  |  | 
+Vận thăng
+승강로  | Vận thăng 
+승강로 | A. ROLE công tắc và công tắc tơ
+가. 릴레이, 스위치, 전자접촉기 | EA | 85000 | 4Năm
+4년  |  |  | 
+ |  | B. Phương tiện thoát nước và các phụ kiện 
+나. 배수수단 및 그 부속품 | EA | _ | _ | Phần thi công
+건축부분 |  | 
+ |  | C. Cơ sở thanh lọc và các phụ kiện
+다. 정화시설 및 그 부속품 | EA | _ | _ | Phần thi công
+건축부분 |  | 
+Nền tảng
+승강장  | Nền tảng
+승강장 | A. Lược chống nhúm
+가. 끼임방지 빗(Comb) | EA | 22000 | Thỉnh thoảng  |  |  | 
+ |  | B. Tự động khởi động lại phương tiện và các phụ kiện
+나. 자동 재기동 수단 및 그 부속품 | EA | 1800000 | 5Năm
+5년  |  |  | 
+ |  | C. Xử lý thiết bị an toàn đầu vào và các phụ kiện  
+다. 손잡이 인입구안전장치 및 그 부속품 | EA | 250000 | 5Năm
+5년  |  |  | 
+ |  | D. Tấm lược 
+라 빗 받침판(Comb plate) | EA | 2500000 | 10Năm
+10년  |  |  | 
+
