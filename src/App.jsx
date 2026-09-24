@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import FloatingWidgets from './components/FloatingWidgets';
 import GoogleAuthModal from './components/GoogleAuthModal';
+import PwaInstallBanner from './components/PwaInstallBanner';
 
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -79,6 +80,9 @@ export default function App() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         />
+
+        {/* PWA App Instant Install Banner */}
+        <PwaInstallBanner />
 
         {/* Google Auth Login Modal */}
         <GoogleAuthModal 
