@@ -1,10 +1,24 @@
-# Environment files (Secrets & Local Config)
+# Environment & Secret files (API Keys, Configs, Credentials)
 .env
+.env*
+*.env
+*.env*
 .env.local
 .env.*.local
 .env.development.local
 .env.test.local
 .env.production.local
+
+# API keys, certificates & service account credentials
+*.pem
+*.key
+*.pkcs12
+*.pfx
+*credentials*.json
+*service_account*.json
+*secret*.json
+api_key*
+*.secret
 
 # Dependencies
 node_modules/
@@ -25,3 +39,4 @@ pnpm-debug.log*
 .idea/
 .DS_Store
 Thumbs.db
+

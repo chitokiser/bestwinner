@@ -12,14 +12,14 @@ import {
   where 
 } from 'firebase/firestore';
 
-// Firebase configuration from environment variables
+// Firebase configuration strictly loaded from environment variables
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyD6oGXWcQIAa46ZiO6E9fBWOXqiNCAL4-c",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "jumper-b15aa.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "jumper-b15aa",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "jumper-b15aa.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "1051842479371",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:1051842479371:web:cd0dca2c1eab0e44b58e0e"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase App singleton
