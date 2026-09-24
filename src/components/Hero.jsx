@@ -47,19 +47,19 @@ export default function Hero({ t, onOpenCalculator }) {
           <div
             key={idx}
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              currentSlide === idx ? 'opacity-30 scale-105' : 'opacity-0 scale-100'
+              currentSlide === idx ? 'opacity-75 sm:opacity-65 scale-105' : 'opacity-0 scale-100'
             } transition-transform duration-7000 ease-linear`}
           >
             <img 
               src={imgSrc} 
               alt={`BEST winner Group ${idx + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-center"
             />
           </div>
         ))}
-        {/* Dark Navy Gradient Overlay for optimal readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-950/95 via-navy-950/80 to-navy-950/70"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-navy-950/80"></div>
+        {/* Balanced Dark Gradient Overlay: Left side contrast for text, right/center vivid visibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-navy-950/90 via-navy-950/60 to-navy-950/25 sm:from-navy-950/85 sm:via-navy-950/50 sm:to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-navy-950/60"></div>
       </div>
 
       {/* Subtle Lighting Accents */}
