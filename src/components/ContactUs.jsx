@@ -62,7 +62,12 @@ export default function ContactUs({ t, initialBU = 'all' }) {
               <div className="space-y-4 text-xs text-slate-300 pt-2 border-t border-navy-800">
                 <div className="flex items-start space-x-3">
                   <MapPin className="w-4 h-4 text-gold-400 flex-shrink-0 mt-0.5" />
-                  <span>{t.contact.address}</span>
+                  <div>
+                    <p className="font-bold text-white">{t.contact.address}</p>
+                    {t.contact.regAddress && (
+                      <p className="text-slate-400 text-[11px] mt-1">{t.contact.regAddress}</p>
+                    )}
+                  </div>
                 </div>
 
                 <div className="flex items-start space-x-3">
