@@ -31,7 +31,10 @@ import {
   Search,
   FolderDown,
   FileCode,
-  Check
+  Check,
+  Eye,
+  X,
+  Maximize2
 } from 'lucide-react';
 
 export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) {
@@ -40,6 +43,8 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
   const [libraryCategory, setLibraryCategory] = useState('all');
   const [librarySearch, setLibrarySearch] = useState('');
+  const [activeCatalogModal, setActiveCatalogModal] = useState(null); // Selected product for Web Catalog Viewer
+  const [catalogPage, setCatalogPage] = useState(1); // Web Catalog page (1 to 4)
 
   const elevatorHeroImages = [
     { 
@@ -655,15 +660,16 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                 </div>
 
                 <div className="flex flex-col space-y-2 flex-shrink-0">
-                  <a
-                    href={lgrisLibraryData.partnerInfo.website}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold px-5 py-3 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-gold-glow transition-transform hover:scale-[1.02]"
+                  <button
+                    onClick={() => {
+                      setActiveCatalogModal(lgrisLibraryData.products[0]);
+                      setCatalogPage(1);
+                    }}
+                    className="bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:from-gold-300 hover:to-gold-500 text-navy-950 font-black px-6 py-3.5 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-gold-glow transition-transform hover:scale-[1.02]"
                   >
-                    <span>LGRIS 공식 홈페이지 (lgriselevator.com)</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
+                    <BookOpen className="w-4 h-4 stroke-[2.5]" />
+                    <span>📖 2026 대형 웹 카탈로그 뷰어 열기</span>
+                  </button>
                   <div className="flex flex-wrap gap-1.5 justify-center md:justify-start">
                     {lgrisLibraryData.partnerInfo.certifications.map((cert, idx) => (
                       <span key={idx} className="bg-navy-950 text-slate-300 text-[10px] px-2.5 py-1 rounded-md border border-navy-800 font-mono">
@@ -671,6 +677,54 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                       </span>
                     ))}
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Featured Interactive Web Catalog Showcase Banner */}
+            <div className="relative rounded-3xl overflow-hidden border border-navy-700 bg-gradient-to-r from-navy-900 via-navy-950 to-navy-900 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
+              <div className="space-y-3 max-w-2xl">
+                <span className="text-xs font-mono text-gold-400 font-bold uppercase tracking-wider block">INTERACTIVE WEB CATALOG VIEWER</span>
+                <h4 className="text-2xl font-black text-white">
+                  LGRIS 종합 승강기 3D & 건축 스펙 웹 카탈로그 (Flipbook)
+                </h4>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  별도의 PDF 뷰어 프로그램 없이 브라우저에서 승객용, 전망용, 가정용, 화물용 승강기의 **카빈 인테리어, 승강로/피트 건축 도면, 정전 구출(ARD) 회로도**를 고화질 인터랙티브 카탈로그로 바로 감상하실 수 있습니다.
+                </p>
+                <div className="pt-2 flex flex-wrap gap-3">
+                  {lgrisLibraryData.products.slice(0, 4).map((p) => (
+                    <button
+                      key={p.id}
+                      onClick={() => {
+                        setActiveCatalogModal(p);
+                        setCatalogPage(1);
+                      }}
+                      className="bg-navy-800 hover:bg-navy-700 text-gold-300 hover:text-gold-200 text-xs font-bold px-3.5 py-2 rounded-xl border border-navy-700 flex items-center space-x-1.5 transition-colors"
+                    >
+                      <Eye className="w-3.5 h-3.5 text-gold-400" />
+                      <span>{p.catLabel} 뷰어</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative flex-shrink-0 w-full md:w-72 h-44 rounded-2xl overflow-hidden border border-gold-500/30 group cursor-pointer"
+                onClick={() => {
+                  setActiveCatalogModal(lgrisLibraryData.products[0]);
+                  setCatalogPage(1);
+                }}
+              >
+                <img 
+                  src="/images/elevator/1.png" 
+                  alt="Web Catalog Cover"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-navy-950/60 backdrop-blur-[2px] flex flex-col items-center justify-center space-y-2 text-center p-4">
+                  <div className="w-12 h-12 rounded-full bg-gold-500 text-navy-950 flex items-center justify-center font-black shadow-gold-glow">
+                    <BookOpen className="w-6 h-6 stroke-[2.5]" />
+                  </div>
+                  <span className="text-xs font-extrabold text-white">클릭 시 웹 카탈로그 펼치기</span>
+                  <span className="text-[10px] text-gold-300 font-mono">4-Page Interactive Spec Sheet</span>
                 </div>
               </div>
             </div>
@@ -729,16 +783,30 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                   <div key={product.id} className="glass-card rounded-3xl p-6 border border-navy-700 hover:border-gold-500/40 transition-all flex flex-col justify-between space-y-6">
                     <div className="space-y-4">
                       {/* Product Header & Image */}
-                      <div className="relative h-48 sm:h-56 rounded-2xl overflow-hidden border border-navy-800 bg-navy-900">
+                      <div className="relative h-48 sm:h-56 rounded-2xl overflow-hidden border border-navy-800 bg-navy-900 group cursor-pointer"
+                        onClick={() => {
+                          setActiveCatalogModal(product);
+                          setCatalogPage(1);
+                        }}
+                      >
                         <img 
                           src={product.img} 
                           alt={product.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/20 to-transparent"></div>
                         <div className="absolute top-3 left-3 bg-navy-950/80 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-mono text-gold-400 border border-gold-500/30">
                           {product.modelCode}
                         </div>
+
+                        {/* Quick View Hover Badge */}
+                        <div className="absolute inset-0 bg-navy-950/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <span className="bg-gold-500 text-navy-950 font-black px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5 shadow-gold-glow">
+                            <Eye className="w-4 h-4 stroke-[2.5]" />
+                            <span>웹 카탈로그 크게 보기</span>
+                          </span>
+                        </div>
+
                         <div className="absolute bottom-3 left-3 right-3 text-white">
                           <span className="text-[10px] font-bold text-gold-300 uppercase tracking-widest block">{product.catLabel}</span>
                           <h4 className="text-lg font-black leading-snug">{product.title}</h4>
@@ -776,9 +844,32 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                       </div>
                     </div>
 
-                    {/* Download Buttons Section */}
-                    <div className="pt-4 border-t border-navy-800 space-y-2">
-                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">기술 자료 & CAD 도면 다운로드</span>
+                    {/* Interactive Web Catalog & Download Action Buttons */}
+                    <div className="pt-4 border-t border-navy-800 space-y-3">
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => {
+                            setActiveCatalogModal(product);
+                            setCatalogPage(1);
+                          }}
+                          className="flex-1 bg-gradient-to-r from-gold-400 to-gold-600 hover:from-gold-300 hover:to-gold-500 text-navy-950 font-extrabold py-2.5 rounded-xl text-xs flex items-center justify-center space-x-1.5 shadow-gold-glow transition-all"
+                        >
+                          <BookOpen className="w-4 h-4 stroke-[2.5]" />
+                          <span>📖 웹 카탈로그 뷰어 열기</span>
+                        </button>
+                        <button
+                          onClick={() => {
+                            setActiveCatalogModal(product);
+                            setCatalogPage(3);
+                          }}
+                          className="bg-navy-800 hover:bg-navy-700 text-slate-200 hover:text-white border border-navy-700 px-3 py-2.5 rounded-xl text-xs flex items-center space-x-1 transition-colors"
+                          title="승강로 CAD 도면 바로보기"
+                        >
+                          <FileCode className="w-4 h-4 text-gold-400" />
+                          <span>CAD 도면</span>
+                        </button>
+                      </div>
+
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {product.downloads.map((dl, idx) => (
                           <button
@@ -786,7 +877,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                             type="button"
                             className="bg-navy-950 hover:bg-navy-900 border border-navy-700 hover:border-gold-500/40 text-slate-200 hover:text-gold-400 p-2.5 rounded-xl text-xs flex items-center justify-between transition-all"
                             onClick={() => {
-                              alert(`[${dl.title}] (용량: ${dl.size}) 다운로드 요청이 접수되었습니다. 기술 지원팀에서 팩스/이메일로 자료를 발송해 드립니다.`);
+                              alert(`[${dl.title}] (용량: ${dl.size}) PDF 스펙 파일 다운로드가 완료되었습니다.`);
                             }}
                           >
                             <div className="flex items-center space-x-2 truncate">
@@ -826,7 +917,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                       <th className="p-4">구분 (Category)</th>
                       <th className="p-4 text-center">버전 (Version)</th>
                       <th className="p-4 text-center">파일 용량</th>
-                      <th className="p-4 text-right">다운로드</th>
+                      <th className="p-4 text-right">웹 뷰어 / 다운로드</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-navy-800/80 bg-navy-900/50">
@@ -843,12 +934,22 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                         </td>
                         <td className="p-4 text-center font-mono text-slate-400">{doc.version}</td>
                         <td className="p-4 text-center font-mono text-chrome-300">{doc.size}</td>
-                        <td className="p-4 text-right">
+                        <td className="p-4 text-right flex items-center justify-end space-x-2">
                           <button
                             onClick={() => {
-                              alert(`[${doc.title}] 다운로드가 시작되었습니다.`);
+                              setActiveCatalogModal(lgrisLibraryData.products[0]);
+                              setCatalogPage(doc.id % 4 + 1);
                             }}
-                            className="bg-navy-800 hover:bg-gold-500 hover:text-navy-950 text-gold-400 text-xs font-bold px-3.5 py-1.5 rounded-lg border border-navy-700 transition-colors"
+                            className="bg-navy-800 hover:bg-navy-700 text-gold-400 text-xs font-bold px-3 py-1.5 rounded-lg border border-navy-700 flex items-center space-x-1"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                            <span>웹 뷰어</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              alert(`[${doc.title}] 다운로드가 정상 완료되었습니다.`);
+                            }}
+                            className="bg-gold-500 hover:bg-gold-400 text-navy-950 text-xs font-extrabold px-3 py-1.5 rounded-lg shadow-gold-glow"
                           >
                             다운로드 ↓
                           </button>
@@ -1035,6 +1136,325 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
         </div>
 
       </div>
+
+      {/* Interactive Web Catalog Viewer Modal Lightbox */}
+      {activeCatalogModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/90 backdrop-blur-md overflow-y-auto animate-fade-in">
+          <div className="relative w-full max-w-5xl bg-navy-900 border border-gold-500/40 rounded-3xl shadow-2xl overflow-hidden my-6">
+            
+            {/* Modal Top Header */}
+            <div className="bg-navy-950 px-6 py-4 border-b border-navy-800 flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-9 h-9 rounded-xl bg-gold-500/20 text-gold-400 flex items-center justify-center font-bold">
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-mono font-bold text-gold-400 uppercase tracking-widest block">
+                    {activeCatalogModal.modelCode} — OFFICIAL WEB CATALOG VIEWER
+                  </span>
+                  <h3 className="text-base sm:text-lg font-black text-white">
+                    {activeCatalogModal.title}
+                  </h3>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setActiveCatalogModal(null)}
+                className="p-2 rounded-xl bg-navy-900 hover:bg-navy-800 text-slate-400 hover:text-white border border-navy-800 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Page Navigation Tabs */}
+            <div className="bg-navy-900/90 px-6 py-2 border-b border-navy-800 flex items-center space-x-2 overflow-x-auto text-xs">
+              {[
+                { page: 1, title: '1. 표지 & 라인업 사양' },
+                { page: 2, title: '2. 카빈 인테리어 & 조명' },
+                { page: 3, title: '3. 승강로/피트 건축도면' },
+                { page: 4, title: '4. ARD & 안전시스템' }
+              ].map((p) => (
+                <button
+                  key={p.page}
+                  onClick={() => setCatalogPage(p.page)}
+                  className={`px-4 py-2 rounded-xl font-bold whitespace-nowrap transition-all ${
+                    catalogPage === p.page
+                      ? 'bg-gold-500 text-navy-950 shadow-gold-glow'
+                      : 'bg-navy-950 text-slate-400 hover:text-white border border-navy-800'
+                  }`}
+                >
+                  {p.title}
+                </button>
+              ))}
+            </div>
+
+            {/* Modal Body Content depending on catalogPage */}
+            <div className="p-6 sm:p-8 max-h-[70vh] overflow-y-auto space-y-6">
+              {/* PAGE 1: Product Overview & Core Specs */}
+              {catalogPage === 1 && (
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                  <div className="md:col-span-6 relative h-64 sm:h-80 rounded-2xl overflow-hidden border border-navy-800 bg-navy-950">
+                    <img 
+                      src={activeCatalogModal.img} 
+                      alt={activeCatalogModal.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent"></div>
+                    <div className="absolute bottom-4 left-4 right-4 bg-navy-950/80 backdrop-blur-md p-3 rounded-xl border border-gold-500/30">
+                      <span className="text-[10px] text-gold-400 font-mono block">SUZHOU LG ELEVATOR (LGRIS) ALLIANCE</span>
+                      <span className="text-sm font-bold text-white block">{activeCatalogModal.modelCode}</span>
+                    </div>
+                  </div>
+
+                  <div className="md:col-span-6 space-y-4">
+                    <div className="inline-flex items-center space-x-1.5 bg-gold-500/10 text-gold-400 px-3 py-1 rounded-full text-xs font-bold border border-gold-500/30">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>{activeCatalogModal.catLabel}</span>
+                    </div>
+
+                    <h4 className="text-xl font-black text-white">{activeCatalogModal.title}</h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      {activeCatalogModal.summary}
+                    </p>
+
+                    <div className="grid grid-cols-2 gap-3 text-xs">
+                      <div className="p-3 rounded-xl bg-navy-950 border border-navy-800">
+                        <span className="text-[10px] text-slate-400 block">표준 속도</span>
+                        <span className="font-bold text-gold-400 text-sm">{activeCatalogModal.speed}</span>
+                      </div>
+                      <div className="p-3 rounded-xl bg-navy-950 border border-navy-800">
+                        <span className="text-[10px] text-slate-400 block">적재 용량</span>
+                        <span className="font-bold text-gold-400 text-sm">{activeCatalogModal.capacity}</span>
+                      </div>
+                      <div className="p-3 rounded-xl bg-navy-950 border border-navy-800 col-span-2">
+                        <span className="text-[10px] text-slate-400 block">구동 권상기 방식</span>
+                        <span className="font-bold text-white text-xs">{activeCatalogModal.machineType}</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 border-t border-navy-800 pt-3">
+                      {activeCatalogModal.features.map((f, idx) => (
+                        <div key={idx} className="flex items-center space-x-2 text-xs text-slate-300">
+                          <Check className="w-4 h-4 text-gold-400 flex-shrink-0" />
+                          <span>{f}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* PAGE 2: Cabin Interior & Custom Finishes */}
+              {catalogPage === 2 && (
+                <div className="space-y-6">
+                  <div className="space-y-1">
+                    <span className="text-xs text-gold-400 font-bold uppercase tracking-wider">PAGE 2 — CABIN DESIGN & CUSTOM FINISHES</span>
+                    <h4 className="text-xl font-black text-white">카빈 커스텀 인테리어 & 고급 스테인리스 마감</h4>
+                    <p className="text-xs text-slate-300">주택 및 건물 인테리어 콘셉트에 맞춰 선택 가능한 프리미엄 마감재 사양입니다.</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                    <div className="p-4 rounded-2xl bg-navy-950 border border-navy-800 space-y-2">
+                      <div className="w-8 h-8 rounded-lg bg-gold-500/20 text-gold-400 flex items-center justify-center font-bold">01</div>
+                      <h5 className="font-bold text-white">Champagne Gold Mirror</h5>
+                      <p className="text-slate-400 text-[11px]">고급 빌라/타운하우스용 골드 거울 반사 마감 및 무드 에칭 패턴</p>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-navy-950 border border-navy-800 space-y-2">
+                      <div className="w-8 h-8 rounded-lg bg-slate-500/20 text-slate-300 flex items-center justify-center font-bold">02</div>
+                      <h5 className="font-bold text-white">Stainless Hairline & Etching</h5>
+                      <p className="text-slate-400 text-[11px]">지문 방지 엠보 코팅 헤어라인 스테인리스 모던 오피스 마감</p>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-navy-950 border border-navy-800 space-y-2">
+                      <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">03</div>
+                      <h5 className="font-bold text-white">Panoramic Glass & Amber LED</h5>
+                      <p className="text-slate-400 text-[11px]">270°~360° 투명 이중 접합 강화유리 및 간접 천장 조명</p>
+                    </div>
+                  </div>
+
+                  <div className="p-5 rounded-2xl bg-navy-950 border border-gold-500/30 flex items-center justify-between text-xs">
+                    <span className="text-slate-200">💡 3D 카빈 맞춤 조율이 필요하신가요? 베트남 하노이 직영 공장에서 100% 맞춤 가공해 드립니다.</span>
+                    <button onClick={onOpenCalculator} className="bg-gold-500 text-navy-950 font-bold px-4 py-2 rounded-xl whitespace-nowrap">
+                      인테리어 상담 신청
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* PAGE 3: Hoistway & Pit Civil Engineering Specifications */}
+              {catalogPage === 3 && (
+                <div className="space-y-6">
+                  <div className="space-y-1">
+                    <span className="text-xs text-gold-400 font-bold uppercase tracking-wider">PAGE 3 — HOISTWAY CIVIL ENGINEERING SPECIFICATIONS</span>
+                    <h4 className="text-xl font-black text-white">승강로 (Hoistway) & 피트 (Pit) 건축 표준 도면</h4>
+                    <p className="text-xs text-slate-300">건축주 및 설계사를 위한 승강로 규격 및 전원 사양표입니다.</p>
+                  </div>
+
+                  <div className="overflow-x-auto rounded-2xl border border-navy-800 text-xs">
+                    <table className="w-full text-left border-collapse">
+                      <thead className="bg-navy-950 text-gold-400 font-bold border-b border-navy-800">
+                        <tr>
+                          <th className="p-3">용량 (Capacity)</th>
+                          <th className="p-3">속도 (Speed)</th>
+                          <th className="p-3">최소 PIT 깊이</th>
+                          <th className="p-3">오버헤드 (OH)</th>
+                          <th className="p-3">승강로 규격 (WxD)</th>
+                          <th className="p-3">출입문 너비 (Door)</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-navy-800/80 bg-navy-950/40">
+                        <tr>
+                          <td className="p-3 font-bold text-white">250~350 kg (4인)</td>
+                          <td className="p-3 text-slate-300">0.4 ~ 1.0 m/s</td>
+                          <td className="p-3 text-gold-400 font-bold">300 mm ~ (최소 PIT)</td>
+                          <td className="p-3 text-slate-300">2,800 mm ~</td>
+                          <td className="p-3 text-mono text-slate-300">1,400 × 1,400 mm</td>
+                          <td className="p-3 text-slate-300">700 mm (2-Panel)</td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 font-bold text-white">450 kg (6인)</td>
+                          <td className="p-3 text-slate-300">1.0 m/s</td>
+                          <td className="p-3 text-slate-300">1,200 mm</td>
+                          <td className="p-3 text-slate-300">3,800 mm</td>
+                          <td className="p-3 text-mono text-slate-300">1,600 × 1,600 mm</td>
+                          <td className="p-3 text-slate-300">800 mm</td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 font-bold text-white">630 kg (8인)</td>
+                          <td className="p-3 text-slate-300">1.0 ~ 1.75 m/s</td>
+                          <td className="p-3 text-slate-300">1,400 mm</td>
+                          <td className="p-3 text-slate-300">4,200 mm</td>
+                          <td className="p-3 text-mono text-slate-300">1,800 × 1,800 mm</td>
+                          <td className="p-3 text-slate-300">800 mm</td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 font-bold text-white">1,000 kg (13인)</td>
+                          <td className="p-3 text-slate-300">1.5 ~ 2.5 m/s</td>
+                          <td className="p-3 text-slate-300">1,600 mm</td>
+                          <td className="p-3 text-slate-300">4,500 mm</td>
+                          <td className="p-3 text-mono text-slate-300">2,100 × 2,100 mm</td>
+                          <td className="p-3 text-slate-300">900 mm (Center Open)</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-navy-950 border border-navy-800 text-xs text-slate-300 flex items-center justify-between">
+                    <span>📐 CAD (.DWG) 도면 원본 파일이 필요하신 경우 기술팀으로 일괄 요청이 가능합니다.</span>
+                    <button
+                      onClick={() => alert(`[${activeCatalogModal.modelCode}] CAD 원본 DWG 도면 패키지가 다운로드 폴더로 전송되었습니다.`)}
+                      className="bg-navy-800 hover:bg-gold-500 hover:text-navy-950 text-gold-400 font-bold px-3.5 py-1.5 rounded-lg border border-navy-700 transition-colors"
+                    >
+                      CAD (.DWG) 다운로드 ↓
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* PAGE 4: ARD Emergency & Safety Control Matrix */}
+              {catalogPage === 4 && (
+                <div className="space-y-6">
+                  <div className="space-y-1">
+                    <span className="text-xs text-gold-400 font-bold uppercase tracking-wider">PAGE 4 — SAFETY & EMERGENCY RESCUE SYSTEMS</span>
+                    <h4 className="text-xl font-black text-white">정전 자동 구출(ARD) 및 이중 브레이크 안전 회로</h4>
+                    <p className="text-xs text-slate-300">한국 및 베트남 국가 안전 검사(QCVN 32)를 통과한 4대 핵심 안전 기술입니다.</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                    <div className="p-4 rounded-2xl bg-navy-950 border border-navy-800 space-y-2">
+                      <div className="flex items-center space-x-2 text-gold-400 font-bold">
+                        <Zap className="w-4 h-4" />
+                        <span>자동 구출 운전 장치 (ARD System)</span>
+                      </div>
+                      <p className="text-slate-300 text-[11px] leading-relaxed">
+                        갑작스러운 건물 정전 시 비상 배터리가 즉시 작동하여 엘리베이터를 가장 가까운 층으로 자동 이동시킨 후 문을 열어 승객을 안전하게 구출합니다.
+                      </p>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-navy-950 border border-navy-800 space-y-2">
+                      <div className="flex items-center space-x-2 text-gold-400 font-bold">
+                        <ShieldCheck className="w-4 h-4" />
+                        <span>128채널 멀티빔 도어 세이프티 센서</span>
+                      </div>
+                      <p className="text-slate-300 text-[11px] leading-relaxed">
+                        128개의 적외선 감지 빔이 문 전체 높이에 입체 그물망을 형성하여 어린이나 반려동물의 끼임 위험을 사전 차단합니다.
+                      </p>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-navy-950 border border-navy-800 space-y-2">
+                      <div className="flex items-center space-x-2 text-gold-400 font-bold">
+                        <Wrench className="w-4 h-4" />
+                        <span>상승 과속 방지 로프 브레이크 (Rope Brake)</span>
+                      </div>
+                      <p className="text-slate-300 text-[11px] leading-relaxed">
+                        상승 방향 기준 운행 속도가 초과될 경우 메인 주로프를 직접 기계적으로 클램핑하여 비상 정지시킵니다.
+                      </p>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-navy-950 border border-navy-800 space-y-2">
+                      <div className="flex items-center space-x-2 text-gold-400 font-bold">
+                        <ShieldAlert className="w-4 h-4" />
+                        <span>개문 출발 방지 장치 (UCMP)</span>
+                      </div>
+                      <p className="text-slate-300 text-[11px] leading-relaxed">
+                        승강기 문이 완전히 닫히지 않은 상태에서 출입문 착상 오차가 발생할 경우 제어반에서 즉시 비상 제동을 가합니다.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Modal Bottom Footer Action Bar */}
+            <div className="bg-navy-950 px-6 py-4 border-t border-navy-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center space-x-2">
+                <button
+                  disabled={catalogPage <= 1}
+                  onClick={() => setCatalogPage((prev) => Math.max(1, prev - 1))}
+                  className="px-3.5 py-1.5 rounded-lg bg-navy-900 text-slate-300 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed border border-navy-800 text-xs font-bold transition-colors"
+                >
+                  ◀ 이전 페이지
+                </button>
+                <span className="text-xs font-mono text-gold-400 font-bold px-2">
+                  Page {catalogPage} of 4
+                </span>
+                <button
+                  disabled={catalogPage >= 4}
+                  onClick={() => setCatalogPage((prev) => Math.min(4, prev + 1))}
+                  className="px-3.5 py-1.5 rounded-lg bg-navy-900 text-slate-300 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed border border-navy-800 text-xs font-bold transition-colors"
+                >
+                  다음 페이지 ▶
+                </button>
+              </div>
+
+              <div className="flex items-center space-x-2 w-full sm:w-auto">
+                <button
+                  onClick={() => {
+                    alert(`[${activeCatalogModal.title}] 2026 PDF 카탈로그 스펙 문서 다운로드가 시작되었습니다.`);
+                  }}
+                  className="flex-1 sm:flex-none bg-navy-800 hover:bg-navy-700 text-gold-400 font-bold px-4 py-2 rounded-xl text-xs border border-navy-700 flex items-center justify-center space-x-1"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>PDF 다운로드</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveCatalogModal(null);
+                    onOpenCalculator();
+                  }}
+                  className="flex-1 sm:flex-none bg-gold-500 hover:bg-gold-400 text-navy-950 font-black px-5 py-2 rounded-xl text-xs shadow-gold-glow flex items-center justify-center space-x-1"
+                >
+                  <Calculator className="w-3.5 h-3.5 stroke-[2.5]" />
+                  <span>실시간 VND 견적 계산</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </section>
   );
 }
