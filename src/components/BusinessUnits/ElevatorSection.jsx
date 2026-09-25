@@ -3,7 +3,6 @@ import {
   ArrowUpRight, 
   ShieldCheck, 
   Cpu, 
-  Download, 
   Calculator, 
   CheckCircle2, 
   Wrench,
@@ -844,8 +843,8 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                       </div>
                     </div>
 
-                    {/* Interactive Web Catalog & Download Action Buttons */}
-                    <div className="pt-4 border-t border-navy-800 space-y-3">
+                    {/* Interactive Web Catalog & Action Buttons */}
+                    <div className="pt-4 border-t border-navy-800 space-y-2">
                       <div className="flex gap-2">
                         <button
                           onClick={() => {
@@ -866,29 +865,8 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                           title="승강로 CAD 도면 바로보기"
                         >
                           <FileCode className="w-4 h-4 text-gold-400" />
-                          <span>CAD 도면</span>
+                          <span>CAD 도면 보기</span>
                         </button>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {product.downloads.map((dl, idx) => (
-                          <button
-                            key={idx}
-                            type="button"
-                            className="bg-navy-950 hover:bg-navy-900 border border-navy-700 hover:border-gold-500/40 text-slate-200 hover:text-gold-400 p-2.5 rounded-xl text-xs flex items-center justify-between transition-all"
-                            onClick={() => {
-                              alert(`[${dl.title}] (용량: ${dl.size}) PDF 스펙 파일 다운로드가 완료되었습니다.`);
-                            }}
-                          >
-                            <div className="flex items-center space-x-2 truncate">
-                              <FileText className="w-3.5 h-3.5 text-gold-400 flex-shrink-0" />
-                              <span className="truncate text-[11px]">{dl.title}</span>
-                            </div>
-                            <span className="text-[10px] font-mono text-slate-400 bg-navy-900 px-1.5 py-0.5 rounded border border-navy-800 ml-1 flex-shrink-0">
-                              {dl.type}
-                            </span>
-                          </button>
-                        ))}
                       </div>
                     </div>
                   </div>
@@ -934,24 +912,16 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                         </td>
                         <td className="p-4 text-center font-mono text-slate-400">{doc.version}</td>
                         <td className="p-4 text-center font-mono text-chrome-300">{doc.size}</td>
-                        <td className="p-4 text-right flex items-center justify-end space-x-2">
+                        <td className="p-4 text-right flex items-center justify-end">
                           <button
                             onClick={() => {
                               setActiveCatalogModal(lgrisLibraryData.products[0]);
                               setCatalogPage(doc.id % 4 + 1);
                             }}
-                            className="bg-navy-800 hover:bg-navy-700 text-gold-400 text-xs font-bold px-3 py-1.5 rounded-lg border border-navy-700 flex items-center space-x-1"
+                            className="bg-navy-800 hover:bg-gold-500 hover:text-navy-950 text-gold-400 text-xs font-bold px-3 py-1.5 rounded-lg border border-navy-700 flex items-center space-x-1 transition-colors"
                           >
                             <Eye className="w-3.5 h-3.5" />
-                            <span>웹 뷰어</span>
-                          </button>
-                          <button
-                            onClick={() => {
-                              alert(`[${doc.title}] 다운로드가 정상 완료되었습니다.`);
-                            }}
-                            className="bg-gold-500 hover:bg-gold-400 text-navy-950 text-xs font-extrabold px-3 py-1.5 rounded-lg shadow-gold-glow"
-                          >
-                            다운로드 ↓
+                            <span>웹 뷰어 열기</span>
                           </button>
                         </td>
                       </tr>
@@ -1350,12 +1320,15 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                   </div>
 
                   <div className="p-4 rounded-xl bg-navy-950 border border-navy-800 text-xs text-slate-300 flex items-center justify-between">
-                    <span>📐 CAD (.DWG) 도면 원본 파일이 필요하신 경우 기술팀으로 일괄 요청이 가능합니다.</span>
+                    <span>📐 CAD (.DWG) 원본 설계 도면 및 상세 기술 자재표는 당사 기술지원팀으로 문의해 주시기 바랍니다.</span>
                     <button
-                      onClick={() => alert(`[${activeCatalogModal.modelCode}] CAD 원본 DWG 도면 패키지가 다운로드 폴더로 전송되었습니다.`)}
+                      onClick={() => {
+                        setActiveCatalogModal(null);
+                        onOpenCalculator();
+                      }}
                       className="bg-navy-800 hover:bg-gold-500 hover:text-navy-950 text-gold-400 font-bold px-3.5 py-1.5 rounded-lg border border-navy-700 transition-colors"
                     >
-                      CAD (.DWG) 다운로드 ↓
+                      기술 문의 / 견적 요청
                     </button>
                   </div>
                 </div>
@@ -1439,13 +1412,10 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
 
               <div className="flex items-center space-x-2 w-full sm:w-auto">
                 <button
-                  onClick={() => {
-                    alert(`[${activeCatalogModal.title}] 2026 PDF 카탈로그 스펙 문서 다운로드가 시작되었습니다.`);
-                  }}
-                  className="flex-1 sm:flex-none bg-navy-800 hover:bg-navy-700 text-gold-400 font-bold px-4 py-2 rounded-xl text-xs border border-navy-700 flex items-center justify-center space-x-1"
+                  onClick={() => setActiveCatalogModal(null)}
+                  className="bg-navy-800 hover:bg-navy-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs border border-navy-700 transition-colors"
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>PDF 다운로드</span>
+                  닫기
                 </button>
                 <button
                   onClick={() => {
