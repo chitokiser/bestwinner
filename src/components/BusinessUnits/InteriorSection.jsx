@@ -18,13 +18,16 @@ import {
   ChevronRight,
   ChevronLeft,
   Send,
-  Download
+  Download,
+  X,
+  ZoomIn
 } from 'lucide-react';
 
 export default function InteriorSection({ t, onOpenConsult }) {
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeStyle, setActiveStyle] = useState('luxury');
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
+  const [selectedPdfProject, setSelectedPdfProject] = useState(null);
 
   const interiorHeroImages = [
     { 
@@ -66,106 +69,223 @@ export default function InteriorSection({ t, onOpenConsult }) {
     return () => clearInterval(timer);
   }, [interiorHeroImages.length]);
 
-  // Real Major Performance Projects extracted from BEST WINNER VN PROFILE.pdf
+  // Real Major Performance Projects extracted & matched from BEST WINNER VN PROFILE.pdf
   const portfolioProjects = [
     {
       id: 1,
       category: 'hotel_public',
       catLabel: 'Hotel & Public Space',
       title: 'Shilla Hotel (Hanoi)',
-      subtitle: '프리미엄 호텔 인테리어 필름 & 공간 시공',
-      year: '2026',
+      subtitle: '하노이 신라호텔 인테리어 필름 & 5성급 호텔 공간 시공',
+      year: '2026.03',
       location: 'Hanoi',
-      img: '/images/interior/3.png',
-      tag: '5-Star Hotel'
+      img: '/images/interior/portfolio/page_13.png',
+      tag: '5-Star Hotel',
+      pdfPage: 13
     },
     {
       id: 2,
       category: 'office_factory',
       catLabel: 'Office & Factory',
       title: 'I-BRIDGE Office (Landmark 72)',
-      subtitle: '랜드마크 72 타워 프라이빗 스마트 오피스 시공',
-      year: '2025',
+      subtitle: '하노이 경남 랜드마크 72 타워 프라이빗 스마트 오피스 시공',
+      year: '2025.12',
       location: 'Landmark 72, Hanoi',
-      img: '/images/interior/5.png',
-      tag: 'Executive Office'
+      img: '/images/interior/portfolio/page_14.png',
+      tag: 'Executive Office',
+      pdfPage: 14
     },
     {
       id: 3,
       category: 'commercial_fnb',
       catLabel: 'Commercial & F&B',
-      title: 'Wau Haus Coffee',
-      subtitle: 'Vincom Mega Mall Ocean Park 2 부스 디자인 & 시공',
-      year: '2025',
+      title: 'Wau Haus Coffee (Vincom Ocean Park 2)',
+      subtitle: 'Vincom Mega Mall Ocean Park 2 카페 인테리어 & 부스 디자인',
+      year: '2025.07',
       location: 'Hung Yen',
-      img: '/images/interior/2.png',
-      tag: 'Shopping Mall Store'
+      img: '/images/interior/portfolio/page_15.png',
+      tag: 'Shopping Mall Store',
+      pdfPage: 15
     },
     {
       id: 4,
       category: 'commercial_fnb',
       catLabel: 'Commercial & F&B',
-      title: 'De Baakji / Baekje Galbi Restaurant',
-      subtitle: 'Vincom Mega Mall & 하노이 VIP 룸 한국형 디자이닝',
-      year: '2025',
-      location: 'Ocean Park 2, Hanoi',
-      img: '/images/interior/4.png',
-      tag: 'K-Dining Space'
+      title: 'De Baakji Restaurant (Vincom Ocean Park 2)',
+      subtitle: 'Vincom Mega Mall Ocean Park 2 한국형 고급 식당 인테리어',
+      year: '2025.05',
+      location: 'Hung Yen',
+      img: '/images/interior/portfolio/page_17.png',
+      tag: 'K-Dining Space',
+      pdfPage: 17
     },
     {
       id: 5,
       category: 'office_factory',
       catLabel: 'Office & Factory',
-      title: 'LG Electronics Factory (P3 Conference Room)',
-      subtitle: 'LG전자 하이퐁 공장 P3 회의실 인테리어 시공',
-      year: '2022',
+      title: 'LG Electronics Factory (Hai Phong)',
+      subtitle: 'LG전자 하이퐁 공장 P3 대회의실 인테리어 & 음향/유리 벽체 시공',
+      year: '2022.03',
       location: 'KCN Trang Due, Hai Phong',
-      img: '/images/interior/5.png',
-      tag: 'Global Tech Factory'
+      img: '/images/interior/portfolio/page_49.png',
+      tag: 'Global Tech Factory',
+      pdfPage: 49
     },
     {
       id: 6,
       category: 'office_factory',
       catLabel: 'Office & Factory',
       title: 'Dreamtech Factory (Bac Ninh)',
-      subtitle: '드림텍 공장 1F 로비 리셉션, 휴게실 & 휴게 테라스 전면 리모델링',
-      year: '2025',
-      location: 'Bac Ninh',
-      img: '/images/interior/2.png',
-      tag: 'Lobby & Reception'
+      subtitle: '드림텍 박닌 공장 1F 로비, 리셉션, 휴게실 & 카페 전면 리모델링',
+      year: '2026.03',
+      location: 'KCN Yen Phong, Bac Ninh',
+      img: '/images/interior/portfolio/page_12.png',
+      tag: 'Lobby & Reception',
+      pdfPage: 12
     },
     {
       id: 7,
-      category: 'beauty_golf',
-      catLabel: 'Beauty & 3D Golf',
-      title: 'GolfZon & SG Screen Golf 3D',
-      subtitle: '하노이 & 박닌 3D 스크린 골프 서비스 공간 턴키 시공',
-      year: '2024',
-      location: 'Hanoi & Bac Ninh',
-      img: '/images/interior/1.png',
-      tag: 'Sports & Leisure'
-    },
-    {
-      id: 8,
       category: 'residential',
       catLabel: 'Luxury Residential',
       title: 'Keangnam Landmark 72 Apartment (A1608)',
-      subtitle: '하노이 경남 랜드마크 72 아파트 하이엔드 리모델링',
-      year: '2024',
-      location: 'Hanoi',
-      img: '/images/interior/1.png',
-      tag: 'Luxury Apartment'
+      subtitle: '하노이 경남 랜드마크 72 아파트 하이엔드 전면 인테리어 리모델링',
+      year: '2024.09',
+      location: 'Landmark 72, Hanoi',
+      img: '/images/interior/portfolio/page_28.png',
+      tag: 'Luxury Apartment',
+      pdfPage: 28
+    },
+    {
+      id: 8,
+      category: 'beauty_golf',
+      catLabel: 'Beauty & Golf',
+      title: 'OJALGONG Golf Zon (Westpoint Hanoi)',
+      subtitle: '하노이 웨스트포인트 3D 스크린 골프 서비스 공간 턴키 시공',
+      year: '2023.08',
+      location: 'Westpoint, Hanoi',
+      img: '/images/interior/portfolio/page_37.png',
+      tag: 'Sports & Leisure',
+      pdfPage: 37
     },
     {
       id: 9,
       category: 'hotel_public',
       catLabel: 'Hotel & Public Space',
-      title: 'Woori Bank & Shinhan Bank Branches',
-      subtitle: '우리은행(완끼엠, 영푹, 하남) & 신한은행 랜드마크지점 금융 공간',
-      year: '2020-2024',
-      location: 'Hanoi & Provinces',
-      img: '/images/interior/3.png',
-      tag: 'Banking & Financial'
+      title: 'Woori Bank Branches (Vinh Phuc & Ha Nam)',
+      subtitle: '우리은행 하노이, 영푹, 하남 지점 금융 공간 & VIP 창구 인테리어',
+      year: '2019-2020',
+      location: 'Vinh Phuc & Ha Nam',
+      img: '/images/interior/portfolio/page_60.png',
+      tag: 'Banking & Financial',
+      pdfPage: 60
+    },
+    {
+      id: 10,
+      category: 'hotel_public',
+      catLabel: 'Hotel & Public Space',
+      title: 'Shinhan Bank & Korean Embassy (Hanoi)',
+      subtitle: '주베트남 대한민국 대사관 & 신한은행 랜드마크 지점 시공',
+      year: '2018-2019',
+      location: 'Hanoi',
+      img: '/images/interior/portfolio/page_63.png',
+      tag: 'Public & Embassy',
+      pdfPage: 63
+    },
+    {
+      id: 11,
+      category: 'office_factory',
+      catLabel: 'Office & Factory',
+      title: 'KOICA Company Office (Hanoi)',
+      subtitle: '한국국제협력단(KOICA) 하노이 오피스 유리 파티션 & 인테리어',
+      year: '2024.06',
+      location: 'Hanoi',
+      img: '/images/interior/portfolio/page_30.png',
+      tag: 'Public & NGO Office',
+      pdfPage: 30
+    },
+    {
+      id: 12,
+      category: 'commercial_fnb',
+      catLabel: 'Commercial & F&B',
+      title: 'HOJI TEA HOUSE (Tràng Tiền Plaza)',
+      subtitle: '하노이 짱띠엔 프라자 프리미엄 티하우스 상업 공간 시공',
+      year: '2024.10',
+      location: 'Trang Tien Plaza, Hanoi',
+      img: '/images/interior/portfolio/page_27.png',
+      tag: 'Commercial & Cafe',
+      pdfPage: 27
+    },
+    {
+      id: 13,
+      category: 'beauty_golf',
+      catLabel: 'Beauty & Golf',
+      title: 'Pilates Studio (Mydinh Hanoi)',
+      subtitle: '하노이 미딩 한국형 기구 필라테스 스튜디오 턴키 인테리어',
+      year: '2025.04',
+      location: 'My Dinh, Hanoi',
+      img: '/images/interior/portfolio/page_19.png',
+      tag: 'Beauty & Wellness',
+      pdfPage: 19
+    },
+    {
+      id: 14,
+      category: 'beauty_golf',
+      catLabel: 'Beauty & Golf',
+      title: 'MEDIVISOR Korean Beauty Salon & Spa',
+      subtitle: '하노이 메디바이저 프리미엄 뷰티 살롱 & 더클라세 스파 시공',
+      year: '2023.02',
+      location: 'Hanoi',
+      img: '/images/interior/portfolio/page_45.png',
+      tag: 'K-Beauty Salon',
+      pdfPage: 45
+    },
+    {
+      id: 15,
+      category: 'office_factory',
+      catLabel: 'Office & Factory',
+      title: 'Hyundai Kefico Factory (Hai Duong)',
+      subtitle: '현대케피코 베트남 공장 대회의실 & 인테리어 마감 시공',
+      year: '2019.02',
+      location: 'Hai Duong',
+      img: '/images/interior/portfolio/page_62.png',
+      tag: 'Global Tech Factory',
+      pdfPage: 62
+    },
+    {
+      id: 16,
+      category: 'commercial_fnb',
+      catLabel: 'Commercial & F&B',
+      title: 'Artisee Cafe (Hanoi)',
+      subtitle: '하노이 아티제(Artisee) 프리미엄 베이커리 카페 인테리어',
+      year: '2021.07',
+      location: 'Hanoi',
+      img: '/images/interior/portfolio/page_52.png',
+      tag: 'Commercial & Cafe',
+      pdfPage: 52
+    },
+    {
+      id: 17,
+      category: 'commercial_fnb',
+      catLabel: 'Commercial & F&B',
+      title: 'Baekje Galbi Restaurant (Hanoi)',
+      subtitle: '하노이 백제갈비 대표 한국형 고급 프라이빗 룸 인테리어',
+      year: '2020.06',
+      location: 'Hanoi',
+      img: '/images/interior/portfolio/page_57.png',
+      tag: 'K-Dining Space',
+      pdfPage: 57
+    },
+    {
+      id: 18,
+      category: 'hotel_public',
+      catLabel: 'Hotel & Public Space',
+      title: 'Korean Visa Application Center (Hanoi)',
+      subtitle: '하노이 대한민국 비자신청센터 민원 창구 & 사무 공간',
+      year: '2019.04',
+      location: 'Hanoi',
+      img: '/images/interior/portfolio/page_61.png',
+      tag: 'Public & Agency',
+      pdfPage: 61
     }
   ];
 
@@ -479,38 +599,49 @@ export default function InteriorSection({ t, onOpenConsult }) {
             </div>
           </div>
 
-          {/* Projects Cards Grid */}
+          {/* Projects Cards Grid (Interactive PDF Image Match) */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProjects.map((project) => (
               <div 
                 key={project.id}
-                className="glass-card rounded-2xl overflow-hidden border border-navy-800 hover:border-gold-500/40 transition-all duration-300 hover:-translate-y-1.5 group flex flex-col justify-between shadow-lg"
+                className="glass-card rounded-2xl overflow-hidden border border-navy-800 hover:border-gold-500/50 transition-all duration-300 hover:-translate-y-1.5 group flex flex-col justify-between shadow-xl cursor-pointer"
+                onClick={() => setSelectedPdfProject(project)}
               >
                 <div>
-                  <div className="relative h-44 overflow-hidden">
+                  <div className="relative h-56 overflow-hidden bg-navy-950">
                     <img 
                       src={project.img} 
                       alt={project.title} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-black/20"></div>
                     
-                    <div className="absolute top-3 left-3">
-                      <span className="text-[10px] font-bold bg-navy-950/90 text-gold-400 px-2.5 py-1 rounded-full border border-gold-500/30">
+                    <div className="absolute top-3 left-3 flex items-center space-x-2">
+                      <span className="text-[10px] font-bold bg-navy-950/90 text-gold-400 px-2.5 py-1 rounded-full border border-gold-500/40 shadow-sm backdrop-blur-md">
                         {project.tag}
                       </span>
                     </div>
 
-                    <div className="absolute top-3 right-3 text-[10px] font-mono font-bold bg-navy-900/90 text-slate-300 px-2 py-0.5 rounded border border-navy-700">
-                      {project.year}
+                    <div className="absolute top-3 right-3 text-[10px] font-mono font-bold bg-gold-500 text-navy-950 px-2 py-0.5 rounded shadow">
+                      PDF Page {project.pdfPage}
+                    </div>
+
+                    <div className="absolute inset-0 bg-gold-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <div className="bg-navy-950/90 text-gold-300 text-xs font-bold px-3 py-1.5 rounded-full border border-gold-500/50 flex items-center space-x-1.5 shadow-lg backdrop-blur-md">
+                        <ZoomIn className="w-3.5 h-3.5" />
+                        <span>PDF 원본 실적 돋보기</span>
+                      </div>
                     </div>
                   </div>
 
                   <div className="p-5 space-y-2">
-                    <h4 className="text-lg font-extrabold text-white group-hover:text-gold-300 transition-colors">
-                      {project.title}
-                    </h4>
-                    <p className="text-xs text-slate-300">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-base font-extrabold text-white group-hover:text-gold-300 transition-colors">
+                        {project.title}
+                      </h4>
+                      <span className="text-[11px] font-mono text-gold-400/80 font-bold">{project.year}</span>
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">
                       {project.subtitle}
                     </p>
                     <p className="text-[11px] text-chrome-400 font-mono">
@@ -519,16 +650,51 @@ export default function InteriorSection({ t, onOpenConsult }) {
                   </div>
                 </div>
 
-                <div className="p-5 pt-0">
+                <div className="p-5 pt-0 flex gap-2">
                   <button
-                    onClick={() => onOpenConsult('interior')}
-                    className="w-full bg-navy-900 hover:bg-navy-800 text-gold-400 font-bold text-xs py-2.5 rounded-xl border border-navy-800 hover:border-gold-500/40 transition-colors flex justify-center items-center"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedPdfProject(project);
+                    }}
+                    className="flex-1 bg-navy-900 hover:bg-navy-800 text-gold-300 font-bold text-xs py-2.5 rounded-xl border border-navy-700 hover:border-gold-500/40 transition-colors flex justify-center items-center space-x-1"
                   >
-                    <span>유사 프로젝트 견적 문의 →</span>
+                    <Eye className="w-3.5 h-3.5" />
+                    <span>실적 원본 확대</span>
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenConsult('interior');
+                    }}
+                    className="flex-1 bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs py-2.5 rounded-xl transition-colors flex justify-center items-center"
+                  >
+                    <span>견적 문의 →</span>
                   </button>
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* PDF Profile Download Link Bar */}
+          <div className="mt-10 p-6 rounded-2xl bg-gradient-to-r from-navy-900 via-navy-850 to-navy-900 border border-gold-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="space-y-1 text-center sm:text-left">
+              <h4 className="text-sm font-extrabold text-white flex items-center justify-center sm:justify-start">
+                <Layers className="w-4 h-4 text-gold-400 mr-2" />
+                BEST WINNER VN INTERIOR FULL PROFILE PDF (전체 브로슈어)
+              </h4>
+              <p className="text-xs text-slate-300">
+                69페이지 상당의 최신 준공 실적 및 자재 스펙 카탈로그 원본 PDF 문서를 확인하실 수 있습니다.
+              </p>
+            </div>
+            <a
+              href="/docu/Interior/BEST WINNER VN PROFILE.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold text-xs px-5 py-3 rounded-xl transition-all shadow-md flex items-center space-x-2 whitespace-nowrap"
+            >
+              <Download className="w-4 h-4" />
+              <span>프로필 PDF 원본 열기 (Download)</span>
+            </a>
           </div>
         </div>
 
@@ -582,6 +748,81 @@ export default function InteriorSection({ t, onOpenConsult }) {
         </div>
 
       </div>
+
+      {/* High-Resolution PDF Portfolio Lightbox Modal */}
+      {selectedPdfProject && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+          onClick={() => setSelectedPdfProject(null)}
+        >
+          <div 
+            className="relative max-w-4xl w-full bg-navy-900 rounded-3xl border border-gold-500/50 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="p-4 sm:p-6 bg-navy-950 border-b border-navy-800 flex items-center justify-between">
+              <div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs font-bold text-gold-400 bg-gold-500/10 px-2.5 py-0.5 rounded-full border border-gold-500/30">
+                    PDF Page {selectedPdfProject.pdfPage}
+                  </span>
+                  <span className="text-xs text-slate-400 font-mono">📍 {selectedPdfProject.location}</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-extrabold text-white mt-1">
+                  {selectedPdfProject.title}
+                </h3>
+                <p className="text-xs text-slate-300">
+                  {selectedPdfProject.subtitle} ({selectedPdfProject.year})
+                </p>
+              </div>
+
+              <button
+                onClick={() => setSelectedPdfProject(null)}
+                className="p-2.5 rounded-full bg-navy-900 text-slate-400 hover:text-white hover:bg-navy-800 border border-navy-700 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Image View */}
+            <div className="p-4 overflow-y-auto flex-1 flex justify-center items-center bg-black/40">
+              <img 
+                src={selectedPdfProject.img} 
+                alt={selectedPdfProject.title}
+                className="max-w-full max-h-[65vh] object-contain rounded-xl shadow-2xl border border-navy-800"
+              />
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-4 sm:p-6 bg-navy-950 border-t border-navy-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <p className="text-xs text-slate-400">
+                📄 BEST WINNER VN PROFILE.pdf 원본 브로슈어 수록 캡처 페이지
+              </p>
+              <div className="flex space-x-3 w-full sm:w-auto">
+                <a
+                  href="/docu/Interior/BEST WINNER VN PROFILE.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 sm:flex-none bg-navy-800 hover:bg-navy-700 text-gold-300 font-bold text-xs px-4 py-2.5 rounded-xl border border-navy-700 transition-colors flex items-center justify-center space-x-1.5"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>PDF 전체 열기</span>
+                </a>
+                <button
+                  onClick={() => {
+                    const bu = 'interior';
+                    setSelectedPdfProject(null);
+                    onOpenConsult(bu);
+                  }}
+                  className="flex-1 sm:flex-none bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold text-xs px-5 py-2.5 rounded-xl transition-colors flex items-center justify-center space-x-1.5"
+                >
+                  <span>동일 타입 견적 상담 신청 →</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
