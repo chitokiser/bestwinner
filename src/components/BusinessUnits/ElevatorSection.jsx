@@ -1248,35 +1248,44 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
               {catalogPage === 2 && (
                 <div className="space-y-6">
                   <div className="space-y-1">
-                    <span className="text-xs text-gold-400 font-bold uppercase tracking-wider">PAGE 2 — CABIN DESIGN & CUSTOM FINISHES</span>
-                    <h4 className="text-xl font-black text-white">카빈 커스텀 인테리어 & 고급 스테인리스 마감</h4>
-                    <p className="text-xs text-slate-300">주택 및 건물 인테리어 콘셉트에 맞춰 선택 가능한 프리미엄 마감재 사양입니다.</p>
+                    <span className="text-xs text-gold-400 font-bold uppercase tracking-wider">PAGE 2 — REAL CABIN DESIGN & CUSTOM FINISHES</span>
+                    <h4 className="text-xl font-black text-white">실제 카빈 커스텀 인테리어 & 고급 마감 갤러리</h4>
+                    <p className="text-xs text-slate-300">베트남 하노이 3,000m² 직영 공장에서 생산되는 실제 카빈 인테리어 마감재 시공 사진입니다.</p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                    <div className="p-4 rounded-2xl bg-navy-950 border border-navy-800 space-y-2">
-                      <div className="w-8 h-8 rounded-lg bg-gold-500/20 text-gold-400 flex items-center justify-center font-bold">01</div>
-                      <h5 className="font-bold text-white">Champagne Gold Mirror</h5>
-                      <p className="text-slate-400 text-[11px]">고급 빌라/타운하우스용 골드 거울 반사 마감 및 무드 에칭 패턴</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs">
+                    <div className="glass-card rounded-2xl overflow-hidden border border-navy-800 space-y-3 p-3">
+                      <div className="h-44 rounded-xl overflow-hidden relative border border-navy-700">
+                        <img src="/images/elevator/3.png" alt="Champagne Gold Mirror" className="w-full h-full object-cover" />
+                        <span className="absolute top-2 left-2 bg-gold-500 text-navy-950 text-[10px] font-bold px-2 py-0.5 rounded">Option 01</span>
+                      </div>
+                      <h5 className="font-bold text-white text-sm">Champagne Gold Mirror</h5>
+                      <p className="text-slate-400 text-[11px] leading-relaxed">고급 빌라/타운하우스용 샴페인 골드 거울 반사 마감 및 무드 에칭 패턴</p>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-navy-950 border border-navy-800 space-y-2">
-                      <div className="w-8 h-8 rounded-lg bg-slate-500/20 text-slate-300 flex items-center justify-center font-bold">02</div>
-                      <h5 className="font-bold text-white">Stainless Hairline & Etching</h5>
-                      <p className="text-slate-400 text-[11px]">지문 방지 엠보 코팅 헤어라인 스테인리스 모던 오피스 마감</p>
+                    <div className="glass-card rounded-2xl overflow-hidden border border-navy-800 space-y-3 p-3">
+                      <div className="h-44 rounded-xl overflow-hidden relative border border-navy-700">
+                        <img src="/images/elevator/elevator_cabin.jpg" alt="Stainless Hairline & Lighting" className="w-full h-full object-cover" />
+                        <span className="absolute top-2 left-2 bg-gold-500 text-navy-950 text-[10px] font-bold px-2 py-0.5 rounded">Option 02</span>
+                      </div>
+                      <h5 className="font-bold text-white text-sm">Stainless Hairline & LED Mood</h5>
+                      <p className="text-slate-400 text-[11px] leading-relaxed">지문 방지 엠보 코팅 헤어라인 스테인리스 & 간접 천장 LED 무드 조명</p>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-navy-950 border border-navy-800 space-y-2">
-                      <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">03</div>
-                      <h5 className="font-bold text-white">Panoramic Glass & Amber LED</h5>
-                      <p className="text-slate-400 text-[11px]">270°~360° 투명 이중 접합 강화유리 및 간접 천장 조명</p>
+                    <div className="glass-card rounded-2xl overflow-hidden border border-navy-800 space-y-3 p-3">
+                      <div className="h-44 rounded-xl overflow-hidden relative border border-navy-700">
+                        <img src="/images/elevator/2.png" alt="Panoramic Glass & Villa Minimal Frame" className="w-full h-full object-cover" />
+                        <span className="absolute top-2 left-2 bg-gold-500 text-navy-950 text-[10px] font-bold px-2 py-0.5 rounded">Option 03</span>
+                      </div>
+                      <h5 className="font-bold text-white text-sm">Panoramic Glass & Minimal Frame</h5>
+                      <p className="text-slate-400 text-[11px] leading-relaxed">270°~360° 투명 이중 접합 강화유리 및 최소 프레임 라운드 인테리어</p>
                     </div>
                   </div>
 
-                  <div className="p-5 rounded-2xl bg-navy-950 border border-gold-500/30 flex items-center justify-between text-xs">
+                  <div className="p-5 rounded-2xl bg-navy-950 border border-gold-500/30 flex flex-col sm:flex-row items-center justify-between text-xs gap-3">
                     <span className="text-slate-200">💡 3D 카빈 맞춤 조율이 필요하신가요? 베트남 하노이 직영 공장에서 100% 맞춤 가공해 드립니다.</span>
-                    <button onClick={onOpenCalculator} className="bg-gold-500 text-navy-950 font-bold px-4 py-2 rounded-xl whitespace-nowrap">
-                      인테리어 상담 신청
+                    <button onClick={onOpenCalculator} className="bg-gold-500 text-navy-950 font-bold px-4 py-2 rounded-xl whitespace-nowrap shadow-gold-glow">
+                      인테리어 맞춤 상담 신청
                     </button>
                   </div>
                 </div>
