@@ -32,7 +32,7 @@ export default function ElevatorPage({ t }) {
                 BEST WINNER ELEVATOR VN
               </h1>
               <p className="text-sm text-slate-300 mt-2 max-w-2xl">
-                한국 거창승강기밸리 기술 네트워크 × LGRIS 글로벌 카탈로그 라이브러리 × 베트남 하노이 3,000m² 직영 공장 180대+ 준공 실적.
+                한국 거창승강기밸리 기술 네트워크 × BEST WINNER 글로벌 카탈로그 라이브러리 × 베트남 하노이 3,000m² 직영 공장 180대+ 준공 실적.
               </p>
             </div>
             
@@ -46,7 +46,7 @@ export default function ElevatorPage({ t }) {
                 className="bg-gold-500 hover:bg-gold-400 text-navy-950 text-xs font-extrabold px-4 py-2.5 rounded-xl flex items-center shadow-gold-glow transition-transform hover:scale-[1.02]"
               >
                 <BookOpen className="w-4 h-4 mr-1.5" />
-                <span>LGRIS 기술 라이브러리</span>
+                <span>BEST WINNER 웹 카탈로그</span>
               </button>
               <Link 
                 to="/business/parking" 

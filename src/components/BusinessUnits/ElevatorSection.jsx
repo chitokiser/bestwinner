@@ -44,6 +44,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
   const [librarySearch, setLibrarySearch] = useState('');
   const [activeCatalogModal, setActiveCatalogModal] = useState(null); // Selected product for Web Catalog Viewer
   const [catalogPage, setCatalogPage] = useState(1); // Web Catalog page (1 to 4)
+  const [zoomedImage, setZoomedImage] = useState(null); // High-res image lightbox state
 
   const elevatorHeroImages = [
     { 
@@ -101,136 +102,172 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
     { part: "유압/스프링 완충기 (Buffer)", cat: "승강로 / 피트", cycle: "15 년", role: "최하층 오버슈트 시 충격 흡수 유압 완충", priceVnd: "380.000~" }
   ];
 
-  // Official LGRIS (SUZHOU LG ELEVATOR CO., LTD.) Global Technical Library Data
+  // Official BEST WINNER Global Technical Library Data
   const lgrisLibraryData = {
     partnerInfo: {
-      name: "SUZHOU LG ELEVATOR CO., LTD. (LGRIS ELEVATOR)",
-      role: "공식 글로벌 승강기 종합 공급 거래처 (Global Alliance Partner)",
-      location: "Jiangsu Province, China (Qidu Town, Wujiang District, Suzhou)",
-      certifications: ["CE Mark", "ISO 9001 Quality", "ISO 14001 Environmental", "EN81 Elevator Safety"],
-      website: "https://www.lgriselevator.com",
-      desc: "SUZHOU LG ELEVATOR(LGRIS)는 승객용, 전망용, 가정용, 화물용 엘리베이터 및 에스컬레이터 전 제품군을 생산·수출하는 국제 승강기 전문 기업으로, BEST WINNER ELEVATOR VN과 긴밀한 파트너십을 맺고 글로벌 스펙 카탈로그 및 완제품/부품 공급 네트워크를 전개합니다."
+      name: "BEST WINNER ELEVATOR GLOBAL TECHNICAL CENTER",
+      role: "공식 글로벌 승강기 기술 스펙 & 엔지니어링 센터",
+      location: "Hanoi, Vietnam & Geochang Elevator Valley, Korea",
+      certifications: ["CE Mark", "ISO 9001 Quality", "ISO 14001 Environmental", "QCVN 32 Elevator Safety"],
+      website: "https://bestwinnervn.com",
+      desc: "BEST WINNER ELEVATOR는 승객용, 전망용, 가정용, 화물용 엘리베이터 및 에스컬레이터 전 제품군을 직접 독자 설계·제작·설치하는 승강기 전문 브랜드로, 독자적인 글로벌 스펙 카탈로그 및 베트남 하노이 3,000m² 직영 공장 생산망을 전개합니다."
     },
     products: [
       {
         id: "passenger",
-        modelCode: "LGRIS-P1000 / BEST PASSENGER",
-        title: "LGRIS Passenger Elevator Series (승객용 엘리베이터)",
+        modelCode: "BEST PASSENGER P1000",
+        title: "BEST WINNER Passenger Elevator Series (승객용 엘리베이터)",
         category: "passenger",
         catLabel: "Passenger Elevator",
         speed: "1.0 m/s ~ 4.0 m/s (고속/중속 선택)",
         capacity: "450 kg ~ 1,600 kg (6인승 ~ 21인승)",
         machineType: "MRL (기계실 없는 타입) & Small MR (소형 기계실)",
         img: "/images/elevator/1.png",
+        galleryImages: ["/images/elevator/1.png", "/images/elevator/elevator_cabin.jpg", "/images/elevator/3.png", "/images/elevator/2.png"],
         summary: "고효율 VVVF 재생 인버터 및 영구자석 동기권상기(PM Gearless Machine) 탑재 승객용 에코 솔루션",
         features: [
           "VVVF Energy Regen Inverter 탑재로 표준 운행 대비 전력 감축 최대 35%",
           "128채널 적외선 3D 멀티빔 센서 적용으로 손끼임 완전 차단 안전 구동",
           "최첨단 마이크로컴퓨터 스마트 그룹 제어 시스템 (Group Control System)",
           "초저소음 48dB(A) 수평 운행 착상 정밀 기술"
-        ],
-        downloads: [
-          { title: "LGRIS Passenger Elevator Catalog 2026.pdf", size: "4.2 MB", type: "PDF Spec" },
-          { title: "Passenger Elevator Standard Hoistway & Pit Layout.dwg", size: "8.5 MB", type: "CAD Plan" }
         ]
       },
       {
         id: "panoramic",
-        modelCode: "LGRIS-OBS 360 / BEST PANORAMIC",
-        title: "LGRIS Panoramic Glass Elevator Series (전망용 / 누드 엘리베이터)",
+        modelCode: "BEST PANORAMIC OBS360",
+        title: "BEST WINNER Panoramic Glass Elevator Series (전망용 / 누드 엘리베이터)",
         category: "panoramic",
         catLabel: "Panoramic Elevator",
         speed: "1.0 m/s ~ 2.5 m/s",
         capacity: "630 kg ~ 1,350 kg (8인승 ~ 18인승)",
         machineType: "Circular / Semi-Circular / Square 3-Side Glass",
         img: "/images/elevator/3.png",
+        galleryImages: ["/images/elevator/3.png", "/images/elevator/1.png", "/images/elevator/elevator_cabin.jpg", "/images/elevator/5.png"],
         summary: "180°~360° 파노라마 투명 이중 강화유리와 럭셔리 무드 조명이 어우러진 최고급 시그니처 전망 엘리베이터",
         features: [
           "이중 구조 안전 접합 강화유리(Laminated Safety Glass)로 100% 시야 확보",
           "건축 외관 브랜딩을 극대화하는 커스텀 RGB/LED 엠비언트 하이라이트",
           "Champagne Gold, Rose Gold Mirror Hairline 고급 스테인리스 프레임",
           "5성급 호텔, 대형 럭셔리 몰, 하이엔드 펜트하우스 시공"
-        ],
-        downloads: [
-          { title: "LGRIS Panoramic Glass Elevator Brochure.pdf", size: "5.1 MB", type: "PDF Spec" },
-          { title: "Panoramic Glass Hoistway Civil Engineering Spec.dwg", size: "9.2 MB", type: "CAD Plan" }
         ]
       },
       {
         id: "home",
-        modelCode: "LGRIS-VILLA 350 / BEST HOME",
-        title: "LGRIS Home & Villa Elevator Series (가정용 / 빌라 엘리베이터)",
+        modelCode: "BEST HOME VILLA350",
+        title: "BEST WINNER Home & Villa Elevator Series (가정용 / 빌라 엘리베이터)",
         category: "home",
         catLabel: "Home & Villa Elevator",
         speed: "0.4 m/s ~ 1.0 m/s",
         capacity: "250 kg ~ 400 kg (3인승 ~ 5인승)",
         machineType: "Ultra-Low Pit (최소 300mm PIT & Single Phase 220V)",
         img: "/images/elevator/2.png",
+        galleryImages: ["/images/elevator/2.png", "/images/elevator/1.png", "/images/elevator/elevator_cabin.jpg", "/images/elevator/4.png"],
         summary: "바닥 굴착이 어려운 기존 주택 리모델링 및 타운하우스에 최적화된 최소 PIT & 가정용 단상 220V 전원 승강기",
         features: [
           "최소 PIT 깊이 300mm / 오버헤드 2800mm 최첨단 컴팩트 설계",
           "별도 고압전력 증설 없이 가정용 단상 220V 전원으로 즉시 운행",
           "정전 시 최우선 층 자동 이송 및 문열림 비상구출운전(ARD) 기본 탑재",
           "무소음 벨트 밸런서 및 기어리스 PM 동기모터 적용"
-        ],
-        downloads: [
-          { title: "LGRIS Villa & Home Elevator Specification.pdf", size: "3.8 MB", type: "PDF Spec" },
-          { title: "Villa Home Elevator Retrofit Civil Drawings.dwg", size: "6.7 MB", type: "CAD Plan" }
         ]
       },
       {
         id: "freight",
-        modelCode: "LGRIS-CARGO 3000 / BEST INDUSTRIAL",
-        title: "LGRIS Heavy Cargo & Industrial Elevator Series (화물 / 공장 승강기)",
+        modelCode: "BEST INDUSTRIAL CARGO3000",
+        title: "BEST WINNER Heavy Cargo & Industrial Elevator Series (화물 / 공장 승강기)",
         category: "freight",
         catLabel: "Freight Elevator",
         speed: "0.5 m/s ~ 1.0 m/s",
         capacity: "1,000 kg ~ 5,000 kg+ (1톤 ~ 5톤 대형 중화물)",
         machineType: "Heavy Duty Side/Center Opening & Vertical Bi-parting Door",
         img: "/images/elevator/4.png",
+        galleryImages: ["/images/elevator/4.png", "/images/elevator/5.png", "/images/elevator/1.png", "/images/elevator/3.png"],
         summary: "지게차 직접 진입을 견디는 고강도 바닥 프레임 및 베트남 KCN 공단 특화 방청 갤버나이즈 화물 승강기",
         features: [
           "지게차(Forklift) 진입 충격을 견디는 강철 체커 플레이트 바닥",
           "고습도·진동·부식 환경에 특화된 갈바나이즈드 세이프티 가드",
           "인버터 인칭(Inching) 착상 제어로 화물 입출고 시 0.1mm 수평 유지",
-          "LG전자 하이퐁 공장, 드림텍 박닌 공장 대형 산업단지 레퍼런스"
-        ],
-        downloads: [
-          { title: "LGRIS Industrial Heavy Cargo Catalog.pdf", size: "6.0 MB", type: "PDF Spec" },
-          { title: "Heavy Cargo Hoistway Structural Loading Drawings.dwg", size: "11.4 MB", type: "CAD Plan" }
+          "하노이 및 주요 산업단지 공장 대형 중화물 시공 레퍼런스"
         ]
       },
       {
         id: "escalator",
-        modelCode: "LGRIS-ESC 35° / LGRIS-WALK 12°",
-        title: "LGRIS Commercial Escalator & Moving Sidewalk Series (에스컬레이터 & 무빙워크)",
+        modelCode: "BEST ESCALATOR ESC35",
+        title: "BEST WINNER Commercial Escalator & Moving Sidewalk Series (에스컬레이터 & 무빙워크)",
         category: "escalator",
         catLabel: "Escalator & Moving Sidewalk",
         speed: "0.5 m/s (Smart Variable Speed)",
         capacity: "9,000 ~ 13,500 passengers / hour",
         machineType: "Escalator 30°/35° & Moving Sidewalk 10°/12°",
         img: "/images/elevator/5.png",
+        galleryImages: ["/images/elevator/5.png", "/images/elevator/4.png", "/images/elevator/1.png", "/images/elevator/2.png"],
         summary: "대형 마트, 공항, 지하철, 복합 쇼핑몰을 위한 VVVF 스마트 정지/출발 자동 에너지 절감 에스컬레이터",
         features: [
           "승객 미탑승 시 대기 모드로 자동 변속되는 스마트 오토 센서",
           "슬림형 고강도 트러스 프레임 & LED 안티클립 핸드레일",
           "스텝 빗판 손끼임 방지 멀티 세이프티 클러치 브레이크",
           "IP55 실내외 옥외형 방수/방진 스텝 조립체"
-        ],
-        downloads: [
-          { title: "LGRIS Escalator & Moving Sidewalk Technical Specs.pdf", size: "7.5 MB", type: "PDF Spec" },
-          { title: "Commercial Escalator Installation Structural Layout.dwg", size: "10.1 MB", type: "CAD Plan" }
         ]
       }
     ],
     documents: [
-      { id: 1, title: "BEST WINNER × LGRIS 2026 Global Elevator Catalog", size: "12.8 MB", type: "PDF Spec", version: "v2026.1", tag: "공식 종합 카탈로그" },
+      { id: 1, title: "BEST WINNER 2026 Global Elevator Technical Catalog", size: "12.8 MB", type: "PDF Spec", version: "v2026.1", tag: "공식 종합 카탈로그" },
       { id: 2, title: "QCVN 32:2018/BLDTBXH National Technical Regulation on Elevator Safety", size: "2.4 MB", type: "PDF Standard", version: "QCVN 32", tag: "베트남 안전 규격" },
       { id: 3, title: "Standard Villa Hoistway & Pit Civil CAD Drawings Pack", size: "15.3 MB", type: "CAD (.DWG)", version: "CAD v3.0", tag: "건축 도면 팩" },
-      { id: 4, title: "LGRIS ARD Automatic Emergency Rescue Device Manual & Wiring", size: "3.1 MB", type: "PDF Manual", version: "v1.4", tag: "비상구출 매뉴얼" },
+      { id: 4, title: "BEST WINNER ARD Automatic Emergency Rescue Device Manual & Wiring", size: "3.1 MB", type: "PDF Manual", version: "v1.4", tag: "비상구출 매뉴얼" },
       { id: 5, title: "Elevator Component Maintenance Lifecycle Matrix (Standard Replacement)", size: "1.8 MB", type: "PDF Matrix", version: "v2.0", tag: "유지보수 매뉴얼" }
     ]
   };
+
+  const realGalleryPhotos = [
+    {
+      id: 1,
+      title: "BEST HOME 350 — Champagne Gold Mirror Cabin",
+      category: "승객용 / 빌라 카빈",
+      desc: "베트남 하노이 고급 빌라 현장에 시공된 샴페인 골드 미러 & 간접 천장 조명 카빈",
+      src: "/images/elevator/1.png",
+      tag: "REAL CABIN INTERIOR"
+    },
+    {
+      id: 2,
+      title: "Stainless Hairline & LED Direct Mood Ceiling",
+      category: "실제 하동 직영 공장 생산 시공",
+      desc: "지문 방지 엠보 스테인리스 헤어라인 마감 및 초슬림 LED 무드 천장 조명",
+      src: "/images/elevator/elevator_cabin.jpg",
+      tag: "FACTORY PRODUCTION"
+    },
+    {
+      id: 3,
+      title: "BEST PANORAMIC — 360° Round Glass Cabin",
+      category: "전망용 / 누드 엘리베이터",
+      desc: "이중 접합 강화유리 360° 파노라마 뷰 및 미니멀 프레임 가공",
+      src: "/images/elevator/3.png",
+      tag: "LUXURY PANORAMIC"
+    },
+    {
+      id: 4,
+      title: "Minimal PIT Retrofit Villa Elevator",
+      category: "기존 주택 리모델링",
+      desc: "최소 300mm PIT 조건에 맞춘 단상 220V 컴팩트 홈 승강기 카빈",
+      src: "/images/elevator/2.png",
+      tag: "RETROFIT VILLA"
+    },
+    {
+      id: 5,
+      title: "BEST INDUSTRIAL — Heavy Freight Cargo Elevator",
+      category: "화물 / 공장 승강기",
+      desc: "지게차 직접 진입이 가능한 5톤급 바닥 체커 플레이트 및 강철 도어",
+      src: "/images/elevator/4.png",
+      tag: "HEAVY INDUSTRIAL"
+    },
+    {
+      id: 6,
+      title: "Commercial Escalator & Intelligent Sensor",
+      category: "에스컬레이터 & 무빙워크",
+      desc: "대형 상업 시설 오토 스타트/스톱 스마트 VVVF 구동 에스컬레이터",
+      src: "/images/elevator/5.png",
+      tag: "COMMERCIAL ESCALATOR"
+    }
+  ];
 
   // Comprehensive Elevator Model Data
   const elevatorData = {
@@ -456,7 +493,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
         <div className="flex space-x-2 border-b border-navy-800 pb-3 mb-10 overflow-x-auto">
           {[
             { id: 'overview', name: '핵심 라인업 & 사양', icon: Layers },
-            { id: 'library', name: '📚 LGRIS 엘리베이터 기술 라이브러리 & 카탈로그', icon: BookOpen },
+            { id: 'library', name: '📚 BEST WINNER 승강기 웹 카탈로그 & 기술 센터', icon: BookOpen },
             { id: 'parts', name: '부품 표준 교체주기 & 유지관리 (QCVN)', icon: FileSpreadsheet },
             { id: 'alliance', name: '한국 거창승강기밸리 얼라이언스', icon: Building2 },
           ].map((tab) => {
@@ -633,6 +670,57 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                 </div>
               );
             })()}
+
+            {/* Real Photos Installation & Cabin Gallery */}
+            <div className="glass-card p-6 sm:p-8 rounded-3xl border border-navy-700 space-y-6">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-navy-800 pb-4">
+                <div>
+                  <span className="text-xs font-mono font-bold text-gold-400 uppercase tracking-widest block">
+                    BEST WINNER REAL PHOTO GALLERY
+                  </span>
+                  <h4 className="text-xl sm:text-2xl font-black text-white flex items-center space-x-2">
+                    <Sparkles className="w-5 h-5 text-gold-400" />
+                    <span>📸 BEST WINNER 실제 시공 & 카빈 갤러리</span>
+                  </h4>
+                  <p className="text-xs text-slate-300 mt-1">
+                    베트남 하노이 3,000m² 직영 공장 및 180대+ 준공 현장의 실제 카빈 인테리어 사진입니다. (이미지 클릭 시 고화질 크게보기)
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {realGalleryPhotos.map((photo) => (
+                  <div 
+                    key={photo.id}
+                    onClick={() => setZoomedImage(photo)}
+                    className="glass-card rounded-2xl overflow-hidden border border-navy-800 hover:border-gold-500/50 transition-all duration-300 group cursor-pointer space-y-3 p-3 flex flex-col justify-between"
+                  >
+                    <div className="h-52 rounded-xl overflow-hidden relative border border-navy-700 bg-navy-950">
+                      <img 
+                        src={photo.src} 
+                        alt={photo.title} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-navy-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span className="bg-gold-500 text-navy-950 font-black px-3.5 py-1.5 rounded-xl text-xs flex items-center space-x-1 shadow-gold-glow">
+                          <Maximize2 className="w-3.5 h-3.5" />
+                          <span>고화질 크게보기</span>
+                        </span>
+                      </div>
+                      <span className="absolute top-2 left-2 bg-navy-950/80 backdrop-blur-md text-gold-400 text-[10px] font-mono font-bold px-2.5 py-1 rounded-md border border-gold-500/30">
+                        {photo.tag}
+                      </span>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="text-[10px] text-gold-400 font-bold block">{photo.category}</span>
+                      <h5 className="font-bold text-white text-sm group-hover:text-gold-300 transition-colors">{photo.title}</h5>
+                      <p className="text-slate-400 text-[11px] leading-relaxed">{photo.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
@@ -645,7 +733,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                 <div className="space-y-2">
                   <div className="inline-flex items-center space-x-2 bg-gold-500/20 text-gold-300 px-3.5 py-1 rounded-full text-xs font-bold border border-gold-500/30">
                     <BookOpen className="w-3.5 h-3.5" />
-                    <span>LGRIS (SUZHOU LG ELEVATOR) × BEST WINNER VN</span>
+                    <span>BEST WINNER ELEVATOR GLOBAL TECHNICAL CENTER</span>
                   </div>
                   <h3 className="text-2xl sm:text-3xl font-black text-white">
                     {lgrisLibraryData.partnerInfo.name}
@@ -685,7 +773,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
               <div className="space-y-3 max-w-2xl">
                 <span className="text-xs font-mono text-gold-400 font-bold uppercase tracking-wider block">INTERACTIVE WEB CATALOG VIEWER</span>
                 <h4 className="text-2xl font-black text-white">
-                  LGRIS 종합 승강기 3D & 건축 스펙 웹 카탈로그 (Flipbook)
+                  BEST WINNER 종합 승강기 3D & 건축 스펙 웹 카탈로그 (Flipbook)
                 </h4>
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                   별도의 PDF 뷰어 프로그램 없이 브라우저에서 승객용, 전망용, 가정용, 화물용 승강기의 **카빈 인테리어, 승강로/피트 건축 도면, 정전 구출(ARD) 회로도**를 고화질 인터랙티브 카탈로그로 바로 감상하실 수 있습니다.
@@ -879,7 +967,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                 <div>
                   <h4 className="text-xl font-bold text-white flex items-center space-x-2">
                     <FolderDown className="w-5 h-5 text-gold-400" />
-                    <span>LGRIS 공식 통합 기술 자료실 (Download Center)</span>
+                    <span>BEST WINNER 공식 통합 기술 자료실 (Technical Center)</span>
                   </h4>
                   <p className="text-xs text-slate-300 mt-1">
                     베트남 승강기 국가 안전 규정(QCVN 32), 건축 승강로 표준 CAD 도면, 비상 구출 회로도 및 종합 카탈로그
@@ -1171,7 +1259,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent"></div>
                     <div className="absolute bottom-4 left-4 right-4 bg-navy-950/80 backdrop-blur-md p-3 rounded-xl border border-gold-500/30">
-                      <span className="text-[10px] text-gold-400 font-mono block">SUZHOU LG ELEVATOR (LGRIS) ALLIANCE</span>
+                      <span className="text-[10px] text-gold-400 font-mono block">BEST WINNER ELEVATOR SERIES</span>
                       <span className="text-sm font-bold text-white block">{activeCatalogModal.modelCode}</span>
                     </div>
                   </div>
@@ -1220,39 +1308,36 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                   <div className="space-y-1">
                     <span className="text-xs text-gold-400 font-bold uppercase tracking-wider">PAGE 2 — REAL CABIN DESIGN & CUSTOM FINISHES</span>
                     <h4 className="text-xl font-black text-white">실제 카빈 커스텀 인테리어 & 고급 마감 갤러리</h4>
-                    <p className="text-xs text-slate-300">베트남 하노이 3,000m² 직영 공장에서 생산되는 실제 카빈 인테리어 마감재 시공 사진입니다.</p>
+                    <p className="text-xs text-slate-300">베트남 하노이 3,000m² 직영 공장에서 생산되는 실제 카빈 인테리어 마감재 시공 사진입니다. (사진 클릭 시 고화질 크게보기)</p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs">
-                    <div className="glass-card rounded-2xl overflow-hidden border border-navy-800 space-y-3 p-3">
-                      <div className="h-44 rounded-xl overflow-hidden relative border border-navy-700">
-                        <img src="/images/elevator/3.png" alt="Champagne Gold Mirror" className="w-full h-full object-cover" />
-                        <span className="absolute top-2 left-2 bg-gold-500 text-navy-950 text-[10px] font-bold px-2 py-0.5 rounded">Option 01</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+                    {realGalleryPhotos.map((item, idx) => (
+                      <div 
+                        key={item.id}
+                        onClick={() => setZoomedImage(item)}
+                        className="glass-card rounded-2xl overflow-hidden border border-navy-800 hover:border-gold-500/40 transition-all p-3 space-y-2.5 group cursor-pointer"
+                      >
+                        <div className="h-40 rounded-xl overflow-hidden relative border border-navy-700 bg-navy-950">
+                          <img src={item.src} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <span className="absolute top-2 left-2 bg-gold-500 text-navy-950 text-[10px] font-bold px-2 py-0.5 rounded">Option 0{idx + 1}</span>
+                          <div className="absolute inset-0 bg-navy-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span className="bg-gold-500 text-navy-950 font-black px-3 py-1 rounded-lg text-[11px] flex items-center space-x-1 shadow-gold-glow">
+                              <Maximize2 className="w-3 h-3" />
+                              <span>크게보기</span>
+                            </span>
+                          </div>
+                        </div>
+                        <div>
+                          <span className="text-[10px] text-gold-400 font-mono block">{item.tag}</span>
+                          <h5 className="font-bold text-white text-xs group-hover:text-gold-300 transition-colors">{item.title}</h5>
+                          <p className="text-slate-400 text-[10px] leading-relaxed line-clamp-2 mt-0.5">{item.desc}</p>
+                        </div>
                       </div>
-                      <h5 className="font-bold text-white text-sm">Champagne Gold Mirror</h5>
-                      <p className="text-slate-400 text-[11px] leading-relaxed">고급 빌라/타운하우스용 샴페인 골드 거울 반사 마감 및 무드 에칭 패턴</p>
-                    </div>
-
-                    <div className="glass-card rounded-2xl overflow-hidden border border-navy-800 space-y-3 p-3">
-                      <div className="h-44 rounded-xl overflow-hidden relative border border-navy-700">
-                        <img src="/images/elevator/elevator_cabin.jpg" alt="Stainless Hairline & Lighting" className="w-full h-full object-cover" />
-                        <span className="absolute top-2 left-2 bg-gold-500 text-navy-950 text-[10px] font-bold px-2 py-0.5 rounded">Option 02</span>
-                      </div>
-                      <h5 className="font-bold text-white text-sm">Stainless Hairline & LED Mood</h5>
-                      <p className="text-slate-400 text-[11px] leading-relaxed">지문 방지 엠보 코팅 헤어라인 스테인리스 & 간접 천장 LED 무드 조명</p>
-                    </div>
-
-                    <div className="glass-card rounded-2xl overflow-hidden border border-navy-800 space-y-3 p-3">
-                      <div className="h-44 rounded-xl overflow-hidden relative border border-navy-700">
-                        <img src="/images/elevator/2.png" alt="Panoramic Glass & Villa Minimal Frame" className="w-full h-full object-cover" />
-                        <span className="absolute top-2 left-2 bg-gold-500 text-navy-950 text-[10px] font-bold px-2 py-0.5 rounded">Option 03</span>
-                      </div>
-                      <h5 className="font-bold text-white text-sm">Panoramic Glass & Minimal Frame</h5>
-                      <p className="text-slate-400 text-[11px] leading-relaxed">270°~360° 투명 이중 접합 강화유리 및 최소 프레임 라운드 인테리어</p>
-                    </div>
+                    ))}
                   </div>
 
-                  <div className="p-5 rounded-2xl bg-navy-950 border border-gold-500/30 flex flex-col sm:flex-row items-center justify-between text-xs gap-3">
+                  <div className="p-4 rounded-2xl bg-navy-950 border border-gold-500/30 flex flex-col sm:flex-row items-center justify-between text-xs gap-3">
                     <span className="text-slate-200">💡 3D 카빈 맞춤 조율이 필요하신가요? 베트남 하노이 직영 공장에서 100% 맞춤 가공해 드립니다.</span>
                     <button onClick={onOpenCalculator} className="bg-gold-500 text-navy-950 font-bold px-4 py-2 rounded-xl whitespace-nowrap shadow-gold-glow">
                       인테리어 맞춤 상담 신청
@@ -1430,6 +1515,48 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
               </div>
             </div>
 
+          </div>
+        </div>
+      )}
+
+      {/* Lightbox / High-Res Image Fullscreen Viewer Modal */}
+      {zoomedImage && (
+        <div 
+          className="fixed inset-0 z-[60] bg-navy-950/90 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in"
+          onClick={() => setZoomedImage(null)}
+        >
+          <div 
+            className="relative max-w-4xl w-full bg-navy-900 border border-gold-500/40 rounded-3xl overflow-hidden shadow-2xl space-y-4 p-4 sm:p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-navy-800 pb-3">
+              <div>
+                <span className="text-[10px] font-mono text-gold-400 font-bold uppercase tracking-wider block">
+                  BEST WINNER REAL PHOTO HIGH-RES VIEW
+                </span>
+                <h4 className="text-base sm:text-lg font-black text-white">{zoomedImage.title || '실제 시공 사진 고화질 크게보기'}</h4>
+              </div>
+              <button
+                onClick={() => setZoomedImage(null)}
+                className="p-2 rounded-xl bg-navy-800 hover:bg-navy-700 text-slate-400 hover:text-white border border-navy-700 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="relative max-h-[65vh] rounded-2xl overflow-hidden border border-navy-800 bg-black flex items-center justify-center">
+              <img 
+                src={zoomedImage.src || zoomedImage} 
+                alt="High-Res Zoom View" 
+                className="max-h-[65vh] w-auto object-contain mx-auto"
+              />
+            </div>
+
+            {zoomedImage.desc && (
+              <p className="text-xs text-slate-300 bg-navy-950 p-3.5 rounded-xl border border-navy-800">
+                {zoomedImage.desc}
+              </p>
+            )}
           </div>
         </div>
       )}
