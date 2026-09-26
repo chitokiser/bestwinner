@@ -33,7 +33,12 @@ import {
   Check,
   Eye,
   X,
-  Maximize2
+  Maximize2,
+  Download,
+  Filter,
+  Grid,
+  Image as ImageIcon,
+  FileDown
 } from 'lucide-react';
 
 export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) {
@@ -45,6 +50,9 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
   const [activeCatalogModal, setActiveCatalogModal] = useState(null); // Selected product for Web Catalog Viewer
   const [catalogPage, setCatalogPage] = useState(1); // Web Catalog page (1 to 4)
   const [zoomedImage, setZoomedImage] = useState(null); // High-res image lightbox state
+  const [galleryFilter, setGalleryFilter] = useState('all'); // Gallery filter category
+  const [pdfViewerOpen, setPdfViewerOpen] = useState(false); // Official 14-page presentation catalog viewer
+  const [pdfCurrentPage, setPdfCurrentPage] = useState(1);
 
   const elevatorHeroImages = [
     { 
@@ -218,54 +226,216 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
     ]
   };
 
+  // Official 14-Page Catalog Presentation Pages List
+  const officialPresentationPages = [
+    { page: 1, title: "표지 및 비전", subtitle: "Korean Tech × Vietnam Production", src: "/images/elevator/gallery/catalog_page_1.webp" },
+    { page: 2, title: "하노이 하동 3,000m² 직영 공장", subtitle: "연간 250대+ 카빈 조립 및 기술진 17명", src: "/images/elevator/gallery/catalog_page_2.webp" },
+    { page: 3, title: "거창 승강기 밸리 협력 & 인증", subtitle: "베트남 QCVN 32, CE, ISO 9001 국가 안전 인증", src: "/images/elevator/gallery/catalog_page_3.webp" },
+    { page: 4, title: "플래그십 BEST HOME 350", subtitle: "350kg / 단상 220V / 최소 300mm PIT 리모델링", src: "/images/elevator/gallery/catalog_page_4.webp" },
+    { page: 5, title: "승객용 & 상업용 승강기 라인업", subtitle: "450kg ~ 1600kg VVVF 고속 승객용 라인업", src: "/images/elevator/gallery/catalog_page_5.webp" },
+    { page: 6, title: "전망용 360° 파노라마 승강기", subtitle: "이중 안전 접합 강화유리 & 골드 미니멀 프레임", src: "/images/elevator/gallery/catalog_page_6.webp" },
+    { page: 7, title: "BEST-GOLD-01 샴페인 골드 미러", subtitle: "티타늄 샴페인 골드 거울 마감 & 패턴 에칭", src: "/images/elevator/gallery/catalog_page_7.webp" },
+    { page: 8, title: "BEST-SILVER-02 스테인리스 헤어라인", subtitle: "지문 방지 AFP 코팅 모던 인테리어 마감", src: "/images/elevator/gallery/catalog_page_8.webp" },
+    { page: 9, title: "BEST-BLACK-03 블랙 티타늄 & 로즈골드", subtitle: "블랙 티타늄 미러 + 로즈골드 레이저 패턴", src: "/images/elevator/gallery/catalog_page_9.webp" },
+    { page: 10, title: "천장 조명 & 바닥 마감 옵션", subtitle: "LED 레이저 타공 천장 & PVC 마블/화강석 바닥", src: "/images/elevator/gallery/catalog_page_10.webp" },
+    { page: 11, title: "화물 승강기 & 에스컬레이터", subtitle: "1톤~5톤 강철 체커 바닥 & 오토 에스컬레이터", src: "/images/elevator/gallery/catalog_page_11.webp" },
+    { page: 12, title: "하노이 빌라 실제 준공 갤러리 1", subtitle: "하노이 서호(Tay Ho), 미딩(My Dinh) 빌라 시공", src: "/images/elevator/gallery/catalog_page_12.webp" },
+    { page: 13, title: "하노이 상업/주택 준공 갤러리 2", subtitle: "하노이 근교 6층 타운하우스 300mm PIT 시공", src: "/images/elevator/gallery/catalog_page_13.webp" },
+    { page: 14, title: "스마트 A/S 및 무상 보증 시스템", subtitle: "1년 무상 직영 보증 & 24/7 원격 긴급 출동", src: "/images/elevator/gallery/catalog_page_14.webp" }
+  ];
+
   const realGalleryPhotos = [
     {
       id: 1,
-      title: "BEST HOME 350 — Champagne Gold Mirror Cabin",
-      category: "승객용 / 빌라 카빈",
-      desc: "베트남 하노이 고급 빌라 현장에 시공된 샴페인 골드 미러 & 간접 천장 조명 카빈",
-      src: "/images/elevator/1.png",
-      tag: "REAL CABIN INTERIOR"
+      title: "BEST-GOLD-01 — 샴페인 골드 미러 & 에칭 카빈",
+      category: "카빈 인테리어 / 빌라 플래그십",
+      filterCategory: "cabin",
+      desc: "공식 카다로그 p.7 / 티타늄 샴페인 골드 거울 마감 + 미세 지문 방지 패턴 에칭 & LED 간접 무드 천장 조명",
+      src: "/images/elevator/gallery/catalog_page_7.webp",
+      slidePage: 7,
+      tag: "CATALOG PAGE 7",
+      details: [
+        { label: "재질 마감", val: "Titanium Champagne Gold Mirror & Etching" },
+        { label: "천장 조명", val: "Direct LED + Indirect Mood LED" },
+        { label: "바닥 마감", val: "High-grade PVC Marble / Real Granite" },
+        { label: "COP 제어반", val: "Full-height Touch Digital COP Panel" }
+      ]
     },
     {
       id: 2,
-      title: "Stainless Hairline & LED Direct Mood Ceiling",
-      category: "실제 하동 직영 공장 생산 시공",
-      desc: "지문 방지 엠보 스테인리스 헤어라인 마감 및 초슬림 LED 무드 천장 조명",
-      src: "/images/elevator/elevator_cabin.jpg",
-      tag: "FACTORY PRODUCTION"
+      title: "BEST-SILVER-02 — 스테인리스 헤어라인 & AFP 지문방지",
+      category: "카빈 인테리어 / 모던 스탠다드",
+      filterCategory: "cabin",
+      desc: "공식 카다로그 p.8 / 지문 방지 코팅(AFP) 고내구성 스테인리스 헤어라인 & 초슬림 LED 레이저 타공 천장",
+      src: "/images/elevator/gallery/catalog_page_8.webp",
+      slidePage: 8,
+      tag: "CATALOG PAGE 8",
+      details: [
+        { label: "재질 마감", val: "Anti-Fingerprint (AFP) Stainless Hairline" },
+        { label: "천장 조명", val: "Ultra-slim Laser Cut Direct LED Panel" },
+        { label: "바닥 마감", val: "Durable PVC Tile / Non-slip Checker Plate" },
+        { label: "COP 제어반", val: "Stainless Mechanical Push Button COP" }
+      ]
     },
     {
       id: 3,
-      title: "BEST PANORAMIC — 360° Round Glass Cabin",
-      category: "전망용 / 누드 엘리베이터",
-      desc: "이중 접합 강화유리 360° 파노라마 뷰 및 미니멀 프레임 가공",
-      src: "/images/elevator/3.png",
-      tag: "LUXURY PANORAMIC"
+      title: "BEST-BLACK-03 — 블랙 티타늄 & 로즈골드 레이저 에칭",
+      category: "카빈 인테리어 / 로열 프리미엄",
+      filterCategory: "cabin",
+      desc: "공식 카다로그 p.9 / 블랙 티타늄 미러 + 로즈골드 레이저 에칭 패턴 & 아늑한 무드 브라운 조명",
+      src: "/images/elevator/gallery/catalog_page_9.webp",
+      slidePage: 9,
+      tag: "CATALOG PAGE 9",
+      details: [
+        { label: "재질 마감", val: "Black Titanium Mirror + Rose Gold Laser" },
+        { label: "천장 조명", val: "Warm Ambient Mood LED Ceiling Panel" },
+        { label: "바닥 마감", val: "Custom Patterned Natural Granite Floor" },
+        { label: "COP 제어반", val: "Black Mirror Touch COP & Voice Guide" }
+      ]
     },
     {
       id: 4,
-      title: "Minimal PIT Retrofit Villa Elevator",
-      category: "기존 주택 리모델링",
-      desc: "최소 300mm PIT 조건에 맞춘 단상 220V 컴팩트 홈 승강기 카빈",
-      src: "/images/elevator/2.png",
-      tag: "RETROFIT VILLA"
+      title: "BEST PANORAMIC — 360° 파노라마 투명 글래스 승강기",
+      category: "전망용 / 누드 엘리베이터",
+      filterCategory: "cabin",
+      desc: "공식 카다로그 p.6 / 이중 구조 안전 접합 강화유리 360° 파노라마 뷰 및 샴페인 골드 미니멀 프레임",
+      src: "/images/elevator/gallery/catalog_page_6.webp",
+      slidePage: 6,
+      tag: "CATALOG PAGE 6",
+      details: [
+        { label: "유리 구조", val: "3-Side Laminated Tempered Safety Glass" },
+        { label: "조명 효과", val: "Circular RGB/LED Ambient Soft Halo Light" },
+        { label: "바닥 마감", val: "Circular Granite / Marble Mosaic Floor" },
+        { label: "적용 장소", val: "5-Star Hotels, Luxury Vlllas & Penthouse" }
+      ]
     },
     {
       id: 5,
-      title: "BEST INDUSTRIAL — Heavy Freight Cargo Elevator",
-      category: "화물 / 공장 승강기",
-      desc: "지게차 직접 진입이 가능한 5톤급 바닥 체커 플레이트 및 강철 도어",
-      src: "/images/elevator/4.png",
-      tag: "HEAVY INDUSTRIAL"
+      title: "하노이 하동 3,000m² 직영 공장 카빈 생산 & 검수 현장",
+      category: "베트남 현지 공장 / 직영 제조",
+      filterCategory: "factory",
+      desc: "공식 카다로그 p.2 / 연간 250대+ 카빈 구조체 레이저 가공, 접합 및 17인 기술진 엄격 출하 전 검수",
+      src: "/images/elevator/gallery/catalog_page_2.webp",
+      slidePage: 2,
+      tag: "HANOI FACTORY",
+      details: [
+        { label: "공장 규모", val: "Hanoi Ha Dong 3,000m² Direct Plant" },
+        { label: "생산 능력", val: "250+ Cabins Annual Assembly & Cutting" },
+        { label: "기술 인력", val: "17 Engineers (2 Korean Chiefs + 15 Local)" },
+        { label: "품질 관리", val: "Pre-shipment 48-point Test Run" }
+      ]
     },
     {
       id: 6,
-      title: "Commercial Escalator & Intelligent Sensor",
-      category: "에스컬레이터 & 무빙워크",
-      desc: "대형 상업 시설 오토 스타트/스톱 스마트 VVVF 구동 에스컬레이터",
-      src: "/images/elevator/5.png",
-      tag: "COMMERCIAL ESCALATOR"
+      title: "거창 승강기 밸리 협력 & 베트남 QCVN 32 국가 인증",
+      category: "기술 협력 / 안전 인증",
+      filterCategory: "factory",
+      desc: "공식 카다로그 p.3 / 한국 거창승강기밸리(조은, 모든, 메이저텍 등) 기술 네트워크 및 베트남 국가 규정 충족",
+      src: "/images/elevator/gallery/catalog_page_3.webp",
+      slidePage: 3,
+      tag: "CERTIFICATION & ALLIANCE",
+      details: [
+        { label: "기술 제휴", val: "JOEUN ELEVATOR & Geochang Cluster" },
+        { label: "국가 규정", val: "QCVN 32:2018/BLDTBXH Safety Certified" },
+        { label: "핵심 부품", val: "Korean PM Traction Machine & Safety Gear" },
+        { label: "무상 보증", val: "1-Year Direct Factory Warranty" }
+      ]
+    },
+    {
+      id: 7,
+      title: "BEST HOME 350 — 베트남 빌라/타운하우스 표준형",
+      category: "라인업 & 스펙 / 플래그십",
+      filterCategory: "lineup",
+      desc: "공식 카다로그 p.4 / 350kg (4-5인승), 단상 220V, 최소 300mm PIT 깊이 구동으로 리모델링 완벽 시공",
+      src: "/images/elevator/gallery/catalog_page_4.webp",
+      slidePage: 4,
+      tag: "CATALOG PAGE 4",
+      details: [
+        { label: "적재 하중", val: "350 kg (4-5 Persons)" },
+        { label: "운행 층수", val: "3 to 7 Stops (Max 30m Rise)" },
+        { label: "전원 사양", val: "Single Phase 220V Home Power" },
+        { label: "PIT 깊이", val: "Min 300mm Ultra-Low Pit Retrofit" }
+      ]
+    },
+    {
+      id: 8,
+      title: "천장 LED 조명 패턴 & 고급 PVC 마블/화강석 바닥 옵션",
+      category: "인테리어 옵션 / 천장 & 바닥",
+      filterCategory: "options",
+      desc: "공식 카다로그 p.10 / 레이저 타공 LED 천장 조명, 내마모성 PVC 마블 타일 및 천연 화강석 바닥 선택",
+      src: "/images/elevator/gallery/catalog_page_10.webp",
+      slidePage: 10,
+      tag: "CATALOG PAGE 10",
+      details: [
+        { label: "천장 옵션", val: "Direct / Indirect Laser Cut LED Ceiling" },
+        { label: "핸드레일", val: "Champagne Gold / Stainless Round Rail" },
+        { label: "바닥 마감", val: "Marble Pattern PVC / Natural Granite" },
+        { label: "버튼 패널", val: "Vandal-resistant LED Push Buttons" }
+      ]
+    },
+    {
+      id: 9,
+      title: "5톤급 Heavy Cargo 화물 승강기 & 지게차 직접 진입 구조",
+      category: "화물 & 공장 / 산업용",
+      filterCategory: "lineup",
+      desc: "공식 카다로그 p.11 / 지게차 진입 충격 완화 강철 체커 플레이트 바닥 & 1톤~5톤 대용량 화물승강기",
+      src: "/images/elevator/gallery/catalog_page_11.webp",
+      slidePage: 11,
+      tag: "CATALOG PAGE 11",
+      details: [
+        { label: "화물 적재", val: "1,000 kg ~ 5,000 kg Heavy Load" },
+        { label: "도어 방식", val: "Heavy Duty Bi-parting & Side Open" },
+        { label: "바닥 강도", val: "Reinforced Steel Checker Plate" },
+        { label: "제어 방식", val: "High-torque VVVF Inverter Control" }
+      ]
+    },
+    {
+      id: 10,
+      title: "하노이 서호(Tây Hồ) 고급 빌라 현장 실제 시공 갤러리",
+      category: "실제 시공 현장 / 하노이 빌라",
+      filterCategory: "sites",
+      desc: "공식 카다로그 p.12 / 샴페인 골드 미러 카빈 및 층별 인테리어 도어 프레임 마감 준공 현장",
+      src: "/images/elevator/gallery/catalog_page_12.webp",
+      slidePage: 12,
+      tag: "TAY HO VILLA SITE",
+      details: [
+        { label: "시공 위치", val: "Tay Ho District, Hanoi, Vietnam" },
+        { label: "주택 유형", val: "5-Story Luxury Villa Residence" },
+        { label: "적용 모델", val: "BEST HOME 350 Gold Mirror Custom" },
+        { label: "운용 상태", val: "Completed & Operating (Active Maintenance)" }
+      ]
+    },
+    {
+      id: 11,
+      title: "하노이 미딩(Mỹ Đình) 기존 6층 타운하우스 300mm PIT 시공",
+      category: "실제 시공 현장 / 주택 리모델링",
+      filterCategory: "sites",
+      desc: "공식 카다로그 p.13 / 바닥 굴착 없이 최소 300mm PIT 조건으로 계단참 공간을 활용한 홈승강기 설치",
+      src: "/images/elevator/gallery/catalog_page_13.webp",
+      slidePage: 13,
+      tag: "MY DINH RETROFIT",
+      details: [
+        { label: "시공 위치", val: "My Dinh District, Hanoi, Vietnam" },
+        { label: "주택 유형", val: "6-Story Townhouse Retrofit" },
+        { label: "피트 구조", val: "300mm Shallow Pit Special Civil Work" },
+        { label: "전원 결선", val: "Single Phase 220V Home Power" }
+      ]
+    },
+    {
+      id: 12,
+      title: "24/7 원격 정비 긴급 출동 & 스마트 A/S QR 시스템",
+      category: "유지보수 & 서비스 / 스마트 A/S",
+      filterCategory: "factory",
+      desc: "공식 카다로그 p.14 / QR코드 승강기 부품 이력 관리, 정전 시 비상구출(ARD) 및 24시간 긴급 A/S 체계",
+      src: "/images/elevator/gallery/catalog_page_14.webp",
+      slidePage: 14,
+      tag: "SMART SERVICE A/S",
+      details: [
+        { label: "ARD 시스템", val: "Automatic Rescue Device (ARD) Active" },
+        { label: "이력 관리", val: "QR-code Component Maintenance Tracking" },
+        { label: "긴급 출동", val: "Under 30-min Emergency Response in Hanoi" },
+        { label: "무상 보증", val: "12-Month Free Guarantee + Monthly Check" }
+      ]
     }
   ];
 
@@ -672,54 +842,151 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
             })()}
 
             {/* Real Photos Installation & Cabin Gallery */}
-            <div className="glass-card p-6 sm:p-8 rounded-3xl border border-navy-700 space-y-6">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-navy-800 pb-4">
-                <div>
-                  <span className="text-xs font-mono font-bold text-gold-400 uppercase tracking-widest block">
-                    BEST WINNER REAL PHOTO GALLERY
-                  </span>
-                  <h4 className="text-xl sm:text-2xl font-black text-white flex items-center space-x-2">
-                    <Sparkles className="w-5 h-5 text-gold-400" />
+            <div className="glass-card p-6 sm:p-8 rounded-3xl border border-navy-700 space-y-8">
+              
+              {/* Header Banner with Catalog PDF Viewer Launchers */}
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-navy-800 pb-6">
+                <div className="space-y-2 max-w-3xl">
+                  <div className="inline-flex items-center space-x-2 bg-gold-500/20 text-gold-400 px-3 py-1 rounded-full text-xs font-bold border border-gold-500/30">
+                    <Sparkles className="w-3.5 h-3.5 text-gold-400" />
+                    <span>BEST WINNER OFFICIAL CATALOG PRESENTATION & REAL GALLERY</span>
+                  </div>
+                  <h4 className="text-2xl sm:text-3xl font-black text-white flex items-center space-x-2">
                     <span>📸 BEST WINNER 실제 시공 & 카빈 갤러리</span>
                   </h4>
-                  <p className="text-xs text-slate-300 mt-1">
-                    베트남 하노이 3,000m² 직영 공장 및 180대+ 준공 현장의 실제 카빈 인테리어 사진입니다. (이미지 클릭 시 고화질 크게보기)
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    **BEST WINNER 승강기 공식 프레젠테이션 카다로그 (총 14페이지)**에 수록된 3D 카빈 디자인, 베트남 하노이 3,000m² 직영 공장 생산 현장, 180대+ 실제 준공 현장 및 QCVN 32 국가 승인 기술 사양입니다.
                   </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+                  <button
+                    onClick={() => {
+                      setPdfCurrentPage(1);
+                      setPdfViewerOpen(true);
+                    }}
+                    className="bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:from-gold-300 hover:to-gold-500 text-navy-950 font-black px-5 py-3 rounded-xl text-xs flex items-center justify-center space-x-2 shadow-gold-glow transition-transform hover:scale-[1.02]"
+                  >
+                    <BookOpen className="w-4 h-4 stroke-[2.5]" />
+                    <span>📖 공식 프레젠테이션 PDF (14페이지) 뷰어 열기</span>
+                  </button>
+                  <a
+                    href="/docu/elevator/BEST_Winner_Elevator_Official_Catalog_2026.pdf"
+                    download="BEST_Winner_Elevator_Official_Catalog_2026.pdf"
+                    className="bg-navy-800 hover:bg-navy-700 text-gold-300 hover:text-white font-bold px-4 py-3 rounded-xl text-xs border border-navy-700 flex items-center justify-center space-x-2 transition-colors"
+                  >
+                    <FileDown className="w-4 h-4 text-gold-400" />
+                    <span>PDF 카탈로그 다운로드</span>
+                  </a>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {realGalleryPhotos.map((photo) => (
-                  <div 
-                    key={photo.id}
-                    onClick={() => setZoomedImage(photo)}
-                    className="glass-card rounded-2xl overflow-hidden border border-navy-800 hover:border-gold-500/50 transition-all duration-300 group cursor-pointer space-y-3 p-3 flex flex-col justify-between"
+              {/* Category Filter Tabs */}
+              <div className="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-thin">
+                <span className="text-xs text-slate-400 font-bold mr-2 flex items-center space-x-1 flex-shrink-0">
+                  <Filter className="w-3.5 h-3.5 text-gold-400" />
+                  <span>필터:</span>
+                </span>
+                {[
+                  { id: 'all', label: '전체 갤러리 (12)' },
+                  { id: 'cabin', label: '✨ 카빈 인테리어 (3D & 실물)' },
+                  { id: 'sites', label: '🏗️ 하노이 실제 시공 현장' },
+                  { id: 'options', label: '💡 천장·바닥·COP 옵션' },
+                  { id: 'lineup', label: '📐 라인업 & 스펙' },
+                  { id: 'factory', label: '🏭 직영 공장 & 국가 인증' }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setGalleryFilter(tab.id)}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                      galleryFilter === tab.id
+                        ? 'bg-gold-500 text-navy-950 shadow-gold-glow'
+                        : 'bg-navy-950 text-slate-400 hover:text-white border border-navy-800'
+                    }`}
                   >
-                    <div className="h-52 rounded-xl overflow-hidden relative border border-navy-700 bg-navy-950">
-                      <img 
-                        src={photo.src} 
-                        alt={photo.title} 
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-navy-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <span className="bg-gold-500 text-navy-950 font-black px-3.5 py-1.5 rounded-xl text-xs flex items-center space-x-1 shadow-gold-glow">
-                          <Maximize2 className="w-3.5 h-3.5" />
-                          <span>고화질 크게보기</span>
-                        </span>
-                      </div>
-                      <span className="absolute top-2 left-2 bg-navy-950/80 backdrop-blur-md text-gold-400 text-[10px] font-mono font-bold px-2.5 py-1 rounded-md border border-gold-500/30">
-                        {photo.tag}
-                      </span>
-                    </div>
-
-                    <div className="space-y-1">
-                      <span className="text-[10px] text-gold-400 font-bold block">{photo.category}</span>
-                      <h5 className="font-bold text-white text-sm group-hover:text-gold-300 transition-colors">{photo.title}</h5>
-                      <p className="text-slate-400 text-[11px] leading-relaxed">{photo.desc}</p>
-                    </div>
-                  </div>
+                    {tab.label}
+                  </button>
                 ))}
               </div>
+
+              {/* Gallery Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {realGalleryPhotos
+                  .filter(photo => galleryFilter === 'all' || photo.filterCategory === galleryFilter)
+                  .map((photo) => (
+                    <div 
+                      key={photo.id}
+                      className="glass-card rounded-2xl overflow-hidden border border-navy-800 hover:border-gold-500/50 transition-all duration-300 group space-y-4 p-4 flex flex-col justify-between"
+                    >
+                      <div className="space-y-3">
+                        {/* Image Box */}
+                        <div 
+                          onClick={() => setZoomedImage(photo)}
+                          className="h-56 rounded-xl overflow-hidden relative border border-navy-700 bg-navy-950 cursor-pointer"
+                        >
+                          <img 
+                            src={photo.src} 
+                            alt={photo.title} 
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-navy-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
+                            <span className="bg-gold-500 text-navy-950 font-black px-3.5 py-1.5 rounded-xl text-xs flex items-center space-x-1 shadow-gold-glow">
+                              <Maximize2 className="w-3.5 h-3.5" />
+                              <span>고화질 크게보기</span>
+                            </span>
+                          </div>
+                          <span className="absolute top-2 left-2 bg-navy-950/90 backdrop-blur-md text-gold-400 text-[10px] font-mono font-bold px-2.5 py-1 rounded-md border border-gold-500/30 shadow-md">
+                            {photo.tag}
+                          </span>
+                        </div>
+
+                        {/* Title & Desc */}
+                        <div className="space-y-1.5">
+                          <span className="text-[10px] text-gold-400 font-bold block">{photo.category}</span>
+                          <h5 className="font-bold text-white text-base group-hover:text-gold-300 transition-colors leading-snug">
+                            {photo.title}
+                          </h5>
+                          <p className="text-slate-300 text-xs leading-relaxed">{photo.desc}</p>
+                        </div>
+
+                        {/* Detail Badges Grid */}
+                        {photo.details && (
+                          <div className="grid grid-cols-2 gap-1.5 pt-2 border-t border-navy-850 text-[11px]">
+                            {photo.details.map((d, idx) => (
+                              <div key={idx} className="bg-navy-950/80 p-2 rounded-lg border border-navy-800">
+                                <span className="text-[9px] text-slate-400 block font-semibold">{d.label}</span>
+                                <span className="font-bold text-slate-200 line-clamp-1">{d.val}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Bottom Action Buttons */}
+                      <div className="pt-2 flex items-center gap-2 border-t border-navy-800">
+                        <button
+                          onClick={() => setZoomedImage(photo)}
+                          className="flex-1 bg-navy-900 hover:bg-navy-800 text-slate-200 hover:text-white font-bold py-2 rounded-xl text-xs border border-navy-750 flex items-center justify-center space-x-1 transition-colors"
+                        >
+                          <Eye className="w-3.5 h-3.5 text-gold-400" />
+                          <span>크게보기</span>
+                        </button>
+                        <button
+                          onClick={() => {
+                            setPdfCurrentPage(photo.slidePage);
+                            setPdfViewerOpen(true);
+                          }}
+                          className="flex-1 bg-gold-500/20 hover:bg-gold-500/30 text-gold-300 hover:text-gold-200 font-bold py-2 rounded-xl text-xs border border-gold-500/40 flex items-center justify-center space-x-1 transition-colors"
+                        >
+                          <BookOpen className="w-3.5 h-3.5 text-gold-400" />
+                          <span>카다로그 p.{photo.slidePage}</span>
+                        </button>
+                      </div>
+
+                    </div>
+                  ))}
+              </div>
+
             </div>
           </div>
         )}
@@ -1519,6 +1786,107 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
         </div>
       )}
 
+      {/* Official 14-Page Catalog Presentation Flipbook Viewer Modal */}
+      {pdfViewerOpen && (
+        <div 
+          className="fixed inset-0 z-[70] bg-navy-950/95 backdrop-blur-xl flex items-center justify-center p-2 sm:p-6 animate-fade-in"
+          onClick={() => setPdfViewerOpen(false)}
+        >
+          <div 
+            className="relative max-w-6xl w-full h-[90vh] bg-navy-900 border border-gold-500/40 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="bg-navy-950 px-6 py-4 border-b border-navy-800 flex items-center justify-between gap-4">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 rounded-xl bg-gold-500/20 border border-gold-500/30 text-gold-400">
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-base sm:text-lg font-black text-white">
+                    BEST WINNER 승강기 공식 프레젠테이션 카다로그 (총 14페이지)
+                  </h4>
+                  <p className="text-xs text-slate-300">
+                    페이지 {pdfCurrentPage} / 14 — {officialPresentationPages[pdfCurrentPage - 1]?.title}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-3">
+                <a
+                  href="/docu/elevator/BEST_Winner_Elevator_Official_Catalog_2026.pdf"
+                  download="BEST_Winner_Elevator_Official_Catalog_2026.pdf"
+                  className="bg-navy-800 hover:bg-navy-700 text-gold-300 font-bold px-3.5 py-2 rounded-xl text-xs border border-navy-700 flex items-center space-x-1.5 transition-colors"
+                >
+                  <FileDown className="w-4 h-4 text-gold-400" />
+                  <span className="hidden sm:inline">PDF 다운로드</span>
+                </a>
+                <button
+                  onClick={() => setPdfViewerOpen(false)}
+                  className="p-2 rounded-xl bg-navy-800 hover:bg-navy-700 text-slate-400 hover:text-white border border-navy-700 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Main Slide Viewer */}
+            <div className="relative flex-1 bg-black/90 p-4 flex items-center justify-center overflow-hidden group">
+              <button
+                disabled={pdfCurrentPage <= 1}
+                onClick={() => setPdfCurrentPage((prev) => Math.max(1, prev - 1))}
+                className="absolute left-4 z-10 p-3 rounded-full bg-navy-900/80 hover:bg-gold-500 hover:text-navy-950 text-white disabled:opacity-30 disabled:cursor-not-allowed border border-navy-700 transition-all shadow-xl"
+              >
+                <ChevronLeft className="w-6 h-6 stroke-[3]" />
+              </button>
+
+              <div className="relative max-h-full max-w-full flex flex-col items-center justify-center">
+                <img 
+                  src={officialPresentationPages[pdfCurrentPage - 1]?.src} 
+                  alt={`Catalog Page ${pdfCurrentPage}`} 
+                  className="max-h-[65vh] w-auto object-contain rounded-xl shadow-2xl border border-navy-800"
+                />
+                <div className="mt-3 bg-navy-950/80 backdrop-blur-md px-4 py-2 rounded-xl border border-gold-500/30 text-center">
+                  <span className="text-xs font-bold text-gold-400 font-mono">
+                    PAGE {pdfCurrentPage} of 14 — {officialPresentationPages[pdfCurrentPage - 1]?.title}
+                  </span>
+                  <p className="text-[11px] text-slate-300">
+                    {officialPresentationPages[pdfCurrentPage - 1]?.subtitle}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                disabled={pdfCurrentPage >= 14}
+                onClick={() => setPdfCurrentPage((prev) => Math.min(14, prev + 1))}
+                className="absolute right-4 z-10 p-3 rounded-full bg-navy-900/80 hover:bg-gold-500 hover:text-navy-950 text-white disabled:opacity-30 disabled:cursor-not-allowed border border-navy-700 transition-all shadow-xl"
+              >
+                <ChevronRight className="w-6 h-6 stroke-[3]" />
+              </button>
+            </div>
+
+            {/* Bottom Page Thumbnails Bar */}
+            <div className="bg-navy-950 p-4 border-t border-navy-800 flex items-center space-x-3 overflow-x-auto scrollbar-thin">
+              {officialPresentationPages.map((item) => (
+                <button
+                  key={item.page}
+                  onClick={() => setPdfCurrentPage(item.page)}
+                  className={`flex-shrink-0 w-24 rounded-xl overflow-hidden border-2 transition-all text-left space-y-1 p-1 bg-navy-900 ${
+                    pdfCurrentPage === item.page
+                      ? 'border-gold-500 scale-105 shadow-gold-glow'
+                      : 'border-navy-800 opacity-60 hover:opacity-100 hover:border-navy-700'
+                  }`}
+                >
+                  <img src={item.src} alt={item.title} className="w-full h-12 object-cover rounded-lg" />
+                  <span className="text-[10px] font-mono font-bold text-gold-400 block px-1">p.{item.page}</span>
+                </button>
+              ))}
+            </div>
+
+          </div>
+        </div>
+      )}
+
       {/* Lightbox / High-Res Image Fullscreen Viewer Modal */}
       {zoomedImage && (
         <div 
@@ -1544,11 +1912,11 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
               </button>
             </div>
 
-            <div className="relative max-h-[65vh] rounded-2xl overflow-hidden border border-navy-800 bg-black flex items-center justify-center">
+            <div className="relative max-h-[60vh] rounded-2xl overflow-hidden border border-navy-800 bg-black flex items-center justify-center">
               <img 
                 src={zoomedImage.src || zoomedImage} 
                 alt="High-Res Zoom View" 
-                className="max-h-[65vh] w-auto object-contain mx-auto"
+                className="max-h-[60vh] w-auto object-contain mx-auto"
               />
             </div>
 
@@ -1556,6 +1924,26 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
               <p className="text-xs text-slate-300 bg-navy-950 p-3.5 rounded-xl border border-navy-800">
                 {zoomedImage.desc}
               </p>
+            )}
+
+            {zoomedImage.slidePage && (
+              <div className="flex items-center justify-between pt-2 border-t border-navy-800">
+                <span className="text-xs text-gold-400 font-mono font-bold">
+                  📄 공식 카다로그 Page {zoomedImage.slidePage} 참조 수록
+                </span>
+                <button
+                  onClick={() => {
+                    const pageNum = zoomedImage.slidePage;
+                    setZoomedImage(null);
+                    setPdfCurrentPage(pageNum);
+                    setPdfViewerOpen(true);
+                  }}
+                  className="bg-gold-500 text-navy-950 font-bold px-4 py-2 rounded-xl text-xs shadow-gold-glow flex items-center space-x-1"
+                >
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>공식 카다로그 p.{zoomedImage.slidePage} 전체화면 보기</span>
+                </button>
+              </div>
             )}
           </div>
         </div>
