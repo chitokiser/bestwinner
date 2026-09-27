@@ -109,12 +109,12 @@ export default function SmartParkingPage({ t }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 my-auto w-full space-y-6">
           
           {/* Breadcrumb Navigation */}
-          <div className="flex items-center space-x-2 text-xs text-slate-300 bg-navy-900/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-navy-700 w-fit">
-            <Link to="/" className="hover:text-gold-400">Home</Link>
-            <span>/</span>
-            <span>Business Areas</span>
-            <span>/</span>
-            <span className="text-emeraldGreen-400 font-bold">BEST winner AI Smart Parking System Vn</span>
+          <div className="flex items-center space-x-2 text-xs text-slate-300 bg-navy-900/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-navy-700 w-fit max-w-full overflow-x-auto whitespace-nowrap scrollbar-none">
+            <Link to="/" className="hover:text-gold-400 shrink-0">Home</Link>
+            <span className="shrink-0">/</span>
+            <span className="shrink-0">Business Areas</span>
+            <span className="shrink-0">/</span>
+            <span className="text-emeraldGreen-400 font-bold shrink-0">BEST winner AI Smart Parking System Vn</span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -123,48 +123,48 @@ export default function SmartParkingPage({ t }) {
             <div className="lg:col-span-7 space-y-5">
               
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-emeraldGreen-400 uppercase tracking-widest bg-emeraldGreen-500/10 px-3 py-1 rounded-full border border-emeraldGreen-500/30">
+                <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-emeraldGreen-400 uppercase tracking-widest bg-emeraldGreen-500/10 px-3 py-1 rounded-full border border-emeraldGreen-500/30 whitespace-nowrap">
                   <Car className="w-3.5 h-3.5" />
                   <span>BUSINESS UNIT ③</span>
                 </span>
-                <span className="inline-flex items-center space-x-1 text-xs font-bold text-gold-400 bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/30">
+                <span className="inline-flex items-center space-x-1 text-xs font-bold text-gold-400 bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/30 whitespace-nowrap">
                   <Sparkles className="w-3 h-3 mr-1" />
                   <span>SHEYONE x AMANO 공식 솔루션</span>
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight break-keep">
+              <h1 className="text-2xl sm:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight break-keep">
                 BEST winner <span className="text-emeraldGreen-400">AI 스마트 주차</span> 관제 시스템
               </h1>
               
-              <p className="text-sm sm:text-lg text-slate-200 font-medium max-w-2xl leading-relaxed break-keep">
+              <p className="text-xs sm:text-lg text-slate-200 font-medium max-w-2xl leading-relaxed break-keep">
                 딥러닝 AI 번호판 인식(LPR), 스마트 무인 차단기, ACRM 24시간 원격 관제 및 모바일 자동 결제가 통합된 미래형 주차 인프라 솔루션입니다.
               </p>
 
               {/* Feature Highlights Pill Bar */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1 max-w-xl">
-                <div className="bg-navy-900/80 border border-emeraldGreen-500/30 rounded-xl p-2.5 text-xs text-slate-200 flex items-center space-x-2">
-                  <CheckCircle2 className="w-4 h-4 text-emeraldGreen-400 shrink-0" />
-                  <span>AI LPR 99.8% 인식</span>
+              <div className="grid grid-cols-3 gap-2 pt-1 max-w-xl">
+                <div className="bg-navy-900/80 border border-emeraldGreen-500/30 rounded-xl p-2.5 text-[11px] sm:text-xs text-slate-200 flex items-center justify-center space-x-1.5 whitespace-nowrap">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emeraldGreen-400 shrink-0" />
+                  <span className="whitespace-nowrap">AI LPR 99.8%</span>
                 </div>
-                <div className="bg-navy-900/80 border border-cyan-500/30 rounded-xl p-2.5 text-xs text-slate-200 flex items-center space-x-2">
-                  <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
-                  <span>ACRM 원격 관제</span>
+                <div className="bg-navy-900/80 border border-cyan-500/30 rounded-xl p-2.5 text-[11px] sm:text-xs text-slate-200 flex items-center justify-center space-x-1.5 whitespace-nowrap">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                  <span className="whitespace-nowrap">ACRM 원격관제</span>
                 </div>
-                <div className="bg-navy-900/80 border border-gold-500/30 rounded-xl p-2.5 text-xs text-slate-200 flex items-center space-x-2">
-                  <CheckCircle2 className="w-4 h-4 text-gold-400 shrink-0" />
-                  <span>24/7 출동 A/S</span>
+                <div className="bg-navy-900/80 border border-gold-500/30 rounded-xl p-2.5 text-[11px] sm:text-xs text-slate-200 flex items-center justify-center space-x-1.5 whitespace-nowrap">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-gold-400 shrink-0" />
+                  <span className="whitespace-nowrap">24/7 출동A/S</span>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-2 flex flex-wrap gap-3 items-center">
+              <div className="pt-2 flex flex-wrap gap-2.5 items-center">
                 <a
                   href="/docu/park/SHEYONE_AMANO_Smart_Parking_Catalog_2026.pdf"
                   download="SHEYONE_AMANO_Smart_Parking_Catalog_2026.pdf"
-                  className="bg-emeraldGreen-500 hover:bg-emeraldGreen-600 text-navy-950 font-extrabold px-6 py-3.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center text-xs sm:text-sm"
+                  className="bg-emeraldGreen-500 hover:bg-emeraldGreen-600 text-navy-950 font-extrabold px-5 py-3 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center text-xs sm:text-sm whitespace-nowrap"
                 >
-                  <Download className="w-4 h-4 mr-2" />
+                  <Download className="w-4 h-4 mr-1.5 shrink-0" />
                   <span>공식 PDF 카탈로그 (20P)</span>
                 </a>
 
@@ -173,9 +173,9 @@ export default function SmartParkingPage({ t }) {
                     const el = document.getElementById('contact');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="bg-navy-800 hover:bg-navy-700 text-white font-bold px-6 py-3.5 rounded-xl border border-navy-700 text-xs sm:text-sm flex items-center space-x-2"
+                  className="bg-navy-800 hover:bg-navy-700 text-white font-bold px-5 py-3 rounded-xl border border-navy-700 text-xs sm:text-sm flex items-center space-x-1.5 whitespace-nowrap"
                 >
-                  <Monitor className="w-4 h-4 text-emeraldGreen-400" />
+                  <Monitor className="w-4 h-4 text-emeraldGreen-400 shrink-0" />
                   <span>현장 맞춤 무료 견적</span>
                 </button>
               </div>

@@ -87,134 +87,134 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
         {/* Unit Header & Official PDF Catalog Download Banner */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-8 border-b border-navy-800/80">
           <div className="space-y-3">
-            <div className="flex items-center space-x-2">
-              <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-emeraldGreen-400 uppercase tracking-widest bg-emeraldGreen-500/10 px-3 py-1 rounded-full border border-emeraldGreen-500/30">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-emeraldGreen-400 uppercase tracking-widest bg-emeraldGreen-500/10 px-3 py-1 rounded-full border border-emeraldGreen-500/30 whitespace-nowrap">
                 <Car className="w-3.5 h-3.5" />
                 <span>BUSINESS UNIT ③</span>
               </span>
-              <span className="text-xs text-gold-400 font-mono bg-navy-950 px-2.5 py-1 rounded border border-navy-700">
+              <span className="text-xs text-gold-400 font-mono bg-navy-950 px-2.5 py-1 rounded border border-navy-700 whitespace-nowrap">
                 SHEYONE x AMANO KOREA & VIETNAM
               </span>
             </div>
             
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight break-keep">
               BEST Winner 스마트 주차 시스템 VN
             </h2>
-            <p className="text-sm sm:text-base text-slate-300 max-w-3xl leading-relaxed">
+            <p className="text-xs sm:text-base text-slate-300 max-w-3xl leading-relaxed break-keep">
               AI 딥러닝 번호판 인식(LPR), 스마트 무인 차단기, ACRM 24시간 원격 관제 및 모바일 결제 플랫폼이 통합된 최첨단 주차 관리 솔루션입니다.
             </p>
           </div>
 
           {/* Catalog PDF Controls */}
-          <div className="mt-6 md:mt-0 flex flex-wrap gap-3">
+          <div className="mt-6 md:mt-0 flex flex-wrap gap-2.5">
             <button
               onClick={() => openPdfAtPage(1)}
-              className="bg-navy-800 hover:bg-navy-700 text-emeraldGreen-400 border border-emeraldGreen-500/30 font-bold px-4 py-3 rounded-xl shadow-lg transition-all flex items-center text-xs sm:text-sm"
+              className="bg-navy-800 hover:bg-navy-700 text-emeraldGreen-400 border border-emeraldGreen-500/30 font-bold px-4 py-3 rounded-xl shadow-lg transition-all flex items-center text-xs sm:text-sm whitespace-nowrap"
             >
-              <Eye className="w-4 h-4 mr-2 text-emeraldGreen-400" />
+              <Eye className="w-4 h-4 mr-1.5 text-emeraldGreen-400 shrink-0" />
               <span>카탈로그 뷰어 (전 20P)</span>
             </button>
             <a
               href="/docu/park/SHEYONE_AMANO_Smart_Parking_Catalog_2026.pdf"
               download="SHEYONE_AMANO_Smart_Parking_Catalog_2026.pdf"
-              className="bg-emeraldGreen-500 hover:bg-emeraldGreen-600 text-navy-950 font-bold px-4 py-3 rounded-xl shadow-lg transition-all flex items-center text-xs sm:text-sm"
+              className="bg-emeraldGreen-500 hover:bg-emeraldGreen-600 text-navy-950 font-bold px-4 py-3 rounded-xl shadow-lg transition-all flex items-center text-xs sm:text-sm whitespace-nowrap"
             >
-              <Download className="w-4 h-4 mr-2" />
+              <Download className="w-4 h-4 mr-1.5 shrink-0" />
               <span>PDF 브로슈어 다운로드</span>
             </a>
           </div>
         </div>
 
         {/* 4 Key Highlight Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-          <div className="bg-navy-950/80 border border-navy-800 rounded-2xl p-5 hover:border-emeraldGreen-500/40 transition-all">
-            <div className="w-10 h-10 rounded-xl bg-emeraldGreen-500/10 border border-emeraldGreen-500/30 text-emeraldGreen-400 flex items-center justify-center mb-3">
-              <Cpu className="w-5 h-5" />
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-12">
+          <div className="bg-navy-950/80 border border-navy-800 rounded-2xl p-4 sm:p-5 hover:border-emeraldGreen-500/40 transition-all">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emeraldGreen-500/10 border border-emeraldGreen-500/30 text-emeraldGreen-400 flex items-center justify-center mb-3">
+              <Cpu className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <h3 className="text-base font-bold text-white mb-1">AI LPR 99.8% 인식률</h3>
-            <p className="text-xs text-slate-400">
+            <h3 className="text-xs sm:text-base font-bold text-white mb-1 break-keep">AI LPR 99.8% 인식률</h3>
+            <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed break-keep">
               야간, 우천, 오염 번호판도 딥러닝 카메라 알고리즘으로 0.1초 내 정확히 인식.
             </p>
           </div>
 
-          <div className="bg-navy-950/80 border border-navy-800 rounded-2xl p-5 hover:border-emeraldGreen-500/40 transition-all">
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center mb-3">
-              <Monitor className="w-5 h-5" />
+          <div className="bg-navy-950/80 border border-navy-800 rounded-2xl p-4 sm:p-5 hover:border-emeraldGreen-500/40 transition-all">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center mb-3">
+              <Monitor className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <h3 className="text-base font-bold text-white mb-1">Amano ACRM 백오피스</h3>
-            <p className="text-xs text-slate-400">
+            <h3 className="text-xs sm:text-base font-bold text-white mb-1 break-keep">Amano ACRM 백오피스</h3>
+            <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed break-keep">
               실시간 입출차 현황, 정산 집계, 장애 이력 모니터링 대시보드 기본 제공.
             </p>
           </div>
 
-          <div className="bg-navy-950/80 border border-navy-800 rounded-2xl p-5 hover:border-emeraldGreen-500/40 transition-all">
-            <div className="w-10 h-10 rounded-xl bg-gold-500/10 border border-gold-500/30 text-gold-400 flex items-center justify-center mb-3">
-              <Clock className="w-5 h-5" />
+          <div className="bg-navy-950/80 border border-navy-800 rounded-2xl p-4 sm:p-5 hover:border-emeraldGreen-500/40 transition-all">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold-500/10 border border-gold-500/30 text-gold-400 flex items-center justify-center mb-3">
+              <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <h3 className="text-base font-bold text-white mb-1">24시간 관제센터 원격지원</h3>
-            <p className="text-xs text-slate-400">
+            <h3 className="text-xs sm:text-base font-bold text-white mb-1 break-keep">24시간 관제 원격지원</h3>
+            <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed break-keep">
               전문 운영요원이 365일 24시간 무인 현장 차단기 제어 및 인터폰 대응.
             </p>
           </div>
 
-          <div className="bg-navy-950/80 border border-navy-800 rounded-2xl p-5 hover:border-emeraldGreen-500/40 transition-all">
-            <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center mb-3">
-              <Smartphone className="w-5 h-5" />
+          <div className="bg-navy-950/80 border border-navy-800 rounded-2xl p-4 sm:p-5 hover:border-emeraldGreen-500/40 transition-all">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center mb-3">
+              <Smartphone className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <h3 className="text-base font-bold text-white mb-1">모바일 앱 & E-Tax 연동</h3>
-            <p className="text-xs text-slate-400">
+            <h3 className="text-xs sm:text-base font-bold text-white mb-1 break-keep">모바일 앱 & E-Tax 연동</h3>
+            <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed break-keep">
               주차장 검색, 월정액 신청, 전자세금계산서 및 무단주차 단속까지 통합 지원.
             </p>
           </div>
         </div>
 
-        {/* Feature Navigation Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-8 bg-navy-950 p-2 rounded-2xl border border-navy-800">
+        {/* Feature Navigation Tabs (Scrollable on Mobile) */}
+        <div className="flex items-center justify-start sm:justify-center gap-2 mb-8 bg-navy-950 p-2 rounded-2xl border border-navy-800 overflow-x-auto whitespace-nowrap scrollbar-none max-w-full">
           <button
             onClick={() => setActiveTab('tech')}
-            className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-2 ${
+            className={`px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-1.5 shrink-0 whitespace-nowrap ${
               activeTab === 'tech'
                 ? 'bg-emeraldGreen-500 text-navy-950 shadow-lg'
                 : 'text-slate-300 hover:bg-navy-900 hover:text-white'
             }`}
           >
-            <Layers className="w-4 h-4" />
+            <Layers className="w-4 h-4 shrink-0" />
             <span>01. 핵심 기술 4대 파트</span>
           </button>
 
           <button
             onClick={() => setActiveTab('equipment')}
-            className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-2 ${
+            className={`px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-1.5 shrink-0 whitespace-nowrap ${
               activeTab === 'equipment'
                 ? 'bg-emeraldGreen-500 text-navy-950 shadow-lg'
                 : 'text-slate-300 hover:bg-navy-900 hover:text-white'
             }`}
           >
-            <Sliders className="w-4 h-4" />
+            <Sliders className="w-4 h-4 shrink-0" />
             <span>02. 아마노 핵심 장비 라인업</span>
           </button>
 
           <button
             onClick={() => setActiveTab('backoffice')}
-            className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-2 ${
+            className={`px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-1.5 shrink-0 whitespace-nowrap ${
               activeTab === 'backoffice'
                 ? 'bg-emeraldGreen-500 text-navy-950 shadow-lg'
                 : 'text-slate-300 hover:bg-navy-900 hover:text-white'
             }`}
           >
-            <Monitor className="w-4 h-4" />
+            <Monitor className="w-4 h-4 shrink-0" />
             <span>03. ACRM 무인관제 & 백오피스</span>
           </button>
 
           <button
             onClick={() => setActiveTab('mobile')}
-            className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-2 ${
+            className={`px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-1.5 shrink-0 whitespace-nowrap ${
               activeTab === 'mobile'
                 ? 'bg-emeraldGreen-500 text-navy-950 shadow-lg'
                 : 'text-slate-300 hover:bg-navy-900 hover:text-white'
             }`}
           >
-            <Smartphone className="w-4 h-4" />
+            <Smartphone className="w-4 h-4 shrink-0" />
             <span>04. 모바일 앱 & 이용 서비스</span>
           </button>
         </div>
@@ -242,48 +242,48 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                 <span className="text-xs font-bold text-emeraldGreen-400 uppercase tracking-wider block mb-1">
                   CORE TECHNOLOGY
                 </span>
-                <h3 className="text-2xl font-extrabold text-white">
-                  SHEYONE AMANO 주차 관제 4대 핵심 축
+                <h3 className="text-xl sm:text-2xl font-extrabold text-white break-keep">
+                  BEST Winner 주차 관제 4대 핵심 축
                 </h3>
               </div>
 
               <div className="space-y-4">
                 <div className="p-4 rounded-xl bg-navy-900/80 border border-navy-700">
                   <div className="flex items-center space-x-2 text-emeraldGreen-400 font-extrabold text-sm mb-1">
-                    <span className="w-6 h-6 rounded bg-emeraldGreen-500/20 flex items-center justify-center text-xs">AI</span>
-                    <span>AI LPR - 딥러닝 번호판 인식</span>
+                    <span className="w-6 h-6 rounded bg-emeraldGreen-500/20 flex items-center justify-center text-xs shrink-0">AI</span>
+                    <span className="break-keep">AI LPR - 딥러닝 번호판 인식</span>
                   </div>
-                  <p className="text-xs text-slate-300 leading-relaxed">
+                  <p className="text-xs text-slate-300 leading-relaxed break-keep">
                     주간/야간, 미등 점등, 우천 상황에서도 99.8% 고득점 인식률을 보장하는 최신 딥러닝 엔진 적용.
                   </p>
                 </div>
 
                 <div className="p-4 rounded-xl bg-navy-900/80 border border-navy-700">
                   <div className="flex items-center space-x-2 text-cyan-400 font-extrabold text-sm mb-1">
-                    <span className="w-6 h-6 rounded bg-cyan-500/20 flex items-center justify-center text-xs">PAY</span>
-                    <span>PAY - 통합 무인 정산</span>
+                    <span className="w-6 h-6 rounded bg-cyan-500/20 flex items-center justify-center text-xs shrink-0">PAY</span>
+                    <span className="break-keep">PAY - 통합 무인 정산</span>
                   </div>
-                  <p className="text-xs text-slate-300 leading-relaxed">
+                  <p className="text-xs text-slate-300 leading-relaxed break-keep">
                     신용카드, 삼성페이, 모바일 QR, 할인권 및 사전 정산 지원으로 출차 정체 제로화 구현.
                   </p>
                 </div>
 
                 <div className="p-4 rounded-xl bg-navy-900/80 border border-navy-700">
                   <div className="flex items-center space-x-2 text-gold-400 font-extrabold text-sm mb-1">
-                    <span className="w-6 h-6 rounded bg-gold-500/20 flex items-center justify-center text-xs">OPS</span>
-                    <span>OPS - 24/7 중앙 관제 백오피스</span>
+                    <span className="w-6 h-6 rounded bg-gold-500/20 flex items-center justify-center text-xs shrink-0">OPS</span>
+                    <span className="break-keep">OPS - 24/7 중앙 관제 백오피스</span>
                   </div>
-                  <p className="text-xs text-slate-300 leading-relaxed">
+                  <p className="text-xs text-slate-300 leading-relaxed break-keep">
                     현장 장비 상태 감시, 차단기 원격 제어, 인터폰 통화 및 비상 조치를 24시간 무인 처리.
                   </p>
                 </div>
 
                 <div className="p-4 rounded-xl bg-navy-900/80 border border-navy-700">
                   <div className="flex items-center space-x-2 text-purple-400 font-extrabold text-sm mb-1">
-                    <span className="w-6 h-6 rounded bg-purple-500/20 flex items-center justify-center text-xs">DATA</span>
-                    <span>DATA - 주차 빅데이터 분석</span>
+                    <span className="w-6 h-6 rounded bg-purple-500/20 flex items-center justify-center text-xs shrink-0">DATA</span>
+                    <span className="break-keep">DATA - 주차 빅데이터 분석</span>
                   </div>
-                  <p className="text-xs text-slate-300 leading-relaxed">
+                  <p className="text-xs text-slate-300 leading-relaxed break-keep">
                     시간대별 입출차 트렌드, 요일별 매출 분석, 정기권 관리 보고서를 자동 산출.
                   </p>
                 </div>
@@ -295,20 +295,20 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
         {/* Tab 2: Hardware Equipment */}
         {activeTab === 'equipment' && (
           <div className="space-y-8 bg-navy-950/60 p-6 sm:p-8 rounded-3xl border border-navy-800">
-            <div className="flex flex-col sm:flex-row justify-between sm:items-center">
+            <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
               <div>
                 <span className="text-xs font-bold text-emeraldGreen-400 uppercase tracking-wider block mb-1">
                   HARDWARE EQUIPMENT
                 </span>
-                <h3 className="text-2xl font-extrabold text-white">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-white break-keep">
                   아마노(AMANO) 주차 관제 핵심 라인업
                 </h3>
               </div>
               <button
                 onClick={() => openPdfAtPage(8)}
-                className="mt-2 sm:mt-0 text-xs font-bold text-emeraldGreen-400 hover:text-emeraldGreen-300 flex items-center space-x-1"
+                className="mt-1 sm:mt-0 text-xs font-bold text-emeraldGreen-400 hover:text-emeraldGreen-300 flex items-center space-x-1 whitespace-nowrap"
               >
-                <Eye className="w-4 h-4" />
+                <Eye className="w-4 h-4 shrink-0" />
                 <span>카탈로그 8P 실물 라인업 보기</span>
               </button>
             </div>
@@ -323,47 +323,47 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             </div>
 
             {/* 4 Hardware Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-navy-900/90 border border-navy-700 rounded-2xl p-5 hover:border-emeraldGreen-500/40 transition-all">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="bg-navy-900/90 border border-navy-700 rounded-2xl p-4 sm:p-5 hover:border-emeraldGreen-500/40 transition-all">
                 <div className="h-32 bg-navy-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center border border-navy-800">
                   <img src="/images/parking/docu/page_8.png" alt="Barrier Gate" className="object-cover h-full w-full object-left-top" />
                 </div>
-                <span className="text-[11px] font-bold text-emeraldGreen-400 bg-emeraldGreen-500/10 px-2 py-0.5 rounded">01. SMART GATE</span>
-                <h4 className="text-lg font-bold text-white mt-1 mb-2">스마트 무인 차단기</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <span className="text-[11px] font-bold text-emeraldGreen-400 bg-emeraldGreen-500/10 px-2 py-0.5 rounded whitespace-nowrap">01. SMART GATE</span>
+                <h4 className="text-base sm:text-lg font-bold text-white mt-1 mb-2 break-keep">스마트 무인 차단기</h4>
+                <p className="text-xs text-slate-300 leading-relaxed break-keep">
                   LED 시기성이 뛰어난 고속 바(Bar) 차단기로 차체 충격 방지 센서 및 차세대 인버터 모터 내장.
                 </p>
               </div>
 
-              <div className="bg-navy-900/90 border border-navy-700 rounded-2xl p-5 hover:border-emeraldGreen-500/40 transition-all">
+              <div className="bg-navy-900/90 border border-navy-700 rounded-2xl p-4 sm:p-5 hover:border-emeraldGreen-500/40 transition-all">
                 <div className="h-32 bg-navy-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center border border-navy-800">
                   <img src="/images/parking/docu/page_8.png" alt="Integrated LPR" className="object-cover h-full w-full object-center" />
                 </div>
-                <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded">02. INTEGRATED LPR</span>
-                <h4 className="text-lg font-bold text-white mt-1 mb-2">통합 AI LPR 카메라</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded whitespace-nowrap">02. INTEGRATED LPR</span>
+                <h4 className="text-base sm:text-lg font-bold text-white mt-1 mb-2 break-keep">통합 AI LPR 카메라</h4>
+                <p className="text-xs text-slate-300 leading-relaxed break-keep">
                   전/후면 듀얼 카메라 옵션, 고휘도 LED 조명 및 IR 야간 촬영으로 극악의 조건에서도 99.8% 인식.
                 </p>
               </div>
 
-              <div className="bg-navy-900/90 border border-navy-700 rounded-2xl p-5 hover:border-emeraldGreen-500/40 transition-all">
+              <div className="bg-navy-900/90 border border-navy-700 rounded-2xl p-4 sm:p-5 hover:border-emeraldGreen-500/40 transition-all">
                 <div className="h-32 bg-navy-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center border border-navy-800">
                   <img src="/images/parking/docu/page_8.png" alt="Payment Terminal" className="object-cover h-full w-full object-right" />
                 </div>
-                <span className="text-[11px] font-bold text-gold-400 bg-gold-500/10 px-2 py-0.5 rounded">03. PAYMENT KIOSK</span>
-                <h4 className="text-lg font-bold text-white mt-1 mb-2">무인 정산기 (Kiosk)</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <span className="text-[11px] font-bold text-gold-400 bg-gold-500/10 px-2 py-0.5 rounded whitespace-nowrap">03. PAYMENT KIOSK</span>
+                <h4 className="text-base sm:text-lg font-bold text-white mt-1 mb-2 break-keep">무인 정산기 (Kiosk)</h4>
+                <p className="text-xs text-slate-300 leading-relaxed break-keep">
                   21.5인치 터치스크린, 신용카드, 모바일 페이, QR 할인권 일체형 무인 정산 키오스크.
                 </p>
               </div>
 
-              <div className="bg-navy-900/90 border border-navy-700 rounded-2xl p-5 hover:border-emeraldGreen-500/40 transition-all">
+              <div className="bg-navy-900/90 border border-navy-700 rounded-2xl p-4 sm:p-5 hover:border-emeraldGreen-500/40 transition-all">
                 <div className="h-32 bg-navy-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center border border-navy-800">
                   <img src="/images/parking/docu/page_8.png" alt="Intercom Display" className="object-cover h-full w-full object-right-bottom" />
                 </div>
-                <span className="text-[11px] font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded">04. INTERCOM & LED</span>
-                <h4 className="text-lg font-bold text-white mt-1 mb-2">통합 인터폰 & 디스플레이</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <span className="text-[11px] font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded whitespace-nowrap">04. INTERCOM & LED</span>
+                <h4 className="text-base sm:text-lg font-bold text-white mt-1 mb-2 break-keep">통합 인터폰 & 디스플레이</h4>
+                <p className="text-xs text-slate-300 leading-relaxed break-keep">
                   24시간 관제센터 직통 비상 인터폰 통화 및 요금, 입출차 안내 텍스트 가시화.
                 </p>
               </div>
@@ -378,78 +378,78 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
               <span className="text-xs font-bold text-emeraldGreen-400 uppercase tracking-wider block mb-1">
                 ACRM BACKOFFICE & 24/7 CONTROL CENTER
               </span>
-              <h3 className="text-2xl font-extrabold text-white">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-white break-keep">
                 아마노 ACRM 관제 대시보드 & 24시간 실물 관제센터
               </h3>
             </div>
 
             {/* Screenshots Grid from Catalog Pages 15, 16, 17, 19 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               
-              <div className="bg-navy-900 rounded-2xl p-5 border border-navy-700 space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold text-emeraldGreen-400 bg-emeraldGreen-500/10 px-2.5 py-1 rounded">
+              <div className="bg-navy-900 rounded-2xl p-4 sm:p-5 border border-navy-700 space-y-3">
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-[11px] sm:text-xs font-bold text-emeraldGreen-400 bg-emeraldGreen-500/10 px-2.5 py-1 rounded whitespace-nowrap">
                     [P.15] ACRM 실시간 현장 대시보드
                   </span>
-                  <button onClick={() => openPdfAtPage(15)} className="text-xs text-slate-400 hover:text-emeraldGreen-400 flex items-center">
-                    <Eye className="w-3.5 h-3.5 mr-1" /> 15P 원본
+                  <button onClick={() => openPdfAtPage(15)} className="text-xs text-slate-400 hover:text-emeraldGreen-400 flex items-center whitespace-nowrap">
+                    <Eye className="w-3.5 h-3.5 mr-1 shrink-0" /> 15P 원본
                   </button>
                 </div>
                 <div className="rounded-xl overflow-hidden border border-navy-800">
                   <img src="/images/parking/docu/page_15.png" alt="ACRM Dashboard" className="w-full h-auto object-cover" />
                 </div>
-                <p className="text-xs text-slate-300">
+                <p className="text-xs text-slate-300 break-keep">
                   입출차 차량 실시간 영상 모니터링, 차단기 제어, 만차/잔여 면수 점유 현황 한눈에 파악.
                 </p>
               </div>
 
-              <div className="bg-navy-900 rounded-2xl p-5 border border-navy-700 space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded">
+              <div className="bg-navy-900 rounded-2xl p-4 sm:p-5 border border-navy-700 space-y-3">
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-[11px] sm:text-xs font-bold text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded whitespace-nowrap">
                     [P.16] 장애 관리 & 관제 백오피스
                   </span>
-                  <button onClick={() => openPdfAtPage(16)} className="text-xs text-slate-400 hover:text-cyan-400 flex items-center">
-                    <Eye className="w-3.5 h-3.5 mr-1" /> 16P 원본
+                  <button onClick={() => openPdfAtPage(16)} className="text-xs text-slate-400 hover:text-cyan-400 flex items-center whitespace-nowrap">
+                    <Eye className="w-3.5 h-3.5 mr-1 shrink-0" /> 16P 원본
                   </button>
                 </div>
                 <div className="rounded-xl overflow-hidden border border-navy-800">
                   <img src="/images/parking/docu/page_16.png" alt="Control & Trouble Mgmt" className="w-full h-auto object-cover" />
                 </div>
-                <p className="text-xs text-slate-300">
+                <p className="text-xs text-slate-300 break-keep">
                   장비 오류 및 통신 장애 자동 알림, 원격 재부팅 및 24h 긴급 현장 출동 링크.
                 </p>
               </div>
 
-              <div className="bg-navy-900 rounded-2xl p-5 border border-navy-700 space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold text-gold-400 bg-gold-500/10 px-2.5 py-1 rounded">
+              <div className="bg-navy-900 rounded-2xl p-4 sm:p-5 border border-navy-700 space-y-3">
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-[11px] sm:text-xs font-bold text-gold-400 bg-gold-500/10 px-2.5 py-1 rounded whitespace-nowrap">
                     [P.17] 기간별 매출 & 이력 보고서
                   </span>
-                  <button onClick={() => openPdfAtPage(17)} className="text-xs text-slate-400 hover:text-gold-400 flex items-center">
-                    <Eye className="w-3.5 h-3.5 mr-1" /> 17P 원본
+                  <button onClick={() => openPdfAtPage(17)} className="text-xs text-slate-400 hover:text-gold-400 flex items-center whitespace-nowrap">
+                    <Eye className="w-3.5 h-3.5 mr-1 shrink-0" /> 17P 원본
                   </button>
                 </div>
                 <div className="rounded-xl overflow-hidden border border-navy-800">
                   <img src="/images/parking/docu/page_17.png" alt="Operation Reports" className="w-full h-auto object-cover" />
                 </div>
-                <p className="text-xs text-slate-300">
+                <p className="text-xs text-slate-300 break-keep">
                   일별/월별 매출 정산서, 차량 종류별 통계, 할인권 사용 실적 엑셀 및 PDF 자동 출력.
                 </p>
               </div>
 
-              <div className="bg-navy-900 rounded-2xl p-5 border border-navy-700 space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded">
+              <div className="bg-navy-900 rounded-2xl p-4 sm:p-5 border border-navy-700 space-y-3">
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-[11px] sm:text-xs font-bold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded whitespace-nowrap">
                     [P.19] 24시간 관제센터 실제 운영 현장
                   </span>
-                  <button onClick={() => openPdfAtPage(19)} className="text-xs text-slate-400 hover:text-purple-400 flex items-center">
-                    <Eye className="w-3.5 h-3.5 mr-1" /> 19P 원본
+                  <button onClick={() => openPdfAtPage(19)} className="text-xs text-slate-400 hover:text-purple-400 flex items-center whitespace-nowrap">
+                    <Eye className="w-3.5 h-3.5 mr-1 shrink-0" /> 19P 원본
                   </button>
                 </div>
                 <div className="rounded-xl overflow-hidden border border-navy-800">
                   <img src="/images/parking/docu/page_19.png" alt="24/7 Operations Room" className="w-full h-auto object-cover" />
                 </div>
-                <p className="text-xs text-slate-300">
+                <p className="text-xs text-slate-300 break-keep">
                   아마노 관제 전문 요원이 365일 24시간 실시간 카메라 화면을 모니터링하는 본사 관제실.
                 </p>
               </div>
@@ -465,7 +465,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
               <span className="text-xs font-bold text-emeraldGreen-400 uppercase tracking-wider block mb-1">
                 MOBILE & WEB SERVICE FLOW
               </span>
-              <h3 className="text-2xl font-extrabold text-white">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-white break-keep">
                 운전자 & 주차장 관리자 모바일 앱 서비스
               </h3>
             </div>
@@ -477,8 +477,8 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                     1
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-white">주차장 검색 & 실시간 요금 확인</h4>
-                    <p className="text-xs text-slate-300 mt-1">
+                    <h4 className="text-sm font-bold text-white break-keep">주차장 검색 & 실시간 요금 확인</h4>
+                    <p className="text-xs text-slate-300 mt-1 break-keep">
                       현재 위치 주변 목적지 주차장의 잔여 주차면 수와 시간당 요금 정보를 앱에서 즉시 비교.
                     </p>
                   </div>
@@ -489,8 +489,8 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                     2
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-white">모바일 선결제 & 자동 출차</h4>
-                    <p className="text-xs text-slate-300 mt-1">
+                    <h4 className="text-sm font-bold text-white break-keep">모바일 선결제 & 자동 출차</h4>
+                    <p className="text-xs text-slate-300 mt-1 break-keep">
                       출차 전 모바일 결제로 사전정산 완료 시, 차단기가 번호판을 자동 인식하여 무정차 통과.
                     </p>
                   </div>
@@ -501,8 +501,8 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                     3
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-white">정기권 신청 & 무단주차 단속</h4>
-                    <p className="text-xs text-slate-300 mt-1">
+                    <h4 className="text-sm font-bold text-white break-keep">정기권 신청 & 무단주차 단속</h4>
+                    <p className="text-xs text-slate-300 mt-1 break-keep">
                       월정액 주차 신청, 자동 계약 갱신, 입주민 할인 등록 및 미등록 무단주차 자동 단속 처리.
                     </p>
                   </div>
@@ -513,8 +513,8 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                     4
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-white">전자세금계산서 자동 발행</h4>
-                    <p className="text-xs text-slate-300 mt-1">
+                    <h4 className="text-sm font-bold text-white break-keep">전자세금계산서 자동 발행</h4>
+                    <p className="text-xs text-slate-300 mt-1 break-keep">
                       법인 및 개인 사업자 주차 요금 증빙을 위한 전자세금계산서 자동 이메일/국세청 연동.
                     </p>
                   </div>
@@ -529,9 +529,9 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                 />
                 <button
                   onClick={() => openPdfAtPage(12)}
-                  className="absolute bottom-4 right-4 bg-navy-950/90 text-emeraldGreen-400 border border-emeraldGreen-500/40 text-xs px-3 py-1.5 rounded-lg flex items-center font-bold"
+                  className="absolute bottom-4 right-4 bg-navy-950/90 text-emeraldGreen-400 border border-emeraldGreen-500/40 text-xs px-3 py-1.5 rounded-lg flex items-center font-bold whitespace-nowrap"
                 >
-                  <Eye className="w-3.5 h-3.5 mr-1" />
+                  <Eye className="w-3.5 h-3.5 mr-1 shrink-0" />
                   <span>12P 모바일 흐름도 원본</span>
                 </button>
               </div>
@@ -584,13 +584,13 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
 
               {/* Simulation Controls */}
               <div className="space-y-3">
-                <span className="text-xs text-slate-400 font-medium">차량 번호판 스캔 시뮬레이션:</span>
+                <span className="text-xs text-slate-400 font-medium block break-keep">차량 번호판 스캔 시뮬레이션:</span>
                 <div className="flex flex-wrap gap-2">
                   {samplePlates.map((plate) => (
                     <button
                       key={plate}
                       onClick={() => { setPlateNumber(plate); simulateScan(); }}
-                      className={`text-xs font-bold px-3 py-2 rounded-lg border transition-all ${
+                      className={`text-xs font-bold px-3 py-2 rounded-lg border transition-all whitespace-nowrap ${
                         plateNumber === plate
                           ? 'bg-emeraldGreen-500 text-navy-950 border-emeraldGreen-400'
                           : 'bg-navy-900 text-slate-300 border-navy-700 hover:border-emeraldGreen-500/40'
@@ -601,9 +601,9 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                   ))}
                   <button
                     onClick={simulateScan}
-                    className="bg-navy-800 hover:bg-navy-700 text-emeraldGreen-400 text-xs font-bold px-4 py-2 rounded-lg border border-emeraldGreen-500/30 flex items-center"
+                    className="bg-navy-800 hover:bg-navy-700 text-emeraldGreen-400 text-xs font-bold px-4 py-2 rounded-lg border border-emeraldGreen-500/30 flex items-center whitespace-nowrap shrink-0"
                   >
-                    <RefreshCw className={`w-3.5 h-3.5 mr-1 ${isScanning ? 'animate-spin' : ''}`} />
+                    <RefreshCw className={`w-3.5 h-3.5 mr-1 shrink-0 ${isScanning ? 'animate-spin' : ''}`} />
                     <span>AI 스캔 실행</span>
                   </button>
                 </div>
@@ -614,10 +614,10 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
 
           {/* Consultation & Spec Callout */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="glass-card p-6 rounded-2xl border border-navy-700 space-y-3">
-              <span className="text-xs font-bold text-emeraldGreen-400 uppercase tracking-wider">주차 시스템 구축 견적</span>
-              <h3 className="text-xl font-extrabold text-white">현장 규모별 맞춤 설계 & 무료 맞춤 컨설팅</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
+            <div className="glass-card p-5 sm:p-6 rounded-2xl border border-navy-700 space-y-3">
+              <span className="text-xs font-bold text-emeraldGreen-400 uppercase tracking-wider block">주차 시스템 구축 견적</span>
+              <h3 className="text-lg sm:text-xl font-extrabold text-white break-keep">현장 규모별 맞춤 설계 & 무료 맞춤 컨설팅</h3>
+              <p className="text-xs text-slate-300 leading-relaxed break-keep">
                 타운하우스, 주상복합 빌딩, 대형 쇼핑몰, 병원 및 주차타워까지 최적의 차단기 수량과 무인정산기, 관제 소프트웨어 구성을 안내해 드립니다.
               </p>
             </div>
@@ -625,23 +625,23 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             <div className="space-y-2.5">
               <div className="flex items-center space-x-3 p-3 rounded-xl bg-navy-900/60 border border-navy-800">
                 <CheckCircle2 className="w-4 h-4 text-emeraldGreen-400 shrink-0" />
-                <span className="text-xs text-slate-200">한국 SHEYONE & 아마노 기술 제휴 공식 보증</span>
+                <span className="text-xs text-slate-200 break-keep">한국 SHEYONE & 아마노 기술 제휴 공식 보증</span>
               </div>
               <div className="flex items-center space-x-3 p-3 rounded-xl bg-navy-900/60 border border-navy-800">
                 <CheckCircle2 className="w-4 h-4 text-emeraldGreen-400 shrink-0" />
-                <span className="text-xs text-slate-200">베트남 현지 24/7 출동 A/S 및 관제망 구축</span>
+                <span className="text-xs text-slate-200 break-keep">베트남 현지 24/7 출동 A/S 및 관제망 구축</span>
               </div>
               <div className="flex items-center space-x-3 p-3 rounded-xl bg-navy-900/60 border border-navy-800">
                 <CheckCircle2 className="w-4 h-4 text-emeraldGreen-400 shrink-0" />
-                <span className="text-xs text-slate-200">기존 차단기/주차장 시스템 호환 및 교체 가능</span>
+                <span className="text-xs text-slate-200 break-keep">기존 차단기/주차장 시스템 호환 및 교체 가능</span>
               </div>
             </div>
 
             <button
               onClick={() => onOpenConsult('parking')}
-              className="w-full bg-emeraldGreen-500 hover:bg-emeraldGreen-600 text-navy-950 font-extrabold text-sm py-3.5 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2"
+              className="w-full bg-emeraldGreen-500 hover:bg-emeraldGreen-600 text-navy-950 font-extrabold text-xs sm:text-sm py-3.5 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 whitespace-nowrap"
             >
-              <Car className="w-4 h-4" />
+              <Car className="w-4 h-4 shrink-0" />
               <span>스마트 주차 시스템 맞춤 견적 신청</span>
             </button>
           </div>
