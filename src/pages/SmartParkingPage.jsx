@@ -23,7 +23,7 @@ export default function SmartParkingPage({ t }) {
     {
       src: '/images/parking/hero/1.png',
       tag: 'AI SMART GATE',
-      title: 'SHEYONE AMANO AI 스마트 주차 무인 게이트',
+      title: 'BEST Winner AI 스마트 주차 무인 게이트',
       desc: '0.8초 초고속 바(Bar) 차단기와 차체 충격 방지 인텔리전트 모터 내장.'
     },
     {

@@ -98,7 +98,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             </div>
             
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-              SHEYONE AMANO 스마트 주차 시스템
+              BEST Winner 스마트 주차 시스템 VN
             </h2>
             <p className="text-sm sm:text-base text-slate-300 max-w-3xl leading-relaxed">
               AI 딥러닝 번호판 인식(LPR), 스마트 무인 차단기, ACRM 24시간 원격 관제 및 모바일 결제 플랫폼이 통합된 최첨단 주차 관리 솔루션입니다.
