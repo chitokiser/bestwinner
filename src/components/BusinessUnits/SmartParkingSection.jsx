@@ -42,7 +42,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
 
   // Full 20-Page Catalog Metadata from SHEYONE_AMANO_스마트주차_F.pdf
   const catalogPages = [
-    { page: 1, title: '표지: SHEYONE x BEST Winner PARKING HUB', desc: 'AI 스마트 주차 플랫폼 공식 브로슈어', src: '/images/parking/docu/page_1.png' },
+    { page: 1, title: '표지: BEST Winner PARKING HUB', desc: 'AI 스마트 주차 플랫폼 공식 브로슈어', src: '/images/parking/docu/page_1.png' },
     { page: 2, title: '목차 & 플랫폼 개요', desc: '회사 철학, 서비스 라인업 및 운영 구조', src: '/images/parking/docu/page_2.png' },
     { page: 3, title: '스마트 주차 인프라 비전', desc: '데이터 기반 미래형 스마트 주차 솔루션 기업', src: '/images/parking/docu/page_3.png' },
     { page: 4, title: '비전 & 미션 (Vision & Mission)', desc: '실시간 모니터링과 데이터 관리를 통한 주차 운영 자동화', src: '/images/parking/docu/page_4.png' },
@@ -61,7 +61,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
     { page: 17, title: '운영 데이터 & 분석 보고서', desc: '기간별 매출, 입출차 트렌드 및 장애 이력 데이터 분석', src: '/images/parking/docu/page_17.png' },
     { page: 18, title: '현장 & 사용자 관리 백오피스', desc: '월정액 차량 등록, 할인권 발행 및 사용자 권한 관리', src: '/images/parking/docu/page_18.png' },
     { page: 19, title: '24시간 통합관제센터 실물 운영', desc: 'BEST Winner 파킹 관제 전담 요원 24시간 실시간 관제 현장', src: '/images/parking/docu/page_19.png' },
-    { page: 20, title: 'SHEYONE SMART PARKING 엔딩', desc: '미래 주차 문화를 선도하는 스마트 주차 파트너', src: '/images/parking/docu/page_20.png' }
+    { page: 20, title: 'BEST Winner SMART PARKING 엔딩', desc: '미래 주차 문화를 선도하는 스마트 주차 파트너', src: '/images/parking/docu/page_20.png' }
   ];
 
   const simulateScan = () => {
@@ -93,7 +93,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                 <span>BUSINESS UNIT ③</span>
               </span>
               <span className="text-xs text-gold-400 font-mono bg-navy-950 px-2.5 py-1 rounded border border-navy-700 whitespace-nowrap">
-                SHEYONE x BEST Winner KOREA & VIETNAM
+                BEST Winner KOREA & VIETNAM
               </span>
             </div>
             
@@ -625,7 +625,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             <div className="space-y-2.5">
               <div className="flex items-center space-x-3 p-3 rounded-xl bg-navy-900/60 border border-navy-800">
                 <CheckCircle2 className="w-4 h-4 text-emeraldGreen-400 shrink-0" />
-                <span className="text-xs text-slate-200 break-keep">한국 SHEYONE & BEST Winner 기술 제휴 공식 보증</span>
+                <span className="text-xs text-slate-200 break-keep">BEST Winner 기술 제휴 공식 보증</span>
               </div>
               <div className="flex items-center space-x-3 p-3 rounded-xl bg-navy-900/60 border border-navy-800">
                 <CheckCircle2 className="w-4 h-4 text-emeraldGreen-400 shrink-0" />
@@ -659,7 +659,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
               <FileText className="w-5 h-5 text-emeraldGreen-400" />
               <div>
                 <h3 className="text-base sm:text-lg font-bold text-white">
-                  SHEYONE x BEST Winner 스마트주차 통합 공식 카탈로그
+                  BEST Winner 스마트주차 통합 공식 카탈로그
                 </h3>
                 <p className="text-xs text-slate-400">
                   페이지 {pdfCurrentPage} / 20 — {catalogPages[pdfCurrentPage - 1]?.title}

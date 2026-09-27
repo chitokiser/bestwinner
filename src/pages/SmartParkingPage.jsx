@@ -129,7 +129,7 @@ export default function SmartParkingPage({ t }) {
                 </span>
                 <span className="inline-flex items-center space-x-1 text-xs font-bold text-gold-400 bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/30 whitespace-nowrap">
                   <Sparkles className="w-3 h-3 mr-1" />
-                  <span>SHEYONE x BEST Winner 공식 솔루션</span>
+                  <span>BEST Winner 스마트 주차 공식 솔루션</span>
                 </span>
               </div>
 
