@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import WaterproofingSection from '../components/BusinessUnits/WaterproofingSection';
 import ContactUs from '../components/ContactUs';
-import { Droplets, ArrowRight } from 'lucide-react';
+import { Droplets, ArrowRight, Play } from 'lucide-react';
 
 export default function WaterproofingPage({ t }) {
   return (
@@ -32,7 +32,19 @@ export default function WaterproofingPage({ t }) {
               </p>
             </div>
             
-            <div className="mt-4 md:mt-0 flex space-x-3">
+            <div className="mt-4 md:mt-0 flex flex-wrap gap-2.5 items-center">
+              <a 
+                href="#promo-video" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  const el = document.getElementById('promo-video');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl border border-red-500/40 flex items-center space-x-1.5 shadow-md transition-all"
+              >
+                <Play className="w-4 h-4 fill-white" />
+                <span>홍보 동영상 보기</span>
+              </a>
               <Link 
                 to="/business/interior" 
                 className="bg-navy-800 hover:bg-navy-700 text-slate-200 text-xs font-semibold px-4 py-2.5 rounded-xl border border-navy-700 flex items-center"

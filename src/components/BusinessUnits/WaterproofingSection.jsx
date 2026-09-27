@@ -28,7 +28,9 @@ import {
   Download,
   Flame,
   Zap,
-  ChevronRight
+  ChevronRight,
+  Play,
+  Video
 } from 'lucide-react';
 
 export default function WaterproofingSection({ t, onOpenConsult }) {
@@ -234,6 +236,18 @@ export default function WaterproofingSection({ t, onOpenConsult }) {
 
           <div className="mt-6 md:mt-0 flex flex-wrap gap-3">
             <a
+              href="#promo-video"
+              onClick={(e) => {
+                e.preventDefault();
+                const el = document.getElementById('promo-video');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="bg-red-600 hover:bg-red-500 text-white font-extrabold px-5 py-3.5 rounded-xl border border-red-500/40 text-xs flex items-center space-x-2 transition-all shadow-lg"
+            >
+              <Play className="w-4 h-4 fill-white" />
+              <span>공식 홍보 동영상 시청</span>
+            </a>
+            <a
               href="/docu/Waterproofing/방수액한글버전(수정)_1.pdf"
               target="_blank"
               rel="noopener noreferrer"
@@ -329,6 +343,45 @@ export default function WaterproofingSection({ t, onOpenConsult }) {
               </div>
             </div>
 
+          </div>
+        </div>
+
+        {/* Official YouTube Promotional Video Showcase Section */}
+        <div id="promo-video" className="glass-card-chrome p-6 sm:p-10 rounded-3xl border border-cyan-500/40 mb-14 shadow-2xl overflow-hidden relative">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div>
+              <span className="inline-flex items-center space-x-2 bg-red-500/20 text-red-400 px-3.5 py-1.5 rounded-full text-xs font-extrabold border border-red-500/40 mb-2">
+                <Play className="w-3.5 h-3.5 fill-red-400" />
+                <span>OFFICIAL PROMOTIONAL VIDEO</span>
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-black text-white">
+                K1 특수 초강력 방수제 공식 홍보 동영상
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-300 mt-1">
+                20년 한국 기술 원료 × 베트남 현지 공장 직접 생산 10년 보장 방수 솔루션 현장 시공 및 시연 영상
+              </p>
+            </div>
+
+            <a
+              href="https://youtu.be/EGUJ_j2HPyI"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-red-600 hover:bg-red-500 text-white font-extrabold px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 transition-all shrink-0 w-fit shadow-md"
+            >
+              <span>YouTube 앱에서 보기</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Embedded YouTube Player Container */}
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-cyan-500/40 shadow-2xl bg-black">
+            <iframe
+              src="https://www.youtube.com/embed/EGUJ_j2HPyI?autoplay=0&rel=0"
+              title="BEST WINNER K1 특수 초강력 방수제 홍보 동영상"
+              className="absolute inset-0 w-full h-full border-0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
 
