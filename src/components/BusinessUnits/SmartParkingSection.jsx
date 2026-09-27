@@ -625,7 +625,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             <div className="space-y-2.5">
               <div className="flex items-center space-x-3 p-3 rounded-xl bg-navy-900/60 border border-navy-800">
                 <CheckCircle2 className="w-4 h-4 text-emeraldGreen-400 shrink-0" />
-                <span className="text-xs text-slate-200 break-keep">BEST Winner 기술 제휴 공식 보증</span>
+                <span className="text-xs text-slate-200 break-keep">한국 AMANO & BEST Winner 기술 제휴 공식 보증</span>
               </div>
               <div className="flex items-center space-x-3 p-3 rounded-xl bg-navy-900/60 border border-navy-800">
                 <CheckCircle2 className="w-4 h-4 text-emeraldGreen-400 shrink-0" />
