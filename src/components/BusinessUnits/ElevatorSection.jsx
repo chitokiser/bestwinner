@@ -38,7 +38,8 @@ import {
   Filter,
   Grid,
   Image as ImageIcon,
-  FileDown
+  FileDown,
+  Play
 } from 'lucide-react';
 
 export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) {
@@ -654,9 +655,47 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                 {st.value}
               </span>
               <span className="text-xs font-bold text-white mt-1 block">{st.label}</span>
-              <span className="text-[11px] text-slate-400 mt-0.5 block font-normal">{st.desc}</span>
             </div>
           ))}
+        </div>
+
+        {/* Official YouTube Promotional Video Showcase Section */}
+        <div id="promo-video" className="glass-card-chrome p-6 sm:p-10 rounded-3xl border border-gold-500/40 mb-14 shadow-2xl overflow-hidden relative">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div>
+              <span className="inline-flex items-center space-x-2 bg-red-500/20 text-red-400 px-3.5 py-1.5 rounded-full text-xs font-extrabold border border-red-500/40 mb-2">
+                <Play className="w-3.5 h-3.5 fill-red-400" />
+                <span>OFFICIAL PROMOTIONAL VIDEO</span>
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-black text-white">
+                BEST WINNER ELEVATOR VN 공식 홍보 동영상
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-300 mt-1">
+                한국 거창승강기밸리 기술 네트워크 × 베트남 하노이 3,000m² 직영 공장 생산 & 180대+ 준공 현장 소개 영상
+              </p>
+            </div>
+
+            <a
+              href="https://youtu.be/1ljonAClvok"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-red-600 hover:bg-red-500 text-white font-extrabold px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 transition-all shrink-0 w-fit shadow-md"
+            >
+              <span>YouTube 앱에서 보기</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Embedded YouTube Player Container */}
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-gold-500/40 shadow-2xl bg-black">
+            <iframe
+              src="https://www.youtube.com/embed/1ljonAClvok?autoplay=0&rel=0"
+              title="BEST WINNER ELEVATOR VN 공식 홍보 동영상"
+              className="absolute inset-0 w-full h-full border-0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
         </div>
 
         {/* Navigation Sub-Tabs (Overview / Library / Parts Lifecycle / Korea Alliance) */}

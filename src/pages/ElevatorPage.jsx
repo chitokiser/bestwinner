@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ElevatorSection from '../components/BusinessUnits/ElevatorSection';
 import ElevatorCalculator from '../components/BusinessUnits/ElevatorCalculator';
 import ContactUs from '../components/ContactUs';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Calculator, Download, BookOpen } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Calculator, Download, BookOpen, Play } from 'lucide-react';
 
 export default function ElevatorPage({ t }) {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
@@ -37,6 +37,18 @@ export default function ElevatorPage({ t }) {
             </div>
             
             <div className="mt-4 md:mt-0 flex flex-wrap gap-2.5">
+              <a
+                href="#promo-video"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const el = document.getElementById('promo-video');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="bg-red-600 hover:bg-red-500 text-white text-xs font-extrabold px-4 py-2.5 rounded-xl border border-red-500/40 flex items-center space-x-1.5 shadow-md transition-all"
+              >
+                <Play className="w-4 h-4 fill-white" />
+                <span>홍보 동영상 보기</span>
+              </a>
               <button
                 onClick={() => {
                   setDefaultSubTab('library');
