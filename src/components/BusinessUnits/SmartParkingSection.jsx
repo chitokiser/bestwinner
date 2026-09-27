@@ -23,7 +23,12 @@ import {
   Clock,
   Server,
   Building,
-  Check
+  Check,
+  TrendingUp,
+  PieChart,
+  MapPin,
+  Briefcase,
+  Sparkles
 } from 'lucide-react';
 
 export default function SmartParkingSection({ t, onOpenConsult }) {
@@ -33,12 +38,68 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
   const [gateStatus, setGateStatus] = useState('CLOSED'); // CLOSED, SCANNING..., ACCESS GRANTED (OPEN)
   const [assignedSpot, setAssignedSpot] = useState('B2-108');
 
-  // Active Tab State: 'tech' | 'equipment' | 'backoffice' | 'mobile'
-  const [activeTab, setActiveTab] = useState('tech');
+  // Active Tab State: 'bizplan' | 'tech' | 'equipment' | 'backoffice' | 'mobile'
+  const [activeTab, setActiveTab] = useState('bizplan');
 
-  // PDF Viewer Modal State
+  // Catalog PDF Viewer Modal State (20 Pages)
   const [pdfViewerOpen, setPdfViewerOpen] = useState(false);
   const [pdfCurrentPage, setPdfCurrentPage] = useState(1);
+
+  // Vietnam Parking Investment Business Plan Modal State (43 Pages)
+  const [bizPlanModalOpen, setBizPlanModalOpen] = useState(false);
+  const [bizPlanCurrentPage, setBizPlanCurrentPage] = useState(1);
+
+  // Full 43-Page Vietnam Parking Business Investment Plan Metadata
+  const bizPlanPages = [
+    { page: 1, title: '베트남 주차장 투자 사업계획서 표지', desc: 'BEST Winner 베트남 스마트 주차 인프라 투자 마스터플랜 2026', src: '/images/parking/biz_plan/page_1.png' },
+    { page: 2, title: '목차 및 사업 요약 (Executive Summary)', desc: '베트남 주차 시장 현황, 투자 수익성 및 마스터플랜 목차', src: '/images/parking/biz_plan/page_2.png' },
+    { page: 3, title: '베트남 거시경제 및 거주 환경 분석', desc: 'GDP 성장률 7.52% 고속 성장과 하노이/호치민 도시화', src: '/images/parking/biz_plan/page_3.png' },
+    { page: 4, title: '베트남 인구 & 모빌리티 보유 현황', desc: '인구 1억 200만명, 승용차 680만대, 오토바이 6,500만대 급증', src: '/images/parking/biz_plan/page_4.png' },
+    { page: 5, title: '하노이/호치민 도심 주차 난 실태', desc: '주차 수요 대비 공급률 10% 미만의 심각한 주차 난', src: '/images/parking/biz_plan/page_5.png' },
+    { page: 6, title: '베트남 2030 주차장 확충 정책', desc: '하노이 마스터플랜 2030 법안 및 주차 수용 의무화', src: '/images/parking/biz_plan/page_6.png' },
+    { page: 7, title: '스마트 주차 인프라 도입의 필요성', desc: '무인 AI LPR 시스템 도입으로 수입 누수 방지 및 운영 최적화', src: '/images/parking/biz_plan/page_7.png' },
+    { page: 8, title: '하노이 1,700개소 주차장 신설 인프라 타겟', desc: '2030년까지 도심 핵심 구역 주차 타워 및 주차장 확보', src: '/images/parking/biz_plan/page_8.png' },
+    { page: 9, title: 'BEST Winner 주차 사업 5대 핵심 경쟁력', desc: '안정적 현금 흐름, 토지 가치 상승, 70% 높은 영업이익률', src: '/images/parking/biz_plan/page_9.png' },
+    { page: 10, title: '투자 & 운영 모델 (BOT / BOO / 위탁)', desc: '민관협력(PPP), BOT 장기 임대 운영 및 무인 위탁 사업', src: '/images/parking/biz_plan/page_10.png' },
+    { page: 11, title: '핵심 투자 타겟 01: 스타레이크 시티 (Starlake City)', desc: '대우건설/THT 개발 63.6만평 (2,076,000㎡) 신도시 CBD 주차 타겟', src: '/images/parking/biz_plan/page_11.png' },
+    { page: 12, title: '스타레이크 시티 정부부처 이전 및 입지', desc: '16개 행정부처 이전 및 고급 주거/상업지구 주차 거점', src: '/images/parking/biz_plan/page_12.png' },
+    { page: 13, title: '스타레이크 주차 빌딩 및 스마트 게이트 설계', desc: '스마트 주차타워 랜드마크 개발안', src: '/images/parking/biz_plan/page_13.png' },
+    { page: 14, title: '핵심 투자 타겟 02: 파크시티 하노이 (ParkCity)', desc: '77.4 Ha 대규모 타운십 7,000세대 스마트 주차 인프라', src: '/images/parking/biz_plan/page_14.png' },
+    { page: 15, title: '파크시티 타운센터 주차 통합 관제', desc: '쇼핑몰 및 아파트 단지 무인 정산 인프라 구축', src: '/images/parking/biz_plan/page_15.png' },
+    { page: 16, title: '핵심 투자 타겟 03: 하노이 BIDV 타워 (BIDV Tower)', desc: '하노이 25층 최고급 오피스 프라임 주차 무인화', src: '/images/parking/biz_plan/page_16.png' },
+    { page: 17, title: '핵심 투자 타겟 04: 롯데센터 하노이 (Lotte Center)', desc: '65층 랜드마크 (승용차 430대, 이륜차 4,000대) 월 8,280만원 매출', src: '/images/parking/biz_plan/page_17.png' },
+    { page: 18, title: '핵심 투자 타겟 05: 롯데몰 웨스트레이크 하노이', desc: '하노이 최대 쇼핑몰 (승용차 1,719대, 이륜차 6,271대) 월 2억원 매출', src: '/images/parking/biz_plan/page_18.png' },
+    { page: 19, title: '베트남 주차 요금 체계 및 수익 구조', desc: '시간제, 월정액, 차량/이륜차 차등 요금 테이블', src: '/images/parking/biz_plan/page_19.png' },
+    { page: 20, title: '무인 관제 도입에 따른 인건비 60% 절감', desc: '인건비 절감 및 24시간 실시간 무인 요금 징수 효과', src: '/images/parking/biz_plan/page_20.png' },
+    { page: 21, title: 'EV 충전소 결합 부가 수익 모델', desc: '전기차 급속 충전 인프라 연동 주차 패키지', src: '/images/parking/biz_plan/page_21.png' },
+    { page: 22, title: '모바일 앱 기반 주차 사전 예약 및 결제', desc: '운전자 모바일 앱으로 주변 주차장 혜택 연동', src: '/images/parking/biz_plan/page_22.png' },
+    { page: 23, title: '입지 분석 및 주차장 부지 타당성 검토', desc: '상권, 유동 차량, 도로 정체 지수 입지 평가', src: '/images/parking/biz_plan/page_23.png' },
+    { page: 24, title: 'CAPEX & OPEX 초기 투자 및 운영비용', desc: '차단기, LPR 카메라, 서버 구축비 시뮬레이션', src: '/images/parking/biz_plan/page_24.png' },
+    { page: 25, title: '손익분기점 (BEP) 및 투자금 회수 분기', desc: '2~3년 내 손익분기 도달 및 연 20%+ 손익률', src: '/images/parking/biz_plan/page_25.png' },
+    { page: 26, title: '리스크 관리 및 대관 허가 가이드', desc: '베트남 기획투자부(MPI) 및 교통부 인허가 가이드', src: '/images/parking/biz_plan/page_26.png' },
+    { page: 27, title: '하노이 공영 주차장 위탁 관리 사업', desc: '지자체 협력 공용 도로 주차 무인화 사업', src: '/images/parking/biz_plan/page_27.png' },
+    { page: 28, title: '호치민 1군/2군 CBD 확장 로드맵', desc: '남부 핵심 광역 도시 주차 거점 확대', src: '/images/parking/biz_plan/page_28.png' },
+    { page: 29, title: 'BEST Winner 솔루션 차별화 경쟁력', desc: '하드웨어, 소프트웨어, 24시간 원격 관제 통합 제공', src: '/images/parking/biz_plan/page_29.png' },
+    { page: 30, title: '스마트 주차 하드웨어 사양서', desc: '고속 스마트 게이트 및 AI LPR 듀얼 센서 사양', src: '/images/parking/biz_plan/page_30.png' },
+    { page: 31, title: '베트남 로컬 PG 연동 (Momo, ZaloPay, ShopeePay)', desc: '간편 결제 QR 통합 징수 솔루션', src: '/images/parking/biz_plan/page_31.png' },
+    { page: 32, title: '전자세금계산서 (E-Tax) 실시간 국세청 발행', desc: '베트남 전자 세무 증빙 수속 자동화', src: '/images/parking/biz_plan/page_32.png' },
+    { page: 33, title: '24시간 무인 관제 센터 운영 프로세스', desc: '비상 인터폰 튜닝 및 원격 차단기 제어망', src: '/images/parking/biz_plan/page_33.png' },
+    { page: 34, title: '단계별 추진 일정 (Phase 1 ~ Phase 4)', desc: '사이트 선정부터 준공, 무인 관제 가동 일정', src: '/images/parking/biz_plan/page_34.png' },
+    { page: 35, title: '주차장 투자 펀드 모집 및 사업 구조', desc: '지분 분배 및 정기 수익 배당 파트너십', src: '/images/parking/biz_plan/page_35.png' },
+    { page: 36, title: '베트남 PPP 민관합작 주차 인프라', desc: '정부 도시 개발 스마트시티 주차 프로젝트', src: '/images/parking/biz_plan/page_36.png' },
+    { page: 37, title: '현지 법인 (JV) 설립 및 세무 법률', desc: '투자 자본금 신고 및 라이선스 취득 절차', src: '/images/parking/biz_plan/page_37.png' },
+    { page: 38, title: '운영 실적 시뮬레이션 및 데이터 보고서', desc: '일별/월별 입출차 트렌드 및 주차 공간 활용률', src: '/images/parking/biz_plan/page_38.png' },
+    { page: 39, title: '부동산 자산 가치 재평가 (Asset Uplift)', desc: '스마트 주차 시설 도입 시 부동산 가치 프리미엄', src: '/images/parking/biz_plan/page_39.png' },
+    { page: 40, title: 'ESG 친환경 스마트 주차 인프라', desc: '공공 공기질 개선 및 주차 대기시간 단축', src: '/images/parking/biz_plan/page_40.png' },
+    { page: 41, title: 'BEST Winner 조직도 및 현지 기술지원 팀', desc: '하노이/호치민 현지 상주 엔지니어 인프라', src: '/images/parking/biz_plan/page_41.png' },
+    { page: 42, title: '자주 묻는 질문 (FAQ) & 투자 가이드', desc: '베트남 주차장 투자 주요 문의사항 및 답변', src: '/images/parking/biz_plan/page_42.png' },
+    { page: 43, title: '베트남 최고 스마트 주차 파트너 BEST Winner', desc: '미래 모빌리티 스마트 주차 공동 사업 승리 비전', src: '/images/parking/biz_plan/page_43.png' }
+  ];
+
+  const openBizPlanAtPage = (pageNum) => {
+    setBizPlanCurrentPage(pageNum);
+    setBizPlanModalOpen(true);
+  };
 
   // Full 20-Page Catalog Metadata from SHEYONE_AMANO_스마트주차_F.pdf
   const catalogPages = [
@@ -105,23 +166,32 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             </p>
           </div>
 
-          {/* Catalog PDF Controls */}
+          {/* Investment Plan & Catalog Controls */}
           <div className="mt-6 md:mt-0 flex flex-wrap gap-2.5">
+            <button
+              onClick={() => openBizPlanAtPage(1)}
+              className="bg-gold-500/20 hover:bg-gold-500/30 text-gold-300 border border-gold-500/40 font-extrabold px-4 py-3 rounded-xl shadow-lg transition-all flex items-center text-xs sm:text-sm whitespace-nowrap"
+            >
+              <Briefcase className="w-4 h-4 mr-1.5 text-gold-400 shrink-0" />
+              <span>사업계획서 뷰어 (43P)</span>
+            </button>
+
+            <a
+              href="/docu/park/BEST_Winner_Vietnam_Parking_Investment_Plan_2026.pdf"
+              download="BEST_Winner_Vietnam_Parking_Investment_Plan_2026.pdf"
+              className="bg-gold-500 hover:bg-gold-400 text-navy-950 font-black px-4 py-3 rounded-xl shadow-lg transition-all flex items-center text-xs sm:text-sm whitespace-nowrap"
+            >
+              <Download className="w-4 h-4 mr-1.5 shrink-0" />
+              <span>사업계획서 PDF 받기</span>
+            </a>
+
             <button
               onClick={() => openPdfAtPage(1)}
               className="bg-navy-800 hover:bg-navy-700 text-emeraldGreen-400 border border-emeraldGreen-500/30 font-bold px-4 py-3 rounded-xl shadow-lg transition-all flex items-center text-xs sm:text-sm whitespace-nowrap"
             >
               <Eye className="w-4 h-4 mr-1.5 text-emeraldGreen-400 shrink-0" />
-              <span>카탈로그 뷰어 (전 20P)</span>
+              <span>시스템 카탈로그 (20P)</span>
             </button>
-            <a
-              href="/docu/park/SHEYONE_AMANO_Smart_Parking_Catalog_2026.pdf"
-              download="SHEYONE_AMANO_Smart_Parking_Catalog_2026.pdf"
-              className="bg-emeraldGreen-500 hover:bg-emeraldGreen-600 text-navy-950 font-bold px-4 py-3 rounded-xl shadow-lg transition-all flex items-center text-xs sm:text-sm whitespace-nowrap"
-            >
-              <Download className="w-4 h-4 mr-1.5 shrink-0" />
-              <span>PDF 브로슈어 다운로드</span>
-            </a>
           </div>
         </div>
 
@@ -171,6 +241,18 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
         {/* Feature Navigation Tabs (Scrollable on Mobile) */}
         <div className="flex items-center justify-start sm:justify-center gap-2 mb-8 bg-navy-950 p-2 rounded-2xl border border-navy-800 overflow-x-auto whitespace-nowrap scrollbar-none max-w-full">
           <button
+            onClick={() => setActiveTab('bizplan')}
+            className={`px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-1.5 shrink-0 whitespace-nowrap ${
+              activeTab === 'bizplan'
+                ? 'bg-gold-500 text-navy-950 shadow-lg'
+                : 'text-slate-300 hover:bg-navy-900 hover:text-white'
+            }`}
+          >
+            <Briefcase className="w-4 h-4 shrink-0" />
+            <span>01. 베트남 주차장 투자 사업계획서 (43P)</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('tech')}
             className={`px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-1.5 shrink-0 whitespace-nowrap ${
               activeTab === 'tech'
@@ -179,7 +261,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             }`}
           >
             <Layers className="w-4 h-4 shrink-0" />
-            <span>01. 핵심 기술 4대 파트</span>
+            <span>02. 핵심 기술 4대 파트</span>
           </button>
 
           <button
@@ -191,7 +273,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             }`}
           >
             <Sliders className="w-4 h-4 shrink-0" />
-            <span>02. BEST Winner 핵심 장비 라인업</span>
+            <span>03. 핵심 장비 라인업</span>
           </button>
 
           <button
@@ -203,7 +285,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             }`}
           >
             <Monitor className="w-4 h-4 shrink-0" />
-            <span>03. ACRM 무인관제 & 백오피스</span>
+            <span>04. ACRM 무인관제 & 백오피스</span>
           </button>
 
           <button
@@ -215,9 +297,294 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             }`}
           >
             <Smartphone className="w-4 h-4 shrink-0" />
-            <span>04. 모바일 앱 & 이용 서비스</span>
+            <span>05. 모바일 앱 서비스</span>
           </button>
         </div>
+
+                {/* Tab 0: Vietnam Parking Investment Plan (43 Pages) */}
+        {activeTab === 'bizplan' && (
+          <div className="space-y-10 bg-navy-950/80 p-6 sm:p-10 rounded-3xl border border-gold-500/30">
+            
+            {/* Business Plan Banner Header */}
+            <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-6 pb-6 border-b border-navy-800">
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-bold text-gold-400 bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/30 uppercase tracking-widest whitespace-nowrap">
+                    2026 VIETNAM PARKING INVESTMENT PLAN (43 PAGES)
+                  </span>
+                  <span className="text-xs text-emeraldGreen-400 bg-navy-900 px-2.5 py-1 rounded border border-navy-700 whitespace-nowrap font-mono">
+                    Official Document 260222
+                  </span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight break-keep">
+                  베트남 스마트 주차장 <span className="text-gold-400">투자 사업계획서</span> 마스터플랜
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed break-keep">
+                  베트남 1억 200만 인구와 680만대 승용차 급증으로 인한 하노이/호치민 주차 난 극복을 위해, BEST Winner가 제안하는 43페이지 분량의 주차장 개발·투자 및 24시간 무인 관제 통합 전략입니다.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-3 shrink-0">
+                <button
+                  onClick={() => openBizPlanAtPage(1)}
+                  className="bg-gold-500 hover:bg-gold-400 text-navy-950 font-black px-5 py-3 rounded-xl shadow-lg transition-all flex items-center text-xs sm:text-sm whitespace-nowrap"
+                >
+                  <Eye className="w-4 h-4 mr-1.5 shrink-0" />
+                  <span>전체 43페이지 슬라이드 뷰어</span>
+                </button>
+                <a
+                  href="/docu/park/BEST_Winner_Vietnam_Parking_Investment_Plan_2026.pdf"
+                  download="BEST_Winner_Vietnam_Parking_Investment_Plan_2026.pdf"
+                  className="bg-navy-900 hover:bg-navy-800 text-gold-300 border border-gold-500/40 font-bold px-5 py-3 rounded-xl shadow-lg transition-all flex items-center text-xs sm:text-sm whitespace-nowrap"
+                >
+                  <Download className="w-4 h-4 mr-1.5 shrink-0 text-gold-400" />
+                  <span>PDF 풀버전 다운로드</span>
+                </a>
+              </div>
+            </div>
+
+            {/* 4 Macro Market Stats Cards */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="bg-navy-900/90 border border-navy-700 rounded-2xl p-4 sm:p-5">
+                <div className="text-gold-400 font-extrabold text-xs uppercase tracking-wider mb-1 flex items-center gap-1">
+                  <TrendingUp className="w-3.5 h-3.5" />
+                  <span>GDP 성장률</span>
+                </div>
+                <div className="text-2xl sm:text-3xl font-black text-white font-mono">7.52%</div>
+                <p className="text-[11px] text-slate-400 mt-1 break-keep">동남아 최고 수준의 거시경제 지속 고속 성장</p>
+              </div>
+
+              <div className="bg-navy-900/90 border border-navy-700 rounded-2xl p-4 sm:p-5">
+                <div className="text-emeraldGreen-400 font-extrabold text-xs uppercase tracking-wider mb-1 flex items-center gap-1">
+                  <Car className="w-3.5 h-3.5" />
+                  <span>차량 보유대수</span>
+                </div>
+                <div className="text-2xl sm:text-3xl font-black text-white font-mono">680만대</div>
+                <p className="text-[11px] text-slate-400 mt-1 break-keep">인구 1억 200만, 이륜차 6,500만대 동시 보유</p>
+              </div>
+
+              <div className="bg-navy-900/90 border border-navy-700 rounded-2xl p-4 sm:p-5">
+                <div className="text-cyan-400 font-extrabold text-xs uppercase tracking-wider mb-1 flex items-center gap-1">
+                  <Building className="w-3.5 h-3.5" />
+                  <span>하노이 주차 난</span>
+                </div>
+                <div className="text-2xl sm:text-3xl font-black text-white font-mono">1,700+</div>
+                <p className="text-[11px] text-slate-400 mt-1 break-keep">2030년까지 신규 필요 주차장 (현재 72개소)</p>
+              </div>
+
+              <div className="bg-navy-900/90 border border-navy-700 rounded-2xl p-4 sm:p-5">
+                <div className="text-purple-400 font-extrabold text-xs uppercase tracking-wider mb-1 flex items-center gap-1">
+                  <PieChart className="w-3.5 h-3.5" />
+                  <span>운영 수익성</span>
+                </div>
+                <div className="text-2xl sm:text-3xl font-black text-white font-mono">70% BEP</div>
+                <p className="text-[11px] text-slate-400 mt-1 break-keep">무인화 AI 도입으로 2~3년 내 투자 회수</p>
+              </div>
+            </div>
+
+            {/* Target Major Projects Section */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-xs font-bold text-gold-400 uppercase tracking-widest block">TARGET INVESTMENT LOCATIONS</span>
+                  <h4 className="text-lg sm:text-xl font-extrabold text-white break-keep">베트남 핵심 주차 개발 & 관제 타겟 프로젝트</h4>
+                </div>
+                <span className="text-xs text-slate-400 font-mono hidden sm:block">사업계획서 P.11 ~ P.18 요약</span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                
+                {/* Site 1: Starlake City */}
+                <div 
+                  onClick={() => openBizPlanAtPage(11)}
+                  className="bg-navy-900 rounded-2xl p-5 border border-navy-700 hover:border-gold-500/50 transition-all cursor-pointer group space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-gold-400 bg-gold-500/10 px-2.5 py-0.5 rounded border border-gold-500/30">
+                      NEW CBD (63.6만평)
+                    </span>
+                    <span className="text-[10px] text-slate-400 group-hover:text-gold-400 transition-colors flex items-center">
+                      <Eye className="w-3 h-3 mr-1" /> P.11 뷰어
+                    </span>
+                  </div>
+                  <h5 className="text-base font-bold text-white group-hover:text-gold-300 transition-colors break-keep">
+                    스타레이크 시티 (Starlake City)
+                  </h5>
+                  <p className="text-xs text-slate-300 leading-relaxed break-keep">
+                    대우건설/THT 개발 2,076,000㎡ 신도시. 베트남 16개 정부부처 이전 및 최고급 복합 빌딩 주차 인프라 구축 타겟.
+                  </p>
+                  <div className="pt-2 border-t border-navy-800 text-[11px] text-slate-400 flex justify-between">
+                    <span>개발 주체: Daewoo E&C / THT</span>
+                    <span className="text-gold-400 font-bold">주차타워 & 지하 관제</span>
+                  </div>
+                </div>
+
+                {/* Site 2: ParkCity Hanoi */}
+                <div 
+                  onClick={() => openBizPlanAtPage(14)}
+                  className="bg-navy-900 rounded-2xl p-5 border border-navy-700 hover:border-gold-500/50 transition-all cursor-pointer group space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-emeraldGreen-400 bg-emeraldGreen-500/10 px-2.5 py-0.5 rounded border border-emeraldGreen-500/30">
+                      TOWNSHIP (77.4 Ha)
+                    </span>
+                    <span className="text-[10px] text-slate-400 group-hover:text-emeraldGreen-400 transition-colors flex items-center">
+                      <Eye className="w-3 h-3 mr-1" /> P.14 뷰어
+                    </span>
+                  </div>
+                  <h5 className="text-base font-bold text-white group-hover:text-emeraldGreen-300 transition-colors break-keep">
+                    파크시티 하노이 (ParkCity Hanoi)
+                  </h5>
+                  <p className="text-xs text-slate-300 leading-relaxed break-keep">
+                    7,000세대 대규모 고급 아파트 및 파크시티 타운센터 쇼핑몰 통합 무인 주차 정산 시스템 표준화.
+                  </p>
+                  <div className="pt-2 border-t border-navy-800 text-[11px] text-slate-400 flex justify-between">
+                    <span>수용 규모: 7,000+ 세대</span>
+                    <span className="text-emeraldGreen-400 font-bold">타운센터 무인 게이트</span>
+                  </div>
+                </div>
+
+                {/* Site 3: Lotte Mall West Lake */}
+                <div 
+                  onClick={() => openBizPlanAtPage(18)}
+                  className="bg-navy-900 rounded-2xl p-5 border border-navy-700 hover:border-gold-500/50 transition-all cursor-pointer group space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-cyan-400 bg-cyan-500/10 px-2.5 py-0.5 rounded border border-cyan-500/30">
+                      MEGA MALL (월 2억 매출)
+                    </span>
+                    <span className="text-[10px] text-slate-400 group-hover:text-cyan-400 transition-colors flex items-center">
+                      <Eye className="w-3 h-3 mr-1" /> P.18 뷰어
+                    </span>
+                  </div>
+                  <h5 className="text-base font-bold text-white group-hover:text-cyan-300 transition-colors break-keep">
+                    롯데몰 웨스트레이크 하노이
+                  </h5>
+                  <p className="text-xs text-slate-300 leading-relaxed break-keep">
+                    하노이 최대 서호 복합 쇼핑몰 (승용차 1,719대, 이륜차 6,271대). 월 2억원 상당의 주차 요금 매출 실적 보유.
+                  </p>
+                  <div className="pt-2 border-t border-navy-800 text-[11px] text-slate-400 flex justify-between">
+                    <span>수용: 승용 1,719대 / 오토바이 6,271대</span>
+                    <span className="text-cyan-400 font-bold">초대형 AI LPR</span>
+                  </div>
+                </div>
+
+                {/* Site 4: Lotte Center Hanoi */}
+                <div 
+                  onClick={() => openBizPlanAtPage(17)}
+                  className="bg-navy-900 rounded-2xl p-5 border border-navy-700 hover:border-gold-500/50 transition-all cursor-pointer group space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-purple-400 bg-purple-500/10 px-2.5 py-0.5 rounded border border-purple-500/30">
+                      LANDMARK (65 Floors)
+                    </span>
+                    <span className="text-[10px] text-slate-400 group-hover:text-purple-400 transition-colors flex items-center">
+                      <Eye className="w-3 h-3 mr-1" /> P.17 뷰어
+                    </span>
+                  </div>
+                  <h5 className="text-base font-bold text-white group-hover:text-purple-300 transition-colors break-keep">
+                    롯데센터 하노이 (Lotte Center)
+                  </h5>
+                  <p className="text-xs text-slate-300 leading-relaxed break-keep">
+                    하노이 중심 65층 프라임 랜드마크. 승용차 430대, 이륜차 4,000대 수용으로 월 8,280만원 이상 수익 창출.
+                  </p>
+                  <div className="pt-2 border-t border-navy-800 text-[11px] text-slate-400 flex justify-between">
+                    <span>수용: 승용 430대 / 오토바이 4,000대</span>
+                    <span className="text-purple-400 font-bold">월 8,280만원 매출</span>
+                  </div>
+                </div>
+
+                {/* Site 5: BIDV Tower */}
+                <div 
+                  onClick={() => openBizPlanAtPage(16)}
+                  className="bg-navy-900 rounded-2xl p-5 border border-navy-700 hover:border-gold-500/50 transition-all cursor-pointer group space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-gold-400 bg-gold-500/10 px-2.5 py-0.5 rounded border border-gold-500/30">
+                      GRADE A OFFICE (25F)
+                    </span>
+                    <span className="text-[10px] text-slate-400 group-hover:text-gold-400 transition-colors flex items-center">
+                      <Eye className="w-3 h-3 mr-1" /> P.16 뷰어
+                    </span>
+                  </div>
+                  <h5 className="text-base font-bold text-white group-hover:text-gold-300 transition-colors break-keep">
+                    하노이 BIDV 타워 (BIDV Tower)
+                  </h5>
+                  <p className="text-xs text-slate-300 leading-relaxed break-keep">
+                    하노이 환끔 구역 25층 최고급 프라임 금융 오피스 빌딩 주차장 무인 차단기 및 24/7 원격 관제 성공 운영.
+                  </p>
+                  <div className="pt-2 border-t border-navy-800 text-[11px] text-slate-400 flex justify-between">
+                    <span>위치: Hoan Kiem District</span>
+                    <span className="text-gold-400 font-bold">ACRM 원격 관제</span>
+                  </div>
+                </div>
+
+                {/* Download Card */}
+                <div className="bg-gradient-to-br from-gold-500/20 via-navy-900 to-navy-950 rounded-2xl p-5 border border-gold-500/40 flex flex-col justify-between space-y-4">
+                  <div className="space-y-2">
+                    <span className="text-xs font-bold text-gold-400 uppercase tracking-widest block">FULL REPORT DOWNLOAD</span>
+                    <h5 className="text-base font-bold text-white break-keep">43페이지 전체 투자 사업계획서</h5>
+                    <p className="text-xs text-slate-300 leading-relaxed break-keep">
+                      거시 경제 분석, 추정 재무제표, BOT/BOO 사업 구조, 법률 및 세무 인허가 절차가 수록되어 있습니다.
+                    </p>
+                  </div>
+                  <a
+                    href="/docu/park/BEST_Winner_Vietnam_Parking_Investment_Plan_2026.pdf"
+                    download="BEST_Winner_Vietnam_Parking_Investment_Plan_2026.pdf"
+                    className="w-full bg-gold-500 hover:bg-gold-400 text-navy-950 font-black py-2.5 rounded-xl shadow text-center text-xs flex items-center justify-center space-x-1.5 transition-all"
+                  >
+                    <Download className="w-4 h-4 shrink-0" />
+                    <span>PDF 마스터플랜 다운로드</span>
+                  </a>
+                </div>
+
+              </div>
+            </div>
+
+            {/* 43 Slide Preview Strip */}
+            <div className="space-y-3 pt-2">
+              <div className="flex justify-between items-center">
+                <h4 className="text-sm font-bold text-white flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4 text-gold-400" />
+                  <span>사업계획서 전체 43 슬라이드 미리보기 (클릭 시 확대)</span>
+                </h4>
+                <button
+                  onClick={() => openBizPlanAtPage(1)}
+                  className="text-xs font-bold text-gold-400 hover:text-gold-300 flex items-center"
+                >
+                  <Eye className="w-3.5 h-3.5 mr-1" />
+                  <span>모두 보기</span>
+                </button>
+              </div>
+
+              <div className="flex gap-3 overflow-x-auto pb-3 pt-1 scrollbar-thin scrollbar-thumb-gold-500">
+                {bizPlanPages.slice(0, 15).map((item) => (
+                  <div
+                    key={item.page}
+                    onClick={() => openBizPlanAtPage(item.page)}
+                    className="flex-shrink-0 w-44 rounded-xl overflow-hidden border border-navy-700 bg-navy-900 cursor-pointer hover:border-gold-400 hover:scale-105 transition-all group relative"
+                  >
+                    <img src={item.src} alt={item.title} className="w-full h-28 object-cover" />
+                    <div className="p-2">
+                      <span className="text-[10px] font-mono font-bold text-gold-400 block">SLIDE {item.page}</span>
+                      <p className="text-[11px] font-bold text-slate-200 line-clamp-1 group-hover:text-gold-300">
+                        {item.title}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={() => openBizPlanAtPage(16)}
+                  className="flex-shrink-0 w-36 h-[152px] rounded-xl border-2 border-dashed border-gold-500/40 bg-navy-900/60 hover:bg-navy-900 text-gold-400 flex flex-col items-center justify-center p-3 text-center space-y-1 transition-all"
+                >
+                  <Eye className="w-6 h-6 mb-1" />
+                  <span className="text-xs font-bold">+28개 슬라이드 더보기</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        )}
 
         {/* Tab 1: Core Tech */}
         {activeTab === 'tech' && (
@@ -649,6 +1016,106 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
         </div>
 
       </div>
+
+      {/* Full 43-Page Business Plan Viewer Modal */}
+      {bizPlanModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-between p-4 sm:p-6 overflow-y-auto">
+          {/* Modal Header */}
+          <div className="w-full max-w-6xl flex items-center justify-between py-3 border-b border-slate-800">
+            <div className="flex items-center space-x-3">
+              <Briefcase className="w-5 h-5 text-gold-400" />
+              <div>
+                <h3 className="text-base sm:text-lg font-bold text-white">
+                  베트남 주차장 투자 사업계획서 (BEST Winner Investment Plan)
+                </h3>
+                <p className="text-xs text-slate-400">
+                  슬라이드 {bizPlanCurrentPage} / 43 — {bizPlanPages[bizPlanCurrentPage - 1]?.title}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-3">
+              <a
+                href="/docu/park/BEST_Winner_Vietnam_Parking_Investment_Plan_2026.pdf"
+                download="BEST_Winner_Vietnam_Parking_Investment_Plan_2026.pdf"
+                className="hidden sm:flex items-center space-x-1.5 text-xs font-bold text-gold-950 bg-gold-500 px-3 py-1.5 rounded-lg hover:bg-gold-400 transition-colors"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>PDF 다운로드</span>
+              </a>
+
+              <button
+                onClick={() => setBizPlanModalOpen(false)}
+                className="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-900 border border-slate-800"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Modal Main Slide Image & Navigation */}
+          <div className="w-full max-w-5xl my-4 relative flex items-center justify-center">
+            {/* Prev Button */}
+            <button
+              onClick={() => setBizPlanCurrentPage((prev) => Math.max(1, prev - 1))}
+              disabled={bizPlanCurrentPage <= 1}
+              className="absolute left-2 sm:left-4 z-10 p-3 rounded-full bg-black/70 hover:bg-gold-500 hover:text-navy-950 text-white disabled:opacity-30 disabled:hover:bg-black/70 disabled:hover:text-white transition-all border border-slate-700"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+
+            {/* Slide Image */}
+            <div className="max-h-[70vh] overflow-hidden rounded-xl border border-slate-800 shadow-2xl flex items-center justify-center bg-navy-950">
+              <img
+                src={bizPlanPages[bizPlanCurrentPage - 1]?.src}
+                alt={`Business Plan Slide ${bizPlanCurrentPage}`}
+                className="max-h-[70vh] w-auto object-contain"
+              />
+            </div>
+
+            {/* Next Button */}
+            <button
+              onClick={() => setBizPlanCurrentPage((prev) => Math.min(43, prev + 1))}
+              disabled={bizPlanCurrentPage >= 43}
+              className="absolute right-2 sm:right-4 z-10 p-3 rounded-full bg-black/70 hover:bg-gold-500 hover:text-navy-950 text-white disabled:opacity-30 disabled:hover:bg-black/70 disabled:hover:text-white transition-all border border-slate-700"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Page Info & Grid Thumbnail Selector */}
+          <div className="w-full max-w-6xl space-y-3">
+            <div className="text-center">
+              <span className="text-xs font-mono text-gold-400 bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/30">
+                SLIDE {bizPlanCurrentPage} of 43 — {bizPlanPages[bizPlanCurrentPage - 1]?.title}
+              </span>
+              <p className="text-xs text-slate-300 mt-1">
+                {bizPlanPages[bizPlanCurrentPage - 1]?.desc}
+              </p>
+            </div>
+
+            {/* Thumbnail Grid Bar */}
+            <div className="flex gap-2 overflow-x-auto pb-2 pt-1 scrollbar-thin scrollbar-thumb-gold-500 justify-start">
+              {bizPlanPages.map((item) => (
+                <button
+                  key={item.page}
+                  onClick={() => setBizPlanCurrentPage(item.page)}
+                  className={`flex-shrink-0 w-16 h-12 rounded border transition-all overflow-hidden relative ${
+                    bizPlanCurrentPage === item.page
+                      ? 'border-gold-400 ring-2 ring-gold-400 scale-105'
+                      : 'border-slate-800 opacity-60 hover:opacity-100'
+                  }`}
+                >
+                  <img src={item.src} alt={`Page ${item.page}`} className="w-full h-full object-cover" />
+                  <span className="absolute bottom-0 right-0 bg-black/80 text-[9px] font-mono text-white px-1">
+                    {item.page}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Full 20-Page Interactive Catalog Viewer Modal */}
       {pdfViewerOpen && (

@@ -160,12 +160,21 @@ export default function SmartParkingPage({ t }) {
               {/* Action Buttons */}
               <div className="pt-2 flex flex-wrap gap-2.5 items-center">
                 <a
-                  href="/docu/park/SHEYONE_AMANO_Smart_Parking_Catalog_2026.pdf"
-                  download="SHEYONE_AMANO_Smart_Parking_Catalog_2026.pdf"
-                  className="bg-emeraldGreen-500 hover:bg-emeraldGreen-600 text-navy-950 font-extrabold px-5 py-3 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center text-xs sm:text-sm whitespace-nowrap"
+                  href="/docu/park/BEST_Winner_Vietnam_Parking_Investment_Plan_2026.pdf"
+                  download="BEST_Winner_Vietnam_Parking_Investment_Plan_2026.pdf"
+                  className="bg-gold-500 hover:bg-gold-400 text-navy-950 font-black px-5 py-3 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center text-xs sm:text-sm whitespace-nowrap"
                 >
                   <Download className="w-4 h-4 mr-1.5 shrink-0" />
-                  <span>공식 PDF 카탈로그 (20P)</span>
+                  <span>투자 사업계획서 PDF (43P)</span>
+                </a>
+
+                <a
+                  href="/docu/park/SHEYONE_AMANO_Smart_Parking_Catalog_2026.pdf"
+                  download="SHEYONE_AMANO_Smart_Parking_Catalog_2026.pdf"
+                  className="bg-navy-800 hover:bg-navy-700 text-emeraldGreen-400 border border-emeraldGreen-500/30 font-extrabold px-5 py-3 rounded-xl shadow-lg transition-all flex items-center text-xs sm:text-sm whitespace-nowrap"
+                >
+                  <Download className="w-4 h-4 mr-1.5 shrink-0" />
+                  <span>공식 PDF 브로슈어 (20P)</span>
                 </a>
 
                 <button
@@ -173,7 +182,7 @@ export default function SmartParkingPage({ t }) {
                     const el = document.getElementById('contact');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="bg-navy-800 hover:bg-navy-700 text-white font-bold px-5 py-3 rounded-xl border border-navy-700 text-xs sm:text-sm flex items-center space-x-1.5 whitespace-nowrap"
+                  className="bg-navy-900 hover:bg-navy-800 text-white font-bold px-5 py-3 rounded-xl border border-navy-700 text-xs sm:text-sm flex items-center space-x-1.5 whitespace-nowrap"
                 >
                   <Monitor className="w-4 h-4 text-emeraldGreen-400 shrink-0" />
                   <span>현장 맞춤 무료 견적</span>
