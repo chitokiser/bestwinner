@@ -42,25 +42,25 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
 
   // Full 20-Page Catalog Metadata from SHEYONE_AMANO_스마트주차_F.pdf
   const catalogPages = [
-    { page: 1, title: '표지: SHEYONE x AMANO PARKING HUB', desc: 'AI 스마트 주차 플랫폼 공식 브로슈어', src: '/images/parking/docu/page_1.png' },
+    { page: 1, title: '표지: SHEYONE x BEST Winner PARKING HUB', desc: 'AI 스마트 주차 플랫폼 공식 브로슈어', src: '/images/parking/docu/page_1.png' },
     { page: 2, title: '목차 & 플랫폼 개요', desc: '회사 철학, 서비스 라인업 및 운영 구조', src: '/images/parking/docu/page_2.png' },
     { page: 3, title: '스마트 주차 인프라 비전', desc: '데이터 기반 미래형 스마트 주차 솔루션 기업', src: '/images/parking/docu/page_3.png' },
     { page: 4, title: '비전 & 미션 (Vision & Mission)', desc: '실시간 모니터링과 데이터 관리를 통한 주차 운영 자동화', src: '/images/parking/docu/page_4.png' },
     { page: 5, title: '통합 비즈니스 모델 (Business Model)', desc: '주차장 검색부터 예약, 선결제, 입출차까지 연결', src: '/images/parking/docu/page_5.png' },
     { page: 6, title: '핵심 기술 4대 파트 (Core Technology)', desc: 'AI LPR(번호판인식), PAY(결제), OPS(관제), DATA(분석)', src: '/images/parking/docu/page_6.png' },
     { page: 7, title: '사업 영역 (Business Areas)', desc: '장비 공급, 개발, 전기차 충전 연동, 위탁 운영 Total Solution', src: '/images/parking/docu/page_7.png' },
-    { page: 8, title: '아마노 핵심 장비 라인업 (Equipment)', desc: '스마트 차단기, 무인정산기, 통합 LPR, 인터폰 디스플레이', src: '/images/parking/docu/page_8.png' },
+    { page: 8, title: 'BEST Winner 핵심 장비 라인업 (Equipment)', desc: '스마트 차단기, 무인정산기, 통합 LPR, 인터폰 디스플레이', src: '/images/parking/docu/page_8.png' },
     { page: 9, title: '주차 이용 경험 혁신', desc: '사용자와 관리자 모두를 만족시키는 서비스 경험', src: '/images/parking/docu/page_9.png' },
-    { page: 10, title: '고객 스토리 & 문제 해결', desc: '주차 스트레스 해소를 위한 AMANO PARKING HUB 신규 서비스', src: '/images/parking/docu/page_10.png' },
+    { page: 10, title: '고객 스토리 & 문제 해결', desc: '주차 스트레스 해소를 위한 BEST Winner PARKING HUB 신규 서비스', src: '/images/parking/docu/page_10.png' },
     { page: 11, title: '통합 스마트 솔루션', desc: '운영 효율 극대화 및 고객 편의성 향상', src: '/images/parking/docu/page_11.png' },
     { page: 12, title: '모바일 앱 & 웹 서비스 프로세스', desc: '검색, 선결제, 월정액, 단속, 세금계산서 자동화', src: '/images/parking/docu/page_12.png' },
     { page: 13, title: '스마트 앱 이용 흐름도', desc: '앱 하나로 주변 주차장 조회 및 즉시 결제', src: '/images/parking/docu/page_13.png' },
-    { page: 14, title: '실시간 운영 소프트웨어 안내', desc: 'Amano ACRM 스마트 관제 백오피스 소개', src: '/images/parking/docu/page_14.png' },
-    { page: 15, title: 'Amano ACRM 통합 대시보드', desc: '실시간 현장 입출차 및 주차면 점유 현황 모니터링', src: '/images/parking/docu/page_15.png' },
+    { page: 14, title: '실시간 운영 소프트웨어 안내', desc: 'BEST Winner ACRM 스마트 관제 백오피스 소개', src: '/images/parking/docu/page_14.png' },
+    { page: 15, title: 'BEST Winner ACRM 통합 대시보드', desc: '실시간 현장 입출차 및 주차면 점유 현황 모니터링', src: '/images/parking/docu/page_15.png' },
     { page: 16, title: '통합관제센터 & 장애관리 백오피스', desc: '24시간 무인 현장 실시간 튜닝 및 장애 긴급 조치', src: '/images/parking/docu/page_16.png' },
     { page: 17, title: '운영 데이터 & 분석 보고서', desc: '기간별 매출, 입출차 트렌드 및 장애 이력 데이터 분석', src: '/images/parking/docu/page_17.png' },
     { page: 18, title: '현장 & 사용자 관리 백오피스', desc: '월정액 차량 등록, 할인권 발행 및 사용자 권한 관리', src: '/images/parking/docu/page_18.png' },
-    { page: 19, title: '24시간 통합관제센터 실물 운영', desc: '아마노 파킹 관제 전담 요원 24시간 실시간 관제 현장', src: '/images/parking/docu/page_19.png' },
+    { page: 19, title: '24시간 통합관제센터 실물 운영', desc: 'BEST Winner 파킹 관제 전담 요원 24시간 실시간 관제 현장', src: '/images/parking/docu/page_19.png' },
     { page: 20, title: 'SHEYONE SMART PARKING 엔딩', desc: '미래 주차 문화를 선도하는 스마트 주차 파트너', src: '/images/parking/docu/page_20.png' }
   ];
 
@@ -93,7 +93,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                 <span>BUSINESS UNIT ③</span>
               </span>
               <span className="text-xs text-gold-400 font-mono bg-navy-950 px-2.5 py-1 rounded border border-navy-700 whitespace-nowrap">
-                SHEYONE x AMANO KOREA & VIETNAM
+                SHEYONE x BEST Winner KOREA & VIETNAM
               </span>
             </div>
             
@@ -141,7 +141,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center mb-3">
               <Monitor className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <h3 className="text-xs sm:text-base font-bold text-white mb-1 break-keep">Amano ACRM 백오피스</h3>
+            <h3 className="text-xs sm:text-base font-bold text-white mb-1 break-keep">BEST Winner ACRM 백오피스</h3>
             <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed break-keep">
               실시간 입출차 현황, 정산 집계, 장애 이력 모니터링 대시보드 기본 제공.
             </p>
@@ -191,7 +191,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             }`}
           >
             <Sliders className="w-4 h-4 shrink-0" />
-            <span>02. 아마노 핵심 장비 라인업</span>
+            <span>02. BEST Winner 핵심 장비 라인업</span>
           </button>
 
           <button
@@ -301,7 +301,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                   HARDWARE EQUIPMENT
                 </span>
                 <h3 className="text-xl sm:text-2xl font-extrabold text-white break-keep">
-                  아마노(AMANO) 주차 관제 핵심 라인업
+                  BEST Winner 주차 관제 핵심 라인업
                 </h3>
               </div>
               <button
@@ -317,7 +317,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             <div className="relative rounded-2xl overflow-hidden border border-navy-700 bg-navy-900">
               <img
                 src="/images/parking/docu/page_8.png"
-                alt="AMANO Parking Hardware Lineup"
+                alt="BEST Winner Parking Hardware Lineup"
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -379,7 +379,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                 ACRM BACKOFFICE & 24/7 CONTROL CENTER
               </span>
               <h3 className="text-xl sm:text-2xl font-extrabold text-white break-keep">
-                아마노 ACRM 관제 대시보드 & 24시간 실물 관제센터
+                BEST Winner ACRM 관제 대시보드 & 24시간 실물 관제센터
               </h3>
             </div>
 
@@ -450,7 +450,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                   <img src="/images/parking/docu/page_19.png" alt="24/7 Operations Room" className="w-full h-auto object-cover" />
                 </div>
                 <p className="text-xs text-slate-300 break-keep">
-                  아마노 관제 전문 요원이 365일 24시간 실시간 카메라 화면을 모니터링하는 본사 관제실.
+                  BEST Winner 관제 전문 요원이 365일 24시간 실시간 카메라 화면을 모니터링하는 본사 관제실.
                 </p>
               </div>
 
@@ -625,7 +625,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             <div className="space-y-2.5">
               <div className="flex items-center space-x-3 p-3 rounded-xl bg-navy-900/60 border border-navy-800">
                 <CheckCircle2 className="w-4 h-4 text-emeraldGreen-400 shrink-0" />
-                <span className="text-xs text-slate-200 break-keep">한국 SHEYONE & 아마노 기술 제휴 공식 보증</span>
+                <span className="text-xs text-slate-200 break-keep">한국 SHEYONE & BEST Winner 기술 제휴 공식 보증</span>
               </div>
               <div className="flex items-center space-x-3 p-3 rounded-xl bg-navy-900/60 border border-navy-800">
                 <CheckCircle2 className="w-4 h-4 text-emeraldGreen-400 shrink-0" />
@@ -659,7 +659,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
               <FileText className="w-5 h-5 text-emeraldGreen-400" />
               <div>
                 <h3 className="text-base sm:text-lg font-bold text-white">
-                  SHEYONE x AMANO 스마트주차 통합 공식 카탈로그
+                  SHEYONE x BEST Winner 스마트주차 통합 공식 카탈로그
                 </h3>
                 <p className="text-xs text-slate-400">
                   페이지 {pdfCurrentPage} / 20 — {catalogPages[pdfCurrentPage - 1]?.title}

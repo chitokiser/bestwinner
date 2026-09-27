@@ -35,7 +35,7 @@ export default function SmartParkingPage({ t }) {
     {
       src: '/images/parking/hero/3.png',
       tag: 'ACRM BACKOFFICE',
-      title: 'Amano ACRM 현장 통합 대시보드',
+      title: 'BEST Winner ACRM 현장 통합 대시보드',
       desc: '입출차 영상 모니터링, 만차/잔여 주차면, 요금 매출 통계 실시간 집계.'
     },
     {
@@ -129,7 +129,7 @@ export default function SmartParkingPage({ t }) {
                 </span>
                 <span className="inline-flex items-center space-x-1 text-xs font-bold text-gold-400 bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/30 whitespace-nowrap">
                   <Sparkles className="w-3 h-3 mr-1" />
-                  <span>SHEYONE x AMANO 공식 솔루션</span>
+                  <span>SHEYONE x BEST Winner 공식 솔루션</span>
                 </span>
               </div>
 
