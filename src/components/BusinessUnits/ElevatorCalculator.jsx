@@ -101,129 +101,131 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showQuotePreview, setShowQuotePreview] = useState(false);
 
+  const isVi = t?.lang === 'vi' || !t?.lang;
+
   // 6 Tier Packages Definition
   const packages = [
     {
       id: 'basic',
       name: 'BASIC',
-      badge: '기본형',
+      badge: isVi ? 'Gói Cơ Bản' : '기본형',
       priceVnd: 0,
-      spec: '기본 안전장치 + LED 조명',
-      desc: '표준 안전 센서 및 에너지 절감형 LED 시스템'
+      spec: isVi ? 'Thiết bị an toàn cơ bản + Đèn LED' : '기본 안전장치 + LED 조명',
+      desc: isVi ? 'Cảm biến an toàn tiêu chuẩn và hệ thống LED tiết kiệm năng lượng' : '표준 안전 센서 및 에너지 절감형 LED 시스템'
     },
     {
       id: 'comfort',
       name: 'COMFORT',
-      badge: '쾌적형',
+      badge: isVi ? 'Gói Thoải Mái' : '쾌적형',
       priceVnd: 15000000,
-      spec: 'BASIC + 전용 에어컨 + 환기 시스템',
-      desc: '동남아 고온 다습 기후 대응 엘리베이터 전용 에어컨 및 공기 순환'
+      spec: isVi ? 'BASIC + Điều hòa chuyên dụng + Hệ thống thông gió' : 'BASIC + 전용 에어컨 + 환기 시스템',
+      desc: isVi ? 'Máy điều hòa chuyên dụng thang máy & tuần hoàn không khí thích ứng khí hậu Đông Nam Á' : '동남아 고온 다습 기후 대응 엘리베이터 전용 에어컨 및 공기 순환'
     },
     {
       id: 'smart',
       name: 'SMART',
-      badge: '인기 추천',
+      badge: isVi ? 'Khuyên Dùng (Hot)' : '인기 추천',
       priceVnd: 35000000,
-      spec: 'COMFORT + 내장 CCTV + 스마트폰 연동',
-      desc: '보안 CCTV 및 스마트폰 원격 호출/상태 관제 연동'
+      spec: isVi ? 'COMFORT + CCTV nội bộ + Kết nối Smartphone' : 'COMFORT + 내장 CCTV + 스마트폰 연동',
+      desc: isVi ? 'CCTV an ninh và kết nối gọi thang / giám sát từ xa qua điện thoại' : '보안 CCTV 및 스마트폰 원격 호출/상태 관제 연동'
     },
     {
       id: 'media',
       name: 'MEDIA',
-      badge: '미디어형',
+      badge: isVi ? 'Gói Truyền Thông' : '미디어형',
       priceVnd: 55000000,
-      spec: 'SMART + LCD 10인치 + Wi-Fi',
-      desc: '디지털 디스플레이, 날씨/시간 정보 및 무선 Wi-Fi 구축'
+      spec: isVi ? 'SMART + Màn hình LCD 10 inch + Wi-Fi' : 'SMART + LCD 10인치 + Wi-Fi',
+      desc: isVi ? 'Màn hình hiển thị kỹ thuật số, thời tiết/tin tức và kết nối Wi-Fi' : '디지털 디스플레이, 날씨/시간 정보 및 무선 Wi-Fi 구축'
     },
     {
       id: 'premium',
       name: 'PREMIUM',
-      badge: '럭셔리형',
+      badge: isVi ? 'Gói Sang Trọng' : '럭셔리형',
       priceVnd: 85000000,
-      spec: 'MEDIA + 고급 유리/스마트글라스 + 대리석',
-      desc: '골드/브론즈 인테리어, 별빛 천장 및 천연 대리석 마감'
+      spec: isVi ? 'MEDIA + Kính cao cấp / Smart Glass + Đá hoa cương' : 'MEDIA + 고급 유리/스마트글라스 + 대리석',
+      desc: isVi ? 'Nội thất mạ Vàng/Bronze, trần bầu trời sao và sàn đá hoa cương tự nhiên' : '골드/브론즈 인테리어, 별빛 천장 및 천연 대리석 마감'
     },
     {
       id: 'best_flagship',
       name: 'BEST FLAGSHIP',
-      badge: '최고급 플래그십',
+      badge: 'Flagship Cao Cấp',
       priceVnd: 125000000,
-      spec: 'PREMIUM + AI 스마트 관제 + 커스텀 인테리어',
-      desc: '플래그십 럭셔리 마감, 스마트 센서 패키지 및 24/7 전용 원격 관제'
+      spec: isVi ? 'PREMIUM + Giám sát AI Smart + Nội thất Custom' : 'PREMIUM + AI 스마트 관제 + 커스텀 인테리어',
+      desc: isVi ? 'Hoàn thiện sang trọng cao cấp nhất, gói cảm biến thông minh và giám sát từ xa 24/7' : '플래그십 럭셔리 마감, 스마트 센서 패키지 및 24/7 전용 원격 관제'
     }
   ];
 
   // Individual Options Definition with Costs
   const optionCatalog = {
     safety: {
-      title: "1. 안전 옵션 (Safety Options)",
+      title: isVi ? "1. Tùy chọn An toàn (Safety Options)" : "1. 안전 옵션 (Safety Options)",
       items: [
-        { id: 'cctv', name: '승강기 내부 HD CCTV', priceVnd: 12000000, defaultIncluded: true },
-        { id: 'intercom', name: '비상통화 장치 / 24h 인터폰', priceVnd: 0, defaultIncluded: true },
-        { id: 'ard', name: '정전 시 자동 층 이송 (ARD)', priceVnd: 0, defaultIncluded: true },
-        { id: 'emergency_light', name: 'LED 비상조명 장치', priceVnd: 0, defaultIncluded: true },
-        { id: 'overspeed_sensor', name: '과속방지 & 문 끼임 방지 센서', priceVnd: 0, defaultIncluded: true },
-        { id: 'fire_alarm', name: '화재 연동 자동 복귀 시스템', priceVnd: 15000000 },
-        { id: 'earthquake_alarm', name: '지진 감지 연동 제어', priceVnd: 15000000 },
-        { id: 'ups_power', name: 'UPS/비상전원 백업 장치', priceVnd: 18000000 },
-        { id: 'remote_fault_alert', name: '원격 고장 감지 & 자동 관제 알림', priceVnd: 10000000 }
+        { id: 'cctv', name: isVi ? 'CCTV HD nội bộ thang máy' : '승강기 내부 HD CCTV', priceVnd: 12000000, defaultIncluded: true },
+        { id: 'intercom', name: isVi ? 'Điện thoại khẩn cấp / Intercom 24h' : '비상통화 장치 / 24h 인터폰', priceVnd: 0, defaultIncluded: true },
+        { id: 'ard', name: isVi ? 'Tự động về tầng khi mất điện (ARD)' : '정전 시 자동 층 이송 (ARD)', priceVnd: 0, defaultIncluded: true },
+        { id: 'emergency_light', name: 'Đèn chiếu sáng khẩn cấp LED', priceVnd: 0, defaultIncluded: true },
+        { id: 'overspeed_sensor', name: isVi ? 'Cảm biến chống vượt tốc & kẹt cửa' : '과속방지 & 문 끼임 방지 센서', priceVnd: 0, defaultIncluded: true },
+        { id: 'fire_alarm', name: isVi ? 'Hệ thống tự động về tầng khi có hỏa hoạn' : '화재 연동 자동 복귀 시스템', priceVnd: 15000000 },
+        { id: 'earthquake_alarm', name: isVi ? 'Điều khiển liên động cảm biến động đất' : '지진 감지 연동 제어', priceVnd: 15000000 },
+        { id: 'ups_power', name: isVi ? 'Bộ lưu điện UPS dự phòng khẩn cấp' : 'UPS/비상전원 백업 장치', priceVnd: 18000000 },
+        { id: 'remote_fault_alert', name: isVi ? 'Phát hiện sự cố từ xa & Cảnh báo giám sát' : '원격 고장 감지 & 자동 관제 알림', priceVnd: 10000000 }
       ]
     },
     cooling: {
-      title: "2. 냉방·공기 관련 (Cooling & Air System)",
+      title: isVi ? "2. Làm mát & Không khí (Cooling & Air System)" : "2. 냉방·공기 관련 (Cooling & Air System)",
       items: [
-        { id: 'ac_unit', name: '엘리베이터 전용 독립 에어컨', priceVnd: 25000000 },
-        { id: 'ceiling_blower', name: '천장형 송풍/강풍 시스템', priceVnd: 8000000 },
-        { id: 'air_purifier', name: 'HEPA 공기청정기 시스템', priceVnd: 12000000 },
-        { id: 'deodorizer', name: '음이온 탈취 & 살균 모듈', priceVnd: 8000000 },
-        { id: 'vent_fan', name: '고성능 환기팬', priceVnd: 5000000 },
-        { id: 'temp_humidity_sensor', name: '실시간 온도·습도 디스플레이 센서', priceVnd: 6000000 }
+        { id: 'ac_unit', name: isVi ? 'Điều hòa độc lập chuyên dụng thang máy' : '엘리베이터 전용 독립 에어컨', priceVnd: 25000000 },
+        { id: 'ceiling_blower', name: isVi ? 'Hệ thống quạt thổi trần mạnh mẽ' : '천장형 송풍/강풍 시스템', priceVnd: 8000000 },
+        { id: 'air_purifier', name: isVi ? 'Hệ thống lọc không khí HEPA' : 'HEPA 공기청정기 시스템', priceVnd: 12000000 },
+        { id: 'deodorizer', name: isVi ? 'Modun khử mùi & tiệt trùng Ion âm' : '음이온 탈취 & 살균 모듈', priceVnd: 8000000 },
+        { id: 'vent_fan', name: isVi ? 'Quạt thông gió hiệu suất cao' : '고성능 환기팬', priceVnd: 5000000 },
+        { id: 'temp_humidity_sensor', name: isVi ? 'Cảm biến & Màn hình hiển thị nhiệt độ/độ ẩm' : '실시간 온도·습도 디스플레이 센서', priceVnd: 6000000 }
       ]
     },
     media: {
-      title: "3. 디스플레이·미디어 (Elevator Digital Display & Media)",
+      title: isVi ? "3. Màn hình & Truyền thông (Digital Display & Media)" : "3. 디스플레이·미디어 (Elevator Digital Display & Media)",
       items: [
-        { id: 'lcd_display', name: 'LCD 스마트 안내 디스플레이 (10~15인치)', priceVnd: 28000000 },
-        { id: 'touch_screen', name: '터치스크린 층 선택 화면', priceVnd: 20000000 },
-        { id: 'info_weather_time', name: '층수 / 날씨 / 실시간 뉴스 표기', priceVnd: 15000000 },
-        { id: 'qr_display', name: '스마트 QR코드 안내 디스플레이', priceVnd: 8000000 },
-        { id: 'wifi', name: '초고속 Wi-Fi 구축 모듈', priceVnd: 10000000 },
-        { id: 'bt_speaker', name: '고음질 블루투스 스피커 System', priceVnd: 10000000 },
-        { id: 'glass_led_video', name: '유리벽 투명 LED / 프로젝션 비디오', priceVnd: 65000000 }
+        { id: 'lcd_display', name: isVi ? 'Màn hình thông minh LCD (10~15 inch)' : 'LCD 스마트 안내 디스플레이 (10~15인치)', priceVnd: 28000000 },
+        { id: 'touch_screen', name: isVi ? 'Màn hình cảm ứng chọn tầng' : '터치스크린 층 선택 화면', priceVnd: 20000000 },
+        { id: 'info_weather_time', name: isVi ? 'Hiển thị số tầng / thời tiết / tin tức' : '층수 / 날씨 / 실시간 뉴스 표기', priceVnd: 15000000 },
+        { id: 'qr_display', name: isVi ? 'Màn hình hướng dẫn mã QR thông minh' : '스마트 QR코드 안내 디스플레이', priceVnd: 8000000 },
+        { id: 'wifi', name: isVi ? 'Modun phát sóng Wi-Fi tốc độ cao' : '초고속 Wi-Fi 구축 모듈', priceVnd: 10000000 },
+        { id: 'bt_speaker', name: isVi ? 'Hệ thống loa Bluetooth chất lượng cao' : '고음질 블루투스 스피커 System', priceVnd: 10000000 },
+        { id: 'glass_led_video', name: isVi ? 'Đèn LED trong suốt / Video chiếu vách kính' : '유리벽 투명 LED / 프로젝션 비디오', priceVnd: 65000000 }
       ]
     },
     interior: {
-      title: "4. 유리·인테리어 마감 (Glass & Interior)",
+      title: isVi ? "4. Nội thất & Vách kính (Glass & Interior)" : "4. 유리·인테리어 마감 (Glass & Interior)",
       items: [
-        { id: 'tempered_glass', name: '투명 강화유리 패널', priceVnd: 20000000 },
-        { id: 'tint_glass', name: '반사 / 틴트 스마트 조망 유리', priceVnd: 25000000 },
-        { id: 'smart_glass', name: '스마트 글라스 (Smart Glass - 투명/불투명 전환)', priceVnd: 45000000 },
-        { id: 'mirror_stainless', name: '거울형 헤어라인 스테인리스', priceVnd: 20000000 },
-        { id: 'gold_bronze_finish', name: '골드 / 브론즈 / 블랙 럭셔리 마감', priceVnd: 30000000 },
-        { id: 'wood_panel', name: '천연목재 패널 마감', priceVnd: 35000000 },
-        { id: 'marble_tile', name: '바닥 천연 대리석 / 마블 패턴 타일', priceVnd: 25000000 },
-        { id: 'indirect_rgb_light', name: '간접조명 & RGB LED 무드등', priceVnd: 18000000 },
-        { id: 'starlight_ceiling', name: '별빛 천장 (Starlight Ceiling) 커스텀', priceVnd: 30000000 }
+        { id: 'tempered_glass', name: isVi ? 'Vách kính cường lực trong suốt' : '투명 강화유리 패널', priceVnd: 20000000 },
+        { id: 'tint_glass', name: isVi ? 'Kính quan sát phản quang / Tint mờ' : '반사 / 틴트 스마트 조망 유리', priceVnd: 25000000 },
+        { id: 'smart_glass', name: isVi ? 'Kính thông minh Smart Glass (Chuyển đổi trong/mờ)' : '스마트 글라스 (Smart Glass - 투명/불투명 전환)', priceVnd: 45000000 },
+        { id: 'mirror_stainless', name: isVi ? 'Inox Hairline gương cao cấp' : '거울형 헤어라인 스테인리스', priceVnd: 20000000 },
+        { id: 'gold_bronze_finish', name: isVi ? 'Hoàn thiện mạ Vàng / Bronze / Đen sang trọng' : '골드 / 브론즈 / 블랙 럭셔리 마감', priceVnd: 30000000 },
+        { id: 'wood_panel', name: isVi ? 'Ốp gỗ tự nhiên cao cấp' : '천연목재 패널 마감', priceVnd: 35000000 },
+        { id: 'marble_tile', name: isVi ? 'Sàn đá hoa cương / Gạch vân mây tự nhiên' : '바닥 천연 대리석 / 마블 패턴 타일', priceVnd: 25000000 },
+        { id: 'indirect_rgb_light', name: isVi ? 'Đèn hắt gián tiếp & Đèn LED RGB đổi màu' : '간접조명 & RGB LED 무드등', priceVnd: 18000000 },
+        { id: 'starlight_ceiling', name: isVi ? 'Trần bầu trời sao (Starlight Ceiling) Custom' : '별빛 천장 (Starlight Ceiling) 커스텀', priceVnd: 30000000 }
       ]
     },
     smarthome: {
-      title: "5. 스마트홈 연동 (Smart Home & Access Control)",
+      title: isVi ? "5. Tích hợp Nhà thông minh (Smart Home & Access)" : "5. 스마트홈 연동 (Smart Home & Access Control)",
       items: [
-        { id: 'smartphone_app', name: '스마트폰 원격 호출 & 층 선택 App', priceVnd: 18000000 },
-        { id: 'nfc_rfid_card', name: 'NFC / RFID 태그 카드 출입 제어', priceVnd: 8000000 },
-        { id: 'face_fingerprint_id', name: '생체인식 (얼굴인식 / 지문인식)', priceVnd: 25000000 },
-        { id: 'smarthome_interlock', name: '스마트홈 월패드 & 관제 센터 연동', priceVnd: 20000000 }
+        { id: 'smartphone_app', name: isVi ? 'Ứng dụng di động gọi thang & chọn tầng từ xa' : '스마트폰 원격 호출 & 층 선택 App', priceVnd: 18000000 },
+        { id: 'nfc_rfid_card', name: isVi ? 'Kiểm soát thẻ từ NFC / RFID' : 'NFC / RFID 태그 카드 출입 제어', priceVnd: 8000000 },
+        { id: 'face_fingerprint_id', name: isVi ? 'Nhận diện sinh trắc học (Khuôn mặt / Vân tay)' : '생체인식 (얼굴인식 / 지문인식)', priceVnd: 25000000 },
+        { id: 'smarthome_interlock', name: isVi ? 'Kết nối màn hình chuông cửa & trung tâm điều khiển' : '스마트홈 월패드 & 관제 센터 연동', priceVnd: 20000000 }
       ]
     },
     convenience: {
-      title: "6. 고급 편의 옵션 (Luxury Convenience)",
+      title: isVi ? "6. Tùy chọn Tiện nghi Cao cấp (Luxury Convenience)" : "6. 고급 편의 옵션 (Luxury Convenience)",
       items: [
-        { id: 'auto_light_voice', name: '자동 조명 감지 & 음성 안내 시스템', priceVnd: 6000000 },
-        { id: 'multilingual_guide', name: '베트남어/한국어/영어 다국어 안내', priceVnd: 5000000 },
-        { id: 'music_bluetooth', name: '배경음악(BGM) 재생 시스템', priceVnd: 5000000 },
-        { id: 'usb_wireless_charge', name: 'USB & 스마트폰 무선충전 패드', priceVnd: 7000000 },
-        { id: 'aroma_diffuser', name: '자동 향기 디퓨저 & 손잡이', priceVnd: 5000000 },
-        { id: 'folding_chair_child_btn', name: '접이식 의자 & 휠체어/어린이 전용 버튼', priceVnd: 12000000 }
+        { id: 'auto_light_voice', name: isVi ? 'Cảm biến chiếu sáng tự động & Hướng dẫn giọng nói' : '자동 조명 감지 & 음성 안내 시스템', priceVnd: 6000000 },
+        { id: 'multilingual_guide', name: isVi ? 'Hướng dẫn đa ngôn ngữ (Việt / Hàn / Anh)' : '베트남어/한국어/영어 다국어 안내', priceVnd: 5000000 },
+        { id: 'music_bluetooth', name: isVi ? 'Hệ thống phát nhạc nền (BGM)' : '배경음악(BGM) 재생 시스템', priceVnd: 5000000 },
+        { id: 'usb_wireless_charge', name: isVi ? 'Cổng cắm USB & Đế sạc không dây smartphone' : 'USB & 스마트폰 무선충전 패드', priceVnd: 7000000 },
+        { id: 'aroma_diffuser', name: isVi ? 'Máy khuếch tán hương thơm tự động' : '자동 향기 디퓨저 & 손잡이', priceVnd: 5000000 },
+        { id: 'folding_chair_child_btn', name: isVi ? 'Ghế gấp gọn & Nút bấm dành riêng cho xe lăn / trẻ em' : '접이식 의자 & 휠체어/어린이 전용 버튼', priceVnd: 12000000 }
       ]
     }
   };
@@ -318,10 +320,10 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
             <span>BEST WINNER ELEVATOR VN SMART CONFIGURATOR</span>
           </span>
           <h2 className="text-3xl sm:text-5xl font-black text-white">
-            승강기 패키지 & 커스텀 옵션 자동 견적
+            {isVi ? 'Bảng Dự Toán Tự Động Thang Máy & Tùy Chọn Gói' : '승강기 패키지 & 커스텀 옵션 자동 견적'}
           </h2>
           <p className="text-sm sm:text-base text-slate-300">
-            베트남 4층/350kg 표준 기준(4억 VND)을 바탕으로 패키지 상품과 미디어·스마트홈 옵션을 실시간 산출합니다.
+            {isVi ? 'Tính toán chi phí thời gian thực dựa trên tiêu chuẩn 4 tầng / 350kg (400 triệu VNĐ) tại Việt Nam cùng các gói tùy chọn thông minh.' : '베트남 4층/350kg 표준 기준(4억 VND)을 바탕으로 패키지 상품과 미디어·스마트홈 옵션을 실시간 산출합니다.'}
           </p>
         </div>
 
@@ -330,53 +332,53 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
           <div className="flex items-center space-x-2 mb-3">
             <Info className="w-5 h-5 text-gold-400 flex-shrink-0" />
             <h3 className="text-base sm:text-lg font-extrabold text-gold-300">
-              2026년 베트남 현지 시장 기준 4층(4개 정차층) / 350kg 가정용 엘리베이터 시세 비교
+              {isVi ? 'Bảng so sánh giá thị trường thang máy gia đình 4 tầng (4 điểm dừng) / 350kg tại Việt Nam (2026)' : '2026년 베트남 현지 시장 기준 4층(4개 정차층) / 350kg 가정용 엘리베이터 시세 비교'}
             </h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-xs sm:text-sm text-left text-slate-300 border-collapse">
               <thead className="text-xs uppercase bg-navy-800 text-gold-400 border-b border-navy-700">
                 <tr>
-                  <th className="px-4 py-3 font-extrabold">구성 (Configuration)</th>
-                  <th className="px-4 py-3 font-extrabold">예상 시장 가격 (VND)</th>
-                  <th className="px-4 py-3 font-extrabold">특징 및 시장 입지</th>
+                  <th className="px-4 py-3 font-extrabold">{isVi ? 'Cấu hình (Configuration)' : '구성 (Configuration)'}</th>
+                  <th className="px-4 py-3 font-extrabold">{isVi ? 'Giá thị trường ước tính (VNĐ)' : '예상 시장 가격 (VND)'}</th>
+                  <th className="px-4 py-3 font-extrabold">{isVi ? 'Đặc điểm & Vị thế thị trường' : '특징 및 시장 입지'}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-navy-800">
                 <tr className="hover:bg-navy-800/40">
-                  <td className="px-4 py-3 font-semibold text-white">중국산 / 보급형</td>
-                  <td className="px-4 py-3 text-slate-300 font-mono">250 ~ 300백만 VND (2.5억 ~ 3.0억)</td>
-                  <td className="px-4 py-3 text-slate-400">초저가 단순 보급형 부품 위주</td>
+                  <td className="px-4 py-3 font-semibold text-white">{isVi ? 'Xuất xứ Trung Quốc / Phổ thông' : '중국산 / 보급형'}</td>
+                  <td className="px-4 py-3 text-slate-300 font-mono">250 ~ 300 {isVi ? 'triệu VNĐ' : '백만 VND (2.5억 ~ 3.0억)'}</td>
+                  <td className="px-4 py-3 text-slate-400">{isVi ? 'Linh kiện phổ thông giá rẻ' : '초저가 단순 보급형 부품 위주'}</td>
                 </tr>
                 <tr className="hover:bg-navy-800/40">
-                  <td className="px-4 py-3 font-semibold text-white">중국산 + 현지 제작/조립</td>
-                  <td className="px-4 py-3 text-slate-300 font-mono">280 ~ 350백만 VND (2.8억 ~ 3.5억)</td>
-                  <td className="px-4 py-3 text-slate-400">현지 프레임 조립 마감</td>
+                  <td className="px-4 py-3 font-semibold text-white">{isVi ? 'Trung Quốc + Lắp ráp nội địa' : '중국산 + 현지 제작/조립'}</td>
+                  <td className="px-4 py-3 text-slate-300 font-mono">280 ~ 350 {isVi ? 'triệu VNĐ' : '백만 VND (2.8억 ~ 3.5억)'}</td>
+                  <td className="px-4 py-3 text-slate-400">{isVi ? 'Gia công lắp ráp khung cabin nội địa' : '현지 프레임 조립 마감'}</td>
                 </tr>
                 <tr className="hover:bg-navy-800/40">
-                  <td className="px-4 py-3 font-semibold text-white">중급형 (인버터·고급 제어반 등)</td>
-                  <td className="px-4 py-3 text-slate-300 font-mono">320 ~ 400백만 VND (3.2억 ~ 4.0억)</td>
-                  <td className="px-4 py-3 text-slate-400">범용 인버터 및 고급 제어반 적용</td>
+                  <td className="px-4 py-3 font-semibold text-white">{isVi ? 'Dòng Trung cấp (Biến tần & Tủ điện)' : '중급형 (인버터·고급 제어반 등)'}</td>
+                  <td className="px-4 py-3 text-slate-300 font-mono">320 ~ 400 {isVi ? 'triệu VNĐ' : '백만 VND (3.2억 ~ 4.0억)'}</td>
+                  <td className="px-4 py-3 text-slate-400">{isVi ? 'Sử dụng biến tần đa năng & tủ điều khiển cao cấp' : '범용 인버터 및 고급 제어반 적용'}</td>
                 </tr>
                 <tr className="bg-gold-500/15 border-l-4 border-gold-400 font-bold">
                   <td className="px-4 py-3 text-gold-300 flex items-center space-x-1.5">
                     <CheckCircle2 className="w-4 h-4 text-gold-400 flex-shrink-0" />
-                    <span>고급형 / 한국 부품 적용 (BEST winner 기준)</span>
+                    <span>{isVi ? 'Dòng Cao cấp / Linh kiện Hàn Quốc (BEST winner)' : '고급형 / 한국 부품 적용 (BEST winner 기준)'}</span>
                   </td>
-                  <td className="px-4 py-3 text-gold-400 font-mono text-sm sm:text-base">380 ~ 500백만 VND (4억 VND 기준)</td>
-                  <td className="px-4 py-3 text-gold-300 font-semibold">K-Tech 핵심 부품 + 베트남 현지 직영 맞춤 제작 (표준 4.0억 VND)</td>
+                  <td className="px-4 py-3 text-gold-400 font-mono text-sm sm:text-base">380 ~ 500 {isVi ? 'triệu VNĐ (Tiêu chuẩn 400 triệu)' : '백만 VND (4억 VND 기준)'}</td>
+                  <td className="px-4 py-3 text-gold-300 font-semibold">{isVi ? 'Linh kiện K-Tech cốt lõi + Sản xuất may đo trực tiếp tại Hà Nội' : 'K-Tech 핵심 부품 + 베트남 현지 직영 맞춤 제작 (표준 4.0억 VND)'}</td>
                 </tr>
                 <tr className="hover:bg-navy-800/40">
-                  <td className="px-4 py-3 font-semibold text-white">수입 완제품</td>
-                  <td className="px-4 py-3 text-slate-300 font-mono">600백만 VND 이상 (6.0억 VND 이상)</td>
-                  <td className="px-4 py-3 text-slate-400">해외 직수입 완성품 (A/S 부품 수급 고비용)</td>
+                  <td className="px-4 py-3 font-semibold text-white">{isVi ? 'Thang nhập khẩu nguyên chiếc' : '수입 완제품'}</td>
+                  <td className="px-4 py-3 text-slate-300 font-mono">&gt; 600 {isVi ? 'triệu VNĐ' : '백만 VND 이상 (6.0억 VND 이상)'}</td>
+                  <td className="px-4 py-3 text-slate-400">{isVi ? 'Thang nhập khẩu nguyên chiếc (Chi phí bảo trì A/S cao)' : '해외 직수입 완성품 (A/S 부품 수급 고비용)'}</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div className="mt-3.5 pt-3 border-t border-navy-800 flex flex-col sm:flex-row justify-between items-start sm:items-center text-[11px] sm:text-xs text-slate-400 gap-2">
-            <span>* BEST winner Group: **4층(4개 정차층) / 350kg 기준 4억 VND (400,000,000 VND)** 표준 출하가 적용</span>
-            <span className="text-gold-400 font-semibold">• 무상 A/S 및 보증 기간: 1년(12개월) 직영 무상 서비스 제공</span>
+            <span>{isVi ? '* BEST winner Group: Áp dụng giá tiêu chuẩn 400.000.000 VNĐ cho 4 tầng dừng / 350kg' : '* BEST winner Group: **4층(4개 정차층) / 350kg 기준 4억 VND (400,000,000 VND)** 표준 출하가 적용'}</span>
+            <span className="text-gold-400 font-semibold">{isVi ? '• Thời hạn bảo hành miễn phí: 12 tháng dịch vụ trực tiếp' : '• 무상 A/S 및 보증 기간: 1년(12개월) 직영 무상 서비스 제공'}</span>
           </div>
         </div>
 

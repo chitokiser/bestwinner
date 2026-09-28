@@ -12,18 +12,20 @@ import {
 } from 'lucide-react';
 
 export default function AboutGroup({ t }) {
+  const isVi = t?.lang === 'vi' || !t?.lang;
+
   const about = t?.about || {
-    subtitle: "TỔNG QUAN TẬP ĐOÀN / 그룹 개요",
+    subtitle: isVi ? "TỔNG QUAN TẬP ĐOÀN" : "TỔNG QUAN TẬP ĐOÀN / 그룹 개요",
     title: "BEST winner Group Vietnam",
-    philosophy: "Korean Technology × Vietnamese Production",
+    philosophy: isVi ? "Hội tụ Công nghệ Kỹ thuật Hàn Quốc & Hệ thống Sản xuất Trực tiếp tại Việt Nam" : "Korean Technology × Vietnamese Production",
     cards: [
-      { title: "Korean Technology", desc: "한국의 정밀 기술력과 엄격한 품질 관리 프로세스 적용." },
-      { title: "Local Production", desc: "하노이 3,000m² 직영 공장 연계 현지 맞춤 제작 및 공급." },
-      { title: "Expert Engineering", desc: "한국인 수석 기술진 2인과 현지 전문 엔지니어 15인 직접 시공." },
-      { title: "Multi-Business Synergy", desc: "전 사업 분야 단일 계약 파이프라인 및 일원화된 A/S 보증." }
+      { title: "Korean Technology", desc: isVi ? "Áp dụng kỹ thuật chính xác Hàn Quốc và quy trình kiểm định chất lượng nghiêm ngặt." : "한국의 정밀 기술력과 엄격한 품질 관리 프로세스 적용." },
+      { title: "Local Production", desc: isVi ? "Nhà máy 3.000m² tại Hà Nội đáp ứng may đo trực tiếp theo công trình." : "하노이 3,000m² 직영 공장 연계 현지 맞춤 제작 및 공급." },
+      { title: "Expert Engineering", desc: isVi ? "2 Kỹ sư Trưởng Hàn Quốc & 15 Kỹ sư chuyên trách trực tiếp thi công." : "한국인 수석 기술진 2인과 현지 전문 엔지니어 15인 직접 시공." },
+      { title: "Multi-Business Synergy", desc: isVi ? "Tối ưu hóa chi phí và quản lý đồng bộ tất cả mảng hạ tầng trong một hợp đồng." : "전 사업 분야 단일 계약 파이프라인 및 일원화된 A/S 보증." }
     ],
     synergyTitle: "One-Stop Integrated Synergy",
-    synergyDesc: "단일 계약 및 통합 관리로 최상의 시공 품질과 24/7 A/S를 제공합니다."
+    synergyDesc: isVi ? "Giải pháp đồng bộ từ tư vấn, thiết kế, thi công lắp đặt đến bảo hành A/S 24/7 toàn diện." : "단일 계약 및 통합 관리로 최상의 시공 품질과 24/7 A/S를 제공합니다."
   };
 
   const cardsList = about.cards || [];
@@ -95,9 +97,11 @@ export default function AboutGroup({ t }) {
             <div className="lg:col-span-4 flex justify-center lg:justify-end">
               <div className="p-6 rounded-2xl bg-navy-950/90 border border-gold-500/30 space-y-3 w-full max-w-xs text-center">
                 <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Group Turnkey Pipeline</p>
-                <div className="text-lg font-extrabold gold-gradient-text break-keep">Single Contract • Unified Warranty</div>
+                <div className="text-lg font-extrabold gold-gradient-text break-keep">
+                  {isVi ? 'Hợp đồng Đơn - Bảo hành Đồng bộ' : 'Single Contract • Unified Warranty'}
+                </div>
                 <p className="text-[11px] text-slate-300 break-keep">
-                  전 사업 분야 단일 계약 및 일원화된 24/7 A/S 파이프라인
+                  {isVi ? 'Giải pháp hợp đồng đơn lẻ & kênh bảo hành A/S 24/7 đồng bộ cho tất cả các mảng.' : '전 사업 분야 단일 계약 및 일원화된 24/7 A/S 파이프라인'}
                 </p>
               </div>
             </div>

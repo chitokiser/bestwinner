@@ -55,35 +55,37 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
   const [pdfViewerOpen, setPdfViewerOpen] = useState(false); // Official 14-page presentation catalog viewer
   const [pdfCurrentPage, setPdfCurrentPage] = useState(1);
 
+  const isVi = t?.lang === 'vi' || !t?.lang;
+
   const elevatorHeroImages = [
     { 
       src: '/images/elevator/1.png', 
       title: 'BEST WINNER Premium Home Elevator', 
-      desc: '한국 거창승강기밸리 기술 × 베트남 하노이 3,000m² 직영 공장',
+      desc: isVi ? 'Công nghệ Thang máy 거창 (Hàn Quốc) × Nhà máy 3.000m² tại Hà Nội' : '한국 거창승강기밸리 기술 × 베트남 하노이 3,000m² 직영 공장',
       tag: 'FLAGSHIP VILLA & RESIDENTIAL'
     },
     { 
       src: '/images/elevator/2.png', 
       title: 'Minimal PIT Retrofit Elevator System', 
-      desc: '최소 PIT(300mm~) & 단상 220V 지원으로 기존 주택 리모델링 완벽 대응',
+      desc: isVi ? 'Hố PIT tối thiểu (300mm~) & Điện 1 pha 220V, phù hợp cải tạo nhà ở' : '최소 PIT(300mm~) & 단상 220V 지원으로 기존 주택 리모델링 완벽 대응',
       tag: 'RETROFIT & RESTRUCTURING'
     },
     { 
       src: '/images/elevator/3.png', 
       title: 'Luxury Stainless & Mirror Cabin Finish', 
-      desc: 'Champagne Gold, Rose Gold Mirror 커스텀 카 인테리어 마감',
+      desc: isVi ? 'Hoàn thiện cabin mạ Champagne Gold, Rose Gold Mirror sang trọng' : 'Champagne Gold, Rose Gold Mirror 커스텀 카 인테리어 마감',
       tag: 'CUSTOM CABIN INTERIOR'
     },
     { 
       src: '/images/elevator/4.png', 
       title: 'Commercial & High-Capacity Freight Series', 
-      desc: '근생 빌딩, 오피스, 호텔 및 공장/물류 전용 화물 승강기 라인업',
+      desc: isVi ? 'Dòng thang máy tải hàng & khách cho tòa nhà văn phòng, khách sạn, nhà máy' : '근생 빌딩, 오피스, 호텔 및 공장/물류 전용 화물 승강기 라인업',
       tag: 'COMMERCIAL & INDUSTRIAL'
     },
     { 
       src: '/images/elevator/5.png', 
       title: 'Smart Safety & Emergency ARD System', 
-      desc: '정전 시 최우선 층 비상 구출(ARD) 및 24시간 스마트 관제 DB',
+      desc: isVi ? 'Cứu hộ tự động ARD khi mất điện & Giám sát thông minh 24/7' : '정전 시 최우선 층 비상 구출(ARD) 및 24시간 스마트 관제 DB',
       tag: 'SMART SAFETY & MONITORING'
     }
   ];
@@ -97,48 +99,48 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
 
   // Elevator Parts Lifecycle Data extracted from official document
   const partsLifecycle = [
-    { part: "메인 인버터 (Main Inverter)", cat: "기계실 / 제어반", cycle: "7 년", role: "VVVF 고효율 전력 변환 및 정밀 속도 제어", priceVnd: "3.800.000~" },
-    { part: "메인 제어 PCB (Main Control PCB)", cat: "기계실 / 제어반", cycle: "7 년", role: "승강기 전체 운행 로직 및 안전 회로 통제", priceVnd: "1.600.000~" },
-    { part: "자동 구출 운전 장치 (ARD)", cat: "기계실 / 제어반", cycle: "7 년", role: "정전 시 최우선 층 자동 이송 및 문열림 비상구출", priceVnd: "1.700.000~" },
-    { part: "비상 전원 장치 (UPS) / 통화장치", cat: "기계실 / 제어반", cycle: "5 년", role: "비상 정전 시 24시간 관제 센터 통화 및 비상 조명", priceVnd: "950.000~" },
-    { part: "구동기 (Traction Machine)", cat: "구동부 / 권상기", cycle: "15 년", role: "기어리스 영구자석 동기모터 (PM Motor) 핵심 권상", priceVnd: "11.500.000~" },
-    { part: "전자기계 브레이크 (Brake System)", cat: "구동부 / 권상기", cycle: "7 년", role: "이중 브레이크 구조로 비상 제동 및 수평 유지", priceVnd: "1.850.000~" },
-    { part: "상승 과속 방지 장치 (Rope Brake)", cat: "안전 시스템", cycle: "10 년", role: "상승 방향 과속 감지 시 로프 직접 클램핑 제동", priceVnd: "2.600.000~" },
-    { part: "개문 출발 방지 장치 (UCMP)", cat: "안전 시스템", cycle: "7 년", role: "문이 열린 채 출발하는 위험 감지 즉시 자동 락", priceVnd: "1.500.000~" },
-    { part: "추락 방지 세이프티 기어 (Safety Gear)", cat: "안전 시스템", cycle: "15 년", role: "주로프 파손 시 가이드레일 물리적 웨지 브레이크", priceVnd: "1.800.000~" },
-    { part: "멀티빔 도어 센서 (Multi-beam Sensor)", cat: "카 및 도어", cycle: "5 년", role: "128채널 적외선 빔으로 승객 손끼임 완벽 방지", priceVnd: "550.000~" },
-    { part: "주행 가이드 레일 (Guide Rail)", cat: "승강로 / 피트", cycle: "20 년", role: "정밀 절삭 가이드레일로 수직 이동 유도", priceVnd: "175.000~ /m" },
-    { part: "유압/스프링 완충기 (Buffer)", cat: "승강로 / 피트", cycle: "15 년", role: "최하층 오버슈트 시 충격 흡수 유압 완충", priceVnd: "380.000~" }
+    { part: isVi ? "Biến tần chính (Main Inverter)" : "메인 인버터 (Main Inverter)", cat: isVi ? "Phòng máy / Tủ điện" : "기계실 / 제어반", cycle: isVi ? "7 năm" : "7 년", role: isVi ? "Biến đổi điện năng VVVF & Điều khiển tốc độ chính xác" : "VVVF 고효율 전력 변환 및 정밀 속도 제어", priceVnd: "3.800.000~" },
+    { part: isVi ? "Bo mạch điều khiển chính (Main Control PCB)" : "메인 제어 PCB (Main Control PCB)", cat: isVi ? "Phòng máy / Tủ điện" : "기계실 / 제어반", cycle: isVi ? "7 năm" : "7 년", role: isVi ? "Quản lý toàn bộ logic vận hành & Mạch an toàn thang máy" : "승강기 전체 운행 로직 및 안전 회로 통제", priceVnd: "1.600.000~" },
+    { part: isVi ? "Thiết bị cứu hộ tự động (ARD)" : "자동 구출 운전 장치 (ARD)", cat: isVi ? "Phòng máy / Tủ điện" : "기계실 / 제어반", cycle: isVi ? "7 năm" : "7 년", role: isVi ? "Tự động đưa thang về tầng gần nhất & mở cửa khi mất điện" : "정전 시 최우선 층 자동 이송 및 문열림 비상구출", priceVnd: "1.700.000~" },
+    { part: isVi ? "Nguồn điện dự phòng (UPS) / Intercom" : "비상 전원 장치 (UPS) / 통화장치", cat: isVi ? "Phòng máy / Tủ điện" : "기계실 / 제어반", cycle: isVi ? "5 năm" : "5 년", role: isVi ? "Kết nối trung tâm giám sát 24/7 & Chiếu sáng khẩn cấp" : "비상 정전 시 24시간 관제 센터 통화 및 비상 조명", priceVnd: "950.000~" },
+    { part: isVi ? "Động cơ kéo (Traction Machine)" : "구동기 (Traction Machine)", cat: isVi ? "Bộ truyền động / Động cơ" : "구동부 / 권상기", cycle: isVi ? "15 năm" : "15 년", role: isVi ? "Động cơ nam châm vĩnh cửu PM Gearless không hộp số" : "기어리스 영구자석 동기모터 (PM Motor) 핵심 권상", priceVnd: "11.500.000~" },
+    { part: isVi ? "Phanh điện từ (Brake System)" : "전자기계 브레이크 (Brake System)", cat: isVi ? "Bộ truyền động / Động cơ" : "구동부 / 권상기", cycle: isVi ? "7 năm" : "7 년", role: isVi ? "Cấu trúc phanh kép hãm khẩn cấp & Giữ bằng tầng" : "이중 브레이크 구조로 비상 제동 및 수평 유지", priceVnd: "1.850.000~" },
+    { part: isVi ? "Thiết bị chống vượt tốc (Rope Brake)" : "상승 과속 방지 장치 (Rope Brake)", cat: isVi ? "Hệ thống an toàn" : "안전 시스템", cycle: isVi ? "10 năm" : "10 년", role: isVi ? "Kẹp cáp phanh trực tiếp khi phát hiện vượt tốc chiều lên" : "상승 방향 과속 감지 시 로프 직접 클램핑 제동", priceVnd: "2.600.000~" },
+    { part: isVi ? "Thiết bị chống cabin di chuyển khi cửa mở (UCMP)" : "개문 출발 방지 장치 (UCMP)", cat: isVi ? "Hệ thống an toàn" : "안전 시스템", cycle: isVi ? "7 năm" : "7 년", role: isVi ? "Tự động khóa ngay khi phát hiện nguy cơ cabin di chuyển mở cửa" : "문이 열린 채 출발하는 위험 감지 즉시 자동 락", priceVnd: "1.500.000~" },
+    { part: isVi ? "Bộ hãm an toàn (Safety Gear)" : "추락 방지 세이프티 기어 (Safety Gear)", cat: isVi ? "Hệ thống an toàn" : "안전 시스템", cycle: isVi ? "15 năm" : "15 년", role: isVi ? "Kẹp cơ khí vào ray dẫn hướng khi đứt cáp chính" : "주로프 파손 시 가이드레일 물리적 웨지 브레이크", priceVnd: "1.800.000~" },
+    { part: isVi ? "Cảm biến cửa hồng ngoại (Multi-beam Sensor)" : "멀티빔 도어 센서 (Multi-beam Sensor)", cat: isVi ? "Cabin & Cửa" : "카 및 도어", cycle: isVi ? "5 năm" : "5 년", role: isVi ? "128 kênh tia hồng ngoại chống kẹt tay tuyệt đối" : "128채널 적외선 빔으로 승객 손끼임 완벽 방지", priceVnd: "550.000~" },
+    { part: isVi ? "Ray dẫn hướng (Guide Rail)" : "주행 가이드 레일 (Guide Rail)", cat: isVi ? "Hố thang / PIT" : "승강로 / 피트", cycle: isVi ? "20 năm" : "20 년", role: isVi ? "Ray cắt chính xác điều hướng di chuyển thẳng đứng" : "정밀 절삭 가이드레일로 수직 이동 유도", priceVnd: "175.000~ /m" },
+    { part: isVi ? "Bộ giảm chấn (Buffer)" : "유압/스프링 완충기 (Buffer)", cat: isVi ? "Hố thang / PIT" : "승강로 / 피트", cycle: isVi ? "15 năm" : "15 년", role: isVi ? "Hấp thụ lực va đập thủy lực khi cabin vượt tầng đáy" : "최하층 오버슈트 시 충격 흡수 유압 완충", priceVnd: "380.000~" }
   ];
 
   // Official BEST WINNER Global Technical Library Data
   const lgrisLibraryData = {
     partnerInfo: {
       name: "BEST WINNER ELEVATOR GLOBAL TECHNICAL CENTER",
-      role: "공식 글로벌 승강기 기술 스펙 & 엔지니어링 센터",
+      role: isVi ? "Trung tâm Kỹ thuật & Tiêu chuẩn Thang máy Toàn cầu" : "공식 글로벌 승강기 기술 스펙 & 엔지니어링 센터",
       location: "Hanoi, Vietnam & Geochang Elevator Valley, Korea",
       certifications: ["CE Mark", "ISO 9001 Quality", "ISO 14001 Environmental", "QCVN 32 Elevator Safety"],
       website: "https://bestwinnervn.com",
-      desc: "BEST WINNER ELEVATOR는 승객용, 전망용, 가정용, 화물용 엘리베이터 및 에스컬레이터 전 제품군을 직접 독자 설계·제작·설치하는 승강기 전문 브랜드로, 독자적인 글로벌 스펙 카탈로그 및 베트남 하노이 3,000m² 직영 공장 생산망을 전개합니다."
+      desc: isVi ? "BEST WINNER ELEVATOR là thương hiệu chuyên về thang máy tự thiết kế, sản xuất và lắp đặt trực tiếp toàn bộ các dòng thang máy tải khách, thang quan sát, thang gia đình, thang tải hàng và thang cuốn với nhà máy 3.000m² tại Hà Nội." : "BEST WINNER ELEVATOR는 승객용, 전망용, 가정용, 화물용 엘리베이터 및 에스컬레이터 전 제품군을 직접 독자 설계·제작·설치하는 승강기 전문 브랜드로, 독자적인 글로벌 스펙 카탈로그 및 베트남 하노이 3,000m² 직영 공장 생산망을 전개합니다."
     },
     products: [
       {
         id: "passenger",
         modelCode: "BEST PASSENGER P1000",
-        title: "BEST WINNER Passenger Elevator Series (승객용 엘리베이터)",
+        title: isVi ? "Dòng Thang máy Tải khách (Passenger Elevator Series)" : "BEST WINNER Passenger Elevator Series (승객용 엘리베이터)",
         category: "passenger",
         catLabel: "Passenger Elevator",
-        speed: "1.0 m/s ~ 4.0 m/s (고속/중속 선택)",
-        capacity: "450 kg ~ 1,600 kg (6인승 ~ 21인승)",
-        machineType: "MRL (기계실 없는 타입) & Small MR (소형 기계실)",
+        speed: "1.0 m/s ~ 4.0 m/s",
+        capacity: "450 kg ~ 1,600 kg (6 ~ 21 người)",
+        machineType: "MRL (Không phòng máy) & Small MR (Phòng máy nhỏ)",
         img: "/images/elevator/1.png",
         galleryImages: ["/images/elevator/1.png", "/images/elevator/elevator_cabin.jpg", "/images/elevator/3.png", "/images/elevator/2.png"],
-        summary: "고효율 VVVF 재생 인버터 및 영구자석 동기권상기(PM Gearless Machine) 탑재 승객용 에코 솔루션",
+        summary: isVi ? "Giải pháp thang máy tiết kiệm điện với biến tần tái tạo VVVF & Động cơ kéo nam châm vĩnh cửu PM Gearless" : "고효율 VVVF 재생 인버터 및 영구자석 동기권상기(PM Gearless Machine) 탑재 승객용 에코 솔루션",
         features: [
-          "VVVF Energy Regen Inverter 탑재로 표준 운행 대비 전력 감축 최대 35%",
-          "128채널 적외선 3D 멀티빔 센서 적용으로 손끼임 완전 차단 안전 구동",
-          "최첨단 마이크로컴퓨터 스마트 그룹 제어 시스템 (Group Control System)",
-          "초저소음 48dB(A) 수평 운행 착상 정밀 기술"
+          isVi ? "Trang bị biến tần VVVF Energy Regen tiết kiệm điện lên đến 35%" : "VVVF Energy Regen Inverter 탑재로 표준 운행 대비 전력 감축 최대 35%",
+          isVi ? "Cảm biến 3D hồng ngoại 128 kênh chống kẹt an toàn tuyệt đối" : "128채널 적외선 3D 멀티빔 센서 적용으로 손끼임 완전 차단 안전 구동",
+          isVi ? "Hệ thống điều khiển nhóm thông minh vi xử lý (Group Control System)" : "최첨단 마이크로컴퓨터 스마트 그룹 제어 시스템 (Group Control System)",
+          isVi ? "Công nghệ dừng tầng chính xác & Độ ồn siêu thấp 48dB(A)" : "초저소음 48dB(A) 수평 운행 착상 정밀 기술"
         ]
       },
       {

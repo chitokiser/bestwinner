@@ -8,31 +8,31 @@ export const translations = {
       callUs: "Hotline: 0988-123-456"
     },
     footer: {
-      aboutTitle: "About BEST winner Group",
-      aboutDesc: "Tập đoàn hạ tầng thông minh, thang máy, nội thất, PCCC và chống thấm hàng đầu Việt Nam. Công nghệ Hàn Quốc, Sản xuất chuyên biệt địa phương.",
-      partnershipTitle: "Yêu cầu Hợp tác (B2B)",
+      aboutTitle: "Về BEST winner Group",
+      aboutDesc: "Tập đoàn giải pháp hạ tầng thông minh, thang máy, nội thất, PCCC và chống thấm hàng đầu Việt Nam. Công nghệ Hàn Quốc, Sản xuất chuyên biệt địa phương.",
+      partnershipTitle: "Yêu cầu Hợp tác (B2B Partner)",
       partnershipDesc: "Bộ Hồ sơ Kỹ thuật & Bản vẽ CAD/DWG/BIM dành riêng cho Kiến trúc sư & Nhà thầu Xây dựng.",
       contactTitle: "Liên hệ & Showroom",
       address: "Số C17, Simco Sông Đà 2, Vạn Phúc, Hà Đông, Hà Nội (MST: 0110245813)",
-      hotline: "Hotline: 0988-123-456",
-      techSupport: "A/S 24/7: 0977-888-999",
+      hotline: "Hotline kinh doanh: 0988-123-456",
+      techSupport: "Hỗ trợ Kỹ thuật & A/S 24/7: 0977-888-999",
       email: "Email: contact@bestwinnervn.com"
     },
     hero: {
-      catchphrase: "Sự dung hợp giữa công nghệ và cảm xúc, hoàn thiện trọn vẹn mong ước của bạn",
-      badge: "Kinh nghiệm 7 năm tại Việt Nam • Đột phá Công nghệ Hàn Quốc",
+      catchphrase: "Sự kết hợp hoàn hảo giữa công nghệ và cảm xúc, hoàn thiện trọn vẹn ngôi nhà bạn",
+      badge: "7 năm kinh nghiệm tại Việt Nam • Đột phá Công nghệ Hàn Quốc",
       titlePrefix: "Tập đoàn Giải pháp ",
       titleHighlight: "Nhà ở & Hạ tầng Thông minh",
       titleSuffix: " Hàng đầu Việt Nam",
-      description: "BEST winner Vn Group mang đến hệ sinh thái B2B/B2C toàn diện từ Thang máy cao cấp, Nội thất sang trọng, Bãi đỗ xe thông minh AI, Vật liệu PCCC tiêu chuẩn QCVN đến Giải pháp Chống thấm công trình.",
-      ctaCalculator: "Dự toán giá Thang máy online",
-      ctaConsult: "Đăng ký tư vấn trực tiếp",
+      description: "BEST winner Vn Group mang đến hệ sinh thái B2B/B2C toàn diện từ Thang máy cao cấp, Nội thất may đo, Bãi đỗ xe thông minh AI, Vật liệu PCCC tiêu chuẩn QCVN đến Giải pháp Chống thấm công trình chuyên sâu.",
+      ctaCalculator: "Dự toán chi phí Thang máy online",
+      ctaConsult: "Đăng ký khảo sát thực tế miễn phí",
       b2bDownload: "Tải B2B Partner Kit (CAD/DWG/BIM)",
       stats: {
-        years: "Năm kinh nghiệm",
+        years: "Năm kinh nghiệm tại VN",
         projects: "Dự án hoàn thành",
-        divisions: "Lĩnh vực cốt lõi",
-        support: "Hỗ trợ Kỹ thuật 24/7"
+        divisions: "Mảng kinh doanh cốt lõi",
+        support: "Hỗ trợ Kỹ thuật & A/S 24/7"
       }
     },
     about: {
@@ -40,20 +40,20 @@ export const translations = {
       title: "Tập đoàn Giải pháp Nhà ở & Hạ tầng Kiến trúc Hàng đầu",
       philosophy: "Hội tụ Công nghệ Kỹ thuật Hàn Quốc và Hệ thống Sản xuất - Thi công Trực tiếp tại Việt Nam, kiến tạo chuẩn mực giá trị sống đẳng cấp.",
       cards: [
-        { title: "Công nghệ Hàn Quốc", desc: "Kỹ thuật chính xác K-Technology cùng quy trình kiểm định chất lượng nghiêm ngặt." },
-        { title: "Sản xuất May đo Địa phương", desc: "Nhà máy 3,000m² tại Hà Nội đáp ứng hoàn hảo mọi quy chuẩn công trình." },
-        { title: "Đội ngũ Chuyên gia Trực tiếp", desc: "2 Kỹ sư Trưởng Hàn Quốc & 15 Kỹ sư 현지 직접 시공." },
+        { title: "Công nghệ Hàn Quốc (K-Technology)", desc: "Kỹ thuật chính xác tiêu chuẩn Hàn Quốc cùng quy trình kiểm định chất lượng nghiêm ngặt." },
+        { title: "Nhà máy Sản xuất May đo", desc: "Nhà máy 3,000m² tại Hà Nội đáp ứng hoàn hảo mọi quy chuẩn công trình thực tế." },
+        { title: "Đội ngũ Chuyên gia Trực tiếp", desc: "2 Kỹ sư Trưởng Hàn Quốc & 15 Kỹ sư chuyên trách trực tiếp thi công tại công trình." },
         { title: "Hệ sinh thái Tích hợp Đa mảng", desc: "Tối ưu hóa chi phí và quản lý đồng bộ tất cả các lĩnh vực hạ tầng trong một hợp đồng duy nhất." }
       ],
       synergyTitle: "Giải pháp One-Stop Synergy Tối ưu Hóa Giá trị Công trình",
-      synergyDesc: "Đơn giản hóa toàn bộ 파이프라인. Từ khâu tư vấn thiết kế, thi công lắp đặt đến bảo hành A/S 24/7 đồng bộ cho toàn bộ mảng hạ tầng."
+      synergyDesc: "Đơn giản hóa toàn bộ quy trình vận hành. Từ khâu tư vấn thiết kế, thi công lắp đặt đến bảo hành A/S 24/7 đồng bộ cho toàn bộ mảng hạ tầng."
     },
     ceoGreeting: {
       badge: "THÔNG ĐỊỆP TỪ TỔNG GIÁM ĐỐC",
-      title: "Sự dung hợp hoàn hảo giữa Công nghệ Hàn Quốc & Không gian Việt Nam",
-      quote: "Sự dung hợp giữa công nghệ chính xác của Hàn Quốc và không gian Việt Nam, mang đến niềm tự hào kiêu hãnh nhất cho hạ tầng xây dựng & nhà ở.",
+      title: "Sự kết hợp hoàn hảo giữa Công nghệ Hàn Quốc & Không gian Kiến trúc Việt Nam",
+      quote: "Sự dung hợp giữa công nghệ chính xác của Hàn Quốc và không gian sống Việt Nam, mang đến niềm tự hào kiêu hãnh nhất cho hạ tầng xây dựng & nhà ở.",
       greeting: "Xin kính chào quý khách hàng và quý đối tác của BEST winner Vn Group,",
-      ceoName: "Kim Sung-won (김 성원)",
+      ceoName: "Kim Sung-won",
       ceoTitle: "Tổng Giám đốc Tập đoàn BEST winner Vn Group",
       p1: "Thị trường nhà ở và xây dựng tại Việt Nam đang phát triển vượt bậc, đòi hỏi các giá trị sống tổng thể cao cấp, hạ tầng thông minh và giải pháp năng lượng tái tạo hơn là các công trình đơn lẻ. BEST winner Vn Group tự hào là tập đoàn giải pháp nhà ở & xây dựng hàng đầu Việt Nam, cung cấp hệ sinh thái tích hợp đa mảng nòng cốt nhằm nâng tầm giá trị không gian sống.",
       p2: "Dưới ngọn cờ 'Korean Technology × Vietnamese Production', chúng tôi kết hợp hoàn hảo giữa công nghệ kỹ thuật chính xác từ Hàn Quốc và hệ thống sản xuất, quản lý trực tiếp tùy biến tại địa phương nhằm liên tục mở rộng và phát triển các trụ cột chiến lược:",
@@ -65,21 +65,21 @@ export const translations = {
       ],
       p3: "Dù quy mô và các lĩnh vực kinh doanh liên tục mở rộng, chúng tôi luôn cam kết mang đến giải pháp One-Stop B2B/B2C đồng hành cộng hưởng, hòa quyện tự nhiên với môi trường kiến trúc Việt Nam và nâng cao giá trị tài sản công trình.",
       p4: "BEST winner Vn Group trân trọng cảm ơn sự tin tưởng của quý khách và mong muốn tiếp tục nhận được sự đồng hành trên hành trình kiến tạo những chuẩn mực không gian mới tại Việt Nam.",
-      closing: "Trân trọng cảm ơn!"
+      closing: "Trân trọng cảm ơn!\n\nTổng Giám đốc BEST winner Vn Group\nKim Sung-won"
     },
     cardsSection: {
       badge: "BÁO CÁO LĨNH VỰC CHUYÊN SÂU",
       title: "Các Lĩnh vực Kinh doanh Nòng cốt của BEST winner Vn Group",
       subtitle: "Nhấp vào card từng lĩnh vực để xem trang giới thiệu chi tiết, thông số kỹ thuật và bộ công cụ B2B/B2C.",
-      cardCta: "Xem chi tiết trang Lĩnh vực →"
+      cardCta: "Xem trang chi tiết Lĩnh vực →"
     },
     business: {
       subtitle: "LĨNH VỰC HOẠT ĐỘNG CỐT LÕI",
-      title: "5 Mảng Kinh doanh Nòng ncore của Tập đoàn",
+      title: "5 Mảng Kinh doanh Nòng cốt của Tập đoàn",
       units: {
         interior: {
           tag: "Nội thất & Không gian",
-          name: "BEST winner interior Vn (인테리어)",
+          name: "BEST winner Interior Vn (Nội thất)",
           desc: "Thiết kế & Thi công nội thất cao cấp cho Biệt thự, Townhouse và Không gian Thương mại.",
           highlight: "Thiết kế không gian đồng bộ hài hòa với Cabin Thang máy & Hạ tầng an toàn.",
           img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
@@ -92,7 +92,7 @@ export const translations = {
         },
         elevator: {
           tag: "Thang máy Premium",
-          name: "BEST winner elevator Vn (엘리베이터)",
+          name: "BEST winner Elevator Vn (Thang máy)",
           desc: "Giải pháp Thang máy Gia đình, Thương mại & Công nghiệp với công nghệ truyền động tiên tiến.",
           highlight: "Dòng sản phẩm chủ lực BEST Home 350 dành riêng cho Townhouse & Villa 3-7 tầng.",
           img: "/images/elevator/elevator_cabin.jpg",
@@ -105,7 +105,7 @@ export const translations = {
         },
         parking: {
           tag: "Hạ tầng Thông minh",
-          name: "BEST winner AI Smart Parking System Vn (AI 스마트파킹)",
+          name: "BEST winner AI Smart Parking System Vn (Bãi đỗ xe thông minh AI)",
           desc: "Hệ thống Quản lý Bãi đỗ xe Thông minh ứng dụng AI Nhận diện Biển số (LPR) & Cổng Rào tự động.",
           highlight: "Giải pháp hạ tầng đỗ xe tối ưu cho Khu đô thị, Tòa nhà Văn phòng & Trung tâm Thương mại.",
           img: "https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=800&q=80",
@@ -114,11 +114,11 @@ export const translations = {
             "Hệ thống Dẫn đường đỗ xe LED & Quản lý vị trí trống realtime",
             "Kiosk Thanh toán không tiền mặt tự động & Phần mềm Quản lý trung tâm"
           ],
-          cta: "Xem Trang AI 주차"
+          cta: "Xem Trang Bãi đỗ xe AI"
         },
         firefighting: {
           tag: "An toàn & PCCC",
-          name: "BEST winner Firefighting materials Vn (소방자재)",
+          name: "BEST winner Firefighting Materials Vn (Vật liệu PCCC)",
           desc: "Cung cấp Vật liệu & Hệ thống PCCC đạt chuẩn Quy chuẩn Kỹ thuật Việt Nam (QCVN / TCVN).",
           highlight: "Tư vấn hồ sơ thẩm duyệt và cung cấp vật liệu PCCC đáp ứng các tiêu chuẩn kiểm định mới nhất.",
           img: "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=800&q=80",
@@ -131,7 +131,7 @@ export const translations = {
         },
         waterproofing: {
           tag: "Bảo vệ Công trình",
-          name: "BEST winner Waterproofing Vn (방수재)",
+          name: "BEST winner Waterproofing Vn (Chống thấm)",
           desc: "Công nghệ Chống thấm Chuyên sâu thích ứng với Khí hậu Nhiệt đới Gió mùa Việt Nam.",
           highlight: "Chống thấm hố PIT thang máy, Mái, Tầng hầm & Tường ngoài - Bảo hành tới 10 năm.",
           img: "/images/waterproofing/k1_overview_product.png",
@@ -144,14 +144,14 @@ export const translations = {
         },
         energy: {
           tag: "Năng lượng Mặt trời 3D PVT",
-          name: "BEST winner Solar Energy Vn (태양광 에너지)",
-          desc: "Công nghệ Hộp 광자 순환 (Photon Cycling Box) 3D PVT - Điện & Nước nóng đồng thời, mật độ phát điện gấp 10 lần, tuổi thọ 40+ năm.",
+          name: "BEST winner Solar Energy Vn (Năng lượng Mặt trời)",
+          desc: "Công nghệ Hộp tuần hoàn Photon (Photon Cycling Box) 3D PVT - Phát điện & Nước nóng đồng thời, mật độ phát điện gấp 10 lần, tuổi thọ 40+ năm.",
           highlight: "Bằng sáng chế #10-2776941 & Triển lãm Intersolar Munich 2023 / Dubai Expo.",
           img: "/images/solar/deck/page_1.png",
           features: [
             "10x Mật độ phát điện (1,300W/㎡ so với 131W/㎡)",
-            "Tuổi thọ 40+ năm (gấp 2 lần nhờ làm mát chất lỏng & kín hoàn toàn)",
-            "Hệ thống PVT 2 trong 1 (Phát điện + Nước nóng 24/7, ROI 사우나 1년)"
+            "Tuổi thọ 40+ năm (gấp 2 lần nhờ làm mát bằng chất lỏng & hộp kín hoàn toàn)",
+            "Hệ thống PVT 2 trong 1 (Phát điện + Nước nóng 24/7, ROI Sauna / Khách sạn 1-2 năm)"
           ],
           cta: "Xem Trang Năng lượng"
         }
@@ -159,7 +159,7 @@ export const translations = {
     },
     calculator: {
       badge: "CÔNG CỤ TÍNH GIÁ TỰ ĐỘNG ONLINE",
-      title: "Dự toán Chi phí Thang máy BEST winner elevator Vn",
+      title: "Dự toán Chi phí Thang máy BEST winner Elevator Vn",
       desc: "Chỉ với 4 bước đơn giản, nhận ngay ước tính chi phí sơ bộ và lịch hẹn khảo sát thực tế miễn phí tại công trình.",
       step1: "1. Chọn Số Tầng",
       step2: "2. Chọn Tải Trọng",
@@ -180,7 +180,7 @@ export const translations = {
       submitBtn: "Gửi Yêu cầu Khảo sát Miễn phí"
     },
     b2bKit: {
-      title: "B2B Architect & Contractor Kit",
+      title: "Bộ hồ sơ B2B Kiến trúc sư & Nhà thầu",
       desc: "Bộ Hồ sơ Kỹ thuật & Bản vẽ CAD/DWG/BIM dành riêng cho Kiến trúc sư, Công ty Thiết kế & Nhà thầu Xây dựng.",
       items: [
         "Bản vẽ Kỹ thuật Thang máy (CAD / DWG / Revit BIM)",
@@ -278,19 +278,6 @@ export const translations = {
       title: "BEST winner Group 핵심 사업 분야",
       subtitle: "각 사업 분야 카드를 클릭하시면 전용 상세 페이지, 사양서 및 견적 시스템으로 이동합니다.",
       cardCta: "사업 분야 전용 페이지 이동 →"
-    },
-    about: {
-      subtitle: "ABOUT BEST WINNER VN GROUP",
-      title: "5대 사업 부문 시너지 - 베트남 턴키 솔루션 리더",
-      philosophy: "그룹 캐치프레이즈: '기술과 감성의 융합, 당신의 마음을 완성하다'. Korean Technology + Local Specialized Production으로 완벽한 품질과 감동을 약속합니다.",
-      synergyTitle: "통합 인프라 시너지",
-      synergyDesc: "개별 외주 방식과 달리, 승강기 캐빈 design, 인테리어 설계, 소방 인허가, PIT 방수 공법을 단일 그룹에서 일체형으로 설계·시공하여 완벽한 조화를 이룹니다.",
-      cards: [
-        { title: "한국 기술 검증 네트워크", desc: "엄격한 한국형 안전 규정과 정밀 제어 기술 적용으로 소음 최소화 및 최상의 승차감 구현." },
-        { title: "현지 직영 Cabin 제작", desc: "베트남 현지 공장 및 커스텀 제작 라인 운영으로 빠른 납기와 맞춤형 디자인 제공." },
-        { title: "24시간 직영 A/S 서비스", desc: "전국 주요 도시 전담 기술팀 상주, 긴급 출동 30~60분 이내 도착 원칙 준수." },
-        { title: "B2B & B2C 맞춤 포트폴리오", desc: "고급 빌라, 타운하우스부터 상업 빌딩, 물류센터, 공장 신축까지 통합 지원." }
-      ]
     },
     business: {
       subtitle: "5 CORE BUSINESS UNITS",
@@ -498,19 +485,6 @@ export const translations = {
       subtitle: "Click on any business card to navigate to its dedicated showcase, specs, and estimators.",
       cardCta: "Go to Business Page →"
     },
-    about: {
-      subtitle: "ABOUT BEST WINNER VN GROUP",
-      title: "Synergy of 5 Business Units - One-Stop Turnkey Partner",
-      philosophy: "Group Catchphrase: 'The Fusion of Technology and Emotion, Completing Your Vision'. Korean Technology + Local Specialized Production.",
-      synergyTitle: "Integrated Infrastructure Synergy",
-      synergyDesc: "Unlike fragmented contractors, BEST winner coordinates elevator cabin design, interior aesthetics, fire permits, and pit waterproofing in one unified workflow.",
-      cards: [
-        { title: "Korean Tech Engineering", desc: "Rigorous Korean safety standards and precise drive tech for silent operation and safety." },
-        { title: "Local Specialized Production", desc: "Local cabin fabrication and stock facilities in Vietnam for fast delivery & custom tailoring." },
-        { title: "24/7 Direct A/S Service", desc: "Dedicated in-house engineers dispatched within 30-60 minutes nationwide." },
-        { title: "Versatile B2B & B2C Coverage", desc: "From luxury villas and townhouses to commercial towers, logistics centers, and factories." }
-      ]
-    },
     business: {
       subtitle: "5 CORE BUSINESS UNITS",
       title: "BEST winner Group Key Business Divisions",
@@ -582,7 +556,7 @@ export const translations = {
         },
         energy: {
           tag: "3D PVT Solar Energy",
-          name: "BEST winner Solar Energy Vn (태양광)",
+          name: "BEST winner Solar Energy Vn (Solar Energy)",
           desc: "3D Photon Cycling Box PVT System — 10× power density per unit area, 40+ years lifespan, simultaneous electricity & hot water.",
           highlight: "Patent #10-2776941 & Validated at Intersolar Munich 2023 & Dubai Expo.",
           img: "/images/solar/deck/page_1.png",

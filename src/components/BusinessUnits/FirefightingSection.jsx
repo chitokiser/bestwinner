@@ -26,84 +26,86 @@ export default function FirefightingSection({ t, onOpenConsult }) {
   const [activeTab, setActiveTab] = useState('lighting');
   const [isDocModalOpen, setIsDocModalOpen] = useState(false);
 
+  const isVi = t?.lang === 'vi' || !t?.lang;
+
   // 6 Enhanced Product & Tech Categories inspired by SY-21 (신영소방) & Sobang24
   const categoriesData = [
     {
       id: 'lighting',
-      badge: '국내 최장 24시간 점등 Q-Mark',
-      name: '비상조명등 & 피난 설비 (Emergency Lighting)',
-      desc: 'KFI 형식승인 및 Q-Mark 품질 인증을 취득한 LED 비상조명등 및 최장 24시간/60분 연속 점등 휴대용 비상조명등 라인업.',
-      highlight: 'SY-M119-FI 휴대용 비상조명등 (국내 최장 24시간/60분 인증) & SY-5009C/R 다운라이트 3W~15W 비상등',
+      badge: isVi ? 'Chứng nhận Q-Mark Chiếu sáng 24h' : '국내 최장 24시간 점등 Q-Mark',
+      name: isVi ? 'Đèn chiếu sáng khẩn cấp & Thiết bị thoát hiểm (Emergency Lighting)' : '비상조명등 & 피난 설비 (Emergency Lighting)',
+      desc: isVi ? 'Dòng sản phẩm đèn chiếu sáng khẩn cấp LED và đèn chiếu sáng di động đạt chứng nhận Q-Mark & KFI thời gian chiếu sáng liên tục 24h / 60 phút.' : 'KFI 형식승인 및 Q-Mark 품질 인증을 취득한 LED 비상조명등 및 최장 24시간/60분 연속 점등 휴대용 비상조명등 라인업.',
+      highlight: isVi ? 'Đèn khẩn cấp di động SY-M119-FI (Chiếu sáng liên tục 24h) & Đèn âm trần SY-5009C/R 3W~15W' : 'SY-M119-FI 휴대용 비상조명등 (국내 최장 24시간/60분 인증) & SY-5009C/R 다운라이트 3W~15W 비상등',
       items: [
-        { name: 'SY-M119-FI 휴대용 비상조명등', detail: '24시간 연속 점등 Q-Mark 지정서 획득, 고휘도 LED & 충전식 리튬 배터리' },
-        { name: 'SY-5009C/R 매립형·다운라이트 비상등 (3W~15W)', detail: 'KFI 형식승인 (비26-12/비26-21), 천장 매립형 슬림 디자인' },
-        { name: 'RF 리모컨 제어 비상조명 시스템', detail: '원격 수동 점검 가능, 공동주택 & 상가 정기 점검 시간 90% 절감' },
-        { name: '상시 겸용 LED 비상조명등', detail: '평시 일반 조명 + 화재 정전 시 자동 비상등 전환 2-in-1 모듈' }
+        { name: isVi ? 'Đèn chiếu sáng khẩn cấp di động SY-M119-FI' : 'SY-M119-FI 휴대용 비상조명등', detail: isVi ? 'Đạt chứng nhận Q-Mark chiếu sáng liên tục 24h, LED độ sáng cao & Pin Lithium sạc điện' : '24시간 연속 점등 Q-Mark 지정서 획득, 고휘도 LED & 충전식 리튬 배터리' },
+        { name: isVi ? 'Đèn âm trần khẩn cấp SY-5009C/R (3W~15W)' : 'SY-5009C/R 매립형·다운라이트 비상등 (3W~15W)', detail: isVi ? 'Chứng nhận KFI, thiết kế mỏng âm trần thẩm mỹ' : 'KFI 형식승인 (비26-12/비26-21), 천장 매립형 슬림 디자인' },
+        { name: isVi ? 'Hệ thống đèn khẩn cấp điều khiển điều khiển từ xa RF' : 'RF 리모컨 제어 비상조명 시스템', detail: isVi ? 'Kiểm tra thủ công từ xa, tiết kiệm 90% thời gian kiểm tra định kỳ' : '원격 수동 점검 가능, 공동주택 & 상가 정기 점검 시간 90% 절감' },
+        { name: isVi ? 'Đèn khẩn cấp LED 2-in-1 kết hợp' : '상시 겸용 LED 비상조명등', detail: isVi ? 'Chiếu sáng thường nhật + Tự động bật đèn khẩn cấp khi mất điện do hỏa hoạn' : '평시 일반 조명 + 화재 정전 시 자동 비상등 전환 2-in-1 모듈' }
       ]
     },
     {
       id: 'cabinets',
-      badge: '태양광 & 특수 방수 거치대',
-      name: '소화기 용품 & 전문 보관함 (Extinguisher & Cabinets)',
-      desc: '태양광 자가발전 LED 소화기 보관함부터 야외 방수형, 거치대 통합형 SY-7010A/B 및 고급 인테리어 부띠크 소화기.',
-      highlight: '특수 방수형 소화기함 SY-7010A/B 거치대 통합 공법 & 도로/건물 시시각각 눈에 띄는 거리형 보관함',
+      badge: isVi ? 'Chống nước đặc biệt & Năng lượng mặt trời' : '태양광 & 특수 방수 거치대',
+      name: isVi ? 'Bình chữa cháy & Tủ bảo vệ chuyên dụng (Extinguisher & Cabinets)' : '소화기 용품 & 전문 보관함 (Extinguisher & Cabinets)',
+      desc: isVi ? 'Tủ đựng bình chữa cháy LED tự sạc năng lượng mặt trời, tủ chống nước ngoài trời SY-7010A/B và dòng bình chữa cháy thiết kế Boutique cao cấp.' : '태양광 자가발전 LED 소화기 보관함부터 야외 방수형, 거치대 통합형 SY-7010A/B 및 고급 인테리어 부띠크 소화기.',
+      highlight: isVi ? 'Tủ chữa cháy chống nước SY-7010A/B tích hợp giá đỡ & Tủ bảo vệ ngoài đường nổi bật' : '특수 방수형 소화기함 SY-7010A/B 거치대 통합 공법 & 도로/건물 시시각각 눈에 띄는 거리형 보관함',
       items: [
-        { name: '태양광 자가발전 LED 소화기 보관함', detail: '주간 태양광 충전, 야간 자동 LED 자가 발광으로 시인성 극대화' },
-        { name: '방수형 소화기함 (SY-7010A/B 거치대 세트)', detail: '야외 비바람 차단 특수 방수 패킹, 일체형 강철 거치 구조' },
-        { name: '거리형 / 옥외 대형 소화기 보관함', detail: '공공장소, 도로변, 건설 현장 전용 고강도 내후성 케이스' },
-        { name: '부띠크 디자인 소화기 & 메트로 금속 소화기', detail: '럭셔리 인테리어에 어우러지는 고품격 디자인 소화용품' }
+        { name: isVi ? 'Tủ đựng bình chữa cháy LED năng lượng mặt trời' : '태양광 자가발전 LED 소화기 보관함', detail: isVi ? 'Ban ngày sạc năng lượng mặt trời, ban đêm tự phát sáng LED nổi bật' : '주간 태양광 충전, 야간 자동 LED 자가 발광으로 시인성 극대화' },
+        { name: isVi ? 'Tủ chữa cháy chống nước (Set chân đế SY-7010A/B)' : '방수형 소화기함 (SY-7010A/B 거치대 세트)', detail: isVi ? 'Gioăng chống nước ngoài trời chuyên dụng, khung thép đúc nguyên khối' : '야외 비바람 차단 특수 방수 패킹, 일체형 강철 거치 구조' },
+        { name: isVi ? 'Tủ đựng bình chữa cháy cỡ lớn ngoài trời / ven đường' : '거리형 / 옥외 대형 소화기 보관함', detail: isVi ? 'Hộp bảo vệ độ bền cao chuyên dụng cho nơi công cộng, ven đường, công trường' : '공공장소, 도로변, 건설 현장 전용 고강도 내후성 케이스' },
+        { name: isVi ? 'Bình chữa cháy Boutique & Kim loại Metro' : '부띠크 디자인 소화기 & 메트로 금속 소화기', detail: isVi ? 'Thiết bị chữa cháy thiết kế sang trọng hài hòa với nội thất cao cấp' : '럭셔리 인테리어에 어우러지는 고품격 디자인 소화용품' }
       ]
     },
     {
       id: 'detection',
-      badge: 'IoT 특허 오작동 해소',
-      name: '자동화재탐지 & 스마트 IoT (Fire Detection & IoT)',
-      desc: 'KFI 형식승인 소화전/속보 PBL 세트, 단독경보형 연기감지기, 그리고 비화재보 오작동을 차단하는 스마트 IoT 무선 감지기.',
-      highlight: 'IoT 기반 비화재보 오작동 해소 특허 기술 (제10-2357956호) & 수신기/전원반 통합 솔루션',
+      badge: isVi ? 'Bằng sáng chế IoT loại bỏ báo cháy giả' : 'IoT 특허 오작동 해소',
+      name: isVi ? 'Báo cháy tự động & IoT thông minh (Fire Detection & IoT)' : '자동화재탐지 & 스마트 IoT (Fire Detection & IoT)',
+      desc: isVi ? 'Bộ tủ PBL chữa cháy đạt chuẩn KFI, đầu báo khói độc lập và đầu báo thông minh IoT triệt tiêu báo động giả.' : 'KFI 형식승인 소화전/속보 PBL 세트, 단독경보형 연기감지기, 그리고 비화재보 오작동을 차단하는 스마트 IoT 무선 감지기.',
+      highlight: isVi ? 'Công nghệ bằng sáng chế IoT loại bỏ báo cháy giả (Số 10-2357956) & Giải pháp đồng bộ tủ trung tâm' : 'IoT 기반 비화재보 오작동 해소 특허 기술 (제10-2357956호) & 수신기/전원반 통합 솔루션',
       items: [
-        { name: '단독경보형 연기/열 감지기', detail: '배터리 10년 수명, 광학식 연기 센서 적용으로 오작동 최소화' },
-        { name: '소화전 PBL 세트 & 속보 PBL 세트', detail: 'KFI 형식승인 완료 (형식승인서 보유), 비상경보 발신기 통합' },
-        { name: 'IoT 무선 화재 감지 수신기 & 플랫폼', detail: '실시간 관제 어플 연동, 미세 먼지/습기 오작동 필터링 알고리즘' },
-        { name: '중앙 관제 전원반 & 비상 콘센트 설비', detail: '소방법규 표준 부합, 과전류 보호 및 24시간 비상 전원 비축' }
+        { name: isVi ? 'Đầu báo khói / nhiệt cục bộ độc lập' : '단독경보형 연기/열 감지기', detail: isVi ? 'Pin 10 năm, cảm biến khói quang học giảm thiểu báo động giả' : '배터리 10년 수명, 광학식 연기 센서 적용으로 오작동 최소화' },
+        { name: isVi ? 'Bộ tủ PBL chữa cháy & Hộp nút bấm khẩn cấp' : '소화전 PBL 세트 & 속보 PBL 세트', detail: isVi ? 'Đạt chứng nhận KFI, tích hợp nút bấm báo cháy khẩn cấp' : 'KFI 형식승인 완료 (형식승인서 보유), 비상경보 발신기 통합' },
+        { name: isVi ? 'Tủ trung tâm & Nền tảng báo cháy không dây IoT' : 'IoT 무선 화재 감지 수신기 & 플랫폼', detail: isVi ? 'Kết nối App giám sát thời gian thực, thuật toán lọc bụi mịn / độ ẩm' : '실시간 관제 어플 연동, 미세 먼지/습기 오작동 필터링 알고리즘' },
+        { name: isVi ? 'Tủ nguồn trung tâm & Thiết bị ổ cắm khẩn cấp' : '중앙 관제 전원반 & 비상 콘센트 설비', detail: isVi ? 'Đạt tiêu chuẩn luật PCCC, bảo vệ quá dòng & Lưu trữ nguồn dự phòng 24h' : '소방법규 표준 부합, 과전류 보호 및 24시간 비상 전원 비축' }
       ]
     },
     {
       id: 'ev_safety',
-      badge: '전기차 지하주차장 방재',
-      name: '전기차(EV) & 특수 소화 장치 (EV Safety & Special Extinction)',
-      desc: '지하 주차장 EV 열폭주 대비 전기차 전용 자동 질식 소화포 Set, 배선반 나노캡슐 자동 소화기 및 드론 소화 시스템.',
-      highlight: '전기차 배터리 열폭주 차단 전용 소화 질식포 & 수조 차단 펜스 및 나노캡슐 자동 소화패치',
+      badge: isVi ? 'An toàn PCCC Xe điện bãi xe ngầm' : '전기차 지하주차장 방재',
+      name: isVi ? 'PCCC Xe điện (EV) & Thiết bị dập lửa đặc biệt (EV Safety)' : '전기차(EV) & 특수 소화 장치 (EV Safety & Special Extinction)',
+      desc: isVi ? 'Chăn dập lửa chữa cháy xe điện khẩn cấp, bình chữa cháy tự động Nano Capsule cho tủ điện và hệ thống dập lửa Drone.' : '지하 주차장 EV 열폭주 대비 전기차 전용 자동 질식 소화포 Set, 배선반 나노캡슐 자동 소화기 및 드론 소화 시스템.',
+      highlight: isVi ? 'Chăn dập lửa chuyên dụng chống bùng nổ nhiệt Pin EV & Miếng dán chữa cháy tự động Nano' : '전기차 배터리 열폭주 차단 전용 소화 질식포 & 수조 차단 펜스 및 나노캡슐 자동 소화패치',
       items: [
-        { name: 'EV 전기차 전용 질식 소화포 (Fire Blanket)', detail: '1,400℃ 고온 견디는 특수 초극세사 방화 천, 2인 즉시 투척 구조' },
-        { name: '전기 분전반/배선반 전용 나노캡슐 소화기', detail: '특수 소화 약제 캡슐이 120℃ 화재 감지 시 자동 터짐 진화' },
-        { name: 'EV 지하주차장 자동 주수 하부 소화장치', detail: '차량 하부 배터리팩 향해 고압 소수 노즐 자동 조준 분사' },
-        { name: '소화 드론 & 자동 가스 소화 시스템', detail: '초고층 및 위험물 저장소용 특수 가스 자동 방출 시스템' }
+        { name: isVi ? 'Chăn dập lửa chuyên dụng xe điện EV (Fire Blanket)' : 'EV 전기차 전용 질식 소화포 (Fire Blanket)', detail: isVi ? 'Vải chịu nhiệt 1.400℃, thiết kế 2 người trùm phủ dập lửa tức thì' : '1,400℃ 고온 견디는 특수 초극세사 방화 천, 2인 즉시 투척 구조' },
+        { name: isVi ? 'Bình dập lửa Nano Capsule tủ điện / bảng phân phối' : '전기 분전반/배선반 전용 나노캡슐 소화기', detail: isVi ? 'Tự động kích hoạt dập lửa khi nhiệt độ vượt 120℃' : '특수 소화 약제 캡슐이 120℃ 화재 감지 시 자동 터짐 진화' },
+        { name: isVi ? 'Hệ thống phun nước tự động gầm xe điện bãi ngầm' : 'EV 지하주차장 자동 주수 하부 소화장치', detail: isVi ? 'Phun nước áp lực cao tự động định hướng vào gói Pin dưới gầm xe' : '차량 하부 배터리팩 향해 고압 소수 노즐 자동 조준 분사' },
+        { name: isVi ? 'Drone chữa cháy & Hệ thống dập lửa bằng khí tự động' : '소화 드론 & 자동 가스 소화 시스템', detail: isVi ? 'Hệ thống xả khí tự động cho nhà cao tầng và kho hàng nguy hiểm' : '초고층 및 위험물 저장소용 특수 가스 자동 방출 시스템' }
       ]
     },
     {
       id: 'signs',
-      badge: '고휘도 축광 야간 유도',
-      name: '축광 피난 유도 & 안전 표지 (Photoluminescent Signs)',
-      desc: '정전 시 완벽한 야간 시야를 확보하는 축광 피난구 표지, 고휘도 축광 계단 논슬립 패드, 소화전 캡 및 냉동창고 바닥깔판.',
-      highlight: '소방청 고시 축광 성능 기준을 상회하는 고휘도 자가 발광 소재 & 냉동창고 전용 방한 바닥재',
+      badge: isVi ? 'Dạ quang phản quang ban đêm' : '고휘도 축광 야간 유도',
+      name: isVi ? 'Biển chỉ dẫn thoát hiểm Dạ quang (Photoluminescent Signs)' : '축광 피난 유도 & 안전 표지 (Photoluminescent Signs)',
+      desc: isVi ? 'Biển thoát hiểm dạ quang đảm bảo tầm nhìn ban đêm khi mất điện, nẹp cầu thang dạ quang, nắp trụ chữa cháy và sàn kho lạnh.' : '정전 시 완벽한 야간 시야를 확보하는 축광 피난구 표지, 고휘도 축광 계단 논슬립 패드, 소화전 캡 및 냉동창고 바닥깔판.',
+      highlight: isVi ? 'Vật liệu tự phát sáng dạ quang vượt tiêu chuẩn PCCC & Sàn cách nhiệt chuyên dụng kho lạnh' : '소방청 고시 축광 성능 기준을 상회하는 고휘도 자가 발광 소재 & 냉동창고 전용 방한 바닥재',
       items: [
-        { name: '축광 피난구 유도표지 & 통로 표지', detail: '빛 축적 후 최대 8시간 지속 발광, KFI 축광 유도표지 인증' },
-        { name: '고휘도 축광 계단 논슬립 패드', detail: '비상 계단 미끄럼 방지 + 야간 이동 경로 선명한 표시' },
-        { name: '소화전 캡 & 비상 콘센트 안전 커버', detail: '부식 방지 황동/스테인리스 스틸 소재, 화재 시 신속 분리' },
-        { name: '냉동창고 바닥깔판 (500x500mm 규격)', detail: '-40℃ 영하 환경 파손 방지, 습기 차단 및 냉동고 안전 바닥재' }
+        { name: isVi ? 'Biển chỉ dẫn lối thoát hiểm dạ quang' : '축광 피난구 유도표지 & 통로 표지', detail: isVi ? 'Phát sáng kéo dài tới 8 giờ sau khi tích tụ ánh sáng, đạt chứng nhận KFI' : '빛 축적 후 최대 8시간 지속 발광, KFI 축광 유도표지 인증' },
+        { name: isVi ? 'Nẹp cầu thang dạ quang chống trượt' : '고휘도 축광 계단 논슬립 패드', detail: isVi ? 'Chống trượt cầu thang khẩn cấp + Chỉ dẫn lối đi rõ ràng ban đêm' : '비상 계단 미끄럼 방지 + 야간 이동 경로 선명한 표시' },
+        { name: isVi ? 'Nắp van chữa cháy & Khung bảo vệ nắp ổ cắm khẩn cấp' : '소화전 캡 & 비상 콘센트 안전 커버', detail: isVi ? 'Chất liệu đồng/inox chống ăn mòn, tháo lắp nhanh khi hỏa hoạn' : '부식 방지 황동/스테인리스 스틸 소재, 화재 시 신속 분리' },
+        { name: isVi ? 'Tấm lót sàn kho lạnh (Kích thước 500x500mm)' : '냉동창고 바닥깔판 (500x500mm 규격)', detail: isVi ? 'Chống nứt gãy môi trường âm 40℃, ngăn ẩm & bảo vệ an toàn kho lạnh' : '-40℃ 영하 환경 파손 방지, 습기 차단 및 냉동고 안전 바닥재' }
       ]
     },
     {
       id: 'consulting',
-      badge: 'QCVN / TCVN 완벽 부합',
-      name: '베트남 소방 인허가 & 서류 솔루션 (Vietnam Permit & CAD/BIM)',
-      desc: '소방 설계 도면 승인(Thẩm duyệt PCCC)부터 현장 완공 검사(Nghiệm thu PCCC), CAD/DWG/BIM 도면 및 KFI 성적서 패키지 제공.',
-      highlight: '베트남 소방당국 최신 규정(QCVN 06:2022) 대응 전문 소방 엔지니어 1:1 서류 대행',
+      badge: 'QCVN / TCVN Chuẩn mực',
+      name: isVi ? 'Tư vấn Thẩm duyệt & Nghiệm thu PCCC Việt Nam (QCVN/TCVN)' : '베트남 소방 인허가 & 서류 솔루션 (Vietnam Permit & CAD/BIM)',
+      desc: isVi ? 'Tư vấn thẩm duyệt bản vẽ PCCC (Thẩm duyệt PCCC), nghiệm thu công trình (Nghiệm thu PCCC), bản vẽ CAD/BIM và hồ sơ chứng nhận KFI.' : '소방 설계 도면 승인(Thẩm duyệt PCCC)부터 현장 완공 검사(Nghiệm thu PCCC), CAD/DWG/BIM 도면 및 KFI 성적서 패키지 제공.',
+      highlight: isVi ? 'Kỹ sư chuyên trách PCCC hỗ trợ 1:1 đáp ứng quy chuẩn mới nhất QCVN 06:2022' : '베트남 소방당국 최신 규정(QCVN 06:2022) 대응 전문 소방 엔지니어 1:1 서류 대행',
       items: [
-        { name: '소방 설계 도면 승인 (Thẩm duyệt PCCC)', detail: '건축/전기/소방 도면 베트남 소방청 기준에 맞춘 사전 승인 대행' },
-        { name: '소방 공사 완공 검사 (Nghiệm thu PCCC)', detail: '현장 감리, 작동 시험, 소방 필증 수령까지 완벽 책임 서류화' },
-        { name: 'KFI 시험성적서 & 자재 승인자료 패키지', detail: '발주처 및 감리단 제출용 CAD 도면, KFI 형식승인서 번역본' },
-        { name: '정기 소방 점검 및 안전 관리 컨설팅', detail: '연간 소방 시설 유지 보수 및 직영 기술진 24/7 긴급 대응' }
+        { name: 'Thẩm duyệt PCCC (Bản vẽ PCCC)', detail: isVi ? 'Tư vấn & Thẩm duyệt bản vẽ kiến trúc / điện / PCCC theo tiêu chuẩn Cục PCCC' : '건축/전기/소방 도면 베트남 소방청 기준에 맞춘 사전 승인 대행' },
+        { name: 'Nghiệm thu PCCC (Hoàn công)', detail: isVi ? 'Giám sát thực địa, thử nghiệm vận hành & Hoàn thiện thủ tục lấy giấy chứng nhận PCCC' : '현장 감리, 작동 시험, 소방 필증 수령까지 완벽 책임 서류화' },
+        { name: 'Bộ hồ sơ chứng nhận KFI & Bản vẽ CAD/BIM', detail: isVi ? 'Cung cấp bản vẽ CAD và bản dịch chứng nhận KFI trình Chủ đầu tư & Giám sát' : '발주처 및 감리단 제출용 CAD 도면, KFI 형식승인서 번역본' },
+        { name: 'Tư vấn quản lý an toàn & Bảo trì PCCC định kỳ', detail: isVi ? 'Bảo trì hệ thống PCCC hàng năm & Kỹ sư ứng cứu sự cố 24/7' : '연간 소방 시설 유지 보수 및 직영 기술진 24/7 긴급 대응' }
       ]
     }
   ];

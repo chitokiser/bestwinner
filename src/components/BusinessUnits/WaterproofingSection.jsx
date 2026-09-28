@@ -38,36 +38,38 @@ export default function WaterproofingSection({ t, onOpenConsult }) {
   const [selectedDocPage, setSelectedDocPage] = useState(null); // Lightbox for PDF page
   const [activeCertModal, setActiveCertModal] = useState(null); // Lightbox for cert
 
+  const isVi = t?.lang === 'vi' || !t?.lang;
+
   // Official K1 Waterproofing Data extracted from PDF "방수액한글버전(수정)_1.pdf"
   const k1Data = {
     companyName: "BEST WINNER WATERPROOF VN",
-    productName: "K1 특수 초강력 방수제 (K1 Special Super Waterproofing Coating)",
-    slogan: "“물 한 방울도 허용하지 않는 완벽한 차단 • 10년의 안전 보장”",
-    subSlogan: "20년간 한국 시장에서 검증된 기술력 × 베트남 유일 직접 생산 체계",
+    productName: isVi ? "Chất chống thấm siêu cấp K1 Special (K1 Special Super Waterproofing)" : "K1 특수 초강력 방수제 (K1 Special Super Waterproofing Coating)",
+    slogan: isVi ? "“Ngăn chặn tuyệt đối không để rò rỉ một giọt nước • Bảo đảm an toàn 10 năm”" : "“물 한 방울도 허용하지 않는 완벽한 차단 • 10년의 안전 보장”",
+    subSlogan: isVi ? "Công nghệ kiểm chứng 20 năm tại thị trường Hàn Quốc × Hệ thống sản xuất trực tiếp duy nhất tại Việt Nam" : "20년간 한국 시장에서 검증된 기술력 × 베트남 유일 직접 생산 체계",
     
     // Core Vision & Mission Cards (Page 4-5)
     coreVisions: [
       {
-        title: "지속시간 10년 보장",
-        desc: "10년을 보장하는 특수 기술력으로 건물의 공간과 자산을 완벽하게 보호합니다.",
+        title: isVi ? "Bảo hành độ bền 10 năm" : "지속시간 10년 보장",
+        desc: isVi ? "Bảo vệ hoàn hảo không gian và tài sản tòa nhà với công nghệ đặc biệt cam kết bảo hành 10 năm." : "10년을 보장하는 특수 기술력으로 건물의 공간과 자산을 완벽하게 보호합니다.",
         highlight: "10 Years Guarantee",
         icon: ShieldCheck
       },
       {
-        title: "친환경 무독성 원료",
-        desc: "지속 가능한 기술로 자연과 공존하며 냄새와 독성이 없는 인체 무해 친환경 원료 사용.",
+        title: isVi ? "Nguyên liệu thân thiện môi trường" : "친환경 무독성 원료",
+        desc: isVi ? "Sử dụng nguyên liệu không mùi, không độc hại, an toàn tuyệt đối cho con người." : "지속 가능한 기술로 자연과 공존하며 냄새와 독성이 없는 인체 무해 친환경 원료 사용.",
         highlight: "100% Eco-Friendly",
         icon: Shield
       },
       {
-        title: "한국 원료 direct 수입",
-        desc: "한국 프리미엄 수입 원료 공급망을 구축하여 원료 수급의 안정성과 최고 품질을 동시에 실현.",
+        title: isVi ? "Nhập khẩu trực tiếp từ Hàn Quốc" : "한국 원료 direct 수입",
+        desc: isVi ? "Thiết lập chuỗi cung ứng nguyên liệu nhập khẩu trực tiếp từ Hàn Quốc, đảm bảo chất lượng hàng đầu." : "한국 프리미엄 수입 원료 공급망을 구축하여 원료 수급의 안정성과 최고 품질을 동시에 실현.",
         highlight: "Korean Raw Material",
         icon: Award
       },
       {
-        title: "베트남 유일 현지 생산",
-        desc: "고온다습 동남아 기후에 맞춰 베트남 현지 공장에서 직접 생산하여 최적 품질과 가격 경쟁력 수립.",
+        title: isVi ? "Sản xuất trực tiếp tại Việt Nam" : "베트남 유일 현지 생산",
+        desc: isVi ? "Sản xuất trực tiếp tại nhà máy Việt Nam tối ưu hóa cho khí hậu nóng ẩm Đông Nam Á." : "고온다습 동남아 기후에 맞춰 베트남 현지 공장에서 직접 생산하여 최적 품질과 가격 경쟁력 수립.",
         highlight: "Local Factory Production",
         icon: Factory
       }
@@ -76,40 +78,40 @@ export default function WaterproofingSection({ t, onOpenConsult }) {
     // 6 Key Features (Page 3, Page 8)
     features: [
       {
-        title: "일액형 (Single-Component) 간편 시공",
-        desc: "주제와 경화제를 별도 혼합하는 타사 2액형과 달리, 전 성분이 1개 패키지로 구성되어 붓이나 롤러 도장으로 누구나 손쉽게 Self 방수 시공 가능.",
+        title: isVi ? "Thi công 1 thành phần (Single-Component) đơn giản" : "일액형 (Single-Component) 간편 시공",
+        desc: isVi ? "Khác với các sản phẩm 2 thành phần cần pha trộn phức tạp, K1 được đóng gói sẵn 1 thành phần giúp dễ dàng tự thi công bằng chổi hoặc con lăn." : "주제와 경화제를 별도 혼합하는 타사 2액형과 달리, 전 성분이 1개 패키지로 구성되어 붓이나 롤러 도장으로 누구나 손쉽게 Self 방수 시공 가능.",
         icon: Wrench,
-        badge: "혼합 불필요 1액형"
+        badge: isVi ? "Khỏi cần pha trộn" : "혼합 불필요 1액형"
       },
       {
-        title: "300% 고탄성 크랙 커버 (300% Elongation)",
-        desc: "독보적인 탄력성(최대 300%)을 갖추어 건물 신축 및 대형 균열, 미세 구멍을 유연하게 커버하여 구조물 수명을 획기적으로 연장.",
+        title: isVi ? "Độ co giãn 300% che phủ vết nứt (300% Elongation)" : "300% 고탄성 크랙 커버 (300% Elongation)",
+        desc: isVi ? "Khả năng đàn hồi vượt trội (lên tới 300%) linh hoạt che phủ các vết nứt lớn và lỗ nhỏ do sụt nứt công trình." : "독보적인 탄력성(최대 300%)을 갖추어 건물 신축 및 대형 균열, 미세 구멍을 유연하게 커버하여 구조물 수명을 획기적으로 연장.",
         icon: ShieldCheck,
-        badge: "300% 고탄성"
+        badge: isVi ? "Co giãn 300%" : "300% 고탄성"
       },
       {
-        title: "차열 & 열에너지 반사 (Energy Saving)",
-        desc: "특수 안료 기술로 여름철 태양열 에너지를 반사하여 실내 온도 상승을 방지하고, 에어컨 냉방 에너지를 크게 절감.",
+        title: isVi ? "Cách nhiệt & Phản xạ nhiệt (Energy Saving)" : "차열 & 열에너지 반사 (Energy Saving)",
+        desc: isVi ? "Công nghệ màu đặc biệt phản xạ năng lượng mặt trời mùa hè, ngăn tăng nhiệt độ trong nhà và tiết kiệm điện điều hòa." : "특수 안료 기술로 여름철 태양열 에너지를 반사하여 실내 온도 상승을 방지하고, 에어컨 냉방 에너지를 크게 절감.",
         icon: Sun,
-        badge: "여름철 차열/절전"
+        badge: isVi ? "Cách nhiệt mùa hè" : "여름철 차열/절전"
       },
       {
-        title: "상도 수성 페인트 후속 도장 가능",
-        desc: "일반 유성 발수재와 달리 K1 시공 후 수성 페인트로 자유롭게 후속 칠이 가능하여 유연한 외관/인테리어 컬러 마감 구현.",
+        title: isVi ? "Sơn phủ sơn nước dễ dàng" : "상도 수성 페인트 후속 도장 가능",
+        desc: isVi ? "Khác với chất chống thấm gốc dầu thông thường, sau khi sơn K1 có thể thoải mái sơn phủ sơn nước lên trên để hoàn thiện màu sắc." : "일반 유성 발수재와 달리 K1 시공 후 수성 페인트로 자유롭게 후속 칠이 가능하여 유연한 외관/인테리어 컬러 마감 구현.",
         icon: Palette,
-        badge: "후속 페인팅 가능"
+        badge: isVi ? "Phủ sơn nước dễ dàng" : "후속 페인팅 가능"
       },
       {
-        title: "친환경 무독성 & 무취 (Non-Toxic & No Odor)",
-        desc: "인체에 해롭지 않은 친환경 원료를 사용하여 작업 시 냄새가 없고 독성이 없어 주거/상업 실내외 공간에 모두 안심 시공.",
+        title: isVi ? "Thân thiện môi trường & Không mùi (Non-Toxic & No Odor)" : "친환경 무독성 & 무취 (Non-Toxic & No Odor)",
+        desc: isVi ? "Sử dụng nguyên liệu thân thiện môi trường, không độc hại và không gây mùi khó chịu trong quá trình thi công." : "인체에 해롭지 않은 친환경 원료를 사용하여 작업 시 냄새가 없고 독성이 없어 주거/상업 실내외 공간에 모두 안심 시공.",
         icon: Shield,
-        badge: "친환경 무독성"
+        badge: isVi ? "Thân thiện môi trường" : "친환경 무독성"
       },
       {
-        title: "구도막 & 내부 구조 고강도 접착력",
-        desc: "기존 도막 및 콘크리트 바탕면에 대한 우수한 고강도 접착력을 발휘하며, 건물 내부 구조의 내구성을 크게 향상.",
+        title: isVi ? "Bám dính cực cao với lớp sơn cũ & kết cấu bê tông" : "구도막 & 내부 구조 고강도 접착력",
+        desc: isVi ? "Độ bám dính tuyệt vời trên bề mặt bê tông và lớp sơn cũ, gia tăng đáng kể độ bền kết cấu bên trong tòa nhà." : "기존 도막 및 콘크리트 바탕면에 대한 우수한 고강도 접착력을 발휘하며, 건물 내부 구조의 내구성을 크게 향상.",
         icon: Building2,
-        badge: "고강도 접착력"
+        badge: isVi ? "Bám dính siêu mạnh" : "고강도 접착력"
       }
     ],
 
