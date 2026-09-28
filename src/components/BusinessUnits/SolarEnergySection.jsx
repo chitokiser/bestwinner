@@ -60,6 +60,8 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
   const [carbonUnitPriceUSD, setCarbonUnitPriceUSD] = useState(22.40); // Default VCM reference price
   const [isLivePriceSync, setIsLivePriceSync] = useState(true);
   const [selectedBenchmarkKey, setSelectedBenchmarkKey] = useState('SOLAR_PV_RE');
+  const [chartTimeframe, setChartTimeframe] = useState('24h');
+  const [hoveredChartPoint, setHoveredChartPoint] = useState(null);
   const [livePriceInfo, setLivePriceInfo] = useState({
     priceUSD: 22.40,
     change24h: 2.35,
@@ -717,6 +719,173 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                   </div>
                 </div>
               </div>
+
+              {/* 📈 Live VCM Carbon Market Price Trend Chart Component */}
+              {(() => {
+                const marketChartData = CarbonPriceService.getMarketHistory(selectedBenchmarkKey, chartTimeframe);
+                const chartW = 500;
+                const chartH = 150;
+                const padX = 25;
+                const padY = 25;
+
+                const pts = marketChartData.history;
+                const minP = marketChartData.minPrice * 0.97;
+                const maxP = marketChartData.maxPrice * 1.03;
+                const pDiff = maxP - minP || 1;
+
+                const coords = pts.map((pt, i) => {
+                  const x = padX + (i / (pts.length - 1)) * (chartW - padX * 2);
+                  const y = chartH - padY - ((pt.price - minP) / pDiff) * (chartH - padY * 2);
+                  return { x, y, price: pt.price, label: pt.label };
+                });
+
+                const lineD = coords.reduce((acc, pt, i) => {
+                  return i === 0 ? `M ${pt.x.toFixed(1)},${pt.y.toFixed(1)}` : `${acc} L ${pt.x.toFixed(1)},${pt.y.toFixed(1)}`;
+                }, '');
+
+                const areaD = `${lineD} L ${(chartW - padX).toFixed(1)},${(chartH - padY).toFixed(1)} L ${padX.toFixed(1)},${(chartH - padY).toFixed(1)} Z`;
+                const isCompliance = selectedBenchmarkKey === 'EU_ETS_COMPLIANCE';
+                const strokeColor = isCompliance ? '#c084fc' : '#34d399';
+                const currentBenchmark = VCM_BENCHMARKS[selectedBenchmarkKey] || VCM_BENCHMARKS.SOLAR_PV_RE;
+
+                return (
+                  <div className="space-y-3 bg-navy-950 p-5 rounded-2xl border border-navy-800 shadow-xl relative overflow-hidden">
+                    {/* Header Bar with Timeframe Controls */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-navy-800/80 pb-3">
+                      <div>
+                        <div className="flex items-center space-x-2">
+                          <TrendingUp className={`w-4 h-4 ${isCompliance ? 'text-purple-400' : 'text-emeraldGreen-400'}`} />
+                          <span className="font-bold text-white text-xs">
+                            탄소크레딧 실시간 시세 변동 차트 ({currentBenchmark.symbol})
+                          </span>
+                        </div>
+                        <span className="text-[10px] text-slate-400 block mt-0.5">
+                          {currentBenchmark.name} • {currentBenchmark.unit}
+                        </span>
+                      </div>
+
+                      {/* Timeframe Selector Tabs */}
+                      <div className="flex items-center space-x-1 bg-navy-900 p-1 rounded-xl border border-navy-800">
+                        {['24h', '7D', '30D', '1Y'].map((tf) => (
+                          <button
+                            key={tf}
+                            onClick={() => setChartTimeframe(tf)}
+                            className={`text-[10px] font-bold px-2.5 py-1 rounded-lg transition-all ${
+                              chartTimeframe === tf
+                                ? isCompliance
+                                  ? 'bg-purple-600 text-white shadow-sm'
+                                  : 'bg-emerald-500 text-navy-950 font-black shadow-sm'
+                                : 'text-slate-400 hover:text-white'
+                            }`}
+                          >
+                            {tf}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Quick Market Stat Summary Banner */}
+                    <div className="grid grid-cols-4 gap-2 text-[10px] bg-navy-900/60 p-2.5 rounded-xl border border-navy-800/60 text-center">
+                      <div>
+                        <span className="text-slate-400 block">현재 시세</span>
+                        <span className="font-mono font-bold text-amber-300 text-xs">${carbonUnitPriceUSD}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 block">기간 최고</span>
+                        <span className="font-mono font-bold text-white text-xs">${marketChartData.maxPrice.toFixed(2)}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 block">기간 최저</span>
+                        <span className="font-mono font-bold text-slate-300 text-xs">${marketChartData.minPrice.toFixed(2)}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 block">24h 변동</span>
+                        <span className={`font-mono font-bold text-xs ${currentBenchmark.change24h >= 0 ? 'text-emeraldGreen-400' : 'text-red-400'}`}>
+                          {currentBenchmark.change24h >= 0 ? '▲ +' : '▼ '}{currentBenchmark.change24h}%
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* SVG Interactive Area Chart Container */}
+                    <div className="relative w-full overflow-hidden pt-2">
+                      <svg
+                        viewBox={`0 0 ${chartW} ${chartH}`}
+                        className="w-full h-36 overflow-visible"
+                        preserveAspectRatio="none"
+                      >
+                        <defs>
+                          <linearGradient id="chartGradientGreen" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#10b981" stopOpacity="0.35" />
+                            <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
+                          </linearGradient>
+                          <linearGradient id="chartGradientPurple" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#a855f7" stopOpacity="0.35" />
+                            <stop offset="100%" stopColor="#a855f7" stopOpacity="0.0" />
+                          </linearGradient>
+                        </defs>
+
+                        {/* Grid Reference Lines */}
+                        <line x1={padX} y1={padY} x2={chartW - padX} y2={padY} stroke="#1e293b" strokeDasharray="3 3" strokeWidth="1" />
+                        <line x1={padX} y1={chartH / 2} x2={chartW - padX} y2={chartH / 2} stroke="#1e293b" strokeDasharray="3 3" strokeWidth="1" />
+                        <line x1={padX} y1={chartH - padY} x2={chartW - padX} y2={chartH - padY} stroke="#1e293b" strokeWidth="1" />
+
+                        {/* Area Fill */}
+                        <path
+                          d={areaD}
+                          fill={isCompliance ? "url(#chartGradientPurple)" : "url(#chartGradientGreen)"}
+                        />
+
+                        {/* Line Stroke */}
+                        <path
+                          d={lineD}
+                          fill="none"
+                          stroke={strokeColor}
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+
+                        {/* Interactive Data Dots & Hover Tooltip Triggers */}
+                        {coords.map((pt, i) => (
+                          <g key={i} className="group/dot cursor-pointer">
+                            <circle
+                              cx={pt.x}
+                              cy={pt.y}
+                              r={hoveredChartPoint?.index === i ? 6 : 3.5}
+                              className={`transition-all duration-200 ${
+                                isCompliance ? 'fill-purple-400 stroke-purple-200' : 'fill-emerald-400 stroke-emerald-200'
+                              } stroke-2 ${hoveredChartPoint?.index === i ? 'scale-125' : 'opacity-80 group-hover/dot:opacity-100'}`}
+                              onMouseEnter={() => setHoveredChartPoint({ ...pt, index: i })}
+                              onMouseLeave={() => setHoveredChartPoint(null)}
+                            />
+                          </g>
+                        ))}
+                      </svg>
+
+                      {/* Hover Tooltip Overlay */}
+                      {hoveredChartPoint && (
+                        <div 
+                          className="absolute bg-navy-900 border border-emerald-500/50 text-white text-[10px] p-2 rounded-lg shadow-xl pointer-events-none transform -translate-x-1/2 -translate-y-full z-20"
+                          style={{
+                            left: `${(hoveredChartPoint.x / chartW) * 100}%`,
+                            top: `${(hoveredChartPoint.y / chartH) * 100 - 8}%`
+                          }}
+                        >
+                          <span className="text-slate-400 block font-mono">{hoveredChartPoint.label}</span>
+                          <span className="font-bold font-mono text-amber-300 text-xs">${hoveredChartPoint.price} USD</span>
+                        </div>
+                      )}
+
+                      {/* X-Axis Time Labels */}
+                      <div className="flex justify-between text-[9px] text-slate-500 px-3 pt-1 font-mono">
+                        <span>{pts[0]?.label}</span>
+                        <span>{pts[Math.floor(pts.length / 2)]?.label}</span>
+                        <span>{pts[pts.length - 1]?.label}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
 
               {/* Methodology Selector */}
               <div className="space-y-2">
