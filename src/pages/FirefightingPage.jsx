@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FirefightingSection from '../components/BusinessUnits/FirefightingSection';
 import ContactUs from '../components/ContactUs';
-import { Flame, ArrowRight } from 'lucide-react';
+import { Flame, ArrowRight, ArrowLeft, ShieldCheck, Award } from 'lucide-react';
 
 export default function FirefightingPage({ t }) {
   return (
@@ -13,32 +13,46 @@ export default function FirefightingPage({ t }) {
           <div className="flex items-center space-x-2 text-xs text-slate-400">
             <Link to="/" className="hover:text-gold-400">Home</Link>
             <span>/</span>
-            <span>Business Areas</span>
+            <Link to="/business/firefighting" className="hover:text-gold-400">Business Areas</Link>
             <span>/</span>
-            <span className="text-gold-400 font-bold">BEST winner Firefighting materials Vn</span>
+            <span className="text-red-400 font-bold">BEST WINNER FIREFIGHTING MATERIALS VN</span>
           </div>
           
-          <div className="flex flex-col md:flex-row justify-between md:items-center">
+          <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
             <div>
-              <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-fireRed-400 uppercase tracking-widest bg-fireRed-500/10 px-3 py-1 rounded-full border border-fireRed-500/30 mb-2">
-                <Flame className="w-3.5 h-3.5" />
-                <span>BUSINESS UNIT ④</span>
-              </span>
-              <h1 className="text-3xl sm:text-5xl font-extrabold text-white">
-                BEST winner Firefighting materials Vn
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-red-400 uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-full border border-red-500/30">
+                  <Flame className="w-3.5 h-3.5" />
+                  <span>BUSINESS UNIT ④</span>
+                </span>
+                <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">
+                  <Award className="w-3.5 h-3.5" />
+                  <span>(주)신영 (SY-21) & 아는소방 기술제휴</span>
+                </span>
+              </div>
+              <h1 className="text-3xl sm:text-5xl font-black text-white">
+                BEST WINNER FIREFIGHTING VN
               </h1>
-              <p className="text-sm text-slate-300 mt-2 max-w-2xl">
-                베트남 소방 안전 규정(QCVN / TCVN)을 준수하는 고품질 소방 자재 및 감지/소화 시스템.
+              <p className="text-sm text-slate-300 mt-2 max-w-3xl leading-relaxed">
+                대한민국 KFI 형식승인 & Q-Mark 24시간 연속점등 비상조명등, 특수 소화기함, IoT 화재 오작동 해소 감지기 및 베트남 QCVN/TCVN 소방 인허가 전문 솔루션.
               </p>
             </div>
             
-            <div className="mt-4 md:mt-0 flex space-x-3">
+            <div className="flex flex-wrap gap-2.5 items-center">
+              <Link 
+                to="/business/parking" 
+                className="bg-navy-800 hover:bg-navy-700 text-slate-300 text-xs font-semibold px-4 py-2.5 rounded-xl border border-navy-700 flex items-center"
+              >
+                <ArrowLeft className="w-4 h-4 mr-1.5 text-slate-400" />
+                <span>이전: AI 스마트파킹</span>
+              </Link>
+
               <Link 
                 to="/business/waterproofing" 
-                className="bg-navy-800 hover:bg-navy-700 text-slate-200 text-xs font-semibold px-4 py-2.5 rounded-xl border border-navy-700 flex items-center"
+                className="bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center shadow-md transition-all"
               >
-                <span>다음: 방수 솔루션 페이지</span>
-                <ArrowRight className="w-4 h-4 ml-1.5 text-gold-400" />
+                <span>다음: 방수재</span>
+                <ArrowRight className="w-4 h-4 ml-1.5" />
               </Link>
             </div>
           </div>
