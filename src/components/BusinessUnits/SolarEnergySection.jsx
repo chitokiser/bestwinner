@@ -625,11 +625,12 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                   </div>
                 </div>
 
-                {/* Benchmark Selector Buttons */}
-                <div className="grid grid-cols-2 gap-2 text-[11px]">
+                {/* Benchmark Selector Buttons with Market Type Badges */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
                   {Object.keys(VCM_BENCHMARKS).map((key) => {
                     const b = VCM_BENCHMARKS[key];
                     const isSelected = selectedBenchmarkKey === key;
+                    const isCompliance = key === 'EU_ETS_COMPLIANCE';
                     return (
                       <button
                         key={key}
@@ -637,22 +638,44 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                           setSelectedBenchmarkKey(key);
                           handleRefreshLivePrice(key, isLivePriceSync);
                         }}
-                        className={`p-2.5 rounded-xl border text-left transition-all ${
+                        className={`p-3 rounded-xl border text-left transition-all relative overflow-hidden ${
                           isSelected
-                            ? 'bg-emerald-950/40 text-white border-emerald-500 font-bold shadow-sm'
+                            ? isCompliance
+                              ? 'bg-purple-950/60 text-white border-purple-500 font-bold shadow-md ring-1 ring-purple-500'
+                              : 'bg-emerald-950/50 text-white border-emerald-500 font-bold shadow-md ring-1 ring-emerald-500'
                             : 'bg-navy-900 text-slate-400 border-navy-800 hover:border-slate-600'
                         }`}
                       >
-                        <div className="flex justify-between items-center text-[10px] text-slate-400">
-                          <span>{b.symbol}</span>
-                          <span className={b.change24h >= 0 ? 'text-emeraldGreen-400' : 'text-red-400'}>
+                        <div className="flex justify-between items-center text-[10px]">
+                          <span className="font-mono text-slate-400">{b.symbol}</span>
+                          <span className={b.change24h >= 0 ? 'text-emeraldGreen-400 font-mono' : 'text-red-400 font-mono'}>
                             {b.change24h >= 0 ? '▲' : '▼'} {Math.abs(b.change24h)}%
                           </span>
                         </div>
-                        <span className="block text-xs font-black text-amber-300 mt-0.5">${b.defaultPrice} <span className="text-[9px] font-normal text-slate-300">USD</span></span>
+                        <div className="flex items-baseline justify-between mt-1">
+                          <span className="text-sm font-black text-amber-300 font-mono">${b.defaultPrice} <span className="text-[9px] font-normal text-slate-400">USD/tCO₂e</span></span>
+                          <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold ${
+                            isCompliance ? 'bg-purple-500/20 text-purple-300 border border-purple-500/40' : 'bg-emerald-500/20 text-emeraldGreen-300 border border-emerald-500/40'
+                          }`}>
+                            {isCompliance ? '🏛️ EU 의무규제' : '🌿 VCM 자발적(실제)'}
+                          </span>
+                        </div>
+                        <span className="text-[10px] text-slate-400 block mt-1 line-clamp-1">{b.desc}</span>
                       </button>
                     );
                   })}
+                </div>
+
+                {/* VCM vs Compliance Market Educational Explanation Card */}
+                <div className="p-3 rounded-xl bg-navy-900/90 border border-navy-800 text-[11px] space-y-1">
+                  <div className="flex items-center space-x-1.5 text-amber-400 font-bold">
+                    <HelpCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span>왜 EU-ETS 배출권 시세($74+)와 VCM 시세($22+) 차이가 큰가요?</span>
+                  </div>
+                  <p className="text-slate-300 text-[10px] leading-relaxed">
+                    <strong>1. EU-ETS (의무 규제 시장):</strong> 유럽 대형 배출 기업이 법적 배출 할당량을 채우지 못할 때 톤당 100유로 이상의 막대한 벌금이 부과되는 <strong>법적 강제 규제 시장(EUA)</strong>으로 시세가 $70~$80 USD에 달합니다. (비교 참고용 지수)<br />
+                    <strong>2. VCM (자발적 탄소 시장 - 실제 적용):</strong> 본 태양광 프로젝트가 정식 등록되는 Verra VMR0017 / Gold Standard 시장으로, 기업의 자발적 Net-Zero 달성용 <strong>$15 ~ $30 USD / tCO₂e</strong> 시세가 실제 자산 가치 산정의 정석 기준입니다.
+                  </p>
                 </div>
 
                 {/* Active Indicator & Price Slider */}
@@ -661,10 +684,20 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                     <span className="text-[11px] text-slate-300">
                       적용 지표 단가 ({isLivePriceSync ? '실시간 라이브 API' : '수동 지정'}):
                     </span>
-                    <span className="text-emeraldGreen-400 font-black text-sm font-mono bg-navy-900 px-2.5 py-0.5 rounded border border-emerald-500/30">
+                    <span className={`font-black text-sm font-mono px-2.5 py-0.5 rounded border ${
+                      selectedBenchmarkKey === 'EU_ETS_COMPLIANCE' 
+                        ? 'text-purple-300 bg-purple-950/60 border-purple-500/50' 
+                        : 'text-emeraldGreen-400 bg-navy-900 border-emerald-500/30'
+                    }`}>
                       ${carbonUnitPriceUSD} USD / tCO₂e
                     </span>
                   </div>
+
+                  {selectedBenchmarkKey === 'EU_ETS_COMPLIANCE' && (
+                    <div className="text-[10px] text-purple-300 bg-purple-950/40 p-2 rounded-lg border border-purple-500/30">
+                      ⚠️ EU-ETS 시세는 유럽 법적 강제 규제 지표입니다. 해외 태양광 자산은 VCM-SOLAR 시세($15~$30/tCO₂e)가 실제 정산 적용 기준입니다.
+                    </div>
+                  )}
 
                   {!isLivePriceSync && (
                     <input
