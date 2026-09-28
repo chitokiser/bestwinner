@@ -56,6 +56,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
   const [calcCapacityMW, setCalcCapacityMW] = useState(1.0);
   const [calcMethodology, setCalcMethodology] = useState('VMR0017');
   const [calcLocationFactor, setCalcLocationFactor] = useState(EMISSION_FACTORS.VIETNAM_NATIONAL_GRID);
+  const [carbonUnitPriceUSD, setCarbonUnitPriceUSD] = useState(20); // Default VCM market reference price: $20 / tCO2e
 
   // 6 Hero Banner Slides from public/images/sola/hreo/
   const heroSlides = [
@@ -487,27 +488,58 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
           </div>
         </div>
 
-        {/* 05. CARBON REDUCTION CALCULATOR & METHODOLOGY (Requirement 7, 16, 17) */}
-        <div className="glass-card rounded-3xl p-8 sm:p-12 border border-emerald-500/30 space-y-8 bg-navy-900/90">
+        {/* 05. CARBON REDUCTION CALCULATOR & METHODOLOGY (Requirement 7, 16, 17 + 1MW Token/USD Intuitive Engine) */}
+        <div className="glass-card rounded-3xl p-8 sm:p-12 border border-emerald-500/30 space-y-8 bg-navy-900/90 shadow-2xl">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-navy-800 pb-6">
             <div>
-              <span className="text-xs font-bold text-emeraldGreen-400 uppercase tracking-widest block mb-1">04. CARBON REDUCTION ENGINE</span>
-              <h3 className="text-2xl sm:text-3xl font-black text-white">CO₂ 감축량 및 탄소크레딧 산정 엔진</h3>
+              <div className="flex items-center space-x-2 mb-1">
+                <span className="text-xs font-bold text-emeraldGreen-400 uppercase tracking-widest">04. CARBON REDUCTION ENGINE</span>
+                <span className="text-[11px] bg-emerald-500/20 text-emeraldGreen-300 px-3 py-0.5 rounded-full border border-emerald-500/40 font-bold">
+                  PROJECTED CARBON ASSET CALCULATOR
+                </span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-black text-white">
+                CO₂ 감축량 및 탄소크레딧·탄소토큰 추정 가치 산정 엔진
+              </h3>
             </div>
-            <span className="text-xs bg-emerald-500/20 text-emeraldGreen-300 px-3.5 py-1.5 rounded-full border border-emerald-500/30">
-              Verra VMR0017 / ACM0002 방법론 선택 가능
+            <span className="text-xs bg-emerald-500/20 text-emeraldGreen-300 px-3.5 py-1.5 rounded-full border border-emerald-500/30 font-semibold">
+              Verra VMR0017 / ACM0002 국제 방법론 적용
             </span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Quick Preset Buttons (Highlighting 1MW) */}
+          <div className="bg-navy-950 p-4 rounded-2xl border border-navy-800 space-y-2">
+            <span className="text-xs font-bold text-slate-400 block">⚡ 태양광 설치 용량 빠른 선택 (Solar Capacity Quick Presets):</span>
+            <div className="flex flex-wrap gap-2 text-xs">
+              {[0.5, 1.0, 2.0, 5.0, 10.0].map((cap) => (
+                <button
+                  key={cap}
+                  onClick={() => setCalcCapacityMW(cap)}
+                  className={`px-4 py-2 rounded-xl font-bold transition-all border ${
+                    calcCapacityMW === cap
+                      ? 'bg-gradient-to-r from-amber-500 to-emerald-500 text-navy-950 border-amber-400 shadow-md shadow-amber-500/20 scale-105'
+                      : 'bg-navy-900 text-slate-300 border-navy-700 hover:border-slate-500'
+                  }`}
+                >
+                  {cap === 1.0 ? '⚡ 1.0 MW (1MW 기본)' : `${cap} MW`}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            {/* Input Controls */}
-            <div className="lg:col-span-6 space-y-4 text-xs">
-              <div className="space-y-2">
-                <label className="font-bold text-white flex justify-between">
-                  <span>태양광 설치 용량 (Solar Capacity):</span>
-                  <span className="text-amber-400 font-black text-sm">{calcCapacityMW} MW ({calcCapacityMW * 1000} kW)</span>
-                </label>
+            {/* Left Column: Input Controls & Sliders */}
+            <div className="lg:col-span-5 space-y-5 text-xs">
+              
+              {/* Solar Capacity Slider */}
+              <div className="space-y-2 bg-navy-950 p-4 rounded-2xl border border-navy-800">
+                <div className="flex justify-between items-center">
+                  <span className="font-bold text-white">태양광 설치 용량 (Solar Capacity):</span>
+                  <span className="text-amber-400 font-black text-base bg-amber-500/10 px-3 py-1 rounded-lg border border-amber-500/30">
+                    {calcCapacityMW} MW ({calcCapacityMW * 1000} kW)
+                  </span>
+                </div>
                 <input
                   type="range"
                   min="0.1"
@@ -515,11 +547,42 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                   step="0.1"
                   value={calcCapacityMW}
                   onChange={(e) => setCalcCapacityMW(parseFloat(e.target.value))}
-                  className="w-full accent-emerald-500 cursor-pointer h-2 bg-navy-950 rounded-lg"
+                  className="w-full accent-amber-400 cursor-pointer h-2 bg-navy-900 rounded-lg"
                 />
+                <div className="flex justify-between text-[10px] text-slate-500">
+                  <span>0.1 MW</span>
+                  <span>1.0 MW</span>
+                  <span>5.0 MW</span>
+                  <span>10.0 MW</span>
+                </div>
               </div>
 
-              <div className="space-y-2 pt-2">
+              {/* Carbon Market Price Slider */}
+              <div className="space-y-2 bg-navy-950 p-4 rounded-2xl border border-navy-800">
+                <div className="flex justify-between items-center">
+                  <span className="font-bold text-white">탄소크레딧 시장 지표 단가 (VCM Reference Price):</span>
+                  <span className="text-emeraldGreen-400 font-black text-base bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/30">
+                    ${carbonUnitPriceUSD} USD / tCO₂e
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min="10"
+                  max="50"
+                  step="1"
+                  value={carbonUnitPriceUSD}
+                  onChange={(e) => setCarbonUnitPriceUSD(parseInt(e.target.value))}
+                  className="w-full accent-emerald-500 cursor-pointer h-2 bg-navy-900 rounded-lg"
+                />
+                <div className="flex justify-between text-[10px] text-slate-500">
+                  <span>$10 USD (보수적)</span>
+                  <span>$15~$30 USD (글로벌 시세)</span>
+                  <span>$50 USD (프리미엄)</span>
+                </div>
+              </div>
+
+              {/* Methodology Selector */}
+              <div className="space-y-2">
                 <label className="font-bold text-white block">탄소 감축 산정 방법론 (Methodology):</label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {METHODOLOGIES.map((m) => (
@@ -539,36 +602,101 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-navy-950 border border-navy-800 space-y-1">
-                <span className="font-bold text-slate-400 block">적용 배출계수 (Emission Factor):</span>
-                <span className="text-white font-mono">{calcLocationFactor} tCO₂e / MWh</span>
-                <p className="text-[10px] text-slate-400">베트남 국가 전력 계통 배출계수 표준 적용</p>
+              {/* Baseline Grid Info */}
+              <div className="p-3.5 rounded-xl bg-navy-950 border border-navy-800 flex items-center justify-between">
+                <div>
+                  <span className="font-bold text-slate-400 block text-[11px]">베트남 전력계통 배출계수:</span>
+                  <span className="text-[10px] text-slate-400">Vietnam National Grid Baseline Factor</span>
+                </div>
+                <span className="text-white font-mono font-bold">{calcLocationFactor} tCO₂e / MWh</span>
               </div>
             </div>
 
-            {/* Calculation Output Box */}
-            <div className="lg:col-span-6 bg-navy-950 p-6 sm:p-8 rounded-2xl border border-emerald-500/40 space-y-6 shadow-2xl">
+            {/* Right Column: Intuitive Token Count & USD Asset Value Output Cards */}
+            <div className="lg:col-span-7 bg-navy-950 p-6 sm:p-8 rounded-2xl border border-emerald-500/40 space-y-6 shadow-2xl">
+              
               <div className="flex items-center justify-between border-b border-navy-800 pb-3">
-                <span className="text-xs font-bold text-slate-400 uppercase">Calculation Engine Output</span>
-                <span className="text-[10px] bg-amber-500/20 text-amber-400 px-2.5 py-0.5 rounded-full border border-amber-500/30">
-                  Projected / Estimated
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center space-x-1.5">
+                  <BarChart3 className="w-4 h-4 text-emeraldGreen-400" />
+                  <span>{calcCapacityMW}MW 설치 시 예상 탄소 토큰 수량 및 USD 자산 가치</span>
+                </span>
+                <span className="text-[10px] bg-amber-500/20 text-amber-400 px-2.5 py-0.5 rounded-full border border-amber-500/30 font-bold">
+                  PROJECTED ESTIMATE
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <span className="text-[11px] text-slate-400 block">연간 예상 발전량</span>
-                  <p className="text-2xl font-black text-cyan-400">{calcResult.annualGenerationMWh.toLocaleString()} MWh</p>
+              {/* Key Output Cards Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                {/* 1. Carbon Token Count Card */}
+                <div className="bg-navy-900/90 p-5 rounded-2xl border border-amber-500/40 space-y-2 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-amber-500/10 rounded-full blur-xl pointer-events-none" />
+                  <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block">
+                    🪙 연간 예상 Carbon Token 수량
+                  </span>
+                  <p className="text-3xl font-black text-white">
+                    {calcResult.estimatedCredits.toLocaleString()} <span className="text-amber-400 text-lg">Tokens / 년</span>
+                  </p>
+                  <p className="text-[11px] text-slate-300">
+                    * 1 Token ≈ 1 tCO₂e 정식 검증 크레딧 연계
+                  </p>
+                  <div className="text-[10px] text-slate-400 bg-navy-950 p-2 rounded-lg border border-navy-800">
+                    {calcCapacityMW}MW 기준 연간 <strong className="text-white">{calcResult.annualGenerationMWh.toLocaleString()} MWh</strong> 발전 ➔ <strong className="text-emeraldGreen-400">{calcResult.netReduction.toLocaleString()} tCO₂e</strong> CO₂ 감축
+                  </div>
                 </div>
-                <div>
-                  <span className="text-[11px] text-emeraldGreen-400 block">Estimated CO₂ Reduction</span>
-                  <p className="text-2xl font-black text-emeraldGreen-400">{calcResult.netReduction.toLocaleString()} tCO₂e/yr</p>
+
+                {/* 2. Projected Annual USD Value Card */}
+                <div className="bg-navy-900/90 p-5 rounded-2xl border border-emerald-500/40 space-y-2 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/10 rounded-full blur-xl pointer-events-none" />
+                  <span className="text-xs font-bold text-emeraldGreen-400 uppercase tracking-widest block">
+                    💵 연간 탄소 자산 USD 추정 가치
+                  </span>
+                  <p className="text-3xl font-black text-emeraldGreen-400">
+                    ${(Math.round(calcResult.netReduction * carbonUnitPriceUSD)).toLocaleString()} <span className="text-slate-300 text-base font-normal">USD / 년</span>
+                  </p>
+                  <p className="text-[11px] text-slate-300">
+                    * 톤당 ${carbonUnitPriceUSD} USD 시장 참고 단가 적용 시
+                  </p>
+                  <div className="text-[10px] text-slate-400 bg-navy-950 p-2 rounded-lg border border-navy-800">
+                    글로벌 VCM 시세($15~$30/tCO₂e) 적용 시: <br />
+                    <strong className="text-white">${(Math.round(calcResult.netReduction * 15)).toLocaleString()} ~ ${(Math.round(calcResult.netReduction * 30)).toLocaleString()} USD / 년</strong>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* 3. Long-Term Cumulative Horizon Cards */}
+              <div className="bg-navy-900 p-5 rounded-2xl border border-navy-800 space-y-3">
+                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+                  📈 장기 누적 예상 탄소 자산 가치 추정 (10년 / 20년)
+                </span>
+                <div className="grid grid-cols-2 gap-4 text-xs">
+                  <div className="bg-navy-950 p-3.5 rounded-xl border border-navy-800">
+                    <span className="text-slate-400 block text-[11px]">10년 누적 탄소 자산 가치</span>
+                    <p className="text-xl font-black text-cyan-400 mt-1">
+                      ${(Math.round(calcResult.netReduction * carbonUnitPriceUSD * 10)).toLocaleString()} USD
+                    </p>
+                    <span className="text-[10px] text-slate-400">
+                      총 { (calcResult.estimatedCredits * 10).toLocaleString() } Tokens 누적
+                    </span>
+                  </div>
+
+                  <div className="bg-navy-950 p-3.5 rounded-xl border border-navy-800">
+                    <span className="text-slate-400 block text-[11px]">20년 누적 탄소 자산 가치</span>
+                    <p className="text-xl font-black text-purple-400 mt-1">
+                      ${(Math.round(calcResult.netReduction * carbonUnitPriceUSD * 20)).toLocaleString()} USD
+                    </p>
+                    <span className="text-[10px] text-slate-400">
+                      총 { (calcResult.estimatedCredits * 20).toLocaleString() } Tokens 누적
+                    </span>
+                  </div>
                 </div>
               </div>
 
+              {/* Detailed Technical Breakdown Table */}
               <div className="p-4 rounded-xl bg-navy-900 border border-navy-800 text-xs space-y-2">
                 <div className="flex justify-between text-slate-300">
-                  <span>Gross Emission Reduction:</span>
+                  <span>Gross CO₂ Emission Reduction:</span>
                   <span className="font-mono">{calcResult.grossReduction} tCO₂e</span>
                 </div>
                 <div className="flex justify-between text-slate-400 text-[11px]">
@@ -576,14 +704,23 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                   <span className="font-mono">0.0 tCO₂e</span>
                 </div>
                 <div className="flex justify-between font-bold text-emeraldGreen-300 border-t border-navy-800 pt-2 text-sm">
-                  <span>Projected Carbon Credits in Pipeline:</span>
-                  <span className="font-mono">{calcResult.estimatedCredits} VCU/yr</span>
+                  <span>Projected Verified Carbon Credits in Pipeline:</span>
+                  <span className="font-mono">{calcResult.estimatedCredits} VCU / 년</span>
                 </div>
               </div>
 
-              <p className="text-[11px] text-slate-400 italic">
-                ⚠️ 주의: 위 계산 결과는 방법론 예시 기준이며, 공식 탄소크레딧 발급은 3자 검증기관(VVB)의 현장 실사 및 최종 검증(Verification) 후 확정됩니다.
-              </p>
+              {/* Mandatory Legal & Regulatory Disclaimer */}
+              <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-200 leading-relaxed space-y-1">
+                <p className="font-bold flex items-center space-x-1">
+                  <AlertCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+                  <span>법률 및 탄소자산 추정 가치 고지 (Legal Disclaimer)</span>
+                </p>
+                <p className="text-slate-300">
+                  본 계산 결과는 국제 자발적 탄소시장(VCM)의 톤당 참고 가격(${carbonUnitPriceUSD}/tCO₂e) 및 Verra VMR0017 방법론 기반의 예상 추정치(Projected Estimate)입니다. 
+                  실제 탄소크레딧 발급량과 토큰화 가치는 제3자 검증기관(VVB)의 현장 실사, 탄소 등록제도(Verra, Gold Standard 등) 승인 및 향후 블록체인 토큰화 심사 결과에 따라 최종 확정되며, 확정 수익을 보장하는 금융 상품이 아닙니다.
+                </p>
+              </div>
+
             </div>
 
           </div>
