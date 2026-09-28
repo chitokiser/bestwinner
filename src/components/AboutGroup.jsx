@@ -20,7 +20,7 @@ export default function AboutGroup({ t }) {
       { title: "Korean Technology", desc: "한국의 정밀 기술력과 엄격한 품질 관리 프로세스 적용." },
       { title: "Local Production", desc: "하노이 3,000m² 직영 공장 연계 현지 맞춤 제작 및 공급." },
       { title: "Expert Engineering", desc: "한국인 수석 기술진 2인과 현지 전문 엔지니어 15인 직접 시공." },
-      { title: "5-in-1 Synergy", desc: "승강기, 인테리어, AI주차, 소방자재, 방수 단일 계약 파이프라인." }
+      { title: "Multi-Business Synergy", desc: "전 사업 분야 단일 계약 파이프라인 및 일원화된 A/S 보증." }
     ],
     synergyTitle: "One-Stop Integrated Synergy",
     synergyDesc: "단일 계약 및 통합 관리로 최상의 시공 품질과 24/7 A/S를 제공합니다."
@@ -97,7 +97,7 @@ export default function AboutGroup({ t }) {
                 <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Group Turnkey Pipeline</p>
                 <div className="text-lg font-extrabold gold-gradient-text break-keep">Single Contract • Unified Warranty</div>
                 <p className="text-[11px] text-slate-300 break-keep">
-                  승강기 + 인테리어 + AI주차 + 소방 + 방수 통합 관리 파이프라인
+                  전 사업 분야 단일 계약 및 일원화된 24/7 A/S 파이프라인
                 </p>
               </div>
             </div>

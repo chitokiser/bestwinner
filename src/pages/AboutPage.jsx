@@ -18,7 +18,7 @@ export default function AboutPage({ t }) {
             BEST winner Group Vietnam
           </h1>
           <p className="text-sm text-slate-300 max-w-2xl">
-            Korean Technology + Local Specialized Production — 7년 현지 노하우 & 5대 사업 통합 리더.
+            Korean Technology + Local Specialized Production — 7년 현지 노하우 & 통합 스마트 인프라 리더.
           </p>
         </div>
       </div>
