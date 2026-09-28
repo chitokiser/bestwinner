@@ -9,11 +9,13 @@ import PwaInstallBanner from './components/PwaInstallBanner';
 
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
+import BusinessPage from './pages/BusinessPage';
 import InteriorPage from './pages/InteriorPage';
 import ElevatorPage from './pages/ElevatorPage';
 import SmartParkingPage from './pages/SmartParkingPage';
 import FirefightingPage from './pages/FirefightingPage';
 import WaterproofingPage from './pages/WaterproofingPage';
+import SolarEnergyPage from './pages/SolarEnergyPage';
 import CalculatorPage from './pages/CalculatorPage';
 import ContactPage from './pages/ContactPage';
 
@@ -30,7 +32,7 @@ export default function App() {
     <Router>
       <div className="min-h-screen bg-navy-950 text-slate-100 flex flex-col font-sans">
         
-        {/* Simplified Header: 1. 홈 | 2. 사업분야 (인테리어/엘리베이터/AI 스마트파킹/소방자재/방수재) | 3. 로그인(구글로그인) */}
+        {/* Simplified Header */}
         <Header 
           currentLang={currentLang} 
           setLang={setLang} 
@@ -55,6 +57,7 @@ export default function App() {
               } 
             />
             <Route path="/about" element={<AboutPage t={t} />} />
+            <Route path="/business" element={<BusinessPage t={t} />} />
             <Route path="/business/interior" element={<InteriorPage t={t} />} />
             <Route 
               path="/business/elevator" 
@@ -63,6 +66,7 @@ export default function App() {
             <Route path="/business/parking" element={<SmartParkingPage t={t} />} />
             <Route path="/business/firefighting" element={<FirefightingPage t={t} />} />
             <Route path="/business/waterproofing" element={<WaterproofingPage t={t} />} />
+            <Route path="/business/energy" element={<SolarEnergyPage t={t} />} />
             <Route path="/calculator" element={<CalculatorPage t={t} />} />
             <Route path="/contact" element={<ContactPage t={t} />} />
           </Routes>

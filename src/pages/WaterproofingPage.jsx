@@ -46,11 +46,11 @@ export default function WaterproofingPage({ t }) {
                 <span>홍보 동영상 보기</span>
               </a>
               <Link 
-                to="/business/interior" 
-                className="bg-navy-800 hover:bg-navy-700 text-slate-200 text-xs font-semibold px-4 py-2.5 rounded-xl border border-navy-700 flex items-center"
+                to="/business/energy" 
+                className="bg-amber-500 hover:bg-amber-400 text-navy-950 text-xs font-bold px-4 py-2.5 rounded-xl flex items-center shadow-md transition-all"
               >
-                <span>처음: 인테리어 페이지</span>
-                <ArrowRight className="w-4 h-4 ml-1.5 text-gold-400" />
+                <span>다음: 태양광 에너지</span>
+                <ArrowRight className="w-4 h-4 ml-1.5" />
               </Link>
             </div>
           </div>

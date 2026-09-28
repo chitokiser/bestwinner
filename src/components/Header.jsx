@@ -23,13 +23,14 @@ export default function Header({ currentLang, setLang, t, onOpenGoogleAuth, user
     { code: 'en', label: 'English', flag: '🇺🇸' },
   ];
 
-  // 5 Business Units strictly matching user specification
+  // 6 Business Units
   const businessUnitsNav = [
     { id: 'interior', path: '/business/interior', name: 'BEST winner interior Vn (인테리어)', tag: 'Interior' },
     { id: 'elevator', path: '/business/elevator', name: 'BEST winner elevator Vn (엘리베이터)', tag: 'Elevator' },
     { id: 'parking', path: '/business/parking', name: 'BEST winner AI Smart Parking (AI 스마트파킹)', tag: 'AI Parking' },
     { id: 'firefighting', path: '/business/firefighting', name: 'BEST winner Firefighting materials (소방자재)', tag: 'Fire Safety' },
     { id: 'waterproofing', path: '/business/waterproofing', name: 'BEST winner Waterproofing Vn (방수재)', tag: 'Waterproof' },
+    { id: 'energy', path: '/business/energy', name: 'BEST winner Solar Energy (태양광 에너지)', tag: 'Solar PVT' },
   ];
 
   const handleNavClick = (path) => {

@@ -142,6 +142,19 @@ export const translations = {
             "Chẩn đoán sự cố rò rỉ nước & Thi công xử lý sự cố triệt để"
           ],
           cta: "Xem Trang Chống thấm"
+        },
+        energy: {
+          tag: "Năng lượng Mặt trời 3D PVT",
+          name: "BEST winner Solar Energy Vn (태양광 에너지)",
+          desc: "Công nghệ Hộp 광자 순환 (Photon Cycling Box) 3D PVT - Điện & Nước nóng đồng thời, mật độ phát điện gấp 10 lần, tuổi thọ 40+ năm.",
+          highlight: "Bằng sáng chế #10-2776941 & Triển lãm Intersolar Munich 2023 / Dubai Expo.",
+          img: "/images/solar/deck/page_1.png",
+          features: [
+            "10x Mật độ phát điện (1,300W/㎡ so với 131W/㎡)",
+            "Tuổi thọ 40+ năm (gấp 2 lần nhờ làm mát chất lỏng & kín hoàn toàn)",
+            "Hệ thống PVT 2 trong 1 (Phát điện + Nước nóng 24/7, ROI 사우나 1년)"
+          ],
+          cta: "Xem Trang Năng lượng"
         }
       }
     },
@@ -349,6 +362,19 @@ export const translations = {
             "누수 원인 정밀 진단 및 하자 보수 컨설팅"
           ],
           cta: "방수 전용 페이지"
+        },
+        energy: {
+          tag: "3D PVT 태양광 에너지",
+          name: "BEST winner Solar Energy Vn (태양광 에너지)",
+          desc: "3D 광자 순환 박스(Photon Cycling Box) PVT 시스템 — 단위면적당 10배 발전량, 40년+ 수명, 전기+온수 동시 생산.",
+          highlight: "특허 제10-2776941호 & Intersolar Europe 2023 / 두바이 엑스포 기술 검증.",
+          img: "/images/solar/deck/page_1.png",
+          features: [
+            "단위면적당 10배 발전 밀도 (1,300W/㎡ 실증 데이터)",
+            "수명 2배 연장 (액체 냉각 & 밀폐 박스로 40년+ 수명)",
+            "전기 + 온수 동시 생산 PVT (사우나/호텔/공장 ROI 1~2년)"
+          ],
+          cta: "태양광 에너지 페이지 보기"
         }
       }
     },
@@ -556,6 +582,19 @@ export const translations = {
             "Leakage diagnostic inspection & remediation consult"
           ],
           cta: "Go to Waterproofing Page"
+        },
+        energy: {
+          tag: "3D PVT Solar Energy",
+          name: "BEST winner Solar Energy Vn (태양광)",
+          desc: "3D Photon Cycling Box PVT System — 10× power density per unit area, 40+ years lifespan, simultaneous electricity & hot water.",
+          highlight: "Patent #10-2776941 & Validated at Intersolar Munich 2023 & Dubai Expo.",
+          img: "/images/solar/deck/page_1.png",
+          features: [
+            "10× Power Density per unit area (1,300W/㎡ field tested)",
+            "2× Lifespan (40+ years via liquid cooling & sealed enclosure)",
+            "Dual PVT System (Electricity + 24/7 Hot water, 1-2yr ROI)"
+          ],
+          cta: "View Solar Energy Page"
         }
       }
     },

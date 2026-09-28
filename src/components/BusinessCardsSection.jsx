@@ -6,6 +6,7 @@ import {
   Car, 
   Flame, 
   Droplets, 
+  Sun,
   CheckCircle2, 
   ArrowRight,
   Sparkles,
@@ -85,6 +86,24 @@ export default function BusinessCardsSection({ t }) {
       badgeColor: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
       btnColor: 'bg-gradient-to-r from-cyan-500 via-blue-600 to-chrome-300 text-navy-950 font-bold',
       bgImg: t.business.units.waterproofing.img
+    },
+    {
+      id: 'energy',
+      path: '/business/energy',
+      num: '06',
+      tag: t.business.units.energy?.tag || '3D PVT 태양광',
+      name: t.business.units.energy?.name || 'BEST winner Solar Energy Vn (태양광 에너지)',
+      desc: t.business.units.energy?.desc || '3D 광자 순환 박스(Photon Cycling Box) PVT 시스템 — 10배 발전량 & 40년+ 수명.',
+      highlight: t.business.units.energy?.highlight || '특허 제10-2776941호 & Intersolar Europe 2023 / 두바이 엑스포 출품.',
+      features: t.business.units.energy?.features || [
+        "단위면적당 10배 발전 밀도 (1,300W/㎡ 실증 데이터)",
+        "수명 2배 연장 (액체 냉각 & 밀폐 박스로 40년+ 수명)",
+        "전기 + 온수 동시 생산 PVT (사우나/호텔/공장 ROI 1~2년)"
+      ],
+      icon: Sun,
+      badgeColor: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+      btnColor: 'bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400 text-navy-950 font-bold',
+      bgImg: t.business.units.energy?.img || '/images/solar/deck/page_1.png'
     }
   ];
 
