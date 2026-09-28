@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Sun, 
   Zap, 
@@ -35,7 +35,9 @@ import {
   HelpCircle,
   Share2,
   Sliders,
-  Check
+  Check,
+  Play,
+  Pause
 } from 'lucide-react';
 
 import { CarbonCalculationService, EMISSION_FACTORS, METHODOLOGIES } from '../../services/carbonCalculationService';
@@ -54,6 +56,84 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
   const [calcCapacityMW, setCalcCapacityMW] = useState(1.0);
   const [calcMethodology, setCalcMethodology] = useState('VMR0017');
   const [calcLocationFactor, setCalcLocationFactor] = useState(EMISSION_FACTORS.VIETNAM_NATIONAL_GRID);
+
+  // 6 Hero Banner Slides from public/images/sola/hreo/
+  const heroSlides = [
+    {
+      id: 1,
+      image: '/images/sola/hreo/1.png',
+      badge: '3D PVT SOLAR & CARBON PLATFORM',
+      badgeClass: 'bg-amber-500/20 text-amber-400 border-amber-500/40',
+      subtitle: 'Beyond Solar Energy — Building Carbon Assets',
+      title: '태양광 발전을 넘어,',
+      highlightTitle: '검증 가능한 탄소자산(Carbon Assets)을 만듭니다',
+      description: 'BEST winner Vn은 태양광 발전 프로젝트의 발전량과 탄소감축 데이터를 디지털화하고, 국제 검증 기준에 부합하는 Carbon Credit (탄소크레딧) 및 차세대 Carbon Asset Management Platform을 구축합니다.'
+    },
+    {
+      id: 2,
+      image: '/images/sola/hreo/2.png',
+      badge: 'REAL-TIME IOT & EMS MONITORING',
+      badgeClass: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
+      subtitle: 'Smart Energy Infrastructure',
+      title: '실시간 태양광 발전 데이터 기반',
+      highlightTitle: '지능형 CO₂ 감축 모니터링 체계 구축',
+      description: 'IoT Smart Meter 및 EMS API 연동을 통해 발전량, 자가소비량, 송전 데이터를 실시간 계측하여 감축량 산정의 신뢰성을 극대화합니다.'
+    },
+    {
+      id: 3,
+      image: '/images/sola/hreo/3.png',
+      badge: 'VERRA VMR0017 & ACM0002 METHODOLOGY',
+      badgeClass: 'bg-emerald-500/20 text-emeraldGreen-300 border-emerald-500/40',
+      subtitle: 'International Standards Verified',
+      title: '글로벌 표준 탄소 방법론 기준',
+      highlightTitle: '투명하게 검증되는 탄소 감축량 산출 엔진',
+      description: 'Verra VMR0017 및 UNFCCC ACM0002 방법론을 기반으로 계통 연계 태양광 발전의 기준선 배출계수와 프로젝트 배출량을 정밀 측정합니다.'
+    },
+    {
+      id: 4,
+      image: '/images/sola/hreo/4.png',
+      badge: '3D PVT HIGH-EFFICIENCY SOLAR TECH',
+      badgeClass: 'bg-purple-500/20 text-purple-300 border-purple-500/40',
+      subtitle: 'Patent No. 10-2776941',
+      title: '발전 효율 10배 향상',
+      highlightTitle: '3D PVT 태양광·수열 하이브리드 혁신 기술',
+      description: '전기 생산과 동시에 열 에너지를 획득하는 차세대 3D PVT 모듈로 단위 면적당 최대 감축 성과를 실현합니다.'
+    },
+    {
+      id: 5,
+      image: '/images/sola/hreo/5.png',
+      badge: 'DIGITAL CARBON ASSET LIFECYCLE',
+      badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+      subtitle: 'End-to-End Asset Accounting',
+      title: 'Solar PV에서 Carbon Asset까지',
+      highlightTitle: '전과정 탄소자산 라이프사이클 디지털화',
+      description: 'Solar PV ➔ 발전량 ➔ CO₂ 감축 ➔ Carbon Credit ➔ Carbon Asset으로 이어지는 전 과정을 6단계 파이프라인으로 체계적으로 관리합니다.'
+    },
+    {
+      id: 6,
+      image: '/images/sola/hreo/6.png',
+      badge: 'FUTURE CARBON TOKENIZATION',
+      badgeClass: 'bg-blue-500/20 text-blue-300 border-blue-500/40',
+      subtitle: 'Next-Gen Blockchain Infrastructure',
+      title: '검증된 탄소 자산 기반',
+      highlightTitle: '차세대 블록체인 Carbon Tokenization 인프라',
+      description: '정식 검증 절차를 마친 환경 자산을 바탕으로 규제 및 탄소등록제도 준수 하에 차세대 디지털 토큰화를 준비합니다 (Under Development).'
+    }
+  ];
+
+  const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
+  const [isHeroAutoPlaying, setIsHeroAutoPlaying] = useState(true);
+
+  useEffect(() => {
+    if (!isHeroAutoPlaying) return;
+    const timer = setInterval(() => {
+      setCurrentHeroIndex((prev) => (prev + 1) % heroSlides.length);
+    }, 5500);
+    return () => clearInterval(timer);
+  }, [isHeroAutoPlaying, heroSlides.length]);
+
+  const handleNextHero = () => setCurrentHeroIndex((prev) => (prev + 1) % heroSlides.length);
+  const handlePrevHero = () => setCurrentHeroIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
 
   // 31 Deck Slides
   const totalSlides = 31;
@@ -84,74 +164,150 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
 
-        {/* 01. HERO BANNER: Beyond Solar Energy — Building Carbon Assets */}
-        <div className="bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900 border border-amber-500/30 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 transform translate-x-12 -translate-y-12 w-64 h-64 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
-          
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 relative z-10">
-            <div className="space-y-4 max-w-3xl">
+        {/* 01. HERO BANNER: Interactive Showcase with 6 High-Res Banner Images */}
+        <div 
+          className="relative rounded-3xl overflow-hidden shadow-2xl border border-amber-500/30 group bg-navy-900"
+          onMouseEnter={() => setIsHeroAutoPlaying(false)}
+          onMouseLeave={() => setIsHeroAutoPlaying(true)}
+        >
+          {/* Background Images with Fade Transition */}
+          {heroSlides.map((slide, idx) => (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                idx === currentHeroIndex ? 'opacity-100 z-0' : 'opacity-0 -z-10'
+              }`}
+            >
+              <img
+                src={slide.image}
+                alt={`Hero Banner ${slide.id}`}
+                className="w-full h-full object-cover object-center filter brightness-[0.70] contrast-[1.05]"
+              />
+              {/* Dark Gradient Overlay for Maximum Text Contrast */}
+              <div className="absolute inset-0 bg-gradient-to-r from-navy-950/95 via-navy-950/80 to-navy-950/40 sm:from-navy-950/95 sm:via-navy-900/75 sm:to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-navy-950/30" />
+            </div>
+          ))}
+
+          {/* Hero Banner Content Overlay */}
+          <div className="relative z-10 p-6 sm:p-10 lg:p-12 min-h-[480px] sm:min-h-[520px] flex flex-col justify-between">
+            {/* Top Bar: Slide Badge, Counter & AutoPlay Toggle */}
+            <div className="flex items-center justify-between gap-4">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center space-x-1.5 bg-amber-500/20 text-amber-400 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/40">
-                  <Sun className="w-3.5 h-3.5 text-amber-400" />
-                  <span>3D PVT SOLAR & CARBON PLATFORM</span>
+                <span className={`inline-flex items-center space-x-1.5 text-xs font-bold px-3 py-1 rounded-full border backdrop-blur-md ${heroSlides[currentHeroIndex].badgeClass}`}>
+                  <Sun className="w-3.5 h-3.5" />
+                  <span>{heroSlides[currentHeroIndex].badge}</span>
                 </span>
-                <span className="inline-flex items-center space-x-1.5 bg-emerald-500/20 text-emeraldGreen-300 text-xs font-bold px-3 py-1 rounded-full border border-emerald-500/40">
+                <span className="hidden sm:inline-flex items-center space-x-1.5 bg-navy-900/80 text-emeraldGreen-300 text-xs font-bold px-3 py-1 rounded-full border border-emerald-500/40 backdrop-blur-md">
                   <TrendingUp className="w-3.5 h-3.5" />
-                  <span>VERRA VMR0017 METHODOLOGY</span>
-                </span>
-                <span className="inline-flex items-center space-x-1.5 bg-purple-500/20 text-purple-300 text-xs font-bold px-3 py-1 rounded-full border border-purple-500/40">
-                  <Award className="w-3.5 h-3.5" />
-                  <span>특허 제10-2776941호</span>
+                  <span>VERRA VMR0017</span>
                 </span>
               </div>
 
-              <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-widest text-amber-400 block">
-                  Beyond Solar Energy — Building Carbon Assets
+              <div className="flex items-center space-x-3 bg-navy-950/80 px-3 py-1.5 rounded-full border border-navy-700/80 text-xs backdrop-blur-md">
+                <span className="font-mono text-amber-400 font-bold">
+                  0{currentHeroIndex + 1} <span className="text-slate-500">/ 0{heroSlides.length}</span>
                 </span>
-                <h2 className="text-3xl sm:text-5xl font-black text-white leading-tight break-keep">
-                  태양광 발전을 넘어, <br />
-                  <span className="bg-gradient-to-r from-amber-400 via-emeraldGreen-400 to-cyan-300 bg-clip-text text-transparent">
-                    검증 가능한 탄소자산(Carbon Assets)을 만듭니다
-                  </span>
-                </h2>
+                <button
+                  onClick={() => setIsHeroAutoPlaying(!isHeroAutoPlaying)}
+                  className="text-slate-400 hover:text-white transition-colors p-1"
+                  title={isHeroAutoPlaying ? "자동 전환 일시정지" : "자동 전환 시작"}
+                >
+                  {isHeroAutoPlaying ? <Pause className="w-3.5 h-3.5 text-amber-400" /> : <Play className="w-3.5 h-3.5 text-emeraldGreen-400" />}
+                </button>
               </div>
-
-              <p className="text-slate-300 text-sm sm:text-base leading-relaxed break-keep">
-                BEST winner Vn은 태양광 발전 프로젝트의 발전량과 탄소감축 데이터를 디지털화하고, 
-                국제 검증 기준에 부합하는 <strong>Carbon Credit (탄소크레딧)</strong> 및 
-                차세대 <strong>Carbon Asset Management Platform</strong>을 구축합니다.
-              </p>
             </div>
 
-            {/* Quick Action Button Stack */}
-            <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto flex-shrink-0">
-              <button
-                onClick={() => setIsAiConsultantOpen(true)}
-                className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-navy-950 font-black px-6 py-3.5 rounded-xl shadow-lg flex items-center justify-center space-x-2 text-xs transition-all transform hover:scale-[1.02] border border-emerald-400/40 whitespace-nowrap min-h-[48px]"
-              >
-                <Bot className="w-4 h-4" />
-                <span>AI 탄소감축량 시뮬레이터 실행</span>
-              </button>
+            {/* Middle Content area */}
+            <div className="my-6 space-y-4 max-w-3xl">
+              <span className="text-xs font-bold uppercase tracking-widest text-amber-400 block drop-shadow-md">
+                {heroSlides[currentHeroIndex].subtitle}
+              </span>
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight break-keep drop-shadow-lg">
+                {heroSlides[currentHeroIndex].title} <br />
+                <span className="bg-gradient-to-r from-amber-400 via-emeraldGreen-400 to-cyan-300 bg-clip-text text-transparent">
+                  {heroSlides[currentHeroIndex].highlightTitle}
+                </span>
+              </h2>
+              <p className="text-slate-200 text-sm sm:text-base leading-relaxed break-keep max-w-2xl drop-shadow">
+                {heroSlides[currentHeroIndex].description}
+              </p>
 
-              <button
-                onClick={() => setIsEsgModalOpen(true)}
-                className="w-full sm:w-auto bg-navy-950 hover:bg-navy-900 text-slate-200 hover:text-emeraldGreen-400 font-bold px-6 py-3.5 rounded-xl border border-emerald-500/30 flex items-center justify-center space-x-2 text-xs transition-all whitespace-nowrap min-h-[48px]"
-              >
-                <FileCheck2 className="w-4 h-4 text-emeraldGreen-400" />
-                <span>ESG 환경 성과 보고서 생성 (PDF/Excel)</span>
-              </button>
+              {/* Action Buttons */}
+              <div className="pt-2 flex flex-wrap gap-3">
+                <button
+                  onClick={() => setIsAiConsultantOpen(true)}
+                  className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-navy-950 font-black px-5 py-3 rounded-xl shadow-lg flex items-center space-x-2 text-xs transition-all transform hover:scale-[1.02] border border-emerald-400/40 whitespace-nowrap"
+                >
+                  <Bot className="w-4 h-4" />
+                  <span>AI 탄소감축량 시뮬레이터</span>
+                </button>
 
-              <a 
-                href={pdfPath} 
-                download="BEST_Winner_Solar_Energy_Seed_Deck_2026.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto bg-navy-900 hover:bg-navy-800 text-slate-300 font-semibold px-6 py-3 rounded-xl border border-navy-700 flex items-center justify-center space-x-2 text-xs transition-all whitespace-nowrap min-h-[44px]"
-              >
-                <Download className="w-3.5 h-3.5 text-amber-400" />
-                <span>사업계획서 PDF 원본 다운로드</span>
-              </a>
+                <button
+                  onClick={() => setIsEsgModalOpen(true)}
+                  className="bg-navy-950/90 hover:bg-navy-900 text-slate-200 hover:text-emeraldGreen-400 font-bold px-5 py-3 rounded-xl border border-emerald-500/40 flex items-center space-x-2 text-xs transition-all backdrop-blur-md whitespace-nowrap"
+                >
+                  <FileCheck2 className="w-4 h-4 text-emeraldGreen-400" />
+                  <span>ESG 보고서 생성</span>
+                </button>
+
+                <a 
+                  href={pdfPath} 
+                  download="BEST_Winner_Solar_Energy_Seed_Deck_2026.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-navy-900/90 hover:bg-navy-800 text-slate-300 font-semibold px-5 py-3 rounded-xl border border-navy-700 flex items-center space-x-2 text-xs transition-all backdrop-blur-md whitespace-nowrap"
+                >
+                  <Download className="w-3.5 h-3.5 text-amber-400" />
+                  <span>사업계획서 PDF</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Bottom Row: Manual Navigation & 6-Image Thumbnail Selector */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-navy-800/60">
+              {/* Prev / Next Buttons */}
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={handlePrevHero}
+                  className="w-9 h-9 rounded-xl bg-navy-950/80 hover:bg-amber-500 hover:text-navy-950 text-slate-300 flex items-center justify-center border border-navy-700 transition-all backdrop-blur-md"
+                  aria-label="Previous Slide"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={handleNextHero}
+                  className="w-9 h-9 rounded-xl bg-navy-950/80 hover:bg-amber-500 hover:text-navy-950 text-slate-300 flex items-center justify-center border border-navy-700 transition-all backdrop-blur-md"
+                  aria-label="Next Slide"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* 6 Hero Image Thumbnails Strip */}
+              <div className="flex items-center space-x-2 overflow-x-auto max-w-full py-1 scrollbar-none">
+                {heroSlides.map((slide, idx) => (
+                  <button
+                    key={slide.id}
+                    onClick={() => setCurrentHeroIndex(idx)}
+                    className={`relative w-16 h-10 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${
+                      idx === currentHeroIndex
+                        ? 'border-amber-400 scale-105 shadow-md shadow-amber-500/20 ring-2 ring-amber-400/40'
+                        : 'border-navy-700 opacity-60 hover:opacity-100 hover:border-slate-400'
+                    }`}
+                  >
+                    <img
+                      src={slide.image}
+                      alt={`Thumb ${slide.id}`}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className={`absolute inset-0 bg-navy-950/30 ${idx === currentHeroIndex ? 'bg-transparent' : ''}`} />
+                    <span className="absolute bottom-0.5 right-1 text-[9px] font-bold text-white bg-black/60 px-1 rounded">
+                      0{slide.id}
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
