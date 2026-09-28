@@ -41,6 +41,7 @@ import {
 } from 'lucide-react';
 
 import { CarbonCalculationService, EMISSION_FACTORS, METHODOLOGIES } from '../../services/carbonCalculationService';
+import { CarbonPriceService, VCM_BENCHMARKS } from '../../services/carbonPriceService';
 import { solarProjectsData, carbonDashboardSummary } from '../../data/solarProjectsData';
 
 export default function SolarEnergySection({ t, onOpenConsult }) {
@@ -56,7 +57,36 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
   const [calcCapacityMW, setCalcCapacityMW] = useState(1.0);
   const [calcMethodology, setCalcMethodology] = useState('VMR0017');
   const [calcLocationFactor, setCalcLocationFactor] = useState(EMISSION_FACTORS.VIETNAM_NATIONAL_GRID);
-  const [carbonUnitPriceUSD, setCarbonUnitPriceUSD] = useState(20); // Default VCM market reference price: $20 / tCO2e
+  const [carbonUnitPriceUSD, setCarbonUnitPriceUSD] = useState(22.40); // Default VCM reference price
+  const [isLivePriceSync, setIsLivePriceSync] = useState(true);
+  const [selectedBenchmarkKey, setSelectedBenchmarkKey] = useState('SOLAR_PV_RE');
+  const [livePriceInfo, setLivePriceInfo] = useState({
+    priceUSD: 22.40,
+    change24h: 2.35,
+    timestamp: new Date().toLocaleTimeString('ko-KR', { hour12: false }),
+    isLive: true
+  });
+
+  // Real-time market price fetcher
+  const handleRefreshLivePrice = async (key = selectedBenchmarkKey, forceSync = isLivePriceSync) => {
+    const data = await CarbonPriceService.fetchLiveCarbonPrice(key);
+    setLivePriceInfo(data);
+    if (forceSync) {
+      setCarbonUnitPriceUSD(data.priceUSD);
+    }
+  };
+
+  // Real-time polling timer (15s)
+  useEffect(() => {
+    handleRefreshLivePrice(selectedBenchmarkKey, isLivePriceSync);
+    if (!isLivePriceSync) return;
+    
+    const interval = setInterval(() => {
+      handleRefreshLivePrice(selectedBenchmarkKey, true);
+    }, 15000);
+
+    return () => clearInterval(interval);
+  }, [isLivePriceSync, selectedBenchmarkKey]);
 
   // 6 Hero Banner Slides from public/images/sola/hreo/
   const heroSlides = [
@@ -557,27 +587,101 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 </div>
               </div>
 
-              {/* Carbon Market Price Slider */}
-              <div className="space-y-2 bg-navy-950 p-4 rounded-2xl border border-navy-800">
-                <div className="flex justify-between items-center">
-                  <span className="font-bold text-white">탄소크레딧 시장 지표 단가 (VCM Reference Price):</span>
-                  <span className="text-emeraldGreen-400 font-black text-base bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/30">
-                    ${carbonUnitPriceUSD} USD / tCO₂e
-                  </span>
+              {/* Live VCM Carbon Market Price Feed & Sync Control */}
+              <div className="space-y-3 bg-navy-950 p-5 rounded-2xl border border-emerald-500/40 shadow-lg">
+                <div className="flex items-center justify-between border-b border-navy-800 pb-2.5">
+                  <div className="flex items-center space-x-2">
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${isLivePriceSync ? 'bg-emerald-400 opacity-75' : 'bg-slate-500 opacity-0'}`}></span>
+                      <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${isLivePriceSync ? 'bg-emerald-500' : 'bg-slate-500'}`}></span>
+                    </span>
+                    <span className="font-bold text-white text-xs flex items-center space-x-1">
+                      <span>탄소크레딧 실시간 시장 지표 단가 (VCM Live Feed)</span>
+                    </span>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => {
+                        const newSyncState = !isLivePriceSync;
+                        setIsLivePriceSync(newSyncState);
+                        if (newSyncState) handleRefreshLivePrice(selectedBenchmarkKey, true);
+                      }}
+                      className={`text-[10px] font-bold px-2.5 py-1 rounded-full border transition-all ${
+                        isLivePriceSync
+                          ? 'bg-emerald-500/20 text-emeraldGreen-300 border-emerald-500/50'
+                          : 'bg-navy-900 text-slate-400 border-navy-700'
+                      }`}
+                    >
+                      {isLivePriceSync ? '🔴 LIVE 연동 ON' : '⚙️ 수동 설정'}
+                    </button>
+                    <button
+                      onClick={() => handleRefreshLivePrice(selectedBenchmarkKey, true)}
+                      className="p-1 rounded-lg bg-navy-900 text-slate-300 hover:text-white border border-navy-700 hover:border-emerald-500/50 transition-all"
+                      title="실시간 시세 즉시 동기화"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5 text-emeraldGreen-400" />
+                    </button>
+                  </div>
                 </div>
-                <input
-                  type="range"
-                  min="10"
-                  max="50"
-                  step="1"
-                  value={carbonUnitPriceUSD}
-                  onChange={(e) => setCarbonUnitPriceUSD(parseInt(e.target.value))}
-                  className="w-full accent-emerald-500 cursor-pointer h-2 bg-navy-900 rounded-lg"
-                />
-                <div className="flex justify-between text-[10px] text-slate-500">
-                  <span>$10 USD (보수적)</span>
-                  <span>$15~$30 USD (글로벌 시세)</span>
-                  <span>$50 USD (프리미엄)</span>
+
+                {/* Benchmark Selector Buttons */}
+                <div className="grid grid-cols-2 gap-2 text-[11px]">
+                  {Object.keys(VCM_BENCHMARKS).map((key) => {
+                    const b = VCM_BENCHMARKS[key];
+                    const isSelected = selectedBenchmarkKey === key;
+                    return (
+                      <button
+                        key={key}
+                        onClick={() => {
+                          setSelectedBenchmarkKey(key);
+                          handleRefreshLivePrice(key, isLivePriceSync);
+                        }}
+                        className={`p-2.5 rounded-xl border text-left transition-all ${
+                          isSelected
+                            ? 'bg-emerald-950/40 text-white border-emerald-500 font-bold shadow-sm'
+                            : 'bg-navy-900 text-slate-400 border-navy-800 hover:border-slate-600'
+                        }`}
+                      >
+                        <div className="flex justify-between items-center text-[10px] text-slate-400">
+                          <span>{b.symbol}</span>
+                          <span className={b.change24h >= 0 ? 'text-emeraldGreen-400' : 'text-red-400'}>
+                            {b.change24h >= 0 ? '▲' : '▼'} {Math.abs(b.change24h)}%
+                          </span>
+                        </div>
+                        <span className="block text-xs font-black text-amber-300 mt-0.5">${b.defaultPrice} <span className="text-[9px] font-normal text-slate-300">USD</span></span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Active Indicator & Price Slider */}
+                <div className="space-y-2 pt-1 border-t border-navy-800/80">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[11px] text-slate-300">
+                      적용 지표 단가 ({isLivePriceSync ? '실시간 라이브 API' : '수동 지정'}):
+                    </span>
+                    <span className="text-emeraldGreen-400 font-black text-sm font-mono bg-navy-900 px-2.5 py-0.5 rounded border border-emerald-500/30">
+                      ${carbonUnitPriceUSD} USD / tCO₂e
+                    </span>
+                  </div>
+
+                  {!isLivePriceSync && (
+                    <input
+                      type="range"
+                      min="10"
+                      max="80"
+                      step="0.5"
+                      value={carbonUnitPriceUSD}
+                      onChange={(e) => setCarbonUnitPriceUSD(parseFloat(e.target.value))}
+                      className="w-full accent-emerald-500 cursor-pointer h-2 bg-navy-900 rounded-lg"
+                    />
+                  )}
+
+                  <div className="flex justify-between items-center text-[10px] text-slate-400 pt-0.5">
+                    <span>최종 동기화 시각: {livePriceInfo.timestamp}</span>
+                    <span className="text-emeraldGreen-400 font-medium">동기화 상태: Live Connected</span>
+                  </div>
                 </div>
               </div>
 
