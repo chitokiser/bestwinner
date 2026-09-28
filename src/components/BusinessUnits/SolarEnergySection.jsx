@@ -61,7 +61,9 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
   const [isLivePriceSync, setIsLivePriceSync] = useState(true);
   const [selectedBenchmarkKey, setSelectedBenchmarkKey] = useState('SOLAR_PV_RE');
   const [chartTimeframe, setChartTimeframe] = useState('24h');
+  const [chartType, setChartType] = useState('candlestick'); // 'candlestick' or 'line'
   const [hoveredChartPoint, setHoveredChartPoint] = useState(null);
+  const [hoveredCandle, setHoveredCandle] = useState(null);
   const [livePriceInfo, setLivePriceInfo] = useState({
     priceUSD: 22.40,
     change24h: 2.35,
@@ -720,43 +722,77 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 </div>
               </div>
 
-              {/* 📈 Live VCM Carbon Market Price Trend Chart Component */}
+              {/* 📊 Live VCM Carbon Market Candlestick & Line Chart Component */}
               {(() => {
-                const marketChartData = CarbonPriceService.getMarketHistory(selectedBenchmarkKey, chartTimeframe);
+                const candleData = CarbonPriceService.getCandleHistory(selectedBenchmarkKey, chartTimeframe);
+                const lineData = CarbonPriceService.getMarketHistory(selectedBenchmarkKey, chartTimeframe);
+                
                 const chartW = 500;
-                const chartH = 150;
+                const chartH = 180;
+                const volH = 35; // Volume bar height pane at bottom
+                const priceH = chartH - volH - 30; // Price pane height
                 const padX = 25;
-                const padY = 25;
+                const padY = 20;
 
-                const pts = marketChartData.history;
-                const minP = marketChartData.minPrice * 0.97;
-                const maxP = marketChartData.maxPrice * 1.03;
+                const candles = candleData.candles;
+                const minP = candleData.minPrice * 0.98;
+                const maxP = candleData.maxPrice * 1.02;
                 const pDiff = maxP - minP || 1;
+                const maxVol = Math.max(...candles.map(c => c.volume)) || 1;
 
-                const coords = pts.map((pt, i) => {
-                  const x = padX + (i / (pts.length - 1)) * (chartW - padX * 2);
-                  const y = chartH - padY - ((pt.price - minP) / pDiff) * (chartH - padY * 2);
-                  return { x, y, price: pt.price, label: pt.label };
-                });
-
-                const lineD = coords.reduce((acc, pt, i) => {
-                  return i === 0 ? `M ${pt.x.toFixed(1)},${pt.y.toFixed(1)}` : `${acc} L ${pt.x.toFixed(1)},${pt.y.toFixed(1)}`;
-                }, '');
-
-                const areaD = `${lineD} L ${(chartW - padX).toFixed(1)},${(chartH - padY).toFixed(1)} L ${padX.toFixed(1)},${(chartH - padY).toFixed(1)} Z`;
                 const isCompliance = selectedBenchmarkKey === 'EU_ETS_COMPLIANCE';
-                const strokeColor = isCompliance ? '#c084fc' : '#34d399';
                 const currentBenchmark = VCM_BENCHMARKS[selectedBenchmarkKey] || VCM_BENCHMARKS.SOLAR_PV_RE;
 
+                // Active candle for OHLC header display (hovered or last)
+                const activeCandle = hoveredCandle || candles[candles.length - 1];
+
+                // SVG Candle Coordinates calculation
+                const candleWidth = Math.max(5, (chartW - padX * 2) / candles.length - 4);
+                const candleCoords = candles.map((c, i) => {
+                  const x = padX + (i + 0.5) * ((chartW - padX * 2) / candles.length);
+                  const yHigh = padY + priceH * (1 - (c.high - minP) / pDiff);
+                  const yLow = padY + priceH * (1 - (c.low - minP) / pDiff);
+                  const yOpen = padY + priceH * (1 - (c.open - minP) / pDiff);
+                  const yClose = padY + priceH * (1 - (c.close - minP) / pDiff);
+                  const bodyTop = Math.min(yOpen, yClose);
+                  const bodyHeight = Math.max(3, Math.abs(yClose - yOpen));
+                  const volHeight = (c.volume / maxVol) * volH;
+                  const volY = chartH - 15 - volHeight;
+
+                  return {
+                    x,
+                    yHigh,
+                    yLow,
+                    yOpen,
+                    yClose,
+                    bodyTop,
+                    bodyHeight,
+                    volY,
+                    volHeight,
+                    candle: c,
+                    index: i
+                  };
+                });
+
+                // Line chart path fallback
+                const pts = lineData.history;
+                const lineCoords = pts.map((pt, i) => {
+                  const x = padX + (i / (pts.length - 1)) * (chartW - padX * 2);
+                  const y = padY + priceH * (1 - (pt.price - minP) / pDiff);
+                  return { x, y, price: pt.price, label: pt.label };
+                });
+                const lineD = lineCoords.reduce((acc, pt, i) => i === 0 ? `M ${pt.x.toFixed(1)},${pt.y.toFixed(1)}` : `${acc} L ${pt.x.toFixed(1)},${pt.y.toFixed(1)}`, '');
+                const areaD = `${lineD} L ${(chartW - padX).toFixed(1)},${(padY + priceH).toFixed(1)} L ${padX.toFixed(1)},${(padY + priceH).toFixed(1)} Z`;
+
                 return (
-                  <div className="space-y-3 bg-navy-950 p-5 rounded-2xl border border-navy-800 shadow-xl relative overflow-hidden">
-                    {/* Header Bar with Timeframe Controls */}
+                  <div className="space-y-3 bg-navy-950 p-5 rounded-2xl border border-navy-800 shadow-2xl relative overflow-hidden">
+                    {/* Header Bar with Chart Type Toggle & Timeframe Selector */}
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-navy-800/80 pb-3">
                       <div>
                         <div className="flex items-center space-x-2">
-                          <TrendingUp className={`w-4 h-4 ${isCompliance ? 'text-purple-400' : 'text-emeraldGreen-400'}`} />
+                          <BarChart3 className={`w-4 h-4 ${isCompliance ? 'text-purple-400' : 'text-emeraldGreen-400'}`} />
                           <span className="font-bold text-white text-xs">
-                            탄소크레딧 실시간 시세 변동 차트 ({currentBenchmark.symbol})
+                            탄소크레딧 실시간 {chartType === 'candlestick' ? '캔들차트 (OHLC)' : '라인차트'} ({currentBenchmark.symbol})
                           </span>
                         </div>
                         <span className="text-[10px] text-slate-400 block mt-0.5">
@@ -764,123 +800,183 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                         </span>
                       </div>
 
-                      {/* Timeframe Selector Tabs */}
-                      <div className="flex items-center space-x-1 bg-navy-900 p-1 rounded-xl border border-navy-800">
-                        {['24h', '7D', '30D', '1Y'].map((tf) => (
+                      <div className="flex items-center space-x-2">
+                        {/* Chart Type Selector */}
+                        <div className="flex items-center bg-navy-900 p-0.5 rounded-lg border border-navy-800 text-[10px]">
                           <button
-                            key={tf}
-                            onClick={() => setChartTimeframe(tf)}
-                            className={`text-[10px] font-bold px-2.5 py-1 rounded-lg transition-all ${
-                              chartTimeframe === tf
-                                ? isCompliance
-                                  ? 'bg-purple-600 text-white shadow-sm'
-                                  : 'bg-emerald-500 text-navy-950 font-black shadow-sm'
-                                : 'text-slate-400 hover:text-white'
+                            onClick={() => setChartType('candlestick')}
+                            className={`px-2.5 py-1 rounded-md font-bold transition-all ${
+                              chartType === 'candlestick' ? 'bg-amber-500 text-navy-950 shadow-sm' : 'text-slate-400 hover:text-white'
                             }`}
                           >
-                            {tf}
+                            📊 캔들차트
                           </button>
-                        ))}
+                          <button
+                            onClick={() => setChartType('line')}
+                            className={`px-2.5 py-1 rounded-md font-bold transition-all ${
+                              chartType === 'line' ? 'bg-amber-500 text-navy-950 shadow-sm' : 'text-slate-400 hover:text-white'
+                            }`}
+                          >
+                            📈 라인차트
+                          </button>
+                        </div>
+
+                        {/* Timeframe Selector Tabs */}
+                        <div className="flex items-center space-x-1 bg-navy-900 p-0.5 rounded-lg border border-navy-800 text-[10px]">
+                          {['24h', '7D', '30D', '1Y'].map((tf) => (
+                            <button
+                              key={tf}
+                              onClick={() => setChartTimeframe(tf)}
+                              className={`px-2 py-1 rounded-md font-bold transition-all ${
+                                chartTimeframe === tf
+                                  ? isCompliance ? 'bg-purple-600 text-white' : 'bg-emerald-500 text-navy-950'
+                                  : 'text-slate-400 hover:text-white'
+                              }`}
+                            >
+                              {tf}
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     </div>
 
-                    {/* Quick Market Stat Summary Banner */}
-                    <div className="grid grid-cols-4 gap-2 text-[10px] bg-navy-900/60 p-2.5 rounded-xl border border-navy-800/60 text-center">
+                    {/* Live OHLC Data Ticker Header */}
+                    <div className="grid grid-cols-5 gap-2 text-[10px] bg-navy-900/80 p-2.5 rounded-xl border border-navy-800 font-mono text-center">
                       <div>
-                        <span className="text-slate-400 block">현재 시세</span>
-                        <span className="font-mono font-bold text-amber-300 text-xs">${carbonUnitPriceUSD}</span>
+                        <span className="text-slate-400 block font-sans text-[9px]">시가 (Open)</span>
+                        <span className="font-bold text-white">${activeCandle?.open?.toFixed(2)}</span>
                       </div>
                       <div>
-                        <span className="text-slate-400 block">기간 최고</span>
-                        <span className="font-mono font-bold text-white text-xs">${marketChartData.maxPrice.toFixed(2)}</span>
+                        <span className="text-slate-400 block font-sans text-[9px]">고가 (High)</span>
+                        <span className="font-bold text-emeraldGreen-400">${activeCandle?.high?.toFixed(2)}</span>
                       </div>
                       <div>
-                        <span className="text-slate-400 block">기간 최저</span>
-                        <span className="font-mono font-bold text-slate-300 text-xs">${marketChartData.minPrice.toFixed(2)}</span>
+                        <span className="text-slate-400 block font-sans text-[9px]">저가 (Low)</span>
+                        <span className="font-bold text-red-400">${activeCandle?.low?.toFixed(2)}</span>
                       </div>
                       <div>
-                        <span className="text-slate-400 block">24h 변동</span>
-                        <span className={`font-mono font-bold text-xs ${currentBenchmark.change24h >= 0 ? 'text-emeraldGreen-400' : 'text-red-400'}`}>
-                          {currentBenchmark.change24h >= 0 ? '▲ +' : '▼ '}{currentBenchmark.change24h}%
+                        <span className="text-slate-400 block font-sans text-[9px]">종가 (Close)</span>
+                        <span className={`font-bold ${activeCandle?.isBullish ? 'text-emeraldGreen-400' : 'text-red-400'}`}>
+                          ${activeCandle?.close?.toFixed(2)}
                         </span>
                       </div>
+                      <div>
+                        <span className="text-slate-400 block font-sans text-[9px]">거래량 (Vol)</span>
+                        <span className="font-bold text-amber-300">{activeCandle?.volume?.toLocaleString()}</span>
+                      </div>
                     </div>
 
-                    {/* SVG Interactive Area Chart Container */}
-                    <div className="relative w-full overflow-hidden pt-2">
+                    {/* SVG Interactive Candlestick / Line Chart Area */}
+                    <div className="relative w-full overflow-hidden pt-1">
                       <svg
                         viewBox={`0 0 ${chartW} ${chartH}`}
-                        className="w-full h-36 overflow-visible"
+                        className="w-full h-44 overflow-visible"
                         preserveAspectRatio="none"
                       >
                         <defs>
                           <linearGradient id="chartGradientGreen" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#10b981" stopOpacity="0.35" />
+                            <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
                             <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
                           </linearGradient>
                           <linearGradient id="chartGradientPurple" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#a855f7" stopOpacity="0.35" />
+                            <stop offset="0%" stopColor="#a855f7" stopOpacity="0.3" />
                             <stop offset="100%" stopColor="#a855f7" stopOpacity="0.0" />
                           </linearGradient>
                         </defs>
 
-                        {/* Grid Reference Lines */}
+                        {/* Price Pane Grid Reference Lines */}
                         <line x1={padX} y1={padY} x2={chartW - padX} y2={padY} stroke="#1e293b" strokeDasharray="3 3" strokeWidth="1" />
-                        <line x1={padX} y1={chartH / 2} x2={chartW - padX} y2={chartH / 2} stroke="#1e293b" strokeDasharray="3 3" strokeWidth="1" />
-                        <line x1={padX} y1={chartH - padY} x2={chartW - padX} y2={chartH - padY} stroke="#1e293b" strokeWidth="1" />
+                        <line x1={padX} y1={padY + priceH / 2} x2={chartW - padX} y2={padY + priceH / 2} stroke="#1e293b" strokeDasharray="3 3" strokeWidth="1" />
+                        <line x1={padX} y1={padY + priceH} x2={chartW - padX} y2={padY + priceH} stroke="#334155" strokeWidth="1" />
 
-                        {/* Area Fill */}
-                        <path
-                          d={areaD}
-                          fill={isCompliance ? "url(#chartGradientPurple)" : "url(#chartGradientGreen)"}
-                        />
+                        {/* Render Mode 1: Japanese Candlestick Chart (OHLC) */}
+                        {chartType === 'candlestick' && (
+                          <g>
+                            {candleCoords.map((cd) => {
+                              const candleColor = cd.candle.isBullish ? '#10b981' : '#ef4444';
+                              const isHovered = hoveredCandle?.label === cd.candle.label;
 
-                        {/* Line Stroke */}
-                        <path
-                          d={lineD}
-                          fill="none"
-                          stroke={strokeColor}
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
+                              return (
+                                <g 
+                                  key={cd.index} 
+                                  className="cursor-pointer transition-all duration-150"
+                                  onMouseEnter={() => setHoveredCandle(cd.candle)}
+                                  onMouseLeave={() => setHoveredCandle(null)}
+                                >
+                                  {/* High-Low Wick Vertical Line */}
+                                  <line
+                                    x1={cd.x}
+                                    y1={cd.yHigh}
+                                    x2={cd.x}
+                                    y2={cd.yLow}
+                                    stroke={candleColor}
+                                    strokeWidth={isHovered ? "2.5" : "1.5"}
+                                  />
 
-                        {/* Interactive Data Dots & Hover Tooltip Triggers */}
-                        {coords.map((pt, i) => (
-                          <g key={i} className="group/dot cursor-pointer">
-                            <circle
-                              cx={pt.x}
-                              cy={pt.y}
-                              r={hoveredChartPoint?.index === i ? 6 : 3.5}
-                              className={`transition-all duration-200 ${
-                                isCompliance ? 'fill-purple-400 stroke-purple-200' : 'fill-emerald-400 stroke-emerald-200'
-                              } stroke-2 ${hoveredChartPoint?.index === i ? 'scale-125' : 'opacity-80 group-hover/dot:opacity-100'}`}
-                              onMouseEnter={() => setHoveredChartPoint({ ...pt, index: i })}
-                              onMouseLeave={() => setHoveredChartPoint(null)}
-                            />
+                                  {/* Open-Close Body Box */}
+                                  <rect
+                                    x={cd.x - candleWidth / 2}
+                                    y={cd.bodyTop}
+                                    width={candleWidth}
+                                    height={cd.bodyHeight}
+                                    fill={candleColor}
+                                    stroke={candleColor}
+                                    rx={1}
+                                    className={`transition-all ${isHovered ? 'filter brightness-125 stroke-white stroke-1' : ''}`}
+                                  />
+
+                                  {/* Bottom Volume Histogram Bar */}
+                                  <rect
+                                    x={cd.x - candleWidth / 2}
+                                    y={cd.volY}
+                                    width={candleWidth}
+                                    height={cd.volHeight}
+                                    fill={candleColor}
+                                    opacity={isHovered ? "0.8" : "0.35"}
+                                    rx={1}
+                                  />
+                                </g>
+                              );
+                            })}
                           </g>
-                        ))}
+                        )}
+
+                        {/* Render Mode 2: Area Line Chart */}
+                        {chartType === 'line' && (
+                          <g>
+                            <path
+                              d={areaD}
+                              fill={isCompliance ? "url(#chartGradientPurple)" : "url(#chartGradientGreen)"}
+                            />
+                            <path
+                              d={lineD}
+                              fill="none"
+                              stroke={isCompliance ? "#c084fc" : "#34d399"}
+                              strokeWidth="2.5"
+                              strokeLinecap="round"
+                            />
+                            {lineCoords.map((pt, i) => (
+                              <circle
+                                key={i}
+                                cx={pt.x}
+                                cy={pt.y}
+                                r={hoveredChartPoint?.index === i ? 6 : 3.5}
+                                className={`transition-all stroke-2 cursor-pointer ${
+                                  isCompliance ? 'fill-purple-400 stroke-purple-200' : 'fill-emerald-400 stroke-emerald-200'
+                                }`}
+                                onMouseEnter={() => setHoveredChartPoint({ ...pt, index: i })}
+                                onMouseLeave={() => setHoveredChartPoint(null)}
+                              />
+                            ))}
+                          </g>
+                        )}
                       </svg>
 
-                      {/* Hover Tooltip Overlay */}
-                      {hoveredChartPoint && (
-                        <div 
-                          className="absolute bg-navy-900 border border-emerald-500/50 text-white text-[10px] p-2 rounded-lg shadow-xl pointer-events-none transform -translate-x-1/2 -translate-y-full z-20"
-                          style={{
-                            left: `${(hoveredChartPoint.x / chartW) * 100}%`,
-                            top: `${(hoveredChartPoint.y / chartH) * 100 - 8}%`
-                          }}
-                        >
-                          <span className="text-slate-400 block font-mono">{hoveredChartPoint.label}</span>
-                          <span className="font-bold font-mono text-amber-300 text-xs">${hoveredChartPoint.price} USD</span>
-                        </div>
-                      )}
-
                       {/* X-Axis Time Labels */}
-                      <div className="flex justify-between text-[9px] text-slate-500 px-3 pt-1 font-mono">
-                        <span>{pts[0]?.label}</span>
-                        <span>{pts[Math.floor(pts.length / 2)]?.label}</span>
-                        <span>{pts[pts.length - 1]?.label}</span>
+                      <div className="flex justify-between text-[9px] text-slate-500 px-3 pt-0.5 font-mono">
+                        <span>{candles[0]?.label}</span>
+                        <span>{candles[Math.floor(candles.length / 2)]?.label}</span>
+                        <span>{candles[candles.length - 1]?.label}</span>
                       </div>
                     </div>
                   </div>

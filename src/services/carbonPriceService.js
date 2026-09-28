@@ -1,6 +1,7 @@
 /**
  * Live Carbon Price Service
- * Fetches real-time Voluntary Carbon Market (VCM) & Compliance Market reference prices and market trend history.
+ * Fetches real-time Voluntary Carbon Market (VCM) & Compliance Market reference prices,
+ * market trend line history, and OHLC Japanese Candlestick chart data.
  */
 
 export const VCM_BENCHMARKS = {
@@ -84,7 +85,7 @@ export class CarbonPriceService {
   }
 
   /**
-   * Generates market price trend chart history points for specified timeframe.
+   * Generates line chart history points for specified timeframe.
    */
   static getMarketHistory(benchmarkId = 'SOLAR_PV_RE', timeframe = '24h') {
     const basePrice = VCM_BENCHMARKS[benchmarkId]?.defaultPrice || 22.40;
@@ -116,6 +117,65 @@ export class CarbonPriceService {
 
     return {
       history,
+      minPrice,
+      maxPrice,
+      basePrice
+    };
+  }
+
+  /**
+   * Generates OHLC (Open, High, Low, Close) Candlestick chart data with Volume.
+   */
+  static getCandleHistory(benchmarkId = 'SOLAR_PV_RE', timeframe = '24h') {
+    const basePrice = VCM_BENCHMARKS[benchmarkId]?.defaultPrice || 22.40;
+    const candlesCount = timeframe === '24h' ? 24 : timeframe === '7D' ? 14 : timeframe === '30D' ? 20 : 12;
+    
+    const candles = [];
+    let prevClose = basePrice * (timeframe === '1Y' ? 0.82 : timeframe === '30D' ? 0.90 : 0.95);
+
+    for (let i = 0; i < candlesCount; i++) {
+      const open = Math.round(prevClose * 100) / 100;
+      const changePercent = (Math.sin(i * 0.8) * 0.02) + ((Math.random() - 0.48) * 0.03);
+      const close = Math.max(5, Math.round((open * (1 + changePercent)) * 100) / 100);
+      
+      const spread = Math.abs(close - open) + basePrice * 0.015;
+      const high = Math.round((Math.max(open, close) + Math.random() * spread) * 100) / 100;
+      const low = Math.max(4, Math.round((Math.min(open, close) - Math.random() * spread) * 100) / 100);
+      const volume = Math.round(1200 + Math.random() * 8500);
+
+      let label = '';
+      if (timeframe === '24h') label = `${String(i).padStart(2, '0')}:00`;
+      else if (timeframe === '7D') label = `Day ${i + 1}`;
+      else if (timeframe === '30D') label = `${i + 1}일`;
+      else label = `${i + 1}월`;
+
+      candles.push({
+        label,
+        open,
+        high,
+        low,
+        close,
+        volume,
+        isBullish: close >= open
+      });
+
+      prevClose = close;
+    }
+
+    // Lock last candle close to basePrice
+    const last = candles[candles.length - 1];
+    last.close = basePrice;
+    last.high = Math.max(last.high, last.open, last.close);
+    last.low = Math.min(last.low, last.open, last.close);
+    last.isBullish = last.close >= last.open;
+
+    const highs = candles.map(c => c.high);
+    const lows = candles.map(c => c.low);
+    const minPrice = Math.min(...lows);
+    const maxPrice = Math.max(...highs);
+
+    return {
+      candles,
       minPrice,
       maxPrice,
       basePrice
