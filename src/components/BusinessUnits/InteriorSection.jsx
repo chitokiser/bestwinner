@@ -20,7 +20,8 @@ import {
   Send,
   Download,
   X,
-  ZoomIn
+  ZoomIn,
+  Play
 } from 'lucide-react';
 
 export default function InteriorSection({ t, onOpenConsult }) {
@@ -435,14 +436,67 @@ export default function InteriorSection({ t, onOpenConsult }) {
               신라호텔(하노이), LG전자(하이퐁), 우리은행, 신한은행, 랜드마크 72 I-BRIDGE 오피스 시공 실적으로 검증된 베트남 최정상 맞춤 인테리어 & 턴키 시공 리더.
             </p>
           </div>
-          <div className="mt-4 md:mt-0 flex space-x-3">
+          <div className="mt-4 md:mt-0 flex flex-wrap gap-3">
+            <a
+              href="#promo-video"
+              onClick={(e) => {
+                e.preventDefault();
+                const el = document.getElementById('promo-video');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="bg-red-600 hover:bg-red-500 text-white font-extrabold px-5 py-3.5 rounded-xl border border-red-500/40 text-xs sm:text-sm flex items-center space-x-2 transition-all shadow-lg"
+            >
+              <Play className="w-4 h-4 fill-white" />
+              <span>공식 홍보 동영상 시청</span>
+            </a>
             <button
               onClick={() => onOpenConsult('interior')}
-              className="bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:from-gold-300 hover:to-gold-400 text-navy-950 font-black px-6 py-3.5 rounded-xl shadow-gold-glow transition-all flex items-center text-sm"
+              className="bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:from-gold-300 hover:to-gold-400 text-navy-950 font-black px-6 py-3.5 rounded-xl shadow-gold-glow transition-all flex items-center text-xs sm:text-sm"
             >
               <span>맞춤 3D 인테리어 상담 신청</span>
               <ArrowRight className="w-4 h-4 ml-2 stroke-[2.5]" />
             </button>
+          </div>
+        </div>
+
+        {/* Official YouTube Shorts Promotional Video Showcase Section */}
+        <div id="promo-video" className="glass-card-chrome p-6 sm:p-10 rounded-3xl border border-gold-500/40 mb-16 shadow-2xl overflow-hidden relative">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div>
+              <span className="inline-flex items-center space-x-2 bg-red-500/20 text-red-400 px-3.5 py-1.5 rounded-full text-xs font-extrabold border border-red-500/40 mb-2">
+                <Play className="w-3.5 h-3.5 fill-red-400" />
+                <span>OFFICIAL SHORTS VIDEO</span>
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-black text-white">
+                BEST WINNER INTERIOR VN 인테리어 시공 숏폼 영상
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-300 mt-1">
+                주택, 빌라, 펜트하우스 & 고급 상업 공간 맞춤형 공간 디자인 및 현장 시공 숏폼 동영상
+              </p>
+            </div>
+
+            <a
+              href="https://www.youtube.com/shorts/H0LrB_Qopls"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-red-600 hover:bg-red-500 text-white font-extrabold px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 transition-all shrink-0 w-fit shadow-md"
+            >
+              <span>YouTube Shorts 앱에서 보기</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Embedded YouTube Shorts Player (Vertical 9:16 optimized format) */}
+          <div className="flex justify-center items-center">
+            <div className="relative w-full max-w-sm aspect-[9/16] rounded-2xl overflow-hidden border-2 border-gold-500/40 shadow-2xl bg-black">
+              <iframe
+                src="https://www.youtube.com/embed/H0LrB_Qopls?autoplay=0&rel=0"
+                title="BEST WINNER INTERIOR VN 인테리어 시공 숏폼 동영상"
+                className="absolute inset-0 w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+            </div>
           </div>
         </div>
 
