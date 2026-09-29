@@ -1,18 +1,17 @@
-const CACHE_NAME = 'best-winner-pwa-v1';
+const CACHE_NAME = 'best-winner-pwa-v2';
 const urlsToCache = [
   '/',
-  '/#/',
   '/manifest.json',
   '/logo.png',
-  '/og-image.png',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png'
+  '/og-image.png'
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache).catch(() => {});
+      return Promise.all(
+        urlsToCache.map((url) => cache.add(url).catch(() => {}))
+      );
     })
   );
   self.skipWaiting();
@@ -34,9 +33,18 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  // Only handle GET requests for same-origin or static assets
+  if (event.request.method !== 'GET') return;
+  
   event.respondWith(
-    fetch(event.request).catch(() => {
-      return caches.match(event.request);
-    })
+    fetch(event.request)
+      .then((response) => {
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request).then((cachedResponse) => {
+          return cachedResponse || Response.error();
+        });
+      })
   );
 });
