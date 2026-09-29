@@ -107,7 +107,7 @@ export default function BusinessCardsSection({ t }) {
       icon: Sun,
       badgeColor: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
       btnColor: 'bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400 text-navy-950 font-bold',
-      bgImg: t.business.units.energy?.img || '/images/solar/deck/page_1.png'
+      bgImg: t.business.units.energy?.img || '/images/sola/hreo/1.png'
     }
   ];
 

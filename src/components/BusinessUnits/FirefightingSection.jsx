@@ -131,25 +131,25 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                 </span>
                 <span className="inline-flex items-center space-x-1.5 bg-amber-500/20 text-amber-400 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/40">
                   <Award className="w-3.5 h-3.5" />
-                  <span>(주)신영 (SY-21) & 아는소방 기술 제휴</span>
+                  <span>{isVi ? 'Hợp tác Kỹ thuật Shinyoung (SY-21) & Aneun Sobang' : '(주)신영 (SY-21) & 아는소방 기술 제휴'}</span>
                 </span>
                 <span className="inline-flex items-center space-x-1.5 bg-cyan-500/20 text-cyan-300 text-xs font-bold px-3 py-1 rounded-full border border-cyan-500/40">
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>QCVN 06:2022 / TCVN & KFI 형식승인</span>
+                  <span>{isVi ? 'Đạt chuẩn QCVN 06:2022 / TCVN & KFI Hàn Quốc' : 'QCVN 06:2022 / TCVN & KFI 형식승인'}</span>
                 </span>
               </div>
 
               <h2 className="text-3xl sm:text-5xl font-black text-white leading-tight break-keep">
-                BEST Winner 소방자재 <br />
+                {isVi ? 'Vật tư PCCC BEST Winner' : 'BEST Winner 소방자재'} <br />
                 <span className="bg-gradient-to-r from-red-500 via-rose-400 to-amber-400 bg-clip-text text-transparent">
-                  대한민국 KFI 검정 필증 & QCVN 완벽 대응
+                  {isVi ? 'Chứng nhận KFI Hàn Quốc & Đáp ứng hoàn hảo QCVN' : '대한민국 KFI 검정 필증 & QCVN 완벽 대응'}
                 </span>
               </h2>
 
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed break-keep">
-                대한민국 소방용품 전문기업 <strong>(주)신영 (SY-21)</strong> 및 <strong>(주)아는소방</strong>과의 기술 제휴를 통해 
-                24시간 연속 점등 Q-Mark 비상조명등, 특수 방수 소화기함, IoT 화재 오작동 해소 감지기, EV 전기차 방재 솔루션부터 
-                베트남 소방 인허가(Thẩm duyệt / Nghiệm thu PCCC) 승인까지 One-Stop으로 제공합니다.
+                {isVi
+                  ? 'Thông qua hợp tác kỹ thuật với doanh nghiệp chuyên về thiết bị PCCC hàng đầu Hàn Quốc Shinyoung (SY-21) và Aneun Sobang, chúng tôi cung cấp giải pháp One-Stop từ đèn chiếu sáng khẩn cấp Q-Mark chiếu sáng 24h, tủ đựng bình chữa cháy chống nước, đầu báo cháy IoT lọc báo giả, giải pháp PCCC xe điện EV đến thủ tục thẩm duyệt & nghiệm thu PCCC tại Việt Nam (Thẩm duyệt / Nghiệm thu PCCC).'
+                  : '대한민국 소방용품 전문기업 (주)신영 (SY-21) 및 (주)아는소방과의 기술 제휴를 통해 24시간 연속 점등 Q-Mark 비상조명등, 특수 방수 소화기함, IoT 화재 오작동 해소 감지기, EV 전기차 방재 솔루션부터 베트남 소방 인허가(Thẩm duyệt / Nghiệm thu PCCC) 승인까지 One-Stop으로 제공합니다.'}
               </p>
             </div>
 
@@ -160,7 +160,7 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                 className="w-full sm:w-auto bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-extrabold px-6 py-3.5 rounded-xl shadow-lg flex items-center justify-center space-x-2 text-xs transition-all border border-red-400/40 min-h-[48px]"
               >
                 <FileText className="w-4 h-4" />
-                <span>카탈로그 & KFI 형식승인서 다운로드</span>
+                <span>{isVi ? 'Tải Catalogue & Chứng nhận KFI' : '카탈로그 & KFI 형식승인서 다운로드'}</span>
               </button>
 
               <button
@@ -174,7 +174,7 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                 className="w-full sm:w-auto bg-navy-950 hover:bg-navy-900 text-slate-200 hover:text-red-400 font-bold px-6 py-3.5 rounded-xl border border-red-500/30 flex items-center justify-center space-x-2 text-xs transition-all min-h-[48px]"
               >
                 <ShieldCheck className="w-4 h-4 text-red-400" />
-                <span>베트남 소방 인허가 서류 1:1 문의</span>
+                <span>{isVi ? 'Tư vấn 1:1 Hồ sơ PCCC Việt Nam' : '베트남 소방 인허가 서류 1:1 문의'}</span>
               </button>
             </div>
           </div>
@@ -186,32 +186,56 @@ export default function FirefightingSection({ t, onOpenConsult }) {
             <div className="w-10 h-10 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center">
               <Zap className="w-5 h-5" />
             </div>
-            <h4 className="text-sm font-extrabold text-white">24시간 연속 점등 Q-Mark</h4>
-            <p className="text-xs text-slate-300">국내 최장시간 Q-Mark 지정서 획득 휴대용 비상조명등 (SY-M119-FI)</p>
+            <h4 className="text-sm font-extrabold text-white">
+              {isVi ? 'Chứng nhận Q-Mark Chiếu sáng 24h' : '24시간 연속 점등 Q-Mark'}
+            </h4>
+            <p className="text-xs text-slate-300">
+              {isVi
+                ? 'Đèn chiếu sáng khẩn cấp di động đạt chứng nhận Q-Mark thời gian dài nhất Hàn Quốc (SY-M119-FI)'
+                : '국내 최장시간 Q-Mark 지정서 획득 휴대용 비상조명등 (SY-M119-FI)'}
+            </p>
           </div>
 
           <div className="glass-card rounded-2xl p-6 border border-amber-500/30 space-y-2">
             <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
               <Cpu className="w-5 h-5" />
             </div>
-            <h4 className="text-sm font-extrabold text-white">IoT 오작동 차단 특허</h4>
-            <p className="text-xs text-slate-300">비화재보 오작동 해소 특허 제10-2357956호 기반 무선 화재 감지 시스템</p>
+            <h4 className="text-sm font-extrabold text-white">
+              {isVi ? 'Bằng sáng chế Khắc phục Báo giả IoT' : 'IoT 오작동 차단 특허'}
+            </h4>
+            <p className="text-xs text-slate-300">
+              {isVi
+                ? 'Hệ thống báo cháy không dây dựa trên bằng sáng chế khắc phục báo giả số 10-2357956'
+                : '비화재보 오작동 해소 특허 제10-2357956호 기반 무선 화재 감지 시스템'}
+            </p>
           </div>
 
           <div className="glass-card rounded-2xl p-6 border border-cyan-500/30 space-y-2">
             <div className="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
               <ShieldAlert className="w-5 h-5" />
             </div>
-            <h4 className="text-sm font-extrabold text-white">EV 전기차 전용 소화포</h4>
-            <p className="text-xs text-slate-300">1,400℃ 초고온 견디는 전기차 지하주차장 배터리 열폭주 질식 소화포</p>
+            <h4 className="text-sm font-extrabold text-white">
+              {isVi ? 'Chăn dập lửa Chuyên dụng Xe điện EV' : 'EV 전기차 전용 소화포'}
+            </h4>
+            <p className="text-xs text-slate-300">
+              {isVi
+                ? 'Chăn dập lửa dập tắt bùng nổ nhiệt Pin xe điện bãi xe ngầm chịu nhiệt 1.400℃'
+                : '1,400℃ 초고온 견디는 전기차 지하주차장 배터리 열폭주 질식 소화포'}
+            </p>
           </div>
 
           <div className="glass-card rounded-2xl p-6 border border-purple-500/30 space-y-2">
             <div className="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
               <FileCheck className="w-5 h-5" />
             </div>
-            <h4 className="text-sm font-extrabold text-white">QCVN / TCVN 100% 부합</h4>
-            <p className="text-xs text-slate-300">소방 설계 도면 승인(Thẩm duyệt) & 완공 검사(Nghiệm thu) 서류 제공</p>
+            <h4 className="text-sm font-extrabold text-white">
+              {isVi ? 'Đáp ứng 100% QCVN / TCVN' : 'QCVN / TCVN 100% 부합'}
+            </h4>
+            <p className="text-xs text-slate-300">
+              {isVi
+                ? 'Cung cấp hồ sơ Thẩm duyệt thiết kế & Nghiệm thu hoàn công PCCC'
+                : '소방 설계 도면 승인(Thẩm duyệt) & 완공 검사(Nghiệm thu) 서류 제공'}
+            </p>
           </div>
         </div>
 
@@ -223,10 +247,12 @@ export default function FirefightingSection({ t, onOpenConsult }) {
               <span>PRODUCT & TECHNOLOGY LINEUP</span>
             </span>
             <h3 className="text-2xl sm:text-4xl font-extrabold text-white break-keep">
-              (주)신영 & 아는소방 6대 소방 제품 라인업
+              {isVi ? '6 Dòng Sản phẩm & Công nghệ PCCC Shinyoung & Aneun Sobang' : '(주)신영 & 아는소방 6대 소방 제품 라인업'}
             </h3>
             <p className="text-slate-300 text-xs sm:text-sm break-keep">
-              탭을 선택하시면 제품별 상세 설명, KFI 형식승인 및 베트남 소방 규격 부합 내역을 확인하실 수 있습니다.
+              {isVi
+                ? 'Chọn từng thẻ để xem chi tiết sản phẩm, chứng nhận KFI và độ tương thích với quy chuẩn PCCC Việt Nam.'
+                : '탭을 선택하시면 제품별 상세 설명, KFI 형식승인 및 베트남 소방 규격 부합 내역을 확인하실 수 있습니다.'}
             </p>
           </div>
 
@@ -275,7 +301,7 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                     {currentCat.desc}
                   </p>
                   <div className="p-3 rounded-xl bg-navy-950 border border-red-500/20 text-xs text-amber-300 font-semibold italic">
-                    💡 핵심 강점: {currentCat.highlight}
+                    💡 {isVi ? 'Điểm mạnh cốt lõi: ' : '핵심 강점: '}{currentCat.highlight}
                   </div>
                 </div>
 
@@ -299,13 +325,15 @@ export default function FirefightingSection({ t, onOpenConsult }) {
               {/* Bottom CTA */}
               <div className="pt-4 border-t border-navy-800 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <span className="text-xs text-slate-400">
-                  QCVN 시험성적서 및 KFI 형식승인서 사전 조회가 가능합니다.
+                  {isVi
+                    ? 'Có thể tra cứu trước Báo cáo thử nghiệm QCVN và Chứng nhận KFI.'
+                    : 'QCVN 시험성적서 및 KFI 형식승인서 사전 조회가 가능합니다.'}
                 </span>
                 <button
                   onClick={() => setIsDocModalOpen(true)}
                   className="bg-red-600 hover:bg-red-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md transition-all whitespace-nowrap"
                 >
-                  관련 승인서류 확인하기 →
+                  {isVi ? 'Xem Hồ sơ Chứng nhận →' : '관련 승인서류 확인하기 →'}
                 </button>
               </div>
 
@@ -321,11 +349,11 @@ export default function FirefightingSection({ t, onOpenConsult }) {
               <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-1">BROADCAST & GLOBAL EXHIBITION</span>
               <h3 className="text-2xl font-extrabold text-white flex items-center space-x-2">
                 <Tv className="w-6 h-6 text-red-400" />
-                <span>방송 협찬 & 글로벌 박람회 참가 실적</span>
+                <span>{isVi ? 'Tài trợ Truyền hình & Thành tích Hội chợ Quốc tế' : '방송 협찬 & 글로벌 박람회 참가 실적'}</span>
               </h3>
             </div>
             <span className="text-xs bg-red-500/20 text-red-400 px-3.5 py-1.5 rounded-full border border-red-500/30">
-              한국 대표 방송사 협찬 & 글로벌 소방 박람회 참전
+              {isVi ? 'Tài trợ Đài truyền hình Hàn Quốc & Tham gia Hội chợ PCCC Toàn cầu' : '한국 대표 방송사 협찬 & 글로벌 소방 박람회 참전'}
             </span>
           </div>
 
@@ -335,28 +363,36 @@ export default function FirefightingSection({ t, onOpenConsult }) {
             <div className="space-y-4">
               <h4 className="text-sm font-extrabold text-white flex items-center space-x-2">
                 <Tv className="w-4 h-4 text-amber-400" />
-                <span>주요 방송 협찬 (TV Drama Sponsorship)</span>
+                <span>{isVi ? 'Tài trợ Phim Truyền hình (TV Drama Sponsorship)' : '주요 방송 협찬 (TV Drama Sponsorship)'}</span>
               </h4>
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div className="bg-navy-950 p-3.5 rounded-xl border border-navy-800">
-                  <span className="font-bold text-amber-400 block">KBS2 드라마</span>
-                  <span className="text-white">"당신이 소원을 말하면"</span>
-                  <p className="text-[10px] text-slate-400 mt-1">소화기 및 비상조명 제품 협찬</p>
+                  <span className="font-bold text-amber-400 block">KBS2 Drama</span>
+                  <span className="text-white">"If You Wish Upon Me"</span>
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    {isVi ? 'Tài trợ bình chữa cháy & đèn khẩn cấp' : '소화기 및 비상조명 제품 협찬'}
+                  </p>
                 </div>
                 <div className="bg-navy-950 p-3.5 rounded-xl border border-navy-800">
-                  <span className="font-bold text-amber-400 block">JTBC 드라마</span>
-                  <span className="text-white">"로스쿨"</span>
-                  <p className="text-[10px] text-slate-400 mt-1">소방 안전 자재 제품 협찬</p>
+                  <span className="font-bold text-amber-400 block">JTBC Drama</span>
+                  <span className="text-white">"Law School"</span>
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    {isVi ? 'Tài trợ vật tư an toàn PCCC' : '소방 안전 자재 제품 협찬'}
+                  </p>
                 </div>
                 <div className="bg-navy-950 p-3.5 rounded-xl border border-navy-800">
-                  <span className="font-bold text-amber-400 block">SBS 드라마</span>
-                  <span className="text-white">"더킹: 영원의 군주"</span>
-                  <p className="text-[10px] text-slate-400 mt-1">특수 소화 용품 협찬</p>
+                  <span className="font-bold text-amber-400 block">SBS Drama</span>
+                  <span className="text-white">"The King: Eternal Monarch"</span>
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    {isVi ? 'Tài trợ thiết bị chữa cháy đặc biệt' : '특수 소화 용품 협찬'}
+                  </p>
                 </div>
                 <div className="bg-navy-950 p-3.5 rounded-xl border border-navy-800">
-                  <span className="font-bold text-amber-400 block">tvN 드라마</span>
-                  <span className="text-white">"머니게임"</span>
-                  <p className="text-[10px] text-slate-400 mt-1">비상경보장치 협찬</p>
+                  <span className="font-bold text-amber-400 block">tvN Drama</span>
+                  <span className="text-white">"Money Game"</span>
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    {isVi ? 'Tài trợ thiết bị báo động khẩn cấp' : '비상경보장치 협찬'}
+                  </p>
                 </div>
               </div>
             </div>
@@ -365,7 +401,7 @@ export default function FirefightingSection({ t, onOpenConsult }) {
             <div className="space-y-4">
               <h4 className="text-sm font-extrabold text-white flex items-center space-x-2">
                 <Globe className="w-4 h-4 text-cyan-400" />
-                <span>글로벌 박람회 (Secutech & Intersec)</span>
+                <span>{isVi ? 'Hội chợ Quốc tế (Secutech & Intersec)' : '글로벌 박람회 (Secutech & Intersec)'}</span>
               </h4>
               <div className="space-y-3 text-xs">
                 <div className="bg-navy-950 p-3.5 rounded-xl border border-navy-800 flex items-start space-x-3">
@@ -373,9 +409,11 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                     VN
                   </div>
                   <div>
-                    <span className="font-bold text-white block">2026 베트남 시큐텍 (Secutech Vietnam)</span>
+                    <span className="font-bold text-white block">2026 Secutech Việt Nam</span>
                     <p className="text-slate-400 text-[11px] mt-0.5">
-                      하노이/호치민 소방 시큐리티 박람회 참가, QCVN 규격 비상조명등 및 소화기함 부스 성료
+                      {isVi
+                        ? 'Tham gia triển lãm PCCC & An ninh Hà Nội/TP.HCM, hoàn thành gian hàng đèn khẩn cấp & tủ chữa cháy chuẩn QCVN'
+                        : '하노이/호치민 소방 시큐리티 박람회 참가, QCVN 규격 비상조명등 및 소화기함 부스 성료'}
                     </p>
                   </div>
                 </div>
@@ -385,9 +423,11 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                     UAE
                   </div>
                   <div>
-                    <span className="font-bold text-white block">2026 두바이 인터섹 (Dubai Intersec)</span>
+                    <span className="font-bold text-white block">2026 Dubai Intersec</span>
                     <p className="text-slate-400 text-[11px] mt-0.5">
-                      중동 최대 소방 박람회 참가, 24시간 휴대용 비상조명등 및 스마트 IoT 감지기 현지 반응
+                      {isVi
+                        ? 'Tham gia triển lãm PCCC lớn nhất Trung Đông, ra mắt đèn khẩn cấp 24h & đầu báo IoT thông minh'
+                        : '중동 최대 소방 박람회 참가, 24시간 휴대용 비상조명등 및 스마트 IoT 감지기 현지 반응'}
                     </p>
                   </div>
                 </div>
@@ -397,9 +437,13 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                     KFI
                   </div>
                   <div>
-                    <span className="font-bold text-white block">국제소방안전박람회 (FIRE TECH)</span>
+                    <span className="font-bold text-white block">
+                      {isVi ? 'Hội chợ An toàn PCCC Quốc tế (FIRE TECH)' : '국제소방안전박람회 (FIRE TECH)'}
+                    </span>
                     <p className="text-slate-400 text-[11px] mt-0.5">
-                      소방청 및 한국소방산업기술원 주관 박람회 연례 출품 및 우수 품질 표창
+                      {isVi
+                        ? 'Trưng bày hàng năm tại triển lãm do Cục PCCC & Viện KFI chủ trì, nhận bằng khen chất lượng xuất sắc'
+                        : '소방청 및 한국소방산업기술원 주관 박람회 연례 출품 및 우수 품질 표창'}
                     </p>
                   </div>
                 </div>
@@ -417,10 +461,12 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                 QCVN / TCVN OFFICIAL CONSULTING
               </span>
               <h3 className="text-2xl sm:text-4xl font-black text-white break-keep">
-                베트남 소방 자재 공급 & 인허가 견적 문의
+                {isVi ? 'Tư vấn Báo giá Cung cấp Vật tư & Cấp phép PCCC Việt Nam' : '베트남 소방 자재 공급 & 인허가 견적 문의'}
               </h3>
               <p className="text-red-100 text-sm font-semibold max-w-2xl break-keep">
-                소방 도면 승인부터 검정 필증 자재 납품 및 현장 소방 완공 검사까지 전문 엔지니어가 직접 상담해 드립니다.
+                {isVi
+                  ? 'Chuyên viên kỹ thuật trực tiếp tư vấn từ thẩm duyệt bản vẽ PCCC, cung cấp vật tư đạt chuẩn đến nghiệm thu hoàn công tại công trình.'
+                  : '소방 도면 승인부터 검정 필증 자재 납품 및 현장 소방 완공 검사까지 전문 엔지니어가 직접 상담해 드립니다.'}
               </p>
             </div>
 
@@ -435,7 +481,7 @@ export default function FirefightingSection({ t, onOpenConsult }) {
               className="w-full sm:w-auto bg-navy-950 hover:bg-navy-900 text-white font-extrabold text-sm px-8 py-4 rounded-2xl shadow-2xl transition-all transform hover:scale-105 flex items-center justify-center space-x-2 whitespace-nowrap min-h-[52px]"
             >
               <Flame className="w-5 h-5 text-red-400" />
-              <span>소방 자재 견적 & 서류 신청하기 →</span>
+              <span>{isVi ? 'Yêu cầu Báo giá & Hồ sơ PCCC →' : '소방 자재 견적 & 서류 신청하기 →'}</span>
             </button>
           </div>
         </div>
@@ -449,7 +495,9 @@ export default function FirefightingSection({ t, onOpenConsult }) {
             <div className="flex items-center justify-between border-b border-navy-800 pb-4">
               <div className="flex items-center space-x-2 text-white">
                 <FileCheck className="w-5 h-5 text-red-400" />
-                <h4 className="text-lg font-bold">소방 자재 승인 서류 & KFI 형식승인서</h4>
+                <h4 className="text-lg font-bold">
+                  {isVi ? 'Hồ sơ Phê duyệt Vật tư PCCC & Chứng nhận KFI' : '소방 자재 승인 서류 & KFI 형식승인서'}
+                </h4>
               </div>
               <button
                 onClick={() => setIsDocModalOpen(false)}
@@ -462,8 +510,14 @@ export default function FirefightingSection({ t, onOpenConsult }) {
             <div className="space-y-3 text-xs">
               <div className="p-3.5 bg-navy-950 rounded-xl border border-navy-800 flex items-center justify-between">
                 <div>
-                  <span className="font-bold text-white block">(주)신영 지명원 & 회사소개서 (PDF)</span>
-                  <span className="text-[11px] text-slate-400">제품 승인 자료, 카탈로그, 생산 공정 및 ISO 인증서</span>
+                  <span className="font-bold text-white block">
+                    {isVi ? 'Hồ sơ Năng lực & Giới thiệu Công ty Shinyoung (PDF)' : '(주)신영 지명원 & 회사소개서 (PDF)'}
+                  </span>
+                  <span className="text-[11px] text-slate-400">
+                    {isVi
+                      ? 'Tài liệu phê duyệt sản phẩm, catalogue, quy trình sản xuất & chứng nhận ISO'
+                      : '제품 승인 자료, 카탈로그, 생산 공정 및 ISO 인증서'}
+                  </span>
                 </div>
                 <a
                   href="/docu/fire/아는소방회사소개.pdf"
@@ -473,14 +527,20 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                   className="bg-red-600 hover:bg-red-500 text-white font-bold px-3.5 py-2 rounded-lg flex items-center space-x-1"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>다운로드</span>
+                  <span>{isVi ? 'Tải về' : '다운로드'}</span>
                 </a>
               </div>
 
               <div className="p-3.5 bg-navy-950 rounded-xl border border-navy-800 flex items-center justify-between">
                 <div>
-                  <span className="font-bold text-white block">휴대용 비상조명등 Q-Mark 지정서 & 형식승인서</span>
-                  <span className="text-[11px] text-slate-400">SY-M119-FI 24시간/60분 Q-Mark 및 KFI 승인서</span>
+                  <span className="font-bold text-white block">
+                    {isVi ? 'Giấy chỉ định Q-Mark & Chứng nhận KFI Đèn khẩn cấp di động' : '휴대용 비상조명등 Q-Mark 지정서 & 형식승인서'}
+                  </span>
+                  <span className="text-[11px] text-slate-400">
+                    {isVi
+                      ? 'Chứng nhận Q-Mark 24h/60분 & KFI cho model SY-M119-FI'
+                      : 'SY-M119-FI 24시간/60분 Q-Mark 및 KFI 승인서'}
+                  </span>
                 </div>
                 <button
                   onClick={() => {
@@ -489,14 +549,20 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                   }}
                   className="bg-navy-800 hover:bg-navy-700 text-red-400 font-bold px-3.5 py-2 rounded-lg border border-red-500/30"
                 >
-                  서류 신청
+                  {isVi ? 'Yêu cầu Hồ sơ' : '서류 신청'}
                 </button>
               </div>
 
               <div className="p-3.5 bg-navy-950 rounded-xl border border-navy-800 flex items-center justify-between">
                 <div>
-                  <span className="font-bold text-white block">소화전 & 속보 PBL 세트 KFI 형식승인서</span>
-                  <span className="text-[11px] text-slate-400">소방청 검정필증 시험성적서 & CAD 도면 세트</span>
+                  <span className="font-bold text-white block">
+                    {isVi ? 'Giấy chứng nhận KFI Bộ tủ PBL Hộp chữa cháy & Báo động' : '소화전 & 속보 PBL 세트 KFI 형식승인서'}
+                  </span>
+                  <span className="text-[11px] text-slate-400">
+                    {isVi
+                      ? 'Báo cáo thử nghiệm chứng nhận Cục PCCC & Bộ bản vẽ CAD'
+                      : '소방청 검정필증 시험성적서 & CAD 도면 세트'}
+                  </span>
                 </div>
                 <button
                   onClick={() => {
@@ -505,14 +571,20 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                   }}
                   className="bg-navy-800 hover:bg-navy-700 text-red-400 font-bold px-3.5 py-2 rounded-lg border border-red-500/30"
                 >
-                  서류 신청
+                  {isVi ? 'Yêu cầu Hồ sơ' : '서류 신청'}
                 </button>
               </div>
 
               <div className="p-3.5 bg-navy-950 rounded-xl border border-navy-800 flex items-center justify-between">
                 <div>
-                  <span className="font-bold text-white block">베트남 QCVN 06:2022 소방 검정 부합 증명서</span>
-                  <span className="text-[11px] text-slate-400">Thẩm duyệt PCCC & Nghiệm thu PCCC 공식 성적서</span>
+                  <span className="font-bold text-white block">
+                    {isVi ? 'Giấy chứng nhận Phù hợp Quy chuẩn PCCC QCVN 06:2022 Việt Nam' : '베트남 QCVN 06:2022 소방 검정 부합 증명서'}
+                  </span>
+                  <span className="text-[11px] text-slate-400">
+                    {isVi
+                      ? 'Báo cáo kết quả chính thức cho Thẩm duyệt PCCC & Nghiệm thu PCCC'
+                      : 'Thẩm duyệt PCCC & Nghiệm thu PCCC 공식 성적서'}
+                  </span>
                 </div>
                 <button
                   onClick={() => {
@@ -521,7 +593,7 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                   }}
                   className="bg-navy-800 hover:bg-navy-700 text-red-400 font-bold px-3.5 py-2 rounded-lg border border-red-500/30"
                 >
-                  서류 신청
+                  {isVi ? 'Yêu cầu Hồ sơ' : '서류 신청'}
                 </button>
               </div>
             </div>
@@ -531,7 +603,7 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                 onClick={() => setIsDocModalOpen(false)}
                 className="bg-navy-800 hover:bg-navy-700 text-slate-300 font-bold text-xs px-5 py-2.5 rounded-xl"
               >
-                닫기
+                {isVi ? 'Đóng' : '닫기'}
               </button>
             </div>
           </div>

@@ -9,15 +9,10 @@ import {
   Box,
   Building,
   Briefcase,
-  Utensils,
-  Scissors,
-  Home,
   Award,
-  CheckCircle2,
   ShieldCheck,
   ChevronRight,
   ChevronLeft,
-  Send,
   Download,
   X,
   ZoomIn,
@@ -30,35 +25,37 @@ export default function InteriorSection({ t, onOpenConsult }) {
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
   const [selectedPdfProject, setSelectedPdfProject] = useState(null);
 
+  const isVi = t?.lang === 'vi' || !t?.lang;
+
   const interiorHeroImages = [
     { 
       src: '/images/interior/1.png', 
-      title: 'Luxury Penthouse & Villa Interior', 
-      desc: '프라이빗 펜트하우스 & 빌라 고급 맞춤 인테리어',
+      title: isVi ? 'Thiết kế Nội thất Cao cấp Penthouse & Biệt thự' : 'Luxury Penthouse & Villa Interior', 
+      desc: isVi ? 'Không gian nội thất may đo đẳng cấp cho Penthouse & Biệt thự riêng tư' : '프라이빗 펜트하우스 & 빌라 고급 맞춤 인테리어',
       tag: 'LUXURY RESIDENTIAL'
     },
     { 
       src: '/images/interior/2.png', 
-      title: 'Natural K-Wood & Living Lounge', 
-      desc: '원목과 자연 채광이 조화로운 K-디자인 공간',
+      title: isVi ? 'Phòng khách & Lounge Gỗ tự nhiên K-Design' : 'Natural K-Wood & Living Lounge', 
+      desc: isVi ? 'Không gian phong cách K-Design kết hợp gỗ tự nhiên và ánh sáng hài hòa' : '원목과 자연 채광이 조화로운 K-디자인 공간',
       tag: 'K-DESIGN LOUNGE'
     },
     { 
       src: '/images/interior/3.png', 
-      title: '5-Star Hotel & Resort Lounge', 
-      desc: '하노이 신라호텔 시공 검증 최고급 호텔식 턴키 마감',
+      title: isVi ? 'Lounge Khách sạn 5 sao & Khu Nghỉ dưỡng' : '5-Star Hotel & Resort Lounge', 
+      desc: isVi ? 'Thi công hoàn thiện trọn gói tiêu chuẩn khách sạn cao cấp (Dự án Khách sạn Shilla Hà Nội)' : '하노이 신라호텔 시공 검증 최고급 호텔식 턴키 마감',
       tag: 'HOTEL & RESORT'
     },
     { 
       src: '/images/interior/4.png', 
-      title: 'Executive Custom Suite & Dining', 
-      desc: '경남 랜드마크 72 & 하이엔드 수트 전용 공간 시공',
+      title: isVi ? 'Căn hộ Suite Cao cấp & Phòng ăn Sang trọng' : 'Executive Custom Suite & Dining', 
+      desc: isVi ? 'Thi công không gian chuyên biệt cho Keangnam Landmark 72 & Căn hộ VIP' : '경남 랜드마크 72 & 하이엔드 수트 전용 공간 시공',
       tag: 'EXECUTIVE SUITE'
     },
     { 
       src: '/images/interior/5.png', 
-      title: 'Smart Office & Commercial Space', 
-      desc: 'LG전자(하이퐁), 오피스 & 프리미엄 상업 공간',
+      title: isVi ? 'Văn phòng Thông minh & Thương mại Công nghệ' : 'Smart Office & Commercial Space', 
+      desc: isVi ? 'Văn phòng LG Electronics (Hải Phòng) & Không gian thương mại cao cấp' : 'LG전자(하이퐁), 오피스 & 프리미엄 상업 공간',
       tag: 'COMMERCIAL & TECH'
     }
   ];
@@ -75,9 +72,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 1,
       category: 'hotel_public',
-      catLabel: 'Hotel & Public Space',
+      catLabel: isVi ? 'Khách sạn & Công cộng' : 'Hotel & Public Space',
       title: 'Shilla Hotel (Hanoi)',
-      subtitle: '하노이 신라호텔 인테리어 필름 & 5성급 호텔 공간 시공',
+      subtitle: isVi ? 'Thi công phim dán nội thất & Không gian khách sạn 5 sao Shilla Hà Nội' : '하노이 신라호텔 인테리어 필름 & 5성급 호텔 공간 시공',
       year: '2026.03',
       location: 'Hanoi',
       img: '/images/interior/portfolio/page_13.png',
@@ -87,9 +84,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 2,
       category: 'office_factory',
-      catLabel: 'Office & Factory',
+      catLabel: isVi ? 'Văn phòng & Nhà máy' : 'Office & Factory',
       title: 'I-BRIDGE Office (Landmark 72)',
-      subtitle: '하노이 경남 랜드마크 72 타워 프라이빗 스마트 오피스 시공',
+      subtitle: isVi ? 'Thi công văn phòng thông minh cao cấp tại Tòa tháp Keangnam Landmark 72' : '하노이 경남 랜드마크 72 타워 프라이빗 스마트 오피스 시공',
       year: '2025.12',
       location: 'Landmark 72, Hanoi',
       img: '/images/interior/portfolio/page_14.png',
@@ -99,9 +96,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 3,
       category: 'commercial_fnb',
-      catLabel: 'Commercial & F&B',
+      catLabel: isVi ? 'Thương mại & F&B' : 'Commercial & F&B',
       title: 'Wau Haus Coffee (Vincom Ocean Park 2)',
-      subtitle: 'Vincom Mega Mall Ocean Park 2 카페 인테리어 & 부스 디자인',
+      subtitle: isVi ? 'Thiết kế gian hàng & Nội thất quán Cafe tại Vincom Mega Mall Ocean Park 2' : 'Vincom Mega Mall Ocean Park 2 카페 인테리어 & 부스 디자인',
       year: '2025.07',
       location: 'Hung Yen',
       img: '/images/interior/portfolio/page_15.png',
@@ -111,9 +108,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 4,
       category: 'commercial_fnb',
-      catLabel: 'Commercial & F&B',
+      catLabel: isVi ? 'Thương mại & F&B' : 'Commercial & F&B',
       title: 'De Baakji Restaurant (Vincom Ocean Park 2)',
-      subtitle: 'Vincom Mega Mall Ocean Park 2 한국형 고급 식당 인테리어',
+      subtitle: isVi ? 'Thi công nội thất nhà hàng ẩm thực Hàn Quốc sang trọng tại Vincom Mega Mall' : 'Vincom Mega Mall Ocean Park 2 한국형 고급 식당 인테리어',
       year: '2025.05',
       location: 'Hung Yen',
       img: '/images/interior/portfolio/page_17.png',
@@ -123,9 +120,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 5,
       category: 'office_factory',
-      catLabel: 'Office & Factory',
+      catLabel: isVi ? 'Văn phòng & Nhà máy' : 'Office & Factory',
       title: 'LG Electronics Factory (Hai Phong)',
-      subtitle: 'LG전자 하이퐁 공장 P3 대회의실 인테리어 & 음향/유리 벽체 시공',
+      subtitle: isVi ? 'Nội thất phòng họp lớn P3 & Tách vách kính âm thanh Nhà máy LG Electronics Hải Phòng' : 'LG전자 하이퐁 공장 P3 대회의실 인테리어 & 음향/유리 벽체 시공',
       year: '2022.03',
       location: 'KCN Trang Due, Hai Phong',
       img: '/images/interior/portfolio/page_49.png',
@@ -135,9 +132,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 6,
       category: 'office_factory',
-      catLabel: 'Office & Factory',
+      catLabel: isVi ? 'Văn phòng & Nhà máy' : 'Office & Factory',
       title: 'Dreamtech Factory (Bac Ninh)',
-      subtitle: '드림텍 박닌 공장 1F 로비, 리셉션, 휴게실 & 카페 전면 리모델링',
+      subtitle: isVi ? 'Cải tạo toàn bộ Sảnh, Lễ tân, Phòng nghỉ & Cafe Nhà máy Dreamtech Bắc Ninh' : '드림텍 박닌 공장 1F 로비, 리셉션, 휴게실 & 카페 전면 리모델링',
       year: '2026.03',
       location: 'KCN Yen Phong, Bac Ninh',
       img: '/images/interior/portfolio/page_12.png',
@@ -147,9 +144,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 7,
       category: 'residential',
-      catLabel: 'Luxury Residential',
+      catLabel: isVi ? 'Nhà ở Cao cấp' : 'Luxury Residential',
       title: 'Keangnam Landmark 72 Apartment (A1608)',
-      subtitle: '하노이 경남 랜드마크 72 아파트 하이엔드 전면 인테리어 리모델링',
+      subtitle: isVi ? 'Cải tạo nội thất tổng thể căn hộ cao cấp Keangnam Landmark 72 Hà Nội' : '하노이 경남 랜드마크 72 아파트 하이엔드 전면 인테리어 리모델링',
       year: '2024.09',
       location: 'Landmark 72, Hanoi',
       img: '/images/interior/portfolio/page_28.png',
@@ -159,9 +156,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 8,
       category: 'beauty_golf',
-      catLabel: 'Beauty & Golf',
+      catLabel: isVi ? 'Làm đẹp & Thể thao' : 'Beauty & Golf',
       title: 'OJALGONG Golf Zon (Westpoint Hanoi)',
-      subtitle: '하노이 웨스트포인트 3D 스크린 골프 서비스 공간 턴키 시공',
+      subtitle: isVi ? 'Thi công trọn gói không gian dịch vụ Golf 3D màn hình Westpoint Hà Nội' : '하노이 웨스트포인트 3D 스크린 골프 서비스 공간 턴키 시공',
       year: '2023.08',
       location: 'Westpoint, Hanoi',
       img: '/images/interior/portfolio/page_37.png',
@@ -171,9 +168,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 9,
       category: 'hotel_public',
-      catLabel: 'Hotel & Public Space',
+      catLabel: isVi ? 'Khách sạn & Công cộng' : 'Hotel & Public Space',
       title: 'Woori Bank Branches (Vinh Phuc & Ha Nam)',
-      subtitle: '우리은행 하노이, 영푹, 하남 지점 금융 공간 & VIP 창구 인테리어',
+      subtitle: isVi ? 'Nội thất không gian tài chính & Quầy VIP Ngân hàng Woori Bank Hà Nội, Vĩnh Phúc, Hà Nam' : '우리은행 하노이, 영푹, 하남 지점 금융 공간 & VIP 창구 인테리어',
       year: '2019-2020',
       location: 'Vinh Phuc & Ha Nam',
       img: '/images/interior/portfolio/page_60.png',
@@ -183,9 +180,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 10,
       category: 'hotel_public',
-      catLabel: 'Hotel & Public Space',
+      catLabel: isVi ? 'Khách sạn & Công cộng' : 'Hotel & Public Space',
       title: 'Shinhan Bank & Korean Embassy (Hanoi)',
-      subtitle: '주베트남 대한민국 대사관 & 신한은행 랜드마크 지점 시공',
+      subtitle: isVi ? 'Thi công Đại sứ quán Hàn Quốc tại Việt Nam & Chi nhánh Shinhan Bank Landmark 72' : '주베트남 대한민국 대사관 & 신한은행 랜드마크 지점 시공',
       year: '2018-2019',
       location: 'Hanoi',
       img: '/images/interior/portfolio/page_63.png',
@@ -195,9 +192,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 11,
       category: 'office_factory',
-      catLabel: 'Office & Factory',
+      catLabel: isVi ? 'Văn phòng & Nhà máy' : 'Office & Factory',
       title: 'KOICA Company Office (Hanoi)',
-      subtitle: '한국국제협력단(KOICA) 하노이 오피스 유리 파티션 & 인테리어',
+      subtitle: isVi ? 'Vách ngăn kính & Nội thất Văn phòng KOICA (Cơ quan Hợp tác Quốc tế Hàn Quốc) Hà Nội' : '한국국제협력단(KOICA) 하노이 오피스 유리 파티션 & 인테리어',
       year: '2024.06',
       location: 'Hanoi',
       img: '/images/interior/portfolio/page_30.png',
@@ -207,9 +204,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 12,
       category: 'commercial_fnb',
-      catLabel: 'Commercial & F&B',
+      catLabel: isVi ? 'Thương mại & F&B' : 'Commercial & F&B',
       title: 'HOJI TEA HOUSE (Tràng Tiền Plaza)',
-      subtitle: '하노이 짱띠엔 프라자 프리미엄 티하우스 상업 공간 시공',
+      subtitle: isVi ? 'Thi công không gian thương mại Quán trà cao cấp Hoji Tea House Tràng Tiền Plaza' : '하노이 짱띠엔 프라자 프리미엄 티하우스 상업 공간 시공',
       year: '2024.10',
       location: 'Trang Tien Plaza, Hanoi',
       img: '/images/interior/portfolio/page_27.png',
@@ -219,9 +216,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 13,
       category: 'beauty_golf',
-      catLabel: 'Beauty & Golf',
+      catLabel: isVi ? 'Làm đẹp & Thể thao' : 'Beauty & Golf',
       title: 'Pilates Studio (Mydinh Hanoi)',
-      subtitle: '하노이 미딩 한국형 기구 필라테스 스튜디오 턴키 인테리어',
+      subtitle: isVi ? 'Nội thất trọn gói Studio Pilates chuẩn Hàn Quốc tại Mỹ Đình Hà Nội' : '하노이 미딩 한국형 기구 필라테스 스튜디오 턴키 인테리어',
       year: '2025.04',
       location: 'My Dinh, Hanoi',
       img: '/images/interior/portfolio/page_19.png',
@@ -231,9 +228,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 14,
       category: 'beauty_golf',
-      catLabel: 'Beauty & Golf',
+      catLabel: isVi ? 'Làm đẹp & Thể thao' : 'Beauty & Golf',
       title: 'MEDIVISOR Korean Beauty Salon & Spa',
-      subtitle: '하노이 메디바이저 프리미엄 뷰티 살롱 & 더클라세 스파 시공',
+      subtitle: isVi ? 'Thi công Salon làm đẹp & The Classe Spa cao cấp Medivisor Hà Nội' : '하노이 메디바이저 프리미엄 뷰티 살롱 & 더클라세 스파 시공',
       year: '2023.02',
       location: 'Hanoi',
       img: '/images/interior/portfolio/page_45.png',
@@ -243,9 +240,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 15,
       category: 'office_factory',
-      catLabel: 'Office & Factory',
+      catLabel: isVi ? 'Văn phòng & Nhà máy' : 'Office & Factory',
       title: 'Hyundai Kefico Factory (Hai Duong)',
-      subtitle: '현대케피코 베트남 공장 대회의실 & 인테리어 마감 시공',
+      subtitle: isVi ? 'Thi công hoàn thiện nội thất & Phòng họp lớn Nhà máy Hyundai Kefico Việt Nam (Hải Dương)' : '현대케피코 베트남 공장 대회의실 & 인테리어 마감 시공',
       year: '2019.02',
       location: 'Hai Duong',
       img: '/images/interior/portfolio/page_62.png',
@@ -255,9 +252,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 16,
       category: 'commercial_fnb',
-      catLabel: 'Commercial & F&B',
+      catLabel: isVi ? 'Thương mại & F&B' : 'Commercial & F&B',
       title: 'Artisee Cafe (Hanoi)',
-      subtitle: '하노이 아티제(Artisee) 프리미엄 베이커리 카페 인테리어',
+      subtitle: isVi ? 'Nội thất tiệm bánh & Quán Cafe cao cấp Artisee Hà Nội' : '하노이 아티제(Artisee) 프리미엄 베이커리 카페 인테리어',
       year: '2021.07',
       location: 'Hanoi',
       img: '/images/interior/portfolio/page_52.png',
@@ -267,9 +264,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 17,
       category: 'commercial_fnb',
-      catLabel: 'Commercial & F&B',
+      catLabel: isVi ? 'Thương mại & F&B' : 'Commercial & F&B',
       title: 'Baekje Galbi Restaurant (Hanoi)',
-      subtitle: '하노이 백제갈비 대표 한국형 고급 프라이빗 룸 인테리어',
+      subtitle: isVi ? 'Nội thất phòng ăn riêng sang trọng phong cách Hàn Quốc - Nhà hàng Baekje Galbi' : '하노이 백제갈비 대표 한국형 고급 프라이빗 룸 인테리어',
       year: '2020.06',
       location: 'Hanoi',
       img: '/images/interior/portfolio/page_57.png',
@@ -279,9 +276,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
     {
       id: 18,
       category: 'hotel_public',
-      catLabel: 'Hotel & Public Space',
+      catLabel: isVi ? 'Khách sạn & Công cộng' : 'Hotel & Public Space',
       title: 'Korean Visa Application Center (Hanoi)',
-      subtitle: '하노이 대한민국 비자신청센터 민원 창구 & 사무 공간',
+      subtitle: isVi ? 'Không gian văn phòng & Quầy tiếp đón Trung tâm Dịch vụ Visa Hàn Quốc tại Hà Nội' : '하노이 대한민국 비자신청센터 민원 창구 & 사무 공간',
       year: '2019.04',
       location: 'Hanoi',
       img: '/images/interior/portfolio/page_61.png',
@@ -297,36 +294,36 @@ export default function InteriorSection({ t, onOpenConsult }) {
   const styleOptions = [
     {
       id: 'luxury',
-      name: 'Luxury Penthouse & Marble Finish',
-      desc: '고급 대리석, Champagne Gold 포인트, 승강기 파사드 일체형 커스텀 디자인',
+      name: isVi ? 'Biệt thự Sang trọng & Đá Cẩm thạch' : 'Luxury Penthouse & Marble Finish',
+      desc: isVi ? 'Đá cẩm thạch cao cấp, điểm nhấn Vàng Champagne, thiết kế đồng bộ với Cabin Thang máy' : '고급 대리석, Champagne Gold 포인트, 승강기 파사드 일체형 커스텀 디자인',
       color: 'bg-gradient-to-r from-amber-600 to-gold-500',
       bgImg: '/images/interior/1.png'
     },
     {
       id: 'modern',
-      name: 'Modern Natural Wood & Living Lounge',
-      desc: '자연 채광과 프리미엄 원목 마감, 아늑한 가족적 거실 공간 인테리어',
+      name: isVi ? 'Gỗ Tự nhiên Hiện đại & Phòng khách' : 'Modern Natural Wood & Living Lounge',
+      desc: isVi ? 'Ánh sáng tự nhiên kết hợp gỗ cao cấp, mang lại không gian ấm cúng cho gia đình' : '자연 채광과 프리미엄 원목 마감, 아늑한 가족적 거실 공간 인테리어',
       color: 'bg-gradient-to-r from-slate-700 to-slate-500',
       bgImg: '/images/interior/2.png'
     },
     {
       id: 'wood',
-      name: 'Natural K-Wood & Hotel Lounge',
-      desc: 'Shilla Hotel / Artisee Cafe 감성의 최고급 원목 질감과 K-디자인 감성',
+      name: isVi ? 'Gỗ Phong cách K-Wood & Lounge Khách sạn' : 'Natural K-Wood & Hotel Lounge',
+      desc: isVi ? 'Cảm hứng từ Khách sạn Shilla / Artisee Cafe với chất liệu gỗ cao cấp và gu thẩm mỹ Hàn Quốc' : 'Shilla Hotel / Artisee Cafe 감성의 최고급 원목 질감과 K-디자인 감성',
       color: 'bg-gradient-to-r from-amber-800 to-yellow-700',
       bgImg: '/images/interior/3.png'
     },
     {
       id: 'executive',
-      name: 'Executive Suite & Private Dining',
-      desc: '경남 랜드마크 72 & VIP 맞춤 인테리어 리모델링',
+      name: isVi ? 'Phòng Executive Suite & Căn hộ VIP' : 'Executive Suite & Private Dining',
+      desc: isVi ? 'Thi công cải tạo nội thất cao cấp chuyên biệt cho Keangnam Landmark 72 & VIP' : '경남 랜드마크 72 & VIP 맞춤 인테리어 리모델링',
       color: 'bg-gradient-to-r from-emerald-800 to-teal-600',
       bgImg: '/images/interior/4.png'
     },
     {
       id: 'commercial',
-      name: 'Smart Office & Tech Commercial',
-      desc: 'LG전자 오피스, 랜드마크 72 I-BRIDGE 상업/업무 공간 설계',
+      name: isVi ? 'Văn phòng Thông minh & Thương mại Tech' : 'Smart Office & Tech Commercial',
+      desc: isVi ? 'Thiết kế không gian làm việc & thương mại cho Văn phòng LG Electronics, Landmark 72 I-BRIDGE' : 'LG전자 오피스, 랜드마크 72 I-BRIDGE 상업/업무 공간 설계',
       color: 'bg-gradient-to-r from-blue-800 to-indigo-600',
       bgImg: '/images/interior/5.png'
     }
@@ -376,7 +373,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
             </p>
 
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-normal break-keep">
-              신라호텔(하노이), LG전자(하이퐁), 우리은행, 신한은행, 랜드마크 72 I-BRIDGE 준공 실적으로 증명된 한국형 기술력 & 턴키 맞춤 공간 인테리어.
+              {isVi 
+                ? 'Thiết kế nội thất không gian may đo trọn gói chuẩn Hàn Quốc — Chứng nhận năng lực qua loạt dự án Khách sạn Shilla (Hà Nội), LG Electronics (Hải Phòng), Woori Bank, Shinhan Bank & Keangnam Landmark 72.' 
+                : '신라호텔(하노이), LG전자(하이퐁), 우리은행, 신한은행, 랜드마크 72 I-BRIDGE 준공 실적으로 증명된 한국형 기술력 & 턴키 맞춤 공간 인테리어.'}
             </p>
 
             <div className="pt-2 flex flex-wrap gap-3">
@@ -384,7 +383,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
                 onClick={() => onOpenConsult('interior')}
                 className="bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:from-gold-300 hover:to-gold-400 text-navy-950 font-black px-6 py-3.5 rounded-xl shadow-gold-glow transition-all text-xs sm:text-sm flex items-center justify-center space-x-2"
               >
-                <span>맞춤 3D 인테리어 무료 상담</span>
+                <span>{isVi ? 'Tư vấn 3D Nội thất Miễn phí' : '맞춤 3D 인테리어 무료 상담'}</span>
                 <ArrowRight className="w-4 h-4 stroke-[2.5]" />
               </button>
             </div>
@@ -397,6 +396,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
                 <button
                   key={idx}
                   onClick={() => setCurrentHeroSlide(idx)}
+                  aria-label={`Slide ${idx + 1}`}
                   className={`h-2 rounded-full transition-all duration-300 ${
                     currentHeroSlide === idx ? 'w-8 bg-gold-400' : 'w-2 bg-slate-500/50 hover:bg-slate-300'
                   }`}
@@ -407,14 +407,14 @@ export default function InteriorSection({ t, onOpenConsult }) {
               <button
                 onClick={() => setCurrentHeroSlide((prev) => (prev - 1 + interiorHeroImages.length) % interiorHeroImages.length)}
                 className="p-2 rounded-lg bg-navy-900/80 text-slate-300 hover:text-white border border-gold-500/30 transition-colors"
-                title="이전 슬라이드"
+                title={isVi ? "Slide trước" : "이전 슬라이드"}
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setCurrentHeroSlide((prev) => (prev + 1) % interiorHeroImages.length)}
                 className="p-2 rounded-lg bg-navy-900/80 text-slate-300 hover:text-white border border-gold-500/30 transition-colors"
-                title="다음 슬라이드"
+                title={isVi ? "Slide tiếp" : "다음 슬라이드"}
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -433,7 +433,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
               BEST winner interior Vn
             </h2>
             <p className="text-sm sm:text-base text-slate-300 max-w-3xl leading-relaxed">
-              신라호텔(하노이), LG전자(하이퐁), 우리은행, 신한은행, 랜드마크 72 I-BRIDGE 오피스 시공 실적으로 검증된 베트남 최정상 맞춤 인테리어 & 턴키 시공 리더.
+              {isVi 
+                ? 'Nội thất may đo & Thi công trọn gói uy tín hàng đầu Việt Nam được kiểm chứng qua các dự án Khách sạn Shilla (Hà Nội), LG Electronics (Hải Phòng), Woori Bank, Shinhan Bank & Keangnam Landmark 72.' 
+                : '신라호텔(하노이), LG전자(하이퐁), 우리은행, 신한은행, 랜드마크 72 I-BRIDGE 오피스 시공 실적으로 검증된 베트남 최정상 맞춤 인테리어 & 턴키 시공 리더.'}
             </p>
           </div>
           <div className="mt-4 md:mt-0 flex flex-wrap gap-3">
@@ -447,13 +449,13 @@ export default function InteriorSection({ t, onOpenConsult }) {
               className="bg-red-600 hover:bg-red-500 text-white font-extrabold px-5 py-3.5 rounded-xl border border-red-500/40 text-xs sm:text-sm flex items-center space-x-2 transition-all shadow-lg"
             >
               <Play className="w-4 h-4 fill-white" />
-              <span>공식 홍보 동영상 시청</span>
+              <span>{isVi ? 'Xem Video Quảng bá' : '공식 홍보 동영상 시청'}</span>
             </a>
             <button
               onClick={() => onOpenConsult('interior')}
               className="bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:from-gold-300 hover:to-gold-400 text-navy-950 font-black px-6 py-3.5 rounded-xl shadow-gold-glow transition-all flex items-center text-xs sm:text-sm"
             >
-              <span>맞춤 3D 인테리어 상담 신청</span>
+              <span>{isVi ? 'Đăng ký Tư vấn Nội thất 3D' : '맞춤 3D 인테리어 상담 신청'}</span>
               <ArrowRight className="w-4 h-4 ml-2 stroke-[2.5]" />
             </button>
           </div>
@@ -468,10 +470,10 @@ export default function InteriorSection({ t, onOpenConsult }) {
                 <span>OFFICIAL SHORTS VIDEO</span>
               </span>
               <h3 className="text-2xl sm:text-3xl font-black text-white">
-                BEST WINNER INTERIOR VN 인테리어 시공 숏폼 영상
+                {isVi ? 'Video Ngắn Thi công Nội thất BEST WINNER INTERIOR VN' : 'BEST WINNER INTERIOR VN 인테리어 시공 숏폼 영상'}
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 mt-1">
-                주택, 빌라, 펜트하우스 & 고급 상업 공간 맞춤형 공간 디자인 및 현장 시공 숏폼 동영상
+                {isVi ? 'Video thực tế thi công hoàn thiện không gian nội thất Nhà ở, Biệt thự, Penthouse & Thương mại cao cấp' : '주택, 빌라, 펜트하우스 & 고급 상업 공간 맞춤형 공간 디자인 및 현장 시공 숏폼 동영상'}
               </p>
             </div>
 
@@ -481,7 +483,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
               rel="noopener noreferrer"
               className="bg-red-600 hover:bg-red-500 text-white font-extrabold px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 transition-all shrink-0 w-fit shadow-md"
             >
-              <span>YouTube Shorts 앱에서 보기</span>
+              <span>{isVi ? 'Xem trên ứng dụng YouTube Shorts' : 'YouTube Shorts 앱에서 보기'}</span>
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>
@@ -491,7 +493,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
             <div className="relative w-full max-w-sm aspect-[9/16] rounded-2xl overflow-hidden border-2 border-gold-500/40 shadow-2xl bg-black">
               <iframe
                 src="https://www.youtube.com/embed/H0LrB_Qopls?autoplay=0&rel=0"
-                title="BEST WINNER INTERIOR VN 인테리어 시공 숏폼 동영상"
+                title={isVi ? 'Video Ngắn Thi công Nội thất BEST WINNER INTERIOR VN' : 'BEST WINNER INTERIOR VN 인테리어 시공 숏폼 동영상'}
                 className="absolute inset-0 w-full h-full border-0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
@@ -504,19 +506,19 @@ export default function InteriorSection({ t, onOpenConsult }) {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-2xl glass-card-chrome border border-chrome-300/40 mb-16">
           <div className="text-center p-3 border-r border-navy-800 last:border-0">
             <p className="text-2xl sm:text-3xl font-black gold-gradient-text">2023.02</p>
-            <p className="text-xs text-chrome-300 mt-1 font-semibold">설립일 (법인번호: 0110245813)</p>
+            <p className="text-xs text-chrome-300 mt-1 font-semibold">{isVi ? 'Ngày thành lập (MSDN: 0110245813)' : '설립일 (법인번호: 0110245813)'}</p>
           </div>
           <div className="text-center p-3 border-r border-navy-800 last:border-0">
             <p className="text-2xl sm:text-3xl font-black chrome-gradient-text">2 + 15+</p>
-            <p className="text-xs text-chrome-300 mt-1 font-semibold">한국인 마스터 & 현지 전문 엔지니어</p>
+            <p className="text-xs text-chrome-300 mt-1 font-semibold">{isVi ? 'Chuyên gia Hàn Quốc & Kỹ sư Việt Nam' : '한국인 마스터 & 현지 전문 엔지니어'}</p>
           </div>
           <div className="text-center p-3 border-r border-navy-800 last:border-0">
             <p className="text-2xl sm:text-3xl font-black text-gold-400">50+</p>
-            <p className="text-xs text-chrome-300 mt-1 font-semibold">글로벌 기업 준공 실적</p>
+            <p className="text-xs text-chrome-300 mt-1 font-semibold">{isVi ? 'Dự án Doanh nghiệp Toàn cầu' : '글로벌 기업 준공 실적'}</p>
           </div>
           <div className="text-center p-3">
             <p className="text-2xl sm:text-3xl font-black text-emeraldGreen-500">100%</p>
-            <p className="text-xs text-chrome-300 mt-1 font-semibold">품질 관리 & 턴키 시공 직영</p>
+            <p className="text-xs text-chrome-300 mt-1 font-semibold">{isVi ? 'Quản lý Chất lượng & Thi công Trọn gói' : '품질 관리 & 턴키 시공 직영'}</p>
           </div>
         </div>
 
@@ -527,10 +529,10 @@ export default function InteriorSection({ t, onOpenConsult }) {
               3D VIRTUAL PREVIEW
             </span>
             <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-              3D 가상 공간 프리뷰 & 자재 디자인 감성
+              {isVi ? 'Phối cảnh 3D Không gian Virtual & Thư viện Mẫu Vật liệu' : '3D 가상 공간 프리뷰 & 자재 디자인 감성'}
             </h3>
             <p className="text-xs sm:text-sm text-slate-300">
-              베트남 주택 및 상업 공간 특성을 고려한 K-디자인 감성 마감재 라이브러리
+              {isVi ? 'Thư viện vật liệu trang trí K-Design được tối ưu hóa cho kiến trúc nhà ở và thương mại tại Việt Nam' : '베트남 주택 및 상업 공간 특성을 고려한 K-디자인 감성 마감재 라이브러리'}
             </p>
           </div>
 
@@ -580,18 +582,18 @@ export default function InteriorSection({ t, onOpenConsult }) {
               <div className="glass-card-gold p-6 rounded-2xl border border-gold-500/40">
                 <h4 className="text-lg font-bold text-gold-400 flex items-center mb-2">
                   <Sparkles className="w-5 h-5 mr-2" />
-                  승강기 Cabin & 공간 디자인 일체화
+                  {isVi ? 'Đồng bộ Thiết kế Cabin Thang máy & Không gian' : '승강기 Cabin & 공간 디자인 일체화'}
                 </h4>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  단순 인테리어를 넘어 승강기(Cabin) 파사드 및 소방/방수 설비와 완벽하게 조화를 이루는 일체형 턴키 공간 설계를 제공합니다.
+                  {isVi ? 'Không chỉ là nội thất thông thường, chúng tôi cung cấp giải pháp thiết kế không gian trọn gói hài hòa hoàn hảo với mặt tiền Thang máy (Cabin) và hệ thống PCCC/Chống thấm.' : '단순 인테리어를 넘어 승강기(Cabin) 파사드 및 소방/방수 설비와 완벽하게 조화를 이루는 일체형 턴키 공간 설계를 제공합니다.'}
                 </p>
               </div>
 
               <div className="space-y-3">
                 {[
-                  "한국산 인테리어 필름 (LG/현대 KEFICO 검증 자재) 시공",
-                  "강화유리 파티션 & 방음 폼 시스템 (KOICA / LG 공장 적용)",
-                  "주택, 빌라, 오피스, F&B 식당, 뷰티/골프장 턴키 설계"
+                  isVi ? 'Thi công Phim dán nội thất Hàn Quốc (Vật liệu kiểm định LG/Hyundai KEFICO)' : '한국산 인테리어 필름 (LG/현대 KEFICO 검증 자재) 시공',
+                  isVi ? 'Vách kính cường lực & Hệ thống cách âm (Áp dụng tại KOICA / Nhà máy LG)' : '강화유리 파티션 & 방음 폼 시스템 (KOICA / LG 공장 적용)',
+                  isVi ? 'Thiết kế trọn gói cho Nhà ở, Biệt thự, Văn phòng, Nhà hàng F&B, Spa & Golf' : '주택, 빌라, 오피스, F&B 식당, 뷰티/골프장 턴키 설계'
                 ].map((feat, idx) => (
                   <div key={idx} className="flex items-start space-x-3 p-3.5 rounded-xl bg-navy-900/80 border border-navy-800">
                     <div className="w-6 h-6 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -607,7 +609,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
                 className="w-full bg-navy-800 hover:bg-navy-700 text-gold-300 font-bold text-xs py-3.5 rounded-xl border border-navy-700 hover:border-gold-500/40 transition-colors flex items-center justify-center space-x-2"
               >
                 <Layers className="w-4 h-4 text-gold-400" />
-                <span>무료 자재 샘플 & 3D 디자인 카탈로그 신청</span>
+                <span>{isVi ? 'Đăng ký Mẫu Vật liệu Miễn phí & Catalog Thiết kế 3D' : '무료 자재 샘플 & 3D 디자인 카탈로그 신청'}</span>
               </button>
             </div>
           </div>
@@ -621,22 +623,22 @@ export default function InteriorSection({ t, onOpenConsult }) {
                 PROJECT PORTFOLIO
               </span>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                BEST winner interior 주요 준공 실적 (Main Performance)
+                {isVi ? 'Dự án Hoàn thành Tiêu biểu BEST WINNER INTERIOR VN' : 'BEST winner interior 주요 준공 실적 (Main Performance)'}
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 mt-1">
-                신라호텔, 드림텍, LG전자, 우리은행, 신한은행, 경남 랜드마크 72 준공 프로젝트
+                {isVi ? 'Các dự án đã hoàn thành: Shilla Hotel, Dreamtech, LG Electronics, Woori Bank, Shinhan Bank, Keangnam Landmark 72' : '신라호텔, 드림텍, LG전자, 우리은행, 신한은행, 경남 랜드마크 72 준공 프로젝트'}
               </p>
             </div>
 
             {/* Filter Tabs */}
             <div className="flex flex-wrap gap-2 mt-4 md:mt-0">
               {[
-                { id: 'all', label: '전체 (All)' },
-                { id: 'hotel_public', label: '호텔 & 공공' },
-                { id: 'office_factory', label: '오피스 & 공장' },
-                { id: 'commercial_fnb', label: '상업 & F&B' },
-                { id: 'beauty_golf', label: '뷰티 & 골프' },
-                { id: 'residential', label: '고급 주거' },
+                { id: 'all', label: isVi ? 'Tất cả (All)' : '전체 (All)' },
+                { id: 'hotel_public', label: isVi ? 'Khách sạn & Công cộng' : '호텔 & 공공' },
+                { id: 'office_factory', label: isVi ? 'Văn phòng & Nhà máy' : '오피스 & 공장' },
+                { id: 'commercial_fnb', label: isVi ? 'Thương mại & F&B' : '상업 & F&B' },
+                { id: 'beauty_golf', label: isVi ? 'Làm đẹp & Thể thao' : '뷰티 & 골프' },
+                { id: 'residential', label: isVi ? 'Nhà ở Cao cấp' : '고급 주거' },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -683,7 +685,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
                     <div className="absolute inset-0 bg-gold-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <div className="bg-navy-950/90 text-gold-300 text-xs font-bold px-3 py-1.5 rounded-full border border-gold-500/50 flex items-center space-x-1.5 shadow-lg backdrop-blur-md">
                         <ZoomIn className="w-3.5 h-3.5" />
-                        <span>PDF 원본 실적 돋보기</span>
+                        <span>{isVi ? 'Phóng to Bản gốc Hồ sơ PDF' : 'PDF 원본 실적 돋보기'}</span>
                       </div>
                     </div>
                   </div>
@@ -713,7 +715,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
                     className="flex-1 bg-navy-900 hover:bg-navy-800 text-gold-300 font-bold text-xs py-2.5 rounded-xl border border-navy-700 hover:border-gold-500/40 transition-colors flex justify-center items-center space-x-1"
                   >
                     <Eye className="w-3.5 h-3.5" />
-                    <span>실적 원본 확대</span>
+                    <span>{isVi ? 'Xem bản gốc PDF' : '실적 원본 확대'}</span>
                   </button>
                   <button
                     onClick={(e) => {
@@ -722,7 +724,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
                     }}
                     className="flex-1 bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs py-2.5 rounded-xl transition-colors flex justify-center items-center"
                   >
-                    <span>견적 문의 →</span>
+                    <span>{isVi ? 'Báo giá →' : '견적 문의 →'}</span>
                   </button>
                 </div>
               </div>
@@ -734,10 +736,10 @@ export default function InteriorSection({ t, onOpenConsult }) {
             <div className="space-y-1 text-center sm:text-left">
               <h4 className="text-sm font-extrabold text-white flex items-center justify-center sm:justify-start">
                 <Layers className="w-4 h-4 text-gold-400 mr-2" />
-                BEST WINNER VN INTERIOR FULL PROFILE PDF (전체 브로슈어)
+                {isVi ? 'TẢI HỒ SƠ NĂNG LỰC TRỌN BỘ PDF (BEST WINNER VN PROFILE PDF)' : 'BEST WINNER VN INTERIOR FULL PROFILE PDF (전체 브로슈어)'}
               </h4>
               <p className="text-xs text-slate-300">
-                69페이지 상당의 최신 준공 실적 및 자재 스펙 카탈로그 원본 PDF 문서를 확인하실 수 있습니다.
+                {isVi ? 'Xem toàn bộ tài liệu PDF 69 trang gồm danh mục dự án đã hoàn thành và thông số kỹ thuật vật liệu mới nhất.' : '69페이지 상당의 최신 준공 실적 및 자재 스펙 카탈로그 원본 PDF 문서를 확인하실 수 있습니다.'}
               </p>
             </div>
             <a
@@ -747,7 +749,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
               className="bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold text-xs px-5 py-3 rounded-xl transition-all shadow-md flex items-center space-x-2 whitespace-nowrap"
             >
               <Download className="w-4 h-4" />
-              <span>프로필 PDF 원본 열기 (Download)</span>
+              <span>{isVi ? 'Mở File PDF Năng lực (Tải về)' : '프로필 PDF 원본 열기 (Download)'}</span>
             </a>
           </div>
         </div>
@@ -759,10 +761,10 @@ export default function InteriorSection({ t, onOpenConsult }) {
               ORGANIZATION & QUALITY CONTROL
             </span>
             <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-              BEST WINNER VN 조직도 & 직영 품질 관리 파이프라인
+              {isVi ? 'Sơ đồ Tổ chức & Quy trình Kiểm soát Chất lượng Trực tiếp' : 'BEST WINNER VN 조직도 & 직영 품질 관리 파이프라인'}
             </h3>
             <p className="text-xs sm:text-sm text-slate-300">
-              본사 경영본부, 디자인 HQ, 시공 본부, 품질 관리팀의 유기적 턴키 체계
+              {isVi ? 'Hệ thống liên kết chặt chẽ giữa Ban Giám đốc, HQ Thiết kế, Ban Quản lý Thi công & Đội Kiểm soát Chất lượng' : '본사 경영본부, 디자인 HQ, 시공 본부, 품질 관리팀의 유기적 턴키 체계'}
             </p>
           </div>
 
@@ -771,32 +773,32 @@ export default function InteriorSection({ t, onOpenConsult }) {
               <div className="w-10 h-10 rounded-xl bg-gold-500/20 text-gold-400 flex items-center justify-center mx-auto">
                 <Building className="w-5 h-5" />
               </div>
-              <h5 className="text-sm font-extrabold text-white">경영 & 디자인 HQ</h5>
-              <p className="text-[11px] text-slate-400">Design Team 1 & 2 (K-Design 감성 & CAD/3D 랜더링)</p>
+              <h5 className="text-sm font-extrabold text-white">{isVi ? 'Ban Executive & HQ Thiết kế' : '경영 & 디자인 HQ'}</h5>
+              <p className="text-[11px] text-slate-400">{isVi ? 'Đội ngũ Design 1 & 2 (Gu thẩm mỹ K-Design & Bản vẽ 3D/CAD)' : 'Design Team 1 & 2 (K-Design 감성 & CAD/3D 랜더링)'}</p>
             </div>
 
             <div className="p-5 rounded-2xl bg-navy-900/90 border border-navy-800 space-y-2">
               <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mx-auto">
                 <Briefcase className="w-5 h-5" />
               </div>
-              <h5 className="text-sm font-extrabold text-white">시공 1 & 2 본부</h5>
-              <p className="text-[11px] text-slate-400">한국인 마스터 감독 & 베트남 현지 전문 엔지니어 직영</p>
+              <h5 className="text-sm font-extrabold text-white">{isVi ? 'Ban Quản lý Thi công 1 & 2' : '시공 1 & 2 본부'}</h5>
+              <p className="text-[11px] text-slate-400">{isVi ? 'Giám sát trực tiếp bởi Chuyên gia Hàn Quốc & Đội kỹ sư Việt Nam' : '한국인 마스터 감독 & 베트남 현지 전문 엔지니어 직영'}</p>
             </div>
 
             <div className="p-5 rounded-2xl bg-navy-900/90 border border-navy-800 space-y-2">
               <div className="w-10 h-10 rounded-xl bg-emeraldGreen-500/20 text-emeraldGreen-400 flex items-center justify-center mx-auto">
                 <ShieldCheck className="w-5 h-5" />
               </div>
-              <h5 className="text-sm font-extrabold text-white">자재 & 품질관리팀</h5>
-              <p className="text-[11px] text-slate-400">한국 정밀 자재, 검정 인테리어 필름 & K1 방수 수급</p>
+              <h5 className="text-sm font-extrabold text-white">{isVi ? 'Đội Vật tư & Chất lượng' : '자재 & 품질관리팀'}</h5>
+              <p className="text-[11px] text-slate-400">{isVi ? 'Cung ứng vật liệu tinh xảo Hàn Quốc, phim dán chuẩn & chống thấm K1' : '한국 정밀 자재, 검정 인테리어 필름 & K1 방수 수급'}</p>
             </div>
 
             <div className="p-5 rounded-2xl bg-navy-900/90 border border-navy-800 space-y-2">
               <div className="w-10 h-10 rounded-xl bg-chrome-400/20 text-chrome-200 flex items-center justify-center mx-auto">
                 <Award className="w-5 h-5" />
               </div>
-              <h5 className="text-sm font-extrabold text-white">기술지원 & A/S</h5>
-              <p className="text-[11px] text-slate-400">시공 완료 후 정기점검 및 24/7 긴급 유지보수 파이프라인</p>
+              <h5 className="text-sm font-extrabold text-white">{isVi ? 'Hỗ trợ Kỹ thuật & Bảo hành' : '기술지원 & A/S'}</h5>
+              <p className="text-[11px] text-slate-400">{isVi ? 'Quy trình kiểm tra định kỳ sau hoàn thiện & Bảo trì khẩn cấp 24/7' : '시공 완료 후 정기점검 및 24/7 긴급 유지보수 파이프라인'}</p>
             </div>
           </div>
         </div>
@@ -832,6 +834,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
 
               <button
                 onClick={() => setSelectedPdfProject(null)}
+                aria-label="Close modal"
                 className="p-2.5 rounded-full bg-navy-900 text-slate-400 hover:text-white hover:bg-navy-800 border border-navy-700 transition-colors"
               >
                 <X className="w-5 h-5" />
@@ -850,7 +853,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
             {/* Modal Footer */}
             <div className="p-4 sm:p-6 bg-navy-950 border-t border-navy-800 flex flex-col sm:flex-row items-center justify-between gap-3">
               <p className="text-xs text-slate-400">
-                📄 BEST WINNER VN PROFILE.pdf 원본 브로슈어 수록 캡처 페이지
+                {isVi ? '📄 Trang chụp từ File Hồ sơ Năng lực gốc BEST WINNER VN PROFILE.pdf' : '📄 BEST WINNER VN PROFILE.pdf 원본 브로슈어 수록 캡처 페이지'}
               </p>
               <div className="flex space-x-3 w-full sm:w-auto">
                 <a
@@ -860,7 +863,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
                   className="flex-1 sm:flex-none bg-navy-800 hover:bg-navy-700 text-gold-300 font-bold text-xs px-4 py-2.5 rounded-xl border border-navy-700 transition-colors flex items-center justify-center space-x-1.5"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>PDF 전체 열기</span>
+                  <span>{isVi ? 'Mở Toàn bộ PDF' : 'PDF 전체 열기'}</span>
                 </a>
                 <button
                   onClick={() => {
@@ -870,7 +873,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
                   }}
                   className="flex-1 sm:flex-none bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold text-xs px-5 py-2.5 rounded-xl transition-colors flex items-center justify-center space-x-1.5"
                 >
-                  <span>동일 타입 견적 상담 신청 →</span>
+                  <span>{isVi ? 'Yêu cầu Báo giá Loại tương tự →' : '동일 타입 견적 상담 신청 →'}</span>
                 </button>
               </div>
             </div>

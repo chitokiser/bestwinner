@@ -45,6 +45,8 @@ import { CarbonPriceService, VCM_BENCHMARKS } from '../../services/carbonPriceSe
 import { solarProjectsData, carbonDashboardSummary } from '../../data/solarProjectsData';
 
 export default function SolarEnergySection({ t, onOpenConsult }) {
+  const isVi = t?.lang === 'vi' || !t?.lang;
+
   // Modal States
   const [isSlideModalOpen, setIsSlideModalOpen] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -100,9 +102,9 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
       badge: '3D PVT SOLAR & CARBON PLATFORM',
       badgeClass: 'bg-amber-500/20 text-amber-400 border-amber-500/40',
       subtitle: 'Beyond Solar Energy — Building Carbon Assets',
-      title: '태양광 발전을 넘어,',
-      highlightTitle: '검증 가능한 탄소자산(Carbon Assets)을 만듭니다',
-      description: 'BEST winner Vn은 태양광 발전 프로젝트의 발전량과 탄소감축 데이터를 디지털화하고, 국제 검증 기준에 부합하는 Carbon Credit (탄소크레딧) 및 차세대 Carbon Asset Management Platform을 구축합니다.'
+      title: isVi ? 'Vượt trên năng lượng mặt trời,' : '태양광 발전을 넘어,',
+      highlightTitle: isVi ? 'Tạo ra Tài sản Carbon (Carbon Assets) có thể xác minh' : '검증 가능한 탄소자산(Carbon Assets)을 만듭니다',
+      description: isVi ? 'BEST Winner VN số hóa lượng điện phát và dữ liệu giảm thải carbon từ các dự án điện mặt trời, đồng thời xây dựng Carbon Credit (tín chỉ carbon) và Nền tảng Quản lý Tài sản Carbon thế hệ mới đáp ứng tiêu chuẩn kiểm định quốc tế.' : 'BEST winner Vn은 태양광 발전 프로젝트의 발전량과 탄소감축 데이터를 디지털화하고, 국제 검증 기준에 부합하는 Carbon Credit (탄소크레딧) 및 차세대 Carbon Asset Management Platform을 구축합니다.'
     },
     {
       id: 2,
@@ -110,9 +112,9 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
       badge: 'REAL-TIME IOT & EMS MONITORING',
       badgeClass: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
       subtitle: 'Smart Energy Infrastructure',
-      title: '실시간 태양광 발전 데이터 기반',
-      highlightTitle: '지능형 CO₂ 감축 모니터링 체계 구축',
-      description: 'IoT Smart Meter 및 EMS API 연동을 통해 발전량, 자가소비량, 송전 데이터를 실시간 계측하여 감축량 산정의 신뢰성을 극대화합니다.'
+      title: isVi ? 'Dựa trên dữ liệu điện mặt trời thời gian thực' : '실시간 태양광 발전 데이터 기반',
+      highlightTitle: isVi ? 'Xây dựng hệ thống giám sát giảm CO₂ thông minh' : '지능형 CO₂ 감축 모니터링 체계 구축',
+      description: isVi ? 'Tối đa hóa độ tin cậy của việc tính toán lượng giảm thải bằng cách đo lường thời gian thực lượng điện phát, tự tiêu thụ và truyền tải thông qua tích hợp IoT Smart Meter & EMS API.' : 'IoT Smart Meter 및 EMS API 연동을 통해 발전량, 자가소비량, 송전 데이터를 실시간 계측하여 감축량 산정의 신뢰성을 극대화합니다.'
     },
     {
       id: 3,
@@ -120,9 +122,9 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
       badge: 'VERRA VMR0017 & ACM0002 METHODOLOGY',
       badgeClass: 'bg-emerald-500/20 text-emeraldGreen-300 border-emerald-500/40',
       subtitle: 'International Standards Verified',
-      title: '글로벌 표준 탄소 방법론 기준',
-      highlightTitle: '투명하게 검증되는 탄소 감축량 산출 엔진',
-      description: 'Verra VMR0017 및 UNFCCC ACM0002 방법론을 기반으로 계통 연계 태양광 발전의 기준선 배출계수와 프로젝트 배출량을 정밀 측정합니다.'
+      title: isVi ? 'Theo tiêu chuẩn phương pháp luận carbon toàn cầu' : '글로벌 표준 탄소 방법론 기준',
+      highlightTitle: isVi ? 'Động cơ tính toán lượng giảm thải carbon xác minh minh bạch' : '투명하게 검증되는 탄소 감축량 산출 엔진',
+      description: isVi ? 'Đo lường chính xác hệ số phát thải đường cơ sở và lượng phát thải dự án điện mặt trời hòa lưới dựa trên phương pháp luận Verra VMR0017 và UNFCCC ACM0002.' : 'Verra VMR0017 및 UNFCCC ACM0002 방법론을 기반으로 계통 연계 태양광 발전의 기준선 배출계수와 프로젝트 배출량을 정밀 측정합니다.'
     },
     {
       id: 4,
@@ -130,9 +132,9 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
       badge: '3D PVT HIGH-EFFICIENCY SOLAR TECH',
       badgeClass: 'bg-purple-500/20 text-purple-300 border-purple-500/40',
       subtitle: 'Patent No. 10-2776941',
-      title: '발전 효율 10배 향상',
-      highlightTitle: '3D PVT 태양광·수열 하이브리드 혁신 기술',
-      description: '전기 생산과 동시에 열 에너지를 획득하는 차세대 3D PVT 모듈로 단위 면적당 최대 감축 성과를 실현합니다.'
+      title: isVi ? 'Tăng hiệu suất phát điện gấp 10 lần' : '발전 효율 10배 향상',
+      highlightTitle: isVi ? 'Công nghệ đổi mới Hybrid 3D PVT Quang điện & Nhiệt nước' : '3D PVT 태양광·수열 하이브리드 혁신 기술',
+      description: isVi ? 'Hiện thực hóa hiệu quả giảm thải tối đa trên mỗi đơn vị diện적 với mô-đun 3D PVT thế hệ mới vừa tạo ra điện năng vừa thu nhiệt năng đồng thời.' : '전기 생산과 동시에 열 에너지를 획득하는 차세대 3D PVT 모듈로 단위 면적당 최대 감축 성과를 실현합니다.'
     },
     {
       id: 5,
@@ -140,9 +142,9 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
       badge: 'DIGITAL CARBON ASSET LIFECYCLE',
       badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
       subtitle: 'End-to-End Asset Accounting',
-      title: 'Solar PV에서 Carbon Asset까지',
-      highlightTitle: '전과정 탄소자산 라이프사이클 디지털화',
-      description: 'Solar PV ➔ 발전량 ➔ CO₂ 감축 ➔ Carbon Credit ➔ Carbon Asset으로 이어지는 전 과정을 6단계 파이프라인으로 체계적으로 관리합니다.'
+      title: isVi ? 'Từ Solar PV đến Carbon Asset' : 'Solar PV에서 Carbon Asset까지',
+      highlightTitle: isVi ? 'Số hóa vòng đời tài sản carbon toàn quy trình' : '전과정 탄소자산 라이프사이클 디지털화',
+      description: isVi ? 'Quản lý bài bản quy trình 6 bước nối liền từ Solar PV ➔ Sản lượng điện ➔ Giảm CO₂ ➔ Carbon Credit ➔ Carbon Asset.' : 'Solar PV ➔ 발전량 ➔ CO₂ 감축 ➔ Carbon Credit ➔ Carbon Asset으로 이어지는 전 과정을 6단계 파이프라인으로 체계적으로 관리합니다.'
     },
     {
       id: 6,
@@ -150,9 +152,9 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
       badge: 'FUTURE CARBON TOKENIZATION',
       badgeClass: 'bg-blue-500/20 text-blue-300 border-blue-500/40',
       subtitle: 'Next-Gen Blockchain Infrastructure',
-      title: '검증된 탄소 자산 기반',
-      highlightTitle: '차세대 블록체인 Carbon Tokenization 인프라',
-      description: '정식 검증 절차를 마친 환경 자산을 바탕으로 규제 및 탄소등록제도 준수 하에 차세대 디지털 토큰화를 준비합니다 (Under Development).'
+      title: isVi ? 'Dựa trên tài sản carbon đã xác minh' : '검증된 탄소 자산 기반',
+      highlightTitle: isVi ? 'Hạ tầng Carbon Tokenization Blockchain thế hệ mới' : '차세대 블록체인 Carbon Tokenization 인프라',
+      description: isVi ? 'Chuẩn bị mã hóa kỹ thuật số thế hệ mới tuân thủ quy định và hệ thống đăng ký carbon dựa trên tài sản môi trường đã qua quy trình xác minh chính thức (Đang phát triển).' : '정식 검증 절차를 마친 환경 자산을 바탕으로 규제 및 탄소등록제도 준수 하에 차세대 디지털 토큰화를 준비합니다 (Under Development).'
     }
   ];
 
@@ -246,7 +248,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 <button
                   onClick={() => setIsHeroAutoPlaying(!isHeroAutoPlaying)}
                   className="text-slate-400 hover:text-white transition-colors p-1"
-                  title={isHeroAutoPlaying ? "자동 전환 일시정지" : "자동 전환 시작"}
+                  title={isHeroAutoPlaying ? (isVi ? "Tạm dừng chuyển tự động" : "자동 전환 일시정지") : (isVi ? "Bắt đầu chuyển tự động" : "자동 전환 시작")}
                 >
                   {isHeroAutoPlaying ? <Pause className="w-3.5 h-3.5 text-amber-400" /> : <Play className="w-3.5 h-3.5 text-emeraldGreen-400" />}
                 </button>
@@ -275,7 +277,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                   className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-navy-950 font-black px-5 py-3 rounded-xl shadow-lg flex items-center space-x-2 text-xs transition-all transform hover:scale-[1.02] border border-emerald-400/40 whitespace-nowrap"
                 >
                   <Bot className="w-4 h-4" />
-                  <span>AI 탄소감축량 시뮬레이터</span>
+                  <span>{isVi ? 'Trình mô phỏng giảm CO₂ AI' : 'AI 탄소감축량 시뮬레이터'}</span>
                 </button>
 
                 <button
@@ -283,7 +285,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                   className="bg-navy-950/90 hover:bg-navy-900 text-slate-200 hover:text-emeraldGreen-400 font-bold px-5 py-3 rounded-xl border border-emerald-500/40 flex items-center space-x-2 text-xs transition-all backdrop-blur-md whitespace-nowrap"
                 >
                   <FileCheck2 className="w-4 h-4 text-emeraldGreen-400" />
-                  <span>ESG 보고서 생성</span>
+                  <span>{isVi ? 'Tạo báo cáo ESG' : 'ESG 보고서 생성'}</span>
                 </button>
 
                 <a 
@@ -294,7 +296,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                   className="bg-navy-900/90 hover:bg-navy-800 text-slate-300 font-semibold px-5 py-3 rounded-xl border border-navy-700 flex items-center space-x-2 text-xs transition-all backdrop-blur-md whitespace-nowrap"
                 >
                   <Download className="w-3.5 h-3.5 text-amber-400" />
-                  <span>사업계획서 PDF</span>
+                  <span>{isVi ? 'PDF Kế hoạch kinh doanh' : '사업계획서 PDF'}</span>
                 </a>
               </div>
             </div>
@@ -362,45 +364,45 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 text-xs">
             
             <div className="glass-card p-4 rounded-2xl border border-navy-800 space-y-1">
-              <span className="text-slate-400 font-semibold block text-[11px]">Total Projects</span>
+              <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Tổng số dự án' : 'Total Projects'}</span>
               <p className="text-2xl font-black text-white">{carbonDashboardSummary.totalProjects}</p>
-              <span className="text-[10px] text-slate-400">Vietnam Regions</span>
+              <span className="text-[10px] text-slate-400">{isVi ? 'Khu vực Việt Nam' : 'Vietnam Regions'}</span>
             </div>
 
             <div className="glass-card p-4 rounded-2xl border border-navy-800 space-y-1">
-              <span className="text-slate-400 font-semibold block text-[11px]">Solar Capacity</span>
+              <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Công suất Solar' : 'Solar Capacity'}</span>
               <p className="text-2xl font-black text-amber-400">{carbonDashboardSummary.solarCapacityMW} MW</p>
               <span className="text-[10px] text-slate-400">3D PVT System</span>
             </div>
 
             <div className="glass-card p-4 rounded-2xl border border-navy-800 space-y-1">
-              <span className="text-slate-400 font-semibold block text-[11px]">Annual Generation</span>
+              <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Sản lượng hàng năm' : 'Annual Generation'}</span>
               <p className="text-2xl font-black text-cyan-400">28,500 MWh</p>
-              <span className="text-[10px] text-slate-400">Green Electricity</span>
+              <span className="text-[10px] text-slate-400">{isVi ? 'Điện xanh' : 'Green Electricity'}</span>
             </div>
 
             <div className="glass-card p-4 rounded-2xl border border-emerald-500/30 space-y-1 bg-emerald-950/20">
-              <span className="text-emeraldGreen-400 font-semibold block text-[11px]">Estimated CO₂ Reduction</span>
+              <span className="text-emeraldGreen-400 font-semibold block text-[11px]">{isVi ? 'Ước tính giảm CO₂' : 'Estimated CO₂ Reduction'}</span>
               <p className="text-2xl font-black text-emeraldGreen-400">15,200 tCO₂e</p>
-              <span className="text-[10px] text-emeraldGreen-300 font-medium">Projected / Year</span>
+              <span className="text-[10px] text-emeraldGreen-300 font-medium">{isVi ? 'Dự kiến / Năm' : 'Projected / Year'}</span>
             </div>
 
             <div className="glass-card p-4 rounded-2xl border border-navy-800 space-y-1">
-              <span className="text-slate-400 font-semibold block text-[11px]">Verified Carbon Credits</span>
+              <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Tín chỉ carbon đã xác minh' : 'Verified Carbon Credits'}</span>
               <p className="text-2xl font-black text-slate-400">0</p>
-              <span className="text-[10px] text-amber-400">Pending Verification</span>
+              <span className="text-[10px] text-amber-400">{isVi ? 'Chờ xác minh' : 'Pending Verification'}</span>
             </div>
 
             <div className="glass-card p-4 rounded-2xl border border-navy-800 space-y-1">
-              <span className="text-slate-400 font-semibold block text-[11px]">Credits in Pipeline</span>
+              <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Tín chỉ trong tiến trình' : 'Credits in Pipeline'}</span>
               <p className="text-2xl font-black text-purple-400">15,200</p>
-              <span className="text-[10px] text-purple-300">Under Review</span>
+              <span className="text-[10px] text-purple-300">{isVi ? 'Đang xem xét' : 'Under Review'}</span>
             </div>
 
             <div className="glass-card p-4 rounded-2xl border border-navy-800 space-y-1 bg-navy-900/90 col-span-2 sm:col-span-1">
-              <span className="text-slate-400 font-semibold block text-[11px]">Carbon Assets</span>
-              <p className="text-xs font-extrabold text-amber-400 uppercase tracking-wider pt-2">Under Development</p>
-              <span className="text-[10px] text-slate-400">Future Tokenization</span>
+              <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Tài sản Carbon' : 'Carbon Assets'}</span>
+              <p className="text-xs font-extrabold text-amber-400 uppercase tracking-wider pt-2">{isVi ? 'Đang phát triển' : 'Under Development'}</p>
+              <span className="text-[10px] text-slate-400">{isVi ? 'Token hóa tương lai' : 'Future Tokenization'}</span>
             </div>
 
           </div>
@@ -411,11 +413,13 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-navy-800 pb-6">
             <div>
               <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-1">02. SOLAR TECHNOLOGY</span>
-              <h3 className="text-2xl sm:text-3xl font-black text-white">광자 순환 박스 (Photon Cycling Box) 3D PVT</h3>
+              <h3 className="text-2xl sm:text-3xl font-black text-white">
+                {isVi ? 'Hộp tuần hoàn Photon (Photon Cycling Box) 3D PVT' : '광자 순환 박스 (Photon Cycling Box) 3D PVT'}
+              </h3>
             </div>
             <div className="flex items-center space-x-2">
               <span className="text-xs bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full border border-amber-500/30">
-                10× 발전 밀도 (1,300W/㎡) • 40년+ 수명 • 온수+전력
+                {isVi ? 'Mật độ phát điện 10× (1,300W/㎡) • Tuổi thọ 40+ năm • Nước nóng + Điện' : '10× 발전 밀도 (1,300W/㎡) • 40년+ 수명 • 온수+전력'}
               </span>
             </div>
           </div>
@@ -423,25 +427,31 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
             <div className="bg-navy-950 p-6 rounded-2xl border border-navy-800 space-y-3">
               <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">1</div>
-              <h4 className="text-base font-bold text-white">집광 렌즈 (Concentrator Lens)</h4>
+              <h4 className="text-base font-bold text-white">
+                {isVi ? 'Thấu kính hội tụ (Concentrator Lens)' : '집광 렌즈 (Concentrator Lens)'}
+              </h4>
               <p className="text-slate-300 leading-relaxed">
-                모듈 상단의 고투과집광 렌즈가 입사광을 넓은 면적으로 받아들여 내부 캐비티 중심부로 고밀도 수집합니다.
+                {isVi ? 'Thấu kính hội tụ độ xuyên thấu cao ở trên cùng của mô-đun nhận ánh sáng tới trên diện tích rộng và thu thập với mật độ cao vào trung tâm khoang bên trong.' : '모듈 상단의 고투과집광 렌즈가 입사광을 넓은 면적으로 받아들여 내부 캐비티 중심부로 고밀도 수집합니다.'}
               </p>
             </div>
 
             <div className="bg-navy-950 p-6 rounded-2xl border border-navy-800 space-y-3">
               <div className="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold">2</div>
-              <h4 className="text-base font-bold text-white">4면 내부 셀 (4-Side Cells)</h4>
+              <h4 className="text-base font-bold text-white">
+                {isVi ? 'Cell 4 mặt bên trong (4-Side Cells)' : '4면 내부 셀 (4-Side Cells)'}
+              </h4>
               <p className="text-slate-300 leading-relaxed">
-                박스 내부 4개 측면에 고효율 태양전지(Si / Perovskite Tandem)를 3D 배치하여 내부 반사광을 100% 흡수.
+                {isVi ? 'Bố trí 3D pin mặt trời hiệu suất cao (Si / Perovskite Tandem) trên 4 mặt bên trong hộp để hấp thụ 100% ánh sáng phản xạ nội bộ.' : '박스 내부 4개 측면에 고효율 태양전지(Si / Perovskite Tandem)를 3D 배치하여 내부 반사광을 100% 흡수.'}
               </p>
             </div>
 
             <div className="bg-navy-950 p-6 rounded-2xl border border-navy-800 space-y-3">
               <div className="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">3</div>
-              <h4 className="text-base font-bold text-white">액체 수냉 순환 (Cooling Fluid)</h4>
+              <h4 className="text-base font-bold text-white">
+                {isVi ? 'Tuần hoàn làm mát bằng chất lỏng (Cooling Fluid)' : '액체 수냉 순환 (Cooling Fluid)'}
+              </h4>
               <p className="text-slate-300 leading-relaxed">
-                특수 수냉 유체가 셀 표면을 지속 냉각하여 고온 셀 열화를 방지하고, 회수된 열을 사우나/호텔/가정 24시간 온수로 활용.
+                {isVi ? 'Chất lỏng làm mát đặc biệt liên tục làm mát bề mặt cell để ngăn ngừa suy giảm do nhiệt độ cao, tận dụng nhiệt thu hồi làm nước nóng 24/7 cho sauna/khách sạn/gia đình.' : '특수 수냉 유체가 셀 표면을 지속 냉각하여 고온 셀 열화를 방지하고, 회수된 열을 사우나/호텔/가정 24시간 온수로 활용.'}
               </p>
             </div>
           </div>
@@ -455,10 +465,10 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
               <span>CARBON ASSET LIFECYCLE</span>
             </span>
             <h3 className="text-2xl sm:text-4xl font-extrabold text-white break-keep">
-              태양광 프로젝트부터 탄소크레딧 및 미래 토큰화 단계
+              {isVi ? 'Từ dự án điện mặt trời đến tín chỉ carbon và các giai đoạn token hóa tương lai' : '태양광 프로젝트부터 탄소크레딧 및 미래 토큰화 단계'}
             </h3>
             <p className="text-slate-300 text-xs sm:text-sm break-keep">
-              발전량 데이터 수집부터 검증·발급, 그리고 미래 블록체인 디지털 자산화까지 명확하게 분리된 8단계 라이프사이클.
+              {isVi ? 'Vòng đời 8 bước phân tách rõ ràng từ thu thập dữ liệu phát điện đến xác minh, cấp phát và số hóa tài sản blockchain tương lai.' : '발전량 데이터 수집부터 검증·발급, 그리고 미래 블록체인 디지털 자산화까지 명확하게 분리된 8단계 라이프사이클.'}
             </p>
           </div>
 
@@ -468,13 +478,13 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
             <div className="bg-navy-950 p-3 rounded-xl border border-navy-800 space-y-2">
               <Sun className="w-5 h-5 text-amber-400 mx-auto" />
               <span className="font-bold text-white block">1. SOLAR PROJECT</span>
-              <span className="text-[10px] text-slate-400">PVT 모듈 시공</span>
+              <span className="text-[10px] text-slate-400">{isVi ? 'Thi công mô-đun PVT' : 'PVT 모듈 시공'}</span>
             </div>
 
             <div className="bg-navy-950 p-3 rounded-xl border border-navy-800 space-y-2">
               <Zap className="w-5 h-5 text-amber-400 mx-auto" />
               <span className="font-bold text-white block">2. POWER GEN</span>
-              <span className="text-[10px] text-slate-400">전력+온수 생산</span>
+              <span className="text-[10px] text-slate-400">{isVi ? 'Phát điện + Nước nóng' : '전력+온수 생산'}</span>
             </div>
 
             <div className="bg-navy-950 p-3 rounded-xl border border-navy-800 space-y-2">
@@ -486,37 +496,37 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
             <div className="bg-navy-950 p-3 rounded-xl border border-emerald-500/40 space-y-2">
               <TrendingUp className="w-5 h-5 text-emeraldGreen-400 mx-auto" />
               <span className="font-bold text-emeraldGreen-300 block">4. CO₂ REDUCTION</span>
-              <span className="text-[10px] text-slate-400">VMR0017 산정</span>
+              <span className="text-[10px] text-slate-400">{isVi ? 'Tính toán VMR0017' : 'VMR0017 산정'}</span>
             </div>
 
             <div className="bg-navy-950 p-3 rounded-xl border border-navy-800 space-y-2">
               <FileCheck2 className="w-5 h-5 text-purple-400 mx-auto" />
               <span className="font-bold text-white block">5. ACCOUNTING</span>
-              <span className="text-[10px] text-slate-400">기준선 검토</span>
+              <span className="text-[10px] text-slate-400">{isVi ? 'Xem xét đường cơ sở' : '기준선 검토'}</span>
             </div>
 
             <div className="bg-navy-950 p-3 rounded-xl border border-navy-800 space-y-2">
               <ShieldCheck className="w-5 h-5 text-cyan-400 mx-auto" />
               <span className="font-bold text-white block">6. VALIDATION</span>
-              <span className="text-[10px] text-slate-400">VVB 3자 검증</span>
+              <span className="text-[10px] text-slate-400">{isVi ? 'Xác minh bên thứ 3 VVB' : 'VVB 3자 검증'}</span>
             </div>
 
             <div className="bg-navy-950 p-3 rounded-xl border border-emerald-500/50 space-y-2">
               <Award className="w-5 h-5 text-emeraldGreen-400 mx-auto" />
               <span className="font-bold text-emeraldGreen-300 block">7. CARBON CREDIT</span>
-              <span className="text-[10px] text-slate-400">Verra VCU 발급</span>
+              <span className="text-[10px] text-slate-400">{isVi ? 'Cấp phát Verra VCU' : 'Verra VCU 발급'}</span>
             </div>
 
             <div className="bg-navy-950 p-3 rounded-xl border border-navy-800 space-y-2">
               <Layers className="w-5 h-5 text-amber-400 mx-auto" />
               <span className="font-bold text-white block">8. CARBON ASSET</span>
-              <span className="text-[10px] text-slate-400">자산 레지스트리</span>
+              <span className="text-[10px] text-slate-400">{isVi ? 'Đăng ký tài sản' : '자산 레지스트리'}</span>
             </div>
 
             <div className="bg-navy-950 p-3 rounded-xl border border-purple-500/40 space-y-2 col-span-2 md:col-span-1">
               <Lock className="w-5 h-5 text-purple-400 mx-auto" />
               <span className="font-bold text-purple-300 block">9. TOKENIZATION</span>
-              <span className="text-[10px] text-amber-400 font-bold">Future (TBD)</span>
+              <span className="text-[10px] text-amber-400 font-bold">{isVi ? 'Tương lai (TBD)' : 'Future (TBD)'}</span>
             </div>
 
           </div>
@@ -533,17 +543,19 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 </span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-black text-white">
-                CO₂ 감축량 및 탄소크레딧·탄소토큰 추정 가치 산정 엔진
+                {isVi ? 'Động cơ tính toán giá trị ước tính lượng giảm CO₂ & Tín chỉ carbon / Token carbon' : 'CO₂ 감축량 및 탄소크레딧·탄소토큰 추정 가치 산정 엔진'}
               </h3>
             </div>
             <span className="text-xs bg-emerald-500/20 text-emeraldGreen-300 px-3.5 py-1.5 rounded-full border border-emerald-500/30 font-semibold">
-              Verra VMR0017 / ACM0002 국제 방법론 적용
+              {isVi ? 'Áp dụng phương pháp luận quốc tế Verra VMR0017 / ACM0002' : 'Verra VMR0017 / ACM0002 국제 방법론 적용'}
             </span>
           </div>
 
           {/* Quick Preset Buttons (Highlighting 1MW) */}
           <div className="bg-navy-950 p-4 rounded-2xl border border-navy-800 space-y-2">
-            <span className="text-xs font-bold text-slate-400 block">⚡ 태양광 설치 용량 빠른 선택 (Solar Capacity Quick Presets):</span>
+            <span className="text-xs font-bold text-slate-400 block">
+              {isVi ? '⚡ Chọn nhanh công suất lắp đặt điện mặt trời (Solar Capacity Quick Presets):' : '⚡ 태양광 설치 용량 빠른 선택 (Solar Capacity Quick Presets):'}
+            </span>
             <div className="flex flex-wrap gap-2 text-xs">
               {[0.5, 1.0, 2.0, 5.0, 10.0].map((cap) => (
                 <button
@@ -555,7 +567,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                       : 'bg-navy-900 text-slate-300 border-navy-700 hover:border-slate-500'
                   }`}
                 >
-                  {cap === 1.0 ? '⚡ 1.0 MW (1MW 기본)' : `${cap} MW`}
+                  {cap === 1.0 ? (isVi ? '⚡ 1.0 MW (Mặc định 1MW)' : '⚡ 1.0 MW (1MW 기본)') : `${cap} MW`}
                 </button>
               ))}
             </div>
@@ -569,7 +581,9 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
               {/* Solar Capacity Slider */}
               <div className="space-y-2 bg-navy-950 p-4 rounded-2xl border border-navy-800">
                 <div className="flex justify-between items-center">
-                  <span className="font-bold text-white">태양광 설치 용량 (Solar Capacity):</span>
+                  <span className="font-bold text-white">
+                    {isVi ? 'Công suất lắp đặt điện mặt trời (Solar Capacity):' : '태양광 설치 용량 (Solar Capacity):'}
+                  </span>
                   <span className="text-amber-400 font-black text-base bg-amber-500/10 px-3 py-1 rounded-lg border border-amber-500/30">
                     {calcCapacityMW} MW ({calcCapacityMW * 1000} kW)
                   </span>
@@ -600,7 +614,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                       <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${isLivePriceSync ? 'bg-emerald-500' : 'bg-slate-500'}`}></span>
                     </span>
                     <span className="font-bold text-white text-xs flex items-center space-x-1">
-                      <span>탄소크레딧 실시간 시장 지표 단가 (VCM Live Feed)</span>
+                      <span>{isVi ? 'Đơn giá chỉ số thị trường tín chỉ carbon thời gian thực (VCM Live Feed)' : '탄소크레딧 실시간 시장 지표 단가 (VCM Live Feed)'}</span>
                     </span>
                   </div>
 
@@ -617,12 +631,12 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                           : 'bg-navy-900 text-slate-400 border-navy-700'
                       }`}
                     >
-                      {isLivePriceSync ? '🔴 LIVE 연동 ON' : '⚙️ 수동 설정'}
+                      {isLivePriceSync ? (isVi ? '🔴 Tích hợp LIVE ON' : '🔴 LIVE 연동 ON') : (isVi ? '⚙️ Cài đặt thủ công' : '⚙️ 수동 설정')}
                     </button>
                     <button
                       onClick={() => handleRefreshLivePrice(selectedBenchmarkKey, true)}
                       className="p-1 rounded-lg bg-navy-900 text-slate-300 hover:text-white border border-navy-700 hover:border-emerald-500/50 transition-all"
-                      title="실시간 시세 즉시 동기화"
+                      title={isVi ? "Đồng bộ giá thời gian thực ngay lập tức" : "실시간 시세 즉시 동기화"}
                     >
                       <RefreshCw className="w-3.5 h-3.5 text-emeraldGreen-400" />
                     </button>
@@ -661,7 +675,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                           <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold ${
                             isCompliance ? 'bg-purple-500/20 text-purple-300 border border-purple-500/40' : 'bg-emerald-500/20 text-emeraldGreen-300 border border-emerald-500/40'
                           }`}>
-                            {isCompliance ? '🏛️ EU 의무규제' : '🌿 VCM 자발적(실제)'}
+                            {isCompliance ? (isVi ? '🏛️ Quy định bắt buộc EU' : '🏛️ EU 의무규제') : (isVi ? '🌿 VCM Tự nguyện (Thực tế)' : '🌿 VCM 자발적(실제)')}
                           </span>
                         </div>
                         <span className="text-[10px] text-slate-400 block mt-1 line-clamp-1">{b.desc}</span>
@@ -674,11 +688,20 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 <div className="p-3 rounded-xl bg-navy-900/90 border border-navy-800 text-[11px] space-y-1">
                   <div className="flex items-center space-x-1.5 text-amber-400 font-bold">
                     <HelpCircle className="w-3.5 h-3.5 flex-shrink-0" />
-                    <span>왜 EU-ETS 배출권 시세($74+)와 VCM 시세($22+) 차이가 큰가요?</span>
+                    <span>{isVi ? 'Tại sao có sự khác biệt lớn giữa giá EU-ETS ($74+) và giá VCM ($22+)?' : '왜 EU-ETS 배출권 시세($74+)와 VCM 시세($22+) 차이가 큰가요?'}</span>
                   </div>
                   <p className="text-slate-300 text-[10px] leading-relaxed">
-                    <strong>1. EU-ETS (의무 규제 시장):</strong> 유럽 대형 배출 기업이 법적 배출 할당량을 채우지 못할 때 톤당 100유로 이상의 막대한 벌금이 부과되는 <strong>법적 강제 규제 시장(EUA)</strong>으로 시세가 $70~$80 USD에 달합니다. (비교 참고용 지수)<br />
-                    <strong>2. VCM (자발적 탄소 시장 - 실제 적용):</strong> 본 태양광 프로젝트가 정식 등록되는 Verra VMR0017 / Gold Standard 시장으로, 기업의 자발적 Net-Zero 달성용 <strong>$15 ~ $30 USD / tCO₂e</strong> 시세가 실제 자산 가치 산정의 정석 기준입니다.
+                    {isVi ? (
+                      <>
+                        <strong>1. EU-ETS (Thị trường bắt buộc):</strong> Thị trường pháp lý bắt buộc (EUA) phạt hơn 100 EUR mỗi tấn cho các doanh nghiệp Châu Âu phát thải lớn không đủ hạn ngạch, giá đạt $70~$80 USD.<br />
+                        <strong>2. VCM (Thị trường carbon tự nguyện - Áp dụng thực tế):</strong> Thị trường Verra VMR0017 / Gold Standard đăng ký cho dự án này, đơn giá thực tế <strong>$15 ~ $30 USD / tCO₂e</strong> cho mục tiêu Net-Zero tự nguyện.
+                      </>
+                    ) : (
+                      <>
+                        <strong>1. EU-ETS (의무 규제 시장):</strong> 유럽 대형 배출 기업이 법적 배출 할당량을 채우지 못할 때 톤당 100유로 이상의 막대한 벌금이 부과되는 <strong>법적 강제 규제 시장(EUA)</strong>으로 시세가 $70~$80 USD에 달합니다. (비교 참고용 지수)<br />
+                        <strong>2. VCM (자발적 탄소 시장 - 실제 적용):</strong> 본 태양광 프로젝트가 정식 등록되는 Verra VMR0017 / Gold Standard 시장으로, 기업의 자발적 Net-Zero 달성용 <strong>$15 ~ $30 USD / tCO₂e</strong> 시세가 실제 자산 가치 산정의 정석 기준입니다.
+                      </>
+                    )}
                   </p>
                 </div>
 
@@ -686,7 +709,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 <div className="space-y-2 pt-1 border-t border-navy-800/80">
                   <div className="flex justify-between items-center">
                     <span className="text-[11px] text-slate-300">
-                      적용 지표 단가 ({isLivePriceSync ? '실시간 라이브 API' : '수동 지정'}):
+                      {isVi ? `Đơn giá chỉ số áp dụng (${isLivePriceSync ? 'API Trực tiếp' : 'Chỉ định thủ công'}):` : `적용 지표 단가 (${isLivePriceSync ? '실시간 라이브 API' : '수동 지정'}):`}
                     </span>
                     <span className={`font-black text-sm font-mono px-2.5 py-0.5 rounded border ${
                       selectedBenchmarkKey === 'EU_ETS_COMPLIANCE' 
@@ -699,7 +722,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
 
                   {selectedBenchmarkKey === 'EU_ETS_COMPLIANCE' && (
                     <div className="text-[10px] text-purple-300 bg-purple-950/40 p-2 rounded-lg border border-purple-500/30">
-                      ⚠️ EU-ETS 시세는 유럽 법적 강제 규제 지표입니다. 해외 태양광 자산은 VCM-SOLAR 시세($15~$30/tCO₂e)가 실제 정산 적용 기준입니다.
+                      {isVi ? '⚠️ Giá EU-ETS là chỉ số quy định bắt buộc của Châu Âu. Tài sản điện mặt trời nước ngoài lấy giá VCM-SOLAR ($15~$30/tCO₂e) làm chuẩn thanh toán thực tế.' : '⚠️ EU-ETS 시세는 유럽 법적 강제 규제 지표입니다. 해외 태양광 자산은 VCM-SOLAR 시세($15~$30/tCO₂e)가 실제 정산 적용 기준입니다.'}
                     </div>
                   )}
 
@@ -716,8 +739,8 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                   )}
 
                   <div className="flex justify-between items-center text-[10px] text-slate-400 pt-0.5">
-                    <span>최종 동기화 시각: {livePriceInfo.timestamp}</span>
-                    <span className="text-emeraldGreen-400 font-medium">동기화 상태: Live Connected</span>
+                    <span>{isVi ? 'Thời gian đồng bộ:' : '최종 동기화 시각:'} {livePriceInfo.timestamp}</span>
+                    <span className="text-emeraldGreen-400 font-medium">{isVi ? 'Trạng thái: Đã kết nối Live' : '동기화 상태: Live Connected'}</span>
                   </div>
                 </div>
               </div>
@@ -1020,7 +1043,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
               <div className="flex items-center justify-between border-b border-navy-800 pb-3">
                 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center space-x-1.5">
                   <BarChart3 className="w-4 h-4 text-emeraldGreen-400" />
-                  <span>{calcCapacityMW}MW 설치 시 예상 탄소 토큰 수량 및 USD 자산 가치</span>
+                  <span>{isVi ? `Số lượng Token Carbon dự kiến & Giá trị tài sản USD khi lắp đặt ${calcCapacityMW}MW` : `${calcCapacityMW}MW 설치 시 예상 탄소 토큰 수량 및 USD 자산 가치`}</span>
                 </span>
                 <span className="text-[10px] bg-amber-500/20 text-amber-400 px-2.5 py-0.5 rounded-full border border-amber-500/30 font-bold">
                   PROJECTED ESTIMATE
@@ -1034,16 +1057,20 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 <div className="bg-navy-900/90 p-5 rounded-2xl border border-amber-500/40 space-y-2 relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-20 h-20 bg-amber-500/10 rounded-full blur-xl pointer-events-none" />
                   <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block">
-                    🪙 연간 예상 Carbon Token 수량
+                    {isVi ? '🪙 Số lượng Token Carbon dự kiến hàng năm' : '🪙 연간 예상 Carbon Token 수량'}
                   </span>
                   <p className="text-3xl font-black text-white">
-                    {calcResult.estimatedCredits.toLocaleString()} <span className="text-amber-400 text-lg">Tokens / 년</span>
+                    {calcResult.estimatedCredits.toLocaleString()} <span className="text-amber-400 text-lg">{isVi ? 'Tokens / Năm' : 'Tokens / 년'}</span>
                   </p>
                   <p className="text-[11px] text-slate-300">
-                    * 1 Token ≈ 1 tCO₂e 정식 검증 크레딧 연계
+                    {isVi ? '* 1 Token ≈ 1 tCO₂e liên kết tín chỉ xác minh chính thức' : '* 1 Token ≈ 1 tCO₂e 정식 검증 크레딧 연계'}
                   </p>
                   <div className="text-[10px] text-slate-400 bg-navy-950 p-2 rounded-lg border border-navy-800">
-                    {calcCapacityMW}MW 기준 연간 <strong className="text-white">{calcResult.annualGenerationMWh.toLocaleString()} MWh</strong> 발전 ➔ <strong className="text-emeraldGreen-400">{calcResult.netReduction.toLocaleString()} tCO₂e</strong> CO₂ 감축
+                    {isVi ? (
+                      <>Quy mô {calcCapacityMW}MW phát điện <strong className="text-white">{calcResult.annualGenerationMWh.toLocaleString()} MWh</strong>/năm ➔ Giảm <strong className="text-emeraldGreen-400">{calcResult.netReduction.toLocaleString()} tCO₂e</strong> CO₂</>
+                    ) : (
+                      <>{calcCapacityMW}MW 기준 연간 <strong className="text-white">{calcResult.annualGenerationMWh.toLocaleString()} MWh</strong> 발전 ➔ <strong className="text-emeraldGreen-400">{calcResult.netReduction.toLocaleString()} tCO₂e</strong> CO₂ 감축</>
+                    )}
                   </div>
                 </div>
 
@@ -1051,17 +1078,17 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 <div className="bg-navy-900/90 p-5 rounded-2xl border border-emerald-500/40 space-y-2 relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/10 rounded-full blur-xl pointer-events-none" />
                   <span className="text-xs font-bold text-emeraldGreen-400 uppercase tracking-widest block">
-                    💵 연간 탄소 자산 USD 추정 가치
+                    {isVi ? '💵 Giá trị tài sản Carbon USD ước tính hàng năm' : '💵 연간 탄소 자산 USD 추정 가치'}
                   </span>
                   <p className="text-3xl font-black text-emeraldGreen-400">
-                    ${(Math.round(calcResult.netReduction * carbonUnitPriceUSD)).toLocaleString()} <span className="text-slate-300 text-base font-normal">USD / 년</span>
+                    ${(Math.round(calcResult.netReduction * carbonUnitPriceUSD)).toLocaleString()} <span className="text-slate-300 text-base font-normal">{isVi ? 'USD / Năm' : 'USD / 년'}</span>
                   </p>
                   <p className="text-[11px] text-slate-300">
-                    * 톤당 ${carbonUnitPriceUSD} USD 시장 참고 단가 적용 시
+                    {isVi ? `* Khi áp dụng đơn giá tham chiếu thị trường $${carbonUnitPriceUSD} USD / tấn` : `* 톤당 $${carbonUnitPriceUSD} USD 시장 참고 단가 적용 시`}
                   </p>
                   <div className="text-[10px] text-slate-400 bg-navy-950 p-2 rounded-lg border border-navy-800">
-                    글로벌 VCM 시세($15~$30/tCO₂e) 적용 시: <br />
-                    <strong className="text-white">${(Math.round(calcResult.netReduction * 15)).toLocaleString()} ~ ${(Math.round(calcResult.netReduction * 30)).toLocaleString()} USD / 년</strong>
+                    {isVi ? 'Khi áp dụng giá VCM toàn cầu ($15~$30/tCO₂e):' : '글로벌 VCM 시세($15~$30/tCO₂e) 적용 시:'} <br />
+                    <strong className="text-white">${(Math.round(calcResult.netReduction * 15)).toLocaleString()} ~ ${(Math.round(calcResult.netReduction * 30)).toLocaleString()} USD / {isVi ? 'Năm' : '년'}</strong>
                   </div>
                 </div>
 
@@ -1070,26 +1097,26 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
               {/* 3. Long-Term Cumulative Horizon Cards */}
               <div className="bg-navy-900 p-5 rounded-2xl border border-navy-800 space-y-3">
                 <span className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
-                  📈 장기 누적 예상 탄소 자산 가치 추정 (10년 / 20년)
+                  {isVi ? '📈 Ước tính giá trị tài sản carbon tích lũy dài hạn (10 năm / 20 năm)' : '📈 장기 누적 예상 탄소 자산 가치 추정 (10년 / 20년)'}
                 </span>
                 <div className="grid grid-cols-2 gap-4 text-xs">
                   <div className="bg-navy-950 p-3.5 rounded-xl border border-navy-800">
-                    <span className="text-slate-400 block text-[11px]">10년 누적 탄소 자산 가치</span>
+                    <span className="text-slate-400 block text-[11px]">{isVi ? 'Giá trị tài sản tích lũy 10 năm' : '10년 누적 탄소 자산 가치'}</span>
                     <p className="text-xl font-black text-cyan-400 mt-1">
                       ${(Math.round(calcResult.netReduction * carbonUnitPriceUSD * 10)).toLocaleString()} USD
                     </p>
                     <span className="text-[10px] text-slate-400">
-                      총 { (calcResult.estimatedCredits * 10).toLocaleString() } Tokens 누적
+                      {isVi ? `Tích lũy tổng ${(calcResult.estimatedCredits * 10).toLocaleString()} Tokens` : `총 ${(calcResult.estimatedCredits * 10).toLocaleString()} Tokens 누적`}
                     </span>
                   </div>
 
                   <div className="bg-navy-950 p-3.5 rounded-xl border border-navy-800">
-                    <span className="text-slate-400 block text-[11px]">20년 누적 탄소 자산 가치</span>
+                    <span className="text-slate-400 block text-[11px]">{isVi ? 'Giá trị tài sản tích lũy 20 năm' : '20년 누적 탄소 자산 가치'}</span>
                     <p className="text-xl font-black text-purple-400 mt-1">
                       ${(Math.round(calcResult.netReduction * carbonUnitPriceUSD * 20)).toLocaleString()} USD
                     </p>
                     <span className="text-[10px] text-slate-400">
-                      총 { (calcResult.estimatedCredits * 20).toLocaleString() } Tokens 누적
+                      {isVi ? `Tích lũy tổng ${(calcResult.estimatedCredits * 20).toLocaleString()} Tokens` : `총 ${(calcResult.estimatedCredits * 20).toLocaleString()} Tokens 누적`}
                     </span>
                   </div>
                 </div>
@@ -1107,7 +1134,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 </div>
                 <div className="flex justify-between font-bold text-emeraldGreen-300 border-t border-navy-800 pt-2 text-sm">
                   <span>Projected Verified Carbon Credits in Pipeline:</span>
-                  <span className="font-mono">{calcResult.estimatedCredits} VCU / 년</span>
+                  <span className="font-mono">{calcResult.estimatedCredits} VCU / {isVi ? 'Năm' : '년'}</span>
                 </div>
               </div>
 
@@ -1115,11 +1142,14 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
               <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-200 leading-relaxed space-y-1">
                 <p className="font-bold flex items-center space-x-1">
                   <AlertCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
-                  <span>법률 및 탄소자산 추정 가치 고지 (Legal Disclaimer)</span>
+                  <span>{isVi ? 'Thông báo pháp lý & Giá trị ước tính tài sản carbon (Legal Disclaimer)' : '법률 및 탄소자산 추정 가치 고지 (Legal Disclaimer)'}</span>
                 </p>
                 <p className="text-slate-300">
-                  본 계산 결과는 국제 자발적 탄소시장(VCM)의 톤당 참고 가격(${carbonUnitPriceUSD}/tCO₂e) 및 Verra VMR0017 방법론 기반의 예상 추정치(Projected Estimate)입니다. 
-                  실제 탄소크레딧 발급량과 토큰화 가치는 제3자 검증기관(VVB)의 현장 실사, 탄소 등록제도(Verra, Gold Standard 등) 승인 및 향후 블록체인 토큰화 심사 결과에 따라 최종 확정되며, 확정 수익을 보장하는 금융 상품이 아닙니다.
+                  {isVi ? (
+                    `Kết quả tính toán này là giá trị ước tính (Projected Estimate) dựa trên giá tham chiếu mỗi tấn ($${carbonUnitPriceUSD}/tCO₂e) của Thị trường Carbon Tự nguyện Quốc tế (VCM) và phương pháp luận Verra VMR0017. Sản lượng cấp tín chỉ carbon thực tế và giá trị token hóa sẽ được xác định cuối cùng sau khi kiểm tra thực địa của cơ quan xác minh bên thứ 3 (VVB), phê duyệt của hệ thống đăng ký carbon (Verra, Gold Standard, v.v.) và thẩm định token hóa blockchain trong tương lai, không phải là sản phẩm tài chính đảm bảo lợi nhuận cố định.`
+                  ) : (
+                    `본 계산 결과는 국제 자발적 탄소시장(VCM)의 톤당 참고 가격($${carbonUnitPriceUSD}/tCO₂e) 및 Verra VMR0017 방법론 기반의 예상 추정치(Projected Estimate)입니다. 실제 탄소크레딧 발급량과 토큰화 가치는 제3자 검증기관(VVB)의 현장 실사, 탄소 등록제도(Verra, Gold Standard 등) 승인 및 향후 블록체인 토큰화 심사 결과에 따라 최종 확정되며, 확정 수익을 보장하는 금융 상품이 아닙니다.`
+                  )}
                 </p>
               </div>
 
@@ -1175,10 +1205,10 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
           <div className="bg-navy-950/80 border border-amber-500/30 rounded-2xl p-6 space-y-2 text-xs">
             <div className="flex items-center space-x-2 text-amber-400 font-bold">
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
-              <span>법률 및 탄소자산 디지털화 규정 안내 (Legal Disclaimer)</span>
+              <span>{isVi ? 'Hướng dẫn quy định pháp lý & Số hóa tài sản carbon (Legal Disclaimer)' : '법률 및 탄소자산 디지털화 규정 안내 (Legal Disclaimer)'}</span>
             </div>
             <p className="text-slate-300 leading-relaxed">
-              <strong>한국어:</strong> 검증된 탄소자산의 블록체인 기반 디지털화는 관련 법규, 탄소등록제도(Verra, Gold Standard 등) 및 법률 검토를 거쳐 향후 추진합니다.
+              <strong>Tiếng Việt / Korean:</strong> {isVi ? 'Việc số hóa tài sản carbon đã xác minh trên nền tảng blockchain sẽ được triển khai trong tương lai sau khi thông qua các quy định pháp luật liên quan, hệ thống đăng ký carbon (Verra, Gold Standard, v.v.) và xem xét pháp lý.' : '검증된 탄소자산의 블록체인 기반 디지털화는 관련 법규, 탄소등록제도(Verra, Gold Standard 등) 및 법률 검토를 거쳐 향후 추진합니다.'}
             </p>
             <p className="text-slate-400 text-[11px] leading-relaxed">
               <strong>English:</strong> Verified carbon assets may be digitally represented on blockchain infrastructure subject to applicable regulations, registry rules and legal review.
@@ -1191,9 +1221,13 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-navy-800 pb-6">
             <div>
               <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-1">09. PROJECT MAP</span>
-              <h3 className="text-2xl sm:text-3xl font-black text-white">베트남 지역별 태양광 & 탄소 프로젝트 지도</h3>
+              <h3 className="text-2xl sm:text-3xl font-black text-white">
+                {isVi ? 'Bản đồ dự án điện mặt trời & carbon theo khu vực tại Việt Nam' : '베트남 지역별 태양광 & 탄소 프로젝트 지도'}
+              </h3>
             </div>
-            <span className="text-xs text-slate-400">클릭 시 프로젝트별 상세 데이터 및 탄소 감축 현황 확인</span>
+            <span className="text-xs text-slate-400">
+              {isVi ? 'Nhấp để xem dữ liệu chi tiết và tình hình giảm CO₂ từng dự án' : '클릭 시 프로젝트별 상세 데이터 및 탄소 감축 현황 확인'}
+            </span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -1243,11 +1277,11 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     <div>
-                      <span className="text-slate-400 text-[11px] block">설치 용량</span>
+                      <span className="text-slate-400 text-[11px] block">{isVi ? 'Công suất lắp đặt' : '설치 용량'}</span>
                       <p className="text-lg font-extrabold text-amber-400">{selectedProject.solarCapacityMW} MW</p>
                     </div>
                     <div>
-                      <span className="text-slate-400 text-[11px] block">연간 예상 발전량</span>
+                      <span className="text-slate-400 text-[11px] block">{isVi ? 'Sản lượng dự kiến/năm' : '연간 예상 발전량'}</span>
                       <p className="text-lg font-extrabold text-cyan-400">{selectedProject.annualGenerationMWh.toLocaleString()} MWh</p>
                     </div>
                     <div>
@@ -1274,8 +1308,12 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
               ) : (
                 <div className="py-12 text-center text-slate-400 space-y-3">
                   <MapPin className="w-10 h-10 text-amber-400 mx-auto" />
-                  <p className="text-sm font-bold text-white">왼쪽 프로젝트 목록에서 원하는 지역을 선택하세요.</p>
-                  <p className="text-xs">하노이, 박닌, 하이퐁, 다낭, 호치민 시 등 베트남 전역의 발전소 데이터 제공</p>
+                  <p className="text-sm font-bold text-white">
+                    {isVi ? 'Vui lòng chọn khu vực mong muốn từ danh sách dự án bên trái.' : '왼쪽 프로젝트 목록에서 원하는 지역을 선택하세요.'}
+                  </p>
+                  <p className="text-xs">
+                    {isVi ? 'Cung cấp dữ liệu nhà máy điện trên khắp Việt Nam như Hà Nội, Bắc Ninh, Hải Phòng, Đà Nẵng, TP.HCM' : '하노이, 박닌, 하이퐁, 다낭, 호치민 시 등 베트남 전역의 발전소 데이터 제공'}
+                  </p>
                 </div>
               )}
             </div>
@@ -1289,9 +1327,9 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
             <div>
               <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-1">BEST WINNER SOLAR DECK</span>
               <h3 className="text-2xl font-extrabold text-white flex items-center space-x-2">
-                <span>사업계획서 전체 31 슬라이드 미리보기</span>
+                <span>{isVi ? 'Xem trước toàn bộ 31 slide Kế hoạch kinh doanh' : '사업계획서 전체 31 슬라이드 미리보기'}</span>
                 <span className="text-xs font-medium text-slate-400 bg-navy-900 px-2.5 py-1 rounded-full border border-navy-800">
-                  클릭 시 대형 뷰어로 확대
+                  {isVi ? 'Nhấp để phóng to xem trên trình xem lớn' : '클릭 시 대형 뷰어로 확대'}
                 </span>
               </h3>
             </div>
@@ -1301,7 +1339,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
               className="bg-amber-500 hover:bg-amber-400 text-navy-950 font-extrabold text-xs px-4 py-2.5 rounded-xl shadow-md transition-all flex items-center space-x-2"
             >
               <Maximize2 className="w-4 h-4" />
-              <span>슬라이드 쇼 뷰어 열기</span>
+              <span>{isVi ? 'Mở trình xem Slide Show' : '슬라이드 쇼 뷰어 열기'}</span>
             </button>
           </div>
 
@@ -1337,10 +1375,10 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 ENERGY & CARBON PARTNERSHIP
               </span>
               <h3 className="text-2xl sm:text-4xl font-black text-navy-950 break-keep">
-                태양광 시공 & 탄소 자산 개발 제휴 문의
+                {isVi ? 'Tư vấn hợp tác thi công điện mặt trời & phát triển tài sản carbon' : '태양광 시공 & 탄소 자산 개발 제휴 문의'}
               </h3>
               <p className="text-navy-950 font-semibold text-sm max-w-2xl break-keep">
-                사우나, 호텔, 공장, 빌라 맞춤형 3D PVT 태양광 시공 및 Carbon Credit 연계 기술 컨설팅을 무료로 지원해 드립니다.
+                {isVi ? 'Chúng tôi hỗ trợ tư vấn kỹ thuật miễn phí về thi công 3D PVT điện mặt trời và liên kết Carbon Credit tùy chỉnh cho sauna, khách sạn, nhà xưởng, biệt thự.' : '사우나, 호텔, 공장, 빌라 맞춤형 3D PVT 태양광 시공 및 Carbon Credit 연계 기술 컨설팅을 무료로 지원해 드립니다.'}
               </p>
             </div>
 
@@ -1355,7 +1393,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
               className="w-full sm:w-auto bg-navy-950 hover:bg-navy-900 text-white font-extrabold text-sm px-8 py-4 rounded-2xl shadow-2xl transition-all transform hover:scale-105 flex items-center justify-center space-x-2 whitespace-nowrap min-h-[52px]"
             >
               <Sun className="w-5 h-5 text-amber-400" />
-              <span>태양광 & 탄소 플랫폼 상담 신청하기 →</span>
+              <span>{isVi ? 'Đăng ký tư vấn Nền tảng Điện mặt trời & Carbon →' : '태양광 & 탄소 플랫폼 상담 신청하기 →'}</span>
             </button>
           </div>
         </div>
@@ -1381,7 +1419,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 className="hidden sm:flex items-center space-x-1 text-xs bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold px-3 py-1.5 rounded-lg transition-colors"
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>PDF 다운로드</span>
+                <span>{isVi ? 'Tải tệp PDF' : 'PDF 다운로드'}</span>
               </a>
               <button
                 onClick={() => setIsSlideModalOpen(false)}
@@ -1446,7 +1484,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
             <div className="flex items-center justify-between border-b border-navy-800 pb-4">
               <div className="flex items-center space-x-2 text-white">
                 <Bot className="w-6 h-6 text-emeraldGreen-400" />
-                <h4 className="text-lg font-bold">AI Carbon Consultant (탄소 시뮬레이터)</h4>
+                <h4 className="text-lg font-bold">{isVi ? 'Tư vấn Carbon AI (Trình mô phỏng Carbon)' : 'AI Carbon Consultant (탄소 시뮬레이터)'}</h4>
               </div>
               <button
                 onClick={() => setIsAiConsultantOpen(false)}
@@ -1458,13 +1496,13 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
 
             <div className="space-y-4 text-xs">
               <div className="p-3.5 bg-navy-950 rounded-xl border border-navy-800 space-y-1">
-                <span className="text-slate-400 font-semibold block">Q. "1MW 태양광 발전소를 설치하면 연간 탄소감축량은 얼마인가요?"</span>
-                <p className="text-slate-300">A. 아래 슬라이더로 원하는 용량을 조절하시면 Verra VMR0017 방법론 기반 시뮬레이션 결과가 표시됩니다.</p>
+                <span className="text-slate-400 font-semibold block">{isVi ? 'H. "Nếu lắp nhà máy điện mặt trời 1MW thì lượng giảm CO₂ hàng năm là bao nhiêu?"' : 'Q. "1MW 태양광 발전소를 설치하면 연간 탄소감축량은 얼마인가요?"'}</span>
+                <p className="text-slate-300">{isVi ? 'Đ. Điều chỉnh thanh trượt bên dưới để xem kết quả mô phỏng dựa trên phương pháp luận Verra VMR0017.' : 'A. 아래 슬라이더로 원하는 용량을 조절하시면 Verra VMR0017 방법론 기반 시뮬레이션 결과가 표시됩니다.'}</p>
               </div>
 
               <div className="space-y-2">
                 <label className="font-bold text-white flex justify-between">
-                  <span>설치용량 선택:</span>
+                  <span>{isVi ? 'Chọn công suất lắp đặt:' : '설치용량 선택:'}</span>
                   <span className="text-emeraldGreen-400 font-black text-sm">{calcCapacityMW} MW</span>
                 </label>
                 <input
@@ -1480,25 +1518,25 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
 
               <div className="bg-navy-950 p-5 rounded-2xl border border-emerald-500/30 space-y-3">
                 <div className="flex justify-between border-b border-navy-800 pb-2">
-                  <span className="text-slate-400">1. 예상 연간 발전량:</span>
+                  <span className="text-slate-400">{isVi ? '1. Sản lượng dự kiến/năm:' : '1. 예상 연간 발전량:'}</span>
                   <span className="font-bold text-cyan-400 font-mono">{calcResult.annualGenerationMWh.toLocaleString()} MWh</span>
                 </div>
                 <div className="flex justify-between border-b border-navy-800 pb-2">
-                  <span className="text-slate-400">2. 적용 배출계수 (Vietnam Grid):</span>
+                  <span className="text-slate-400">{isVi ? '2. Hệ số phát thải áp dụng (Vietnam Grid):' : '2. 적용 배출계수 (Vietnam Grid):'}</span>
                   <span className="font-bold text-white font-mono">0.533 tCO₂e/MWh</span>
                 </div>
                 <div className="flex justify-between border-b border-navy-800 pb-2">
                   <span className="text-slate-400">3. Estimated CO₂ Emission Reduction:</span>
-                  <span className="font-bold text-emeraldGreen-400 font-mono">{calcResult.netReduction.toLocaleString()} tCO₂e / 년</span>
+                  <span className="font-bold text-emeraldGreen-400 font-mono">{calcResult.netReduction.toLocaleString()} tCO₂e / {isVi ? 'Năm' : '년'}</span>
                 </div>
                 <div className="flex justify-between font-bold text-amber-400 text-sm pt-1">
                   <span>4. Projected Carbon Credits:</span>
-                  <span className="font-mono">{calcResult.estimatedCredits} VCU / 년</span>
+                  <span className="font-mono">{calcResult.estimatedCredits} VCU / {isVi ? 'Năm' : '년'}</span>
                 </div>
               </div>
 
               <div className="p-3 bg-navy-950 rounded-xl border border-amber-500/30 text-[11px] text-slate-300 space-y-1">
-                <span className="font-bold text-amber-400 block">필요 검증 절차 (Verification Steps):</span>
+                <span className="font-bold text-amber-400 block">{isVi ? 'Quy trình xác minh bắt buộc (Verification Steps):' : '필요 검증 절차 (Verification Steps):'}</span>
                 <p>① PDD 설계서 작성 ➔ ② VVB 3자 검증 ➔ ③ Verra 등록 ➔ ④ 모니터링 성적서 발행 ➔ ⑤ VCU 공식 발급</p>
               </div>
 
@@ -1512,7 +1550,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 onClick={() => setIsAiConsultantOpen(false)}
                 className="bg-emerald-600 hover:bg-emerald-500 text-navy-950 font-bold text-xs px-6 py-2.5 rounded-xl"
               >
-                시뮬레이터 닫기
+                {isVi ? 'Đóng trình mô phỏng' : '시뮬레이터 닫기'}
               </button>
             </div>
           </div>
@@ -1589,7 +1627,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                 onClick={() => setIsEsgModalOpen(false)}
                 className="bg-navy-800 hover:bg-navy-700 text-slate-300 font-bold text-xs px-5 py-2.5 rounded-xl"
               >
-                닫기
+                {isVi ? 'Đóng' : '닫기'}
               </button>
             </div>
           </div>
