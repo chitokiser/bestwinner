@@ -3,6 +3,8 @@ export const translations = {
     nav: {
       home: "Trang chủ",
       business: "Lĩnh vực kinh doanh",
+      services: "Dịch vụ",
+      aiManagement: "AI 경영관리 (AI Management)",
       login: "Đăng nhập Google",
       logout: "Đăng xuất",
       callUs: "Hotline: 0988-123-456"
@@ -154,6 +156,20 @@ export const translations = {
             "Hệ thống PVT 2 trong 1 (Phát điện + Nước nóng 24/7, ROI Sauna / Khách sạn 1-2 năm)"
           ],
           cta: "Xem Trang Năng lượng"
+        },
+        aiManagement: {
+          tag: "SaaS AI Solution 1.0",
+          name: "BEST AI Quản lý Doanh nghiệp 1.0 (SaaS)",
+          desc: "Nền tảng Quản lý Doanh nghiệp AI 1.0 dạng SaaS truy cập ngay lập tức — Dashboard quản trị, dự toán B2B tự động & bảo trì 24/7.",
+          highlight: "Truy cập trực tiếp nền tảng SaaS Cloud tại besterp.netlify.app để trải nghiệm ngay.",
+          img: "/images/parking/hero/1.png",
+          features: [
+            "Truy cập SaaS Cloud Quản lý AI & Báo cáo Tài chính Realtime",
+            "Tự động xuất dự toán B2B từ CAD/BIM trong 1 phút",
+            "Giám sát sự cố Thang máy, PCCC & Chống thấm 24/7"
+          ],
+          cta: "Truy cập BEST AI SaaS (besterp.netlify.app)",
+          externalUrl: "https://besterp.netlify.app"
         }
       }
     },
@@ -209,6 +225,8 @@ export const translations = {
     nav: {
       home: "홈",
       business: "사업분야",
+      services: "서비스",
+      aiManagement: "AI경영관리",
       login: "구글 로그인",
       logout: "로그아웃",
       callUs: "직통전화: 0988-123-456"
@@ -360,6 +378,20 @@ export const translations = {
             "전기 + 온수 동시 생산 PVT (사우나/호텔/공장 ROI 1~2년)"
           ],
           cta: "태양광 에너지 페이지 보기"
+        },
+        aiManagement: {
+          tag: "SaaS AI 솔루션 1.0",
+          name: "BEST AI 경영관리 1.0 (SaaS)",
+          desc: "SaaS 개념으로 즉시 이용 가능한 AI 경영관리 1.0 서비스 — 경영 대시보드, 스마트 자동 견적, 공정 최적화 & 24/7 예지보전 관제.",
+          highlight: "클라우드 SaaS 플랫폼(besterp.netlify.app)을 통해 즉시 접속 및 스마트 경영 관리가 가능합니다.",
+          img: "/images/parking/hero/1.png",
+          features: [
+            "SaaS 클라우드 기반 AI 경영 대시보드 & 실시간 재무 분석",
+            "1분 이내 CAD/BIM 연동 B2B 스마트 자동 견적 산출",
+            "24시간 예지보전 관제 & 현장 공정·인력 최적 배치"
+          ],
+          cta: "BEST AI 경영관리 SaaS 접속 (besterp.netlify.app)",
+          externalUrl: "https://besterp.netlify.app"
         }
       }
     },
@@ -415,6 +447,8 @@ export const translations = {
     nav: {
       home: "Home",
       business: "Business Areas",
+      services: "Services",
+      aiManagement: "AI Management",
       login: "Google Login",
       logout: "Logout",
       callUs: "Hotline: 0988-123-456"
@@ -566,6 +600,20 @@ export const translations = {
             "Dual PVT System (Electricity + 24/7 Hot water, 1-2yr ROI)"
           ],
           cta: "View Solar Energy Page"
+        },
+        aiManagement: {
+          tag: "SaaS AI Solution 1.0",
+          name: "BEST AI Management 1.0 (SaaS)",
+          desc: "Instant SaaS cloud platform for AI Enterprise Management 1.0 — Financial Cockpit, Automated B2B Quoting & 24/7 Predictive Maintenance.",
+          highlight: "Access directly via cloud SaaS platform at besterp.netlify.app.",
+          img: "/images/parking/hero/1.png",
+          features: [
+            "Cloud SaaS AI Management & Real-time Financial Dashboard",
+            "Under 60s B2B Smart Automated Quoting from CAD/BIM",
+            "24/7 Predictive Maintenance & Site Dispatch Optimization"
+          ],
+          cta: "Launch BEST AI SaaS (besterp.netlify.app)",
+          externalUrl: "https://besterp.netlify.app"
         }
       }
     },

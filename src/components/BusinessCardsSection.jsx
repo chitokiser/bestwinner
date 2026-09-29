@@ -7,6 +7,8 @@ import {
   Flame, 
   Droplets, 
   Sun,
+  Cpu,
+  ExternalLink,
   CheckCircle2, 
   ArrowRight,
   Sparkles,
@@ -18,9 +20,29 @@ export default function BusinessCardsSection({ t }) {
 
   const cardsData = [
     {
+      id: 'aiManagement',
+      path: '/services/ai-management',
+      externalUrl: 'https://besterp.netlify.app',
+      num: '01',
+      tag: t.business.units.aiManagement?.tag || 'SaaS AI 솔루션 1.0',
+      name: t.business.units.aiManagement?.name || 'BEST AI 경영관리 1.0 (SaaS)',
+      desc: t.business.units.aiManagement?.desc || 'SaaS 개념으로 즉시 이용 가능한 AI 경영관리 1.0 서비스 — 경영 대시보드, 스마트 자동 견적, 공정 최적화 & 24/7 예지보전 관제.',
+      highlight: t.business.units.aiManagement?.highlight || 'besterp.netlify.app 클라우드 SaaS 방식으로 즉시 접속 및 스마트 경영 관리가 가능합니다.',
+      features: t.business.units.aiManagement?.features || [
+        "SaaS 클라우드 기반 AI 경영 대시보드 & 실시간 재무 분석",
+        "1분 이내 CAD/BIM 연동 B2B 스마트 자동 견적 산출",
+        "24시간 예지보전 관제 & 현장 공정·인력 최적 배치"
+      ],
+      cta: t.business.units.aiManagement?.cta || 'BEST AI 경영관리 SaaS 접속 (besterp.netlify.app)',
+      icon: Cpu,
+      badgeColor: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+      btnColor: 'bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white font-bold',
+      bgImg: '/images/parking/hero/1.png'
+    },
+    {
       id: 'interior',
       path: '/business/interior',
-      num: '01',
+      num: '02',
       tag: t.business.units.interior.tag,
       name: t.business.units.interior.name,
       desc: t.business.units.interior.desc,
@@ -34,7 +56,7 @@ export default function BusinessCardsSection({ t }) {
     {
       id: 'elevator',
       path: '/business/elevator',
-      num: '02',
+      num: '03',
       tag: t.business.units.elevator.tag,
       name: t.business.units.elevator.name,
       desc: t.business.units.elevator.desc,
@@ -48,7 +70,7 @@ export default function BusinessCardsSection({ t }) {
     {
       id: 'parking',
       path: '/business/parking',
-      num: '03',
+      num: '04',
       tag: t.business.units.parking.tag,
       name: t.business.units.parking.name,
       desc: t.business.units.parking.desc,
@@ -62,7 +84,7 @@ export default function BusinessCardsSection({ t }) {
     {
       id: 'firefighting',
       path: '/business/firefighting',
-      num: '04',
+      num: '05',
       tag: t.business.units.firefighting.tag,
       name: t.business.units.firefighting.name,
       desc: t.business.units.firefighting.desc,
@@ -76,7 +98,7 @@ export default function BusinessCardsSection({ t }) {
     {
       id: 'waterproofing',
       path: '/business/waterproofing',
-      num: '05',
+      num: '06',
       tag: t.business.units.waterproofing.tag,
       name: t.business.units.waterproofing.name,
       desc: t.business.units.waterproofing.desc,
@@ -90,7 +112,7 @@ export default function BusinessCardsSection({ t }) {
     {
       id: 'energy',
       path: '/business/energy',
-      num: '06',
+      num: '07',
       tag: t.business.units.energy?.tag || (t?.lang === 'vi' || !t?.lang ? 'Năng lượng Mặt trời 3D PVT' : '3D PVT 태양광'),
       name: t.business.units.energy?.name || (t?.lang === 'vi' || !t?.lang ? 'BEST winner Solar Energy Vn (Năng lượng Mặt trời)' : 'BEST winner Solar Energy Vn (태양광 에너지)'),
       desc: t.business.units.energy?.desc || (t?.lang === 'vi' || !t?.lang ? 'Hệ thống 3D PVT Hộp tuần hoàn Photon - Mật độ phát điện gấp 10 lần & Tuổi thọ 40+ năm.' : '3D 광자 순환 박스(Photon Cycling Box) PVT 시스템 — 10배 발전량 & 40년+ 수명.'),
@@ -195,17 +217,42 @@ export default function BusinessCardsSection({ t }) {
                 </div>
 
                 {/* Card Action Link Button */}
-                <div className="p-6 pt-0">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleCardClick(card.path);
-                    }}
-                    className={`w-full py-3.5 rounded-xl font-bold text-xs shadow-md transition-transform group-hover:scale-[1.02] flex items-center justify-center space-x-2 border border-chrome-300/30 min-h-[44px] ${card.btnColor}`}
-                  >
-                    <span>{t.cardsSection.cardCta}</span>
-                    <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-                  </button>
+                <div className="p-6 pt-0 space-y-2">
+                  {card.externalUrl ? (
+                    <div className="flex flex-col gap-2">
+                      <a
+                        href={card.externalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="w-full py-3.5 rounded-xl font-bold text-xs shadow-md transition-transform hover:scale-[1.02] flex items-center justify-center space-x-2 border border-cyan-400/40 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white min-h-[44px]"
+                      >
+                        <span>{card.cta || 'SaaS AI 1.0 접속 (besterp.netlify.app)'}</span>
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCardClick(card.path);
+                        }}
+                        className="w-full py-2 rounded-lg text-[11px] font-semibold text-slate-300 hover:text-cyan-400 hover:bg-navy-900 transition-colors flex items-center justify-center space-x-1 border border-navy-800"
+                      >
+                        <span>소개 & 상세 기능 보기</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCardClick(card.path);
+                      }}
+                      className={`w-full py-3.5 rounded-xl font-bold text-xs shadow-md transition-transform group-hover:scale-[1.02] flex items-center justify-center space-x-2 border border-chrome-300/30 min-h-[44px] ${card.btnColor}`}
+                    >
+                      <span>{t.cardsSection.cardCta}</span>
+                      <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                    </button>
+                  )}
                 </div>
               </div>
             );

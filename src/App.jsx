@@ -16,6 +16,7 @@ import SmartParkingPage from './pages/SmartParkingPage';
 import FirefightingPage from './pages/FirefightingPage';
 import WaterproofingPage from './pages/WaterproofingPage';
 import SolarEnergyPage from './pages/SolarEnergyPage';
+import AIManagementPage from './pages/AIManagementPage';
 import CalculatorPage from './pages/CalculatorPage';
 import ContactPage from './pages/ContactPage';
 
@@ -67,6 +68,8 @@ export default function App() {
             <Route path="/business/firefighting" element={<FirefightingPage t={t} />} />
             <Route path="/business/waterproofing" element={<WaterproofingPage t={t} />} />
             <Route path="/business/energy" element={<SolarEnergyPage t={t} />} />
+            <Route path="/services" element={<AIManagementPage t={t} />} />
+            <Route path="/services/ai-management" element={<AIManagementPage t={t} />} />
             <Route path="/calculator" element={<CalculatorPage t={t} />} />
             <Route path="/contact" element={<ContactPage t={t} />} />
           </Routes>

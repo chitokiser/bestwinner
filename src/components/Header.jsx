@@ -11,6 +11,7 @@ export default function Header({ currentLang, setLang, t }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const [isBUDropdownOpen, setIsBUDropdownOpen] = useState(false);
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,9 +35,19 @@ export default function Header({ currentLang, setLang, t }) {
     { id: 'energy', path: '/business/energy', name: isVi ? 'BEST winner Solar Energy (Năng lượng mặt trời)' : isKo ? 'BEST winner Solar Energy (태양광 에너지)' : 'BEST winner Solar Energy (Solar PVT)', tag: 'Solar PVT' },
   ];
 
+  const servicesNav = [
+    { 
+      id: 'ai-management', 
+      path: '/services/ai-management', 
+      name: isVi ? 'Quản lý AI (AI Management System)' : isKo ? 'AI경영관리 (AI Management System)' : 'AI Management System', 
+      tag: 'AI Enterprise' 
+    },
+  ];
+
   const handleNavClick = (path) => {
     setIsMobileMenuOpen(false);
     setIsBUDropdownOpen(false);
+    setIsServicesDropdownOpen(false);
     navigate(path);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -67,7 +78,7 @@ export default function Header({ currentLang, setLang, t }) {
             </div>
           </Link>
 
-          {/* Simple Header Navbar strictly: 1. 홈 | 2. 사업분야 (인테리어/엘리베이터/AI 스마트파킹/소방자재/방수재) */}
+          {/* Simple Header Navbar: 1. 홈 | 2. 서비스 Dropdown (AI경영관리) | 3. 사업분야 Dropdown */}
           <nav className="hidden md:flex items-center space-x-2">
             
             {/* 1. 홈 */}
@@ -82,10 +93,50 @@ export default function Header({ currentLang, setLang, t }) {
               {t.nav.home}
             </Link>
 
-            {/* 2. 사업분야 Dropdown */}
+            {/* 2. 서비스 Dropdown (AI경영관리) */}
             <div className="relative">
               <button
-                onClick={() => setIsBUDropdownOpen(!isBUDropdownOpen)}
+                onClick={() => {
+                  setIsServicesDropdownOpen(!isServicesDropdownOpen);
+                  setIsBUDropdownOpen(false);
+                }}
+                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center ${
+                  location.pathname.startsWith('/services') 
+                    ? 'text-gold-400 bg-navy-900 border border-gold-500/30 shadow-sm' 
+                    : 'text-slate-200 hover:bg-navy-900/80 hover:text-gold-400'
+                }`}
+              >
+                <span>{t.nav.services || (isKo ? '서비스' : isVi ? 'Dịch vụ' : 'Services')}</span>
+                <ChevronDown className="w-4 h-4 ml-1.5 text-gold-500" />
+              </button>
+
+              {isServicesDropdownOpen && (
+                <div className="absolute left-0 mt-2 w-80 bg-navy-900/95 backdrop-blur-xl border border-gold-500/30 rounded-2xl shadow-2xl py-2 z-50 divide-y divide-navy-800">
+                  {servicesNav.map((srv) => (
+                    <button
+                      key={srv.id}
+                      onClick={() => handleNavClick(srv.path)}
+                      className={`w-full text-left px-4 py-3 text-xs text-slate-200 hover:bg-navy-800 hover:text-gold-400 transition-colors flex items-center justify-between group ${
+                        location.pathname === srv.path ? 'bg-navy-800/80 text-gold-400 font-bold' : ''
+                      }`}
+                    >
+                      <span className="font-bold group-hover:translate-x-1 transition-transform">{srv.name}</span>
+                      <span className="text-[10px] bg-gold-500/20 text-gold-400 px-2 py-0.5 rounded-full border border-gold-500/40">
+                        {srv.tag}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* 3. 사업분야 Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => {
+                  setIsBUDropdownOpen(!isBUDropdownOpen);
+                  setIsServicesDropdownOpen(false);
+                }}
                 className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center ${
                   location.pathname.startsWith('/business') 
                     ? 'text-gold-400 bg-navy-900 border border-gold-500/30 shadow-sm' 
@@ -202,6 +253,23 @@ export default function Header({ currentLang, setLang, t }) {
             {t.nav.home}
           </button>
           
+          {/* Services Section in Mobile */}
+          <div className="pl-3 py-1 space-y-2 border-l-2 border-cyan-500/50">
+            <p className="text-xs font-bold text-cyan-400 uppercase tracking-wider">
+              {t.nav.services || (isKo ? '서비스' : isVi ? 'Dịch vụ' : 'Services')}
+            </p>
+            {servicesNav.map((srv) => (
+              <button
+                key={srv.id}
+                onClick={() => handleNavClick(srv.path)}
+                className="block w-full text-left text-xs text-slate-300 hover:text-gold-400 py-2 font-semibold min-h-[40px] flex items-center"
+              >
+                • {srv.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Business Areas Section in Mobile */}
           <div className="pl-3 py-1 space-y-2 border-l-2 border-gold-500/50">
             <p className="text-xs font-bold text-gold-400 uppercase tracking-wider">{t.nav.business}</p>
             {businessUnitsNav.map((bu) => (
