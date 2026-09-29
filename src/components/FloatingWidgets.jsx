@@ -8,7 +8,8 @@ import {
   Sparkles 
 } from 'lucide-react';
 
-export default function FloatingWidgets({ onOpenCalculator }) {
+export default function FloatingWidgets({ t, onOpenCalculator }) {
+  const isVi = t?.lang === 'vi' || !t?.lang;
   const [showQuickMenu, setShowQuickMenu] = useState(false);
 
   const scrollToTop = () => {
@@ -49,7 +50,7 @@ export default function FloatingWidgets({ onOpenCalculator }) {
             className="flex items-center space-x-2 bg-gold-500 hover:bg-gold-400 text-navy-950 text-xs font-bold px-4 py-2.5 rounded-full shadow-gold-glow transition-transform hover:scale-105"
           >
             <Calculator className="w-4 h-4 stroke-[2.5]" />
-            <span>승강기 자동 견적</span>
+            <span>{isVi ? 'Dự toán Thang máy Online' : '승강기 자동 견적'}</span>
           </button>
         </div>
       )}

@@ -91,15 +91,19 @@ export default function BusinessCardsSection({ t }) {
       id: 'energy',
       path: '/business/energy',
       num: '06',
-      tag: t.business.units.energy?.tag || '3D PVT 태양광',
-      name: t.business.units.energy?.name || 'BEST winner Solar Energy Vn (태양광 에너지)',
-      desc: t.business.units.energy?.desc || '3D 광자 순환 박스(Photon Cycling Box) PVT 시스템 — 10배 발전량 & 40년+ 수명.',
-      highlight: t.business.units.energy?.highlight || '특허 제10-2776941호 & Intersolar Europe 2023 / 두바이 엑스포 출품.',
-      features: t.business.units.energy?.features || [
+      tag: t.business.units.energy?.tag || (t?.lang === 'vi' || !t?.lang ? 'Năng lượng Mặt trời 3D PVT' : '3D PVT 태양광'),
+      name: t.business.units.energy?.name || (t?.lang === 'vi' || !t?.lang ? 'BEST winner Solar Energy Vn (Năng lượng Mặt trời)' : 'BEST winner Solar Energy Vn (태양광 에너지)'),
+      desc: t.business.units.energy?.desc || (t?.lang === 'vi' || !t?.lang ? 'Hệ thống 3D PVT Hộp tuần hoàn Photon - Mật độ phát điện gấp 10 lần & Tuổi thọ 40+ năm.' : '3D 광자 순환 박스(Photon Cycling Box) PVT 시스템 — 10배 발전량 & 40년+ 수명.'),
+      highlight: t.business.units.energy?.highlight || (t?.lang === 'vi' || !t?.lang ? 'Bằng sáng chế #10-2776941 & Triển lãm Intersolar Munich / Dubai Expo.' : '특허 제10-2776941호 & Intersolar Europe 2023 / 두바이 엑스포 출품.'),
+      features: t.business.units.energy?.features || (t?.lang === 'vi' || !t?.lang ? [
+        "10x Mật độ phát điện (1,300W/㎡ so với 131W/㎡)",
+        "Tuổi thọ 40+ năm (làm mát bằng chất lỏng & hộp kín)",
+        "Hệ thống PVT 2 trong 1 (Điện + Nước nóng 24/7, ROI 1-2 năm)"
+      ] : [
         "단위면적당 10배 발전 밀도 (1,300W/㎡ 실증 데이터)",
         "수명 2배 연장 (액체 냉각 & 밀폐 박스로 40년+ 수명)",
         "전기 + 온수 동시 생산 PVT (사우나/호텔/공장 ROI 1~2년)"
-      ],
+      ]),
       icon: Sun,
       badgeColor: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
       btnColor: 'bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400 text-navy-950 font-bold',

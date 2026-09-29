@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, LogIn, LogOut, CheckCircle2, ShieldCheck, User } from 'lucide-react';
 
 export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
+  const isVi = t?.lang === 'vi' || !t?.lang;
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   if (!isOpen) return null;
@@ -55,7 +56,7 @@ export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
                 <CheckCircle2 className="w-4 h-4" />
                 <span>B2B Partner Session Active</span>
               </div>
-              <p className="text-[11px] text-slate-400">CAD 도면 & 견적서 우선 지원 계정입니다.</p>
+              <p className="text-[11px] text-slate-400">{isVi ? "Tài khoản hỗ trợ ưu tiên bản vẽ CAD & Báo giá." : "CAD 도면 & 견적서 우선 지원 계정입니다."}</p>
             </div>
 
             <button
@@ -63,7 +64,7 @@ export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
               className="w-full bg-navy-900 hover:bg-red-950 text-red-400 font-bold py-3 rounded-xl border border-red-500/30 text-xs flex items-center justify-center space-x-2 transition-colors"
             >
               <LogOut className="w-4 h-4" />
-              <span>{t.nav.logout}</span>
+              <span>{t?.nav?.logout || (isVi ? "Đăng xuất" : "로그아웃")}</span>
             </button>
           </div>
         ) : (
@@ -80,9 +81,9 @@ export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
             </div>
 
             <div className="space-y-1">
-              <h3 className="text-xl font-extrabold text-white">Google 계정으로 로그인</h3>
+              <h3 className="text-xl font-extrabold text-white">{isVi ? "Đăng nhập bằng tài khoản Google" : "Google 계정으로 로그인"}</h3>
               <p className="text-xs text-slate-300">
-                BEST winner Group B2B 파트너 & 회원 전용 서비스
+                {isVi ? "Dịch vụ dành riêng cho Đối tác B2B & Hội viên BEST winner Group" : "BEST winner Group B2B 파트너 & 회원 전용 서비스"}
               </p>
             </div>
 
@@ -101,13 +102,13 @@ export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
                   </svg>
-                  <span>Google 계정으로 계속하기</span>
+                  <span>{isVi ? "Tiếp tục với tài khoản Google" : "Google 계정으로 계속하기"}</span>
                 </>
               )}
             </button>
 
             <div className="text-[10px] text-slate-400 space-y-1 pt-2 border-t border-navy-800">
-              <p>Google OAuth 2.0 보안 인증이 적용됩니다.</p>
+              <p>{isVi ? "Áp dụng xác thực bảo mật Google OAuth 2.0." : "Google OAuth 2.0 보안 인증이 적용됩니다."}</p>
               <p>NEXT_PUBLIC_GOOGLE_CLIENT_ID: 1051842...apps.googleusercontent.com</p>
             </div>
           </div>

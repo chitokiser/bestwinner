@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Download, X, Smartphone, Share, PlusSquare, Check } from 'lucide-react';
 
-export default function PwaInstallBanner() {
+export default function PwaInstallBanner({ t }) {
+  const isVi = t?.lang === 'vi' || !t?.lang;
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showBanner, setShowBanner] = useState(false);
   const [isIos, setIsIos] = useState(false);
@@ -87,7 +88,7 @@ export default function PwaInstallBanner() {
         <button
           onClick={handleDismiss}
           className="absolute top-2.5 right-2.5 p-1 text-slate-400 hover:text-white rounded-lg transition-colors"
-          title="닫기"
+          title={isVi ? "Đóng" : "닫기"}
         >
           <X className="w-4 h-4" />
         </button>
@@ -99,21 +100,21 @@ export default function PwaInstallBanner() {
 
           <div className="space-y-0.5 flex-1 min-w-0">
             <div className="flex items-center space-x-1.5">
-              <span className="text-xs font-bold text-gold-400 uppercase tracking-wider">공식 앱 출시</span>
+              <span className="text-xs font-bold text-gold-400 uppercase tracking-wider">{isVi ? "Ứng dụng Chính thức" : "공식 앱 출시"}</span>
               <span className="w-1.5 h-1.5 rounded-full bg-emeraldGreen-400 animate-pulse"></span>
             </div>
             <h4 className="text-sm font-black text-white truncate">
-              BEST winner Group 앱 설치
+              {isVi ? "Cài đặt App BEST winner Group" : "BEST winner Group 앱 설치"}
             </h4>
             <p className="text-[11px] text-slate-300 truncate">
-              홈 화면에 추가하여 당근처럼 빠른 실행
+              {isVi ? "Thêm vào màn hình chính để truy cập nhanh chóng" : "홈 화면에 추가하여 당근처럼 빠른 실행"}
             </p>
           </div>
         </div>
 
         <div className="mt-3 pt-2.5 border-t border-navy-800 flex items-center justify-between gap-2">
           <span className="text-[10px] text-slate-400">
-            {isIos ? "iOS Safari 지원" : "원클릭 즉시 설치"}
+            {isIos ? (isVi ? "Hỗ trợ iOS Safari" : "iOS Safari 지원") : (isVi ? "Cài đặt nhanh 1-Click" : "원클릭 즉시 설치")}
           </span>
 
           <button
@@ -121,7 +122,7 @@ export default function PwaInstallBanner() {
             className="bg-gradient-to-r from-gold-400 to-gold-600 hover:from-gold-300 hover:to-gold-500 text-navy-950 font-extrabold px-4 py-2 rounded-xl text-xs shadow-gold-glow flex items-center space-x-1.5 transition-transform active:scale-95"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>{isIos ? "iOS 설치 방법" : "앱 설치하기"}</span>
+            <span>{isIos ? (isVi ? "Hướng dẫn iOS" : "iOS 설치 방법") : (isVi ? "Cài đặt App" : "앱 설치하기")}</span>
           </button>
         </div>
 
@@ -129,12 +130,12 @@ export default function PwaInstallBanner() {
         {showIosGuide && isIos && (
           <div className="mt-3 p-3 bg-navy-900 rounded-xl border border-gold-500/30 text-xs text-slate-200 space-y-2">
             <p className="font-bold text-gold-300 flex items-center space-x-1">
-              <span>iPhone/iPad 홈 화면에 설치하는 법:</span>
+              <span>{isVi ? "Cách thêm vào màn hình chính iPhone/iPad:" : "iPhone/iPad 홈 화면에 설치하는 법:"}</span>
             </p>
             <ol className="list-decimal list-inside space-y-1 text-[11px] text-slate-300">
-              <li>사파리 하단 중앙의 <Share className="w-3 h-3 inline text-gold-400" /> **공유** 아이콘 클릭</li>
-              <li>메뉴를 올려 <PlusSquare className="w-3 h-3 inline text-gold-400" /> **'홈 화면에 추가'** 선택</li>
-              <li>우측 상단 **'추가'**를 누르면 앱 아이콘 생성을 완료합니다.</li>
+              <li>{isVi ? "Nhấn vào biểu tượng Chia sẻ ở giữa phía dưới Safari" : "사파리 하단 중앙의 공유 아이콘 클릭"}</li>
+              <li>{isVi ? "Kéo menu lên và chọn 'Thêm vào MH chính'" : "메뉴를 올려 '홈 화면에 추가' 선택"}</li>
+              <li>{isVi ? "Nhấn 'Thêm' ở góc trên bên phải để hoàn tất tạo biểu tượng app." : "우측 상단 '추가'를 누르면 앱 아이콘 생성을 완료합니다."}</li>
             </ol>
           </div>
         )}

@@ -79,6 +79,7 @@ export default function App() {
 
         {/* Floating Omnichannel Lead Widgets */}
         <FloatingWidgets 
+          t={t}
           onOpenCalculator={() => {
             window.location.hash = '#/calculator';
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -86,7 +87,7 @@ export default function App() {
         />
 
         {/* PWA App Instant Install Banner */}
-        <PwaInstallBanner />
+        <PwaInstallBanner t={t} />
 
         {/* Google Auth Login Modal */}
         <GoogleAuthModal 
