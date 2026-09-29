@@ -22,13 +22,16 @@ export default function Header({ currentLang, setLang, t }) {
   ];
 
   // 6 Business Units
+  const isVi = currentLang === 'vi';
+  const isKo = currentLang === 'ko';
+
   const businessUnitsNav = [
-    { id: 'interior', path: '/business/interior', name: 'BEST winner interior Vn (인테리어)', tag: 'Interior' },
-    { id: 'elevator', path: '/business/elevator', name: 'BEST winner elevator Vn (엘리베이터)', tag: 'Elevator' },
-    { id: 'parking', path: '/business/parking', name: 'BEST winner AI Smart Parking (AI 스마트파킹)', tag: 'AI Parking' },
-    { id: 'firefighting', path: '/business/firefighting', name: 'BEST winner Firefighting materials (소방자재)', tag: 'Fire Safety' },
-    { id: 'waterproofing', path: '/business/waterproofing', name: 'BEST winner Waterproofing Vn (방수재)', tag: 'Waterproof' },
-    { id: 'energy', path: '/business/energy', name: 'BEST winner Solar Energy (태양광 에너지)', tag: 'Solar PVT' },
+    { id: 'interior', path: '/business/interior', name: isVi ? 'BEST winner interior Vn (Nội thất)' : isKo ? 'BEST winner interior Vn (인테리어)' : 'BEST winner interior Vn (Interior)', tag: 'Interior' },
+    { id: 'elevator', path: '/business/elevator', name: isVi ? 'BEST winner elevator Vn (Thang máy)' : isKo ? 'BEST winner elevator Vn (엘리베이터)' : 'BEST winner elevator Vn (Elevator)', tag: 'Elevator' },
+    { id: 'parking', path: '/business/parking', name: isVi ? 'BEST winner AI Smart Parking (Bãi đỗ xe AI)' : isKo ? 'BEST winner AI Smart Parking (AI 스마트파킹)' : 'BEST winner AI Smart Parking (AI Parking)', tag: 'AI Parking' },
+    { id: 'firefighting', path: '/business/firefighting', name: isVi ? 'BEST winner Firefighting materials (Vật tư PCCC)' : isKo ? 'BEST winner Firefighting materials (소방자재)' : 'BEST winner Firefighting materials (Fire Safety)', tag: 'Fire Safety' },
+    { id: 'waterproofing', path: '/business/waterproofing', name: isVi ? 'BEST winner Waterproofing Vn (Chống thấm)' : isKo ? 'BEST winner Waterproofing Vn (방수재)' : 'BEST winner Waterproofing Vn (Waterproof)', tag: 'Waterproof' },
+    { id: 'energy', path: '/business/energy', name: isVi ? 'BEST winner Solar Energy (Năng lượng mặt trời)' : isKo ? 'BEST winner Solar Energy (태양광 에너지)' : 'BEST winner Solar Energy (Solar PVT)', tag: 'Solar PVT' },
   ];
 
   const handleNavClick = (path) => {

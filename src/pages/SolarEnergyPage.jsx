@@ -28,7 +28,9 @@ export default function SolarEnergyPage({ t }) {
                 BEST WINNER SOLAR ENERGY VN
               </h1>
               <p className="text-sm text-slate-300 mt-2 max-w-3xl leading-relaxed">
-                광자 순환 박스 (Photon Cycling Box) 3D PVT — 10배 발전량 밀도, 40년+ 수명, 전기+24시간 온수 복합 생산 기술.
+                {t?.lang === 'vi' || !t?.lang
+                  ? '3D PVT Photon Cycling Box — Mật độ phát điện gấp 10 lần, Tuổi thọ 40 năm+, Sản xuất điện & nước nóng 24h.'
+                  : '광자 순환 박스 (Photon Cycling Box) 3D PVT — 10배 발전량 밀도, 40년+ 수명, 전기+24시간 온수 복합 생산 기술.'}
               </p>
             </div>
             
@@ -38,14 +40,14 @@ export default function SolarEnergyPage({ t }) {
                 className="bg-navy-800 hover:bg-navy-700 text-slate-300 text-xs font-semibold px-4 py-2.5 rounded-xl border border-navy-700 flex items-center"
               >
                 <ArrowLeft className="w-4 h-4 mr-1.5 text-slate-400" />
-                <span>이전: 방수재</span>
+                <span>{t?.lang === 'vi' || !t?.lang ? 'Trước: Vật liệu Chống thấm' : '이전: 방수재'}</span>
               </Link>
 
               <Link 
                 to="/business/interior" 
                 className="bg-amber-500 hover:bg-amber-400 text-navy-950 text-xs font-bold px-4 py-2.5 rounded-xl flex items-center shadow-md transition-all"
               >
-                <span>처음: 인테리어</span>
+                <span>{t?.lang === 'vi' || !t?.lang ? 'Đầu: Nội thất' : '처음: 인테리어'}</span>
                 <ArrowRight className="w-4 h-4 ml-1.5" />
               </Link>
             </div>

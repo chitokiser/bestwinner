@@ -11,6 +11,9 @@ import {
 } from 'lucide-react';
 
 export default function ContactUs({ t, initialBU = 'all' }) {
+  const isVi = t?.lang === 'vi' || !t?.lang;
+  const isKo = t?.lang === 'ko';
+
   const [selectedBU, setSelectedBU] = useState(initialBU);
   const [contactForm, setContactForm] = useState({
     name: '',
@@ -124,22 +127,24 @@ export default function ContactUs({ t, initialBU = 'all' }) {
                       onChange={(e) => setSelectedBU(e.target.value)}
                       className="w-full bg-navy-900 border border-navy-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-gold-500"
                     >
-                      <option value="all">{t.contact.allBU}</option>
-                      <option value="interior">① BEST winner interior Vn (맞춤 인테리어)</option>
-                      <option value="elevator">② BEST winner elevator Vn (승강기 & A/S)</option>
-                      <option value="parking">③ BEST winner AI Smart Parking System Vn (AI주차)</option>
-                      <option value="firefighting">④ BEST winner Firefighting materials Vn (소방 자재)</option>
-                      <option value="waterproofing">⑤ BEST winner Waterproofing Vn (건축 방수)</option>
+                      <option value="all">{t?.contact?.allBU || (isVi ? 'Tất cả các lĩnh vực' : '전 사업 분야 종합 상담')}</option>
+                      <option value="interior">{isVi ? '① BEST winner interior Vn (Nội thất)' : isKo ? '① BEST winner interior Vn (맞춤 인테리어)' : '① BEST winner interior Vn (Interior)'}</option>
+                      <option value="elevator">{isVi ? '② BEST winner elevator Vn (Thang máy & A/S)' : isKo ? '② BEST winner elevator Vn (승강기 & A/S)' : '② BEST winner elevator Vn (Elevator)'}</option>
+                      <option value="parking">{isVi ? '③ BEST winner AI Smart Parking Vn (Bãi đỗ xe AI)' : isKo ? '③ BEST winner AI Smart Parking System Vn (AI주차)' : '③ BEST winner AI Smart Parking Vn (AI Parking)'}</option>
+                      <option value="firefighting">{isVi ? '④ BEST winner Firefighting materials Vn (Vật tư PCCC)' : isKo ? '④ BEST winner Firefighting materials Vn (소방 자재)' : '④ BEST winner Firefighting materials Vn (Fire Safety)'}</option>
+                      <option value="waterproofing">{isVi ? '⑤ BEST winner Waterproofing Vn (Chống thấm)' : isKo ? '⑤ BEST winner Waterproofing Vn (건축 방수)' : '⑤ BEST winner Waterproofing Vn (Waterproof)'}</option>
                     </select>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-bold text-slate-300 block mb-1.5">성함 / Company Name</label>
+                      <label className="text-xs font-bold text-slate-300 block mb-1.5">
+                        {isVi ? 'Họ và tên / Tên công ty' : '성함 / Company Name'}
+                      </label>
                       <input 
                         type="text" 
                         required
-                        placeholder="이름 또는 회사명 입력"
+                        placeholder={isVi ? 'Nhập tên cá nhân hoặc tên công ty' : '이름 또는 회사명 입력'}
                         value={contactForm.name}
                         onChange={(e) => setContactForm({...contactForm, name: e.target.value})}
                         className="w-full bg-navy-900 border border-navy-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500"
@@ -147,7 +152,9 @@ export default function ContactUs({ t, initialBU = 'all' }) {
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold text-slate-300 block mb-1.5">연락처 (Zalo / Kakao)</label>
+                      <label className="text-xs font-bold text-slate-300 block mb-1.5">
+                        {isVi ? 'Số điện thoại (Zalo / Kakao)' : '연락처 (Zalo / Kakao)'}
+                      </label>
                       <input 
                         type="tel" 
                         required
@@ -160,7 +167,9 @@ export default function ContactUs({ t, initialBU = 'all' }) {
                   </div>
 
                   <div>
-                    <label className="text-xs font-bold text-slate-300 block mb-1.5">이메일 주소</label>
+                    <label className="text-xs font-bold text-slate-300 block mb-1.5">
+                      {isVi ? 'Địa chỉ Email' : '이메일 주소'}
+                    </label>
                     <input 
                       type="email" 
                       required
@@ -172,11 +181,13 @@ export default function ContactUs({ t, initialBU = 'all' }) {
                   </div>
 
                   <div>
-                    <label className="text-xs font-bold text-slate-300 block mb-1.5">문의 및 프로젝트 상세 내용</label>
+                    <label className="text-xs font-bold text-slate-300 block mb-1.5">
+                      {isVi ? 'Nội dung chi tiết yêu cầu & dự án' : '문의 및 프로젝트 상세 내용'}
+                    </label>
                     <textarea 
                       rows="4" 
                       required
-                      placeholder="건물 유형(빌라, 오피스, 공장), 위치, 희망 일정 등 문의사항을 남겨주세요."
+                      placeholder={isVi ? 'Vui lòng nhập loại công trình (Biệt thự, Văn phòng, Nhà máy), vị trí, tiến độ mong muốn.' : '건물 유형(빌라, 오피스, 공장), 위치, 희망 일정 등 문의사항을 남겨주세요.'}
                       value={contactForm.message}
                       onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
                       className="w-full bg-navy-900 border border-navy-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500"
@@ -188,7 +199,7 @@ export default function ContactUs({ t, initialBU = 'all' }) {
                     className="w-full bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:from-gold-300 hover:to-gold-400 text-navy-950 font-black py-4 rounded-xl shadow-gold-glow text-xs uppercase tracking-wider flex items-center justify-center space-x-2"
                   >
                     <Send className="w-4 h-4 stroke-[2.5]" />
-                    <span>상담 신청서 제출하기</span>
+                    <span>{isVi ? 'Gửi Đăng ký Tư vấn' : '상담 신청서 제출하기'}</span>
                   </button>
                 </form>
               )}

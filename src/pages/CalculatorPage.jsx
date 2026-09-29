@@ -18,10 +18,12 @@ export default function CalculatorPage({ t }) {
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold text-white flex items-center">
             <Calculator className="w-8 h-8 mr-3 text-gold-400" />
-            승강기 온라인 자동 견적 계산기
+            {t?.lang === 'vi' || !t?.lang ? 'Bảng Dự Toán Chi Phí Thang Máy Online' : '승강기 온라인 자동 견적 계산기'}
           </h1>
           <p className="text-sm text-slate-300 max-w-2xl">
-            층수, 하중, 디자인 선택 시 즉시 실시간 견적을 확인하고 무료 현장 실측을 예약할 수 있습니다.
+            {t?.lang === 'vi' || !t?.lang
+              ? 'Chọn số tầng, tải trọng và kiểu dáng để xem ngay dự toán chi phí thời gian thực và đặt lịch khảo sát miễn phí.'
+              : '층수, 하중, 디자인 선택 시 즉시 실시간 견적을 확인하고 무료 현장 실측을 예약할 수 있습니다.'}
           </p>
         </div>
       </div>

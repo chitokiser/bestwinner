@@ -28,7 +28,9 @@ export default function InteriorPage({ t }) {
                 BEST winner interior Vn
               </h1>
               <p className="text-sm text-slate-300 mt-2 max-w-2xl">
-                주택, 빌라, 타운하우스 및 상업 공간 맞춤형 공간 Design & 고급 인테리어 시공.
+                {t?.lang === 'vi' || !t?.lang
+                  ? 'Thiết kế Không gian May đo & Thi công Nội thất Cao cấp cho Nhà ở, Biệt thự, Townhouse và Thương mại.'
+                  : '주택, 빌라, 타운하우스 및 상업 공간 맞춤형 공간 Design & 고급 인테리어 시공.'}
               </p>
             </div>
             
@@ -43,13 +45,13 @@ export default function InteriorPage({ t }) {
                 className="bg-red-600 hover:bg-red-500 text-white text-xs font-extrabold px-4 py-2.5 rounded-xl border border-red-500/40 flex items-center space-x-1.5 shadow-md transition-all"
               >
                 <Play className="w-4 h-4 fill-white" />
-                <span>홍보 동영상 보기</span>
+                <span>{t?.lang === 'vi' || !t?.lang ? 'Xem Video Quảng bá' : '홍보 동영상 보기'}</span>
               </a>
               <Link 
                 to="/business/elevator" 
                 className="bg-navy-800 hover:bg-navy-700 text-slate-200 text-xs font-semibold px-4 py-2.5 rounded-xl border border-navy-700 flex items-center"
               >
-                <span>다음: 승강기 페이지</span>
+                <span>{t?.lang === 'vi' || !t?.lang ? 'Tiếp: Thang máy' : '다음: 승강기 페이지'}</span>
                 <ArrowRight className="w-4 h-4 ml-1.5 text-gold-400" />
               </Link>
             </div>

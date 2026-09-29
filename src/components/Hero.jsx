@@ -84,12 +84,16 @@ export default function Hero({ t, onOpenCalculator }) {
 
           {/* Sub-headline */}
           <p className="text-base sm:text-xl font-bold text-chrome-200 leading-snug break-keep">
-            베트남 대표 통합 주택·건설·스마트 인프라 솔루션
+            {t?.lang === 'vi' || !t?.lang 
+              ? 'Giải pháp Hạ tầng Thông minh & Xây dựng Nhà ở Hàng đầu Việt Nam' 
+              : '베트남 대표 통합 주택·건설·스마트 인프라 솔루션'}
           </p>
 
           {/* Concise Description */}
           <p className="text-slate-300 text-xs sm:text-base leading-relaxed max-w-2xl font-normal break-keep">
-            한국의 정밀 기술력과 베트남 현지 맞춤 제작 시스템의 완벽한 조화로 공간의 가치를 완성합니다.
+            {t?.lang === 'vi' || !t?.lang 
+              ? 'Sự kết hợp hoàn hảo giữa công nghệ kỹ thuật chính xác Hàn Quốc và hệ thống sản xuất may đo trực tiếp tại Việt Nam.' 
+              : '한국의 정밀 기술력과 베트남 현지 맞춤 제작 시스템의 완벽한 조화로 공간의 가치를 완성합니다.'}
           </p>
 
           {/* Main CTAs */}

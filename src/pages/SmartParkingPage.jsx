@@ -18,43 +18,45 @@ import {
 } from 'lucide-react';
 
 export default function SmartParkingPage({ t }) {
+  const isVi = t?.lang === 'vi' || !t?.lang;
+
   // Hero Banner Images from /public/images/parking/hero/ (1.png ~ 6.png)
   const heroSlides = [
     {
       src: '/images/parking/hero/1.png',
       tag: 'AI SMART GATE',
-      title: 'BEST Winner AI 스마트 주차 무인 게이트',
-      desc: '0.8초 초고속 바(Bar) 차단기와 차체 충격 방지 인텔리전트 모터 내장.'
+      title: isVi ? 'Cổng kiểm soát xe thông minh AI BEST Winner' : 'BEST Winner AI 스마트 주차 무인 게이트',
+      desc: isVi ? 'Rào chắn tốc độ cao 0.8 giây tích hợp động cơ thông minh chống va đập.' : '0.8초 초고속 바(Bar) 차단기와 차체 충격 방지 인텔리전트 모터 내장.'
     },
     {
       src: '/images/parking/hero/2.png',
       tag: 'DEEP LEARNING LPR',
-      title: '딥러닝 초고속 AI 번호판 인식 카메라',
-      desc: '야간, 우천, 훼손 번호판도 99.8% 정확도로 0.1초 내 실시간 인식.'
+      title: isVi ? 'Camera nhận diện biển số AI Deep Learning' : '딥러닝 초고속 AI 번호판 인식 카메라',
+      desc: isVi ? 'Nhận diện biển số ban đêm, mưa gió, biển hỏng với độ chính xác 99.8% trong 0.1 giây.' : '야간, 우천, 훼손 번호판도 99.8% 정확도로 0.1초 내 실시간 인식.'
     },
     {
       src: '/images/parking/hero/3.png',
       tag: 'ACRM BACKOFFICE',
-      title: 'BEST Winner ACRM 현장 통합 대시보드',
-      desc: '입출차 영상 모니터링, 만차/잔여 주차면, 요금 매출 통계 실시간 집계.'
+      title: isVi ? 'Bảng điều khiển quản lý tập trung ACRM BEST Winner' : 'BEST Winner ACRM 현장 통합 대시보드',
+      desc: isVi ? 'Giám sát video vào/ra, số chỗ trống/đầy và thống kê doanh thu theo thời gian thực.' : '입출차 영상 모니터링, 만차/잔여 주차면, 요금 매출 통계 실시간 집계.'
     },
     {
       src: '/images/parking/hero/4.png',
       tag: 'SELF PAYMENT KIOSK',
-      title: '21.5인치 무인 정산 키오스크 시스템',
-      desc: '신용카드, 삼성페이, 모바일 QR, 할인권 사전 정산으로 출차 정체 제로화.'
+      title: isVi ? 'Hệ thống Kiosk thanh toán tự động 21.5 inch' : '21.5인치 무인 정산 키오스크 시스템',
+      desc: isVi ? 'Thanh toán trước qua Thẻ tín dụng, Samsung Pay, Mã QR di động giúp giải tỏa ùn tắc xuất xe.' : '신용카드, 삼성페이, 모바일 QR, 할인권 사전 정산으로 출차 정체 제로화.'
     },
     {
       src: '/images/parking/hero/5.png',
       tag: '24/7 CONTROL ROOM',
-      title: '24시간 무인 현장 원격 통합관제센터',
-      desc: '365일 24시간 전문 요원의 실시간 인터폰 대응 및 비상 차단기 원격 제어.'
+      title: isVi ? 'Trung tâm điều hành & giám sát từ xa 24/7' : '24시간 무인 현장 원격 통합관제센터',
+      desc: isVi ? 'Chuyên viên phản hồi Intercom 24/7 và điều khiển rào chắn khẩn cấp từ xa.' : '365일 24시간 전문 요원의 실시간 인터폰 대응 및 비상 차단기 원격 제어.'
     },
     {
       src: '/images/parking/hero/6.png',
       tag: 'MOBILE & E-TAX',
-      title: '모바일 앱 결제 & 정기권 자동 세금계산서',
-      desc: '주차장 검색, 월정액 신청, 미등록 무단주차 자동 단속 및 국세청 E-Tax 연동.'
+      title: isVi ? 'Thanh toán qua App di động & Hóa đơn điện tử tự động' : '모바일 앱 결제 & 정기권 자동 세금계산서',
+      desc: isVi ? 'Tìm bãi xe, đăng ký vé tháng, tự động xử lý xe vi phạm & Tích hợp E-Tax Tổng cục Thuế.' : '주차장 검색, 월정액 신청, 미등록 무단주차 자동 단속 및 국세청 E-Tax 연동.'
     },
   ];
 
@@ -129,16 +131,18 @@ export default function SmartParkingPage({ t }) {
                 </span>
                 <span className="inline-flex items-center space-x-1 text-xs font-bold text-gold-400 bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/30 whitespace-nowrap">
                   <Sparkles className="w-3 h-3 mr-1" />
-                  <span>BEST Winner 스마트 주차 공식 솔루션</span>
+                  <span>{isVi ? 'Giải pháp Chính thức Bãi đỗ xe Thông minh BEST Winner' : 'BEST Winner 스마트 주차 공식 솔루션'}</span>
                 </span>
               </div>
 
               <h1 className="text-2xl sm:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight break-keep">
-                BEST winner <span className="text-emeraldGreen-400">AI 스마트 주차</span> 관제 시스템
+                BEST winner <span className="text-emeraldGreen-400">{isVi ? 'Hệ thống Quản lý Bãi đỗ xe AI Smart' : 'AI 스마트 주차 관제 시스템'}</span>
               </h1>
               
               <p className="text-xs sm:text-lg text-slate-200 font-medium max-w-2xl leading-relaxed break-keep">
-                딥러닝 AI 번호판 인식(LPR), 스마트 무인 차단기, ACRM 24시간 원격 관제 및 모바일 자동 결제가 통합된 미래형 주차 인프라 솔루션입니다.
+                {isVi 
+                  ? 'Giải pháp hạ tầng bãi đỗ xe tương lai tích hợp nhận diện biển số AI LPR, rào chắn tự động, giám sát ACRM 24/7 và thanh toán di động.' 
+                  : '딥러닝 AI 번호판 인식(LPR), 스마트 무인 차단기, ACRM 24시간 원격 관제 및 모바일 자동 결제가 통합된 미래형 주차 인프라 솔루션입니다.'}
               </p>
 
               {/* Feature Highlights Pill Bar */}
@@ -149,11 +153,11 @@ export default function SmartParkingPage({ t }) {
                 </div>
                 <div className="bg-navy-900/80 border border-cyan-500/30 rounded-xl p-2.5 text-[11px] sm:text-xs text-slate-200 flex items-center justify-center space-x-1.5 whitespace-nowrap">
                   <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                  <span className="whitespace-nowrap">ACRM 원격관제</span>
+                  <span className="whitespace-nowrap">{isVi ? 'Giám sát ACRM 24/7' : 'ACRM 원격관제'}</span>
                 </div>
                 <div className="bg-navy-900/80 border border-gold-500/30 rounded-xl p-2.5 text-[11px] sm:text-xs text-slate-200 flex items-center justify-center space-x-1.5 whitespace-nowrap">
                   <CheckCircle2 className="w-3.5 h-3.5 text-gold-400 shrink-0" />
-                  <span className="whitespace-nowrap">24/7 출동A/S</span>
+                  <span className="whitespace-nowrap">{isVi ? 'Hỗ trợ A/S 24/7' : '24/7 출동A/S'}</span>
                 </div>
               </div>
 
@@ -165,7 +169,7 @@ export default function SmartParkingPage({ t }) {
                   className="bg-gold-500 hover:bg-gold-400 text-navy-950 font-black px-5 py-3 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center text-xs sm:text-sm whitespace-nowrap"
                 >
                   <Download className="w-4 h-4 mr-1.5 shrink-0" />
-                  <span>투자 사업계획서 PDF (43P)</span>
+                  <span>{isVi ? 'Kế hoạch Đầu tư PDF (43 Trang)' : '투자 사업계획서 PDF (43P)'}</span>
                 </a>
 
                 <a
@@ -174,7 +178,7 @@ export default function SmartParkingPage({ t }) {
                   className="bg-navy-800 hover:bg-navy-700 text-emeraldGreen-400 border border-emeraldGreen-500/30 font-extrabold px-5 py-3 rounded-xl shadow-lg transition-all flex items-center text-xs sm:text-sm whitespace-nowrap"
                 >
                   <Download className="w-4 h-4 mr-1.5 shrink-0" />
-                  <span>공식 PDF 브로슈어 (20P)</span>
+                  <span>{isVi ? 'Brochure Chính thức (20 Trang)' : '공식 PDF 브로슈어 (20P)'}</span>
                 </a>
 
                 <button
@@ -185,7 +189,7 @@ export default function SmartParkingPage({ t }) {
                   className="bg-navy-900 hover:bg-navy-800 text-white font-bold px-5 py-3 rounded-xl border border-navy-700 text-xs sm:text-sm flex items-center space-x-1.5 whitespace-nowrap"
                 >
                   <Monitor className="w-4 h-4 text-emeraldGreen-400 shrink-0" />
-                  <span>현장 맞춤 무료 견적</span>
+                  <span>{isVi ? 'Báo giá Khảo sát Miễn phí' : '현장 맞춤 무료 견적'}</span>
                 </button>
               </div>
 
@@ -262,7 +266,7 @@ export default function SmartParkingPage({ t }) {
               to="/business/firefighting" 
               className="bg-navy-900 hover:bg-navy-800 text-slate-300 text-xs font-semibold px-4 py-2.5 rounded-xl border border-navy-700 flex items-center"
             >
-              <span>다음: 소방 자재 페이지</span>
+              <span>{isVi ? 'Tiếp: Vật tư PCCC' : '다음: 소방 자재 페이지'}</span>
               <ArrowRight className="w-4 h-4 ml-1.5 text-gold-400" />
             </Link>
           </div>

@@ -18,7 +18,9 @@ export default function ContactPage({ t }) {
             Contact & Hanoi Experience Center
           </h1>
           <p className="text-sm text-slate-300 max-w-2xl">
-            하노이 본사 쇼룸 안내 및 5대 사업부별 1:1 맞춤 상담 신청.
+            {t?.lang === 'vi' || !t?.lang
+              ? 'Thông tin Showroom Trụ sở Hà Nội & Đăng ký tư vấn 1:1 cho các mảng kinh doanh.'
+              : '하노이 본사 쇼룸 안내 및 5대 사업부별 1:1 맞춤 상담 신청.'}
           </p>
         </div>
       </div>

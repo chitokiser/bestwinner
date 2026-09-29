@@ -28,7 +28,9 @@ export default function WaterproofingPage({ t }) {
                 BEST WINNER WATERPROOF VN
               </h1>
               <p className="text-sm text-slate-300 mt-2 max-w-2xl">
-                K1 특수 초강력 방수제 — 20년 한국 기술 원료 수입 × 베트남 현지 공장 직접 생산 10년 보장 방수 솔루션.
+                {t?.lang === 'vi' || !t?.lang
+                  ? 'Chất chống thấm siêu cấp K1 — Nguyên liệu nhập khẩu công nghệ Hàn Quốc 20 năm × Sản xuất trực tiếp tại Việt Nam cam kết bảo hành 10 năm.'
+                  : 'K1 특수 초강력 방수제 — 20년 한국 기술 원료 수입 × 베트남 현지 공장 직접 생산 10년 보장 방수 솔루션.'}
               </p>
             </div>
             
@@ -43,13 +45,13 @@ export default function WaterproofingPage({ t }) {
                 className="bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl border border-red-500/40 flex items-center space-x-1.5 shadow-md transition-all"
               >
                 <Play className="w-4 h-4 fill-white" />
-                <span>홍보 동영상 보기</span>
+                <span>{t?.lang === 'vi' || !t?.lang ? 'Xem Video Quảng bá' : '홍보 동영상 보기'}</span>
               </a>
               <Link 
                 to="/business/energy" 
                 className="bg-amber-500 hover:bg-amber-400 text-navy-950 text-xs font-bold px-4 py-2.5 rounded-xl flex items-center shadow-md transition-all"
               >
-                <span>다음: 태양광 에너지</span>
+                <span>{t?.lang === 'vi' || !t?.lang ? 'Tiếp: Năng lượng Mặt trời' : '다음: 태양광 에너지'}</span>
                 <ArrowRight className="w-4 h-4 ml-1.5" />
               </Link>
             </div>
