@@ -23,7 +23,7 @@ import {
   Calculator
 } from 'lucide-react';
 
-export default function MegazinePage({ t }) {
+export default function MegazinePage({ t, user, onOpenAuth }) {
   const [articles, setArticles] = useState([]);
   const [weather, setWeather] = useState(null);
   const [exchangeRates, setExchangeRates] = useState(null);
@@ -319,6 +319,8 @@ export default function MegazinePage({ t }) {
                 article={article}
                 onOpen={(art) => setSelectedArticle(art)}
                 onShare={(art) => setSelectedArticle(art)}
+                user={user}
+                onOpenAuth={onOpenAuth}
               />
             ))}
           </div>
@@ -331,6 +333,8 @@ export default function MegazinePage({ t }) {
         <ArticleDetailModal
           article={selectedArticle}
           onClose={() => setSelectedArticle(null)}
+          user={user}
+          onOpenAuth={onOpenAuth}
         />
       )}
 

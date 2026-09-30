@@ -72,7 +72,16 @@ export default function App() {
             <Route path="/business/energy" element={<SolarEnergyPage t={t} />} />
             <Route path="/services" element={<AIManagementPage t={t} />} />
             <Route path="/services/ai-management" element={<AIManagementPage t={t} />} />
-            <Route path="/megazine" element={<MegazinePage t={t} />} />
+            <Route 
+              path="/megazine" 
+              element={
+                <MegazinePage 
+                  t={t} 
+                  user={user} 
+                  onOpenAuth={() => setIsGoogleAuthOpen(true)} 
+                />
+              } 
+            />
             <Route path="/megazine/admin" element={<MegazineAdminPage t={t} />} />
             <Route path="/calculator" element={<CalculatorPage t={t} />} />
             <Route path="/contact" element={<ContactPage t={t} />} />
