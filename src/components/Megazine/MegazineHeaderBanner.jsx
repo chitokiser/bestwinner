@@ -1,5 +1,6 @@
 import React from 'react';
 import { CloudSun, CloudRain, Sun, DollarSign, TrendingUp, Sparkles, Clock, MapPin } from 'lucide-react';
+import MegazineHeroShowcase from './MegazineHeroShowcase';
 
 export default function MegazineHeaderBanner({ weather, exchangeRates, aqi, t }) {
   const isVi = t?.lang === 'vi';
@@ -109,6 +110,11 @@ export default function MegazineHeaderBanner({ weather, exchangeRates, aqi, t })
 
         </div>
 
+      </div>
+
+      {/* Hero Showcase Carousel featuring public/images/megazine 6 cover images */}
+      <div className="mt-6 max-w-7xl mx-auto">
+        <MegazineHeroShowcase />
       </div>
 
       {/* 5 Daily Editions Pipeline Status Ribbon */}
