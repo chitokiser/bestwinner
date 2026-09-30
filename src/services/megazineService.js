@@ -26,14 +26,21 @@ export async function getArticles() {
     console.warn('[MegazineService] Firebase fetch error, using local storage fallback:', err);
   }
 
-  // LocalStorage Fallback
+  // LocalStorage Fallback & Upgrade Seed Sync
   if (typeof window !== 'undefined') {
     const raw = localStorage.getItem(LOCAL_STORAGE_ARTICLES_KEY);
     if (raw) {
       try {
         const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed) && parsed.length > 0) {
+        if (Array.isArray(parsed) && parsed.length >= INITIAL_ARTICLES.length) {
           return parsed.sort((a, b) => new Date(b.publishedAt || b.createdAt) - new Date(a.publishedAt || a.createdAt));
+        } else if (Array.isArray(parsed)) {
+          // Merge missing initial seed articles into local storage
+          const existingIds = new Set(parsed.map(a => String(a.id)));
+          const missingSeeds = INITIAL_ARTICLES.filter(a => !existingIds.has(String(a.id)));
+          const merged = [...parsed, ...missingSeeds];
+          localStorage.setItem(LOCAL_STORAGE_ARTICLES_KEY, JSON.stringify(merged));
+          return merged.sort((a, b) => new Date(b.publishedAt || b.createdAt) - new Date(a.publishedAt || a.createdAt));
         }
       } catch (e) {
         console.error('[MegazineService] JSON parse error:', e);
