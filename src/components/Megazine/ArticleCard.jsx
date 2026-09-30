@@ -9,6 +9,7 @@ import {
   Bookmark,
   Flame
 } from 'lucide-react';
+import { getDefaultThumbnail } from '../../services/megazineService';
 
 export default function ArticleCard({ article, onOpen, onShare }) {
   const publishedDate = article.publishedAt 
@@ -24,9 +25,12 @@ export default function ArticleCard({ article, onOpen, onShare }) {
         {/* Top Image Banner (SNS Optimized 3:2 Aspect Ratio) */}
         <div className="relative aspect-[16/10] overflow-hidden bg-navy-950">
           <img 
-            src={article.thumbnail || 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80'} 
+            src={article.thumbnail || getDefaultThumbnail(article.category)} 
             alt={article.title}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            onError={(e) => {
+              e.currentTarget.src = getDefaultThumbnail(article.category);
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/20 to-transparent" />
           

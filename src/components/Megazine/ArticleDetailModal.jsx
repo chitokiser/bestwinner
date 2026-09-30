@@ -22,6 +22,7 @@ import {
 import BestPickCard from './BestPickCard';
 import AudioBriefingPlayer from './AudioBriefingPlayer';
 import { INITIAL_BEST_PICKS } from '../../data/megazineInitialData';
+import { getDefaultThumbnail } from '../../services/megazineService';
 
 export default function ArticleDetailModal({ article, onClose, user, onOpenAuth }) {
   const [copied, setCopied] = useState(false);
@@ -308,15 +309,16 @@ BEST MEGAZINE AI 취재팀은 하루 5회(07:00, 11:00, 14:00, 18:00, 21:00) 베
           />
 
           {/* Featured Image */}
-          {article.thumbnail && (
-            <div className="rounded-2xl overflow-hidden border border-navy-800 aspect-[16/9] shadow-xl">
-              <img 
-                src={article.thumbnail} 
-                alt={article.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          )}
+          <div className="rounded-2xl overflow-hidden border border-navy-800 aspect-[16/9] shadow-xl bg-navy-950">
+            <img 
+              src={article.thumbnail || getDefaultThumbnail(article.category)} 
+              alt={article.title}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.src = getDefaultThumbnail(article.category);
+              }}
+            />
+          </div>
 
           {/* Structured News Sections: NEWS -> INFORMATION -> ACTION */}
           <div className="space-y-6 bg-navy-950/80 p-5 sm:p-6 rounded-3xl border border-navy-800">
