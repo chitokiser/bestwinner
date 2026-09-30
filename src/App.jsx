@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Header from './components/Header';
@@ -22,12 +22,37 @@ import MegazineAdminPage from './pages/MegazineAdminPage';
 import CalculatorPage from './pages/CalculatorPage';
 import ContactPage from './pages/ContactPage';
 
+import { auth } from './lib/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import { translations } from './locales/translations';
 
 export default function App() {
   const [currentLang, setLang] = useState('vi'); // 'vi' (default), 'ko', 'en'
   const [isGoogleAuthOpen, setIsGoogleAuthOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const saved = localStorage.getItem('best_user_session');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) { }
+    }
+    return null;
+  });
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        const userData = {
+          uid: firebaseUser.uid,
+          name: firebaseUser.displayName || firebaseUser.email.split('@')[0],
+          email: firebaseUser.email,
+          avatar: firebaseUser.photoURL || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+          provider: 'Google OAuth 2.0'
+        };
+        setUser(userData);
+        localStorage.setItem('best_user_session', JSON.stringify(userData));
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   const t = translations[currentLang] || translations.vi;
 

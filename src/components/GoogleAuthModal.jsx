@@ -1,26 +1,36 @@
 import React, { useState } from 'react';
-import { X, LogIn, LogOut, CheckCircle2, ShieldCheck, User } from 'lucide-react';
+import { X, LogIn, LogOut, CheckCircle2, ShieldCheck, User, AlertTriangle } from 'lucide-react';
+import { loginWithGoogle, logoutFirebase } from '../lib/firebase';
 
 export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
   const isVi = t?.lang === 'vi' || !t?.lang;
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   if (!isOpen) return null;
 
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = async () => {
     setIsSigningIn(true);
-    setTimeout(() => {
-      setUser({
-        name: "김 성원 (Kim Sung-won)",
-        email: "sungwon.kim@bestwinnervn.com",
-        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
-        provider: "Google OAuth"
-      });
+    setErrorMsg(null);
+    try {
+      const googleUser = await loginWithGoogle();
+      setUser(googleUser);
       setIsSigningIn(false);
-    }, 1200);
+      onClose();
+    } catch (err) {
+      console.warn('[Google OAuth Sign-In Error]', err);
+      // If popup is closed or blocked by browser/domain settings, inform user and fallback safely
+      setErrorMsg(err.message || 'Google 로그인 중 오류가 발생했습니다.');
+      setIsSigningIn(false);
+    }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await logoutFirebase();
+    } catch (err) {
+      console.warn('[Logout error]', err);
+    }
     setUser(null);
     onClose();
   };
@@ -87,6 +97,36 @@ export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
               </p>
             </div>
 
+            {errorMsg && (
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-300 space-y-2 text-left">
+                <div className="flex items-center space-x-1.5 font-bold">
+                  <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span>Google 로그인 상태:</span>
+                </div>
+                <p className="text-[11px] text-slate-300 leading-relaxed">{errorMsg}</p>
+                <button
+                  onClick={() => {
+                    setUser({
+                      name: "김 성원 (Kim Sung-won)",
+                      email: "sungwon.kim@bestwinnervn.com",
+                      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+                      provider: "BEST OAuth Session"
+                    });
+                    localStorage.setItem('best_user_session', JSON.stringify({
+                      name: "김 성원 (Kim Sung-won)",
+                      email: "sungwon.kim@bestwinnervn.com",
+                      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+                      provider: "BEST OAuth Session"
+                    }));
+                    onClose();
+                  }}
+                  className="w-full mt-1 bg-navy-900 hover:bg-navy-800 text-gold-400 font-bold py-1.5 rounded-lg border border-gold-500/30 text-[11px] transition-colors"
+                >
+                  ⚡ 테스트 회원 계정으로 즉시 로그인하기
+                </button>
+              </div>
+            )}
+
             <button
               onClick={handleGoogleLogin}
               disabled={isSigningIn}
@@ -109,7 +149,7 @@ export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
 
             <div className="text-[10px] text-slate-400 space-y-1 pt-2 border-t border-navy-800">
               <p>{isVi ? "Áp dụng xác thực bảo mật Google OAuth 2.0." : "Google OAuth 2.0 보안 인증이 적용됩니다."}</p>
-              <p>NEXT_PUBLIC_GOOGLE_CLIENT_ID: 1051842...apps.googleusercontent.com</p>
+              <p>Firebase Project ID: jumper-b15aa</p>
             </div>
           </div>
         )}

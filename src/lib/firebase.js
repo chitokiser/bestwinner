@@ -1,5 +1,12 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { 
+  getAuth, 
+  GoogleAuthProvider, 
+  signInWithPopup, 
+  signOut, 
+  onAuthStateChanged 
+} from 'firebase/auth';
+import { 
   getFirestore, 
   collection, 
   getDocs, 
@@ -25,6 +32,45 @@ const firebaseConfig = {
 // Initialize Firebase App singleton
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const db = getFirestore(app);
+export const auth = getAuth(app);
+export const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
+
+/**
+ * Real Google OAuth 2.0 Sign In via Firebase Auth
+ */
+export async function loginWithGoogle() {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
+    const userData = {
+      uid: user.uid,
+      name: user.displayName || user.email.split('@')[0],
+      email: user.email,
+      avatar: user.photoURL || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+      provider: 'Google OAuth 2.0'
+    };
+    localStorage.setItem('best_user_session', JSON.stringify(userData));
+    return userData;
+  } catch (error) {
+    console.error('[Firebase Auth Error]', error);
+    throw error;
+  }
+}
+
+/**
+ * Sign out user from Firebase Auth
+ */
+export async function logoutFirebase() {
+  try {
+    await signOut(auth);
+    localStorage.removeItem('best_user_session');
+    return true;
+  } catch (error) {
+    console.error('[Firebase Logout Error]', error);
+    throw error;
+  }
+}
 
 // Core collection definitions (per project database specifications)
 // Collection names: products, departures, bookings, users
