@@ -14,6 +14,7 @@ import {
   Check
 } from 'lucide-react';
 import BestPickCard from './BestPickCard';
+import AudioBriefingPlayer from './AudioBriefingPlayer';
 import { INITIAL_BEST_PICKS } from '../../data/megazineInitialData';
 
 export default function ArticleDetailModal({ article, onClose, onShare }) {
@@ -104,6 +105,12 @@ export default function ArticleDetailModal({ article, onClose, onShare }) {
               </p>
             )}
           </div>
+
+          {/* AI 1-Min Audio Briefing Player */}
+          <AudioBriefingPlayer 
+            title={article.title} 
+            textToRead={article.summary || article.whyItMatters || article.content} 
+          />
 
           {/* Featured Image */}
           {article.thumbnail && (

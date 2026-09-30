@@ -1,7 +1,7 @@
 import React from 'react';
 import { CloudSun, CloudRain, Sun, DollarSign, TrendingUp, Sparkles, Clock, MapPin } from 'lucide-react';
 
-export default function MegazineHeaderBanner({ weather, exchangeRates, t }) {
+export default function MegazineHeaderBanner({ weather, exchangeRates, aqi, t }) {
   const isVi = t?.lang === 'vi';
   const isKo = t?.lang === 'ko' || (!t?.lang && true);
 
@@ -15,6 +15,13 @@ export default function MegazineHeaderBanner({ weather, exchangeRates, t }) {
       default:
         return <CloudSun className="w-5 h-5 text-amber-300" />;
     }
+  };
+
+  const getAqiColorBadge = (aqiVal) => {
+    if (!aqiVal || aqiVal <= 50) return 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10';
+    if (aqiVal <= 100) return 'text-amber-400 border-amber-500/30 bg-amber-500/10';
+    if (aqiVal <= 150) return 'text-orange-400 border-orange-500/30 bg-orange-500/10';
+    return 'text-rose-400 border-rose-500/30 bg-rose-500/10';
   };
 
   return (
@@ -38,42 +45,63 @@ export default function MegazineHeaderBanner({ weather, exchangeRates, t }) {
           </p>
         </div>
 
-        {/* Live Weather & Exchange Widgets Bar */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full lg:w-auto">
+        {/* Live Weather, AQI & Exchange Widgets Bar */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full lg:w-auto">
           
           {/* Weather Widget */}
-          <div className="bg-navy-900/90 border border-navy-700/80 rounded-2xl p-3.5 flex items-center space-x-3 shadow-md backdrop-blur-md">
-            <div className="p-2.5 rounded-xl bg-navy-800 border border-navy-700">
+          <div className="bg-navy-900/90 border border-navy-700/80 rounded-2xl p-3 flex items-center space-x-2.5 shadow-md backdrop-blur-md">
+            <div className="p-2 rounded-xl bg-navy-800 border border-navy-700">
               {getWeatherIcon(weather?.icon)}
             </div>
             <div>
-              <div className="flex items-center space-x-1.5 text-[11px] font-bold text-slate-400 uppercase">
+              <div className="flex items-center space-x-1 text-[10px] font-bold text-slate-400 uppercase">
                 <MapPin className="w-3 h-3 text-gold-400" />
-                <span>{weather?.city || 'Hanoi'} Weather</span>
+                <span>Hanoi Weather</span>
               </div>
-              <p className="text-sm font-black text-white">
-                {weather?.temp || 29}°C <span className="text-xs text-slate-300 font-medium">({weather?.condition || '구름 조금'})</span>
+              <p className="text-xs font-black text-white">
+                {weather?.temp || 29}°C <span className="text-[10px] text-slate-300 font-normal">({weather?.condition || '구름 조금'})</span>
               </p>
-              <p className="text-[10px] text-slate-400">
-                습도 {weather?.humidity || 75}% · 강수확률 {weather?.rainProb || 20}%
+              <p className="text-[9px] text-slate-400">
+                습도 {weather?.humidity || 75}% · 강수 {weather?.rainProb || 20}%
+              </p>
+            </div>
+          </div>
+
+          {/* AQI (Air Quality Index) Widget */}
+          <div className="bg-navy-900/90 border border-navy-700/80 rounded-2xl p-3 flex items-center space-x-2.5 shadow-md backdrop-blur-md">
+            <div className="p-2 rounded-xl bg-navy-800 border border-navy-700">
+              <span className="text-lg">🍃</span>
+            </div>
+            <div>
+              <div className="flex items-center space-x-1 text-[10px] font-bold text-slate-400 uppercase">
+                <span>Hanoi AQI (미세먼지)</span>
+              </div>
+              <p className="text-xs font-black text-white flex items-center gap-1">
+                AQI {aqi?.aqi || 68}
+                <span className={`text-[9px] px-1.5 py-0.2 rounded border font-semibold ${getAqiColorBadge(aqi?.aqi)}`}>
+                  {aqi?.status?.split(' ')[0] || '보통'}
+                </span>
+              </p>
+              <p className="text-[9px] text-slate-400">
+                PM2.5: {aqi?.pm25 || 28}µg/m³
               </p>
             </div>
           </div>
 
           {/* Exchange Rates Widget */}
-          <div className="bg-navy-900/90 border border-navy-700/80 rounded-2xl p-3.5 flex items-center space-x-3 shadow-md backdrop-blur-md">
-            <div className="p-2.5 rounded-xl bg-navy-800 border border-navy-700">
-              <DollarSign className="w-5 h-5 text-emerald-400" />
+          <div className="bg-navy-900/90 border border-navy-700/80 rounded-2xl p-3 flex items-center space-x-2.5 shadow-md backdrop-blur-md">
+            <div className="p-2 rounded-xl bg-navy-800 border border-navy-700">
+              <DollarSign className="w-4 h-4 text-emerald-400" />
             </div>
             <div>
-              <div className="flex items-center space-x-1.5 text-[11px] font-bold text-slate-400 uppercase">
+              <div className="flex items-center space-x-1 text-[10px] font-bold text-slate-400 uppercase">
                 <TrendingUp className="w-3 h-3 text-emerald-400" />
                 <span>Live Exchange Rate</span>
               </div>
-              <p className="text-xs sm:text-sm font-black text-emerald-400">
+              <p className="text-xs font-black text-emerald-400">
                 1,000 KRW = {Math.round((exchangeRates?.krwVnd || 18.52) * 1000).toLocaleString()} VND
               </p>
-              <p className="text-[10px] text-slate-400">
+              <p className="text-[9px] text-slate-400">
                 1 USD = {(exchangeRates?.usdVnd || 25420).toLocaleString()} VND
               </p>
             </div>

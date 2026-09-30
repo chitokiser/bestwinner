@@ -6,6 +6,8 @@ import ArticleDetailModal from '../components/Megazine/ArticleDetailModal';
 import BestPickCard from '../components/Megazine/BestPickCard';
 import { getArticles } from '../services/megazineService';
 import { fetchHanoiWeather, fetchExchangeRates } from '../services/weatherExchangeService';
+import { fetchHanoiAQI } from '../services/airQualityService';
+import { VIETNAM_BANK_RATES, calculateInterest } from '../services/vietnamBankRatesService';
 import { DEFAULT_CATEGORIES, INITIAL_BEST_PICKS } from '../data/megazineInitialData';
 import { 
   Search, 
@@ -16,29 +18,39 @@ import {
   Newspaper,
   Star,
   Layers,
-  ArrowRight
+  ArrowRight,
+  Landmark,
+  Calculator
 } from 'lucide-react';
 
 export default function MegazinePage({ t }) {
   const [articles, setArticles] = useState([]);
   const [weather, setWeather] = useState(null);
   const [exchangeRates, setExchangeRates] = useState(null);
+  const [aqi, setAqi] = useState(null);
   const [activeCategory, setActiveCategory] = useState('ALL');
   const [activeEdition, setActiveEdition] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Deposit Calculator State
+  const [calcAmount, setCalcAmount] = useState('100000000'); // 1억 VND default
+  const [calcMonths, setCalcMonths] = useState(12);
+  const [selectedBankId, setSelectedBankId] = useState('shinhan-vn');
+
   const loadData = async () => {
     setLoading(true);
-    const [arts, w, ex] = await Promise.all([
+    const [arts, w, ex, air] = await Promise.all([
       getArticles(),
       fetchHanoiWeather(),
-      fetchExchangeRates()
+      fetchExchangeRates(),
+      fetchHanoiAQI()
     ]);
     setArticles(arts);
     setWeather(w);
     setExchangeRates(ex);
+    setAqi(air);
     setLoading(false);
   };
 
@@ -61,8 +73,8 @@ export default function MegazinePage({ t }) {
   return (
     <div className="min-h-screen bg-navy-950 pb-20">
       
-      {/* Top Header Banner with Weather & Rates */}
-      <MegazineHeaderBanner weather={weather} exchangeRates={exchangeRates} t={t} />
+      {/* Top Header Banner with Weather, AQI & Rates */}
+      <MegazineHeaderBanner weather={weather} exchangeRates={exchangeRates} aqi={aqi} t={t} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         
@@ -147,8 +159,130 @@ export default function MegazinePage({ t }) {
                 <span>{cat.label}</span>
               </button>
             ))}
+
+            {/* Vietnam Bank Rates Tab Chip */}
+            <button
+              onClick={() => setActiveCategory('BANK_RATES')}
+              className={`px-4 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-1.5 ${
+                activeCategory === 'BANK_RATES'
+                  ? 'bg-emerald-500 text-navy-950 shadow-lg'
+                  : 'bg-navy-900 text-slate-300 hover:bg-navy-800 border border-navy-800'
+              }`}
+            >
+              <Landmark className="w-3.5 h-3.5" />
+              <span>🏦 베트남 은행 예금 금리</span>
+            </button>
           </div>
         </div>
+
+        {/* BANK_RATES Special Interactive Section */}
+        {activeCategory === 'BANK_RATES' && (
+          <div className="bg-navy-900/90 border border-emerald-500/30 rounded-3xl p-6 shadow-xl space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-navy-800 pb-4">
+              <div>
+                <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/30 mb-2">
+                  <Landmark className="w-3.5 h-3.5" />
+                  <span>VIETNAM BANK DEPOSIT INTEREST RATES</span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-white">베트남 주요 은행 예금 금리 비교 & 이자 계산기</h2>
+                <p className="text-xs text-slate-400 mt-1">베트남 거주 교민을 위한 신한베트남은행, 우리베트남은행 및 주요 국영은행 예금 금리 안내 (개인 예금 이자 소득세 0% 비과세)</p>
+              </div>
+            </div>
+
+            {/* Bank Rates Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {VIETNAM_BANK_RATES.map(bank => (
+                <div 
+                  key={bank.id}
+                  onClick={() => setSelectedBankId(bank.id)}
+                  className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+                    selectedBankId === bank.id 
+                      ? 'bg-navy-800 border-gold-500 ring-2 ring-gold-500/40' 
+                      : 'bg-navy-950 border-navy-800 hover:border-navy-700'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-2xl">{bank.logo}</span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gold-500/20 text-gold-400 border border-gold-500/30">
+                      {bank.badge}
+                    </span>
+                  </div>
+                  <h3 className="text-xs font-bold text-white mb-1 line-clamp-1">{bank.name}</h3>
+                  <p className="text-[10px] text-slate-400 mb-3">{bank.desc}</p>
+                  
+                  <div className="space-y-1.5 border-t border-navy-800 pt-2 text-xs">
+                    <div className="flex justify-between text-slate-300">
+                      <span>1개월 예금</span>
+                      <span className="font-bold text-white">{bank.rate1M}%</span>
+                    </div>
+                    <div className="flex justify-between text-slate-300">
+                      <span>6개월 예금</span>
+                      <span className="font-bold text-cyan-400">{bank.rate6M}%</span>
+                    </div>
+                    <div className="flex justify-between text-slate-300">
+                      <span>12개월 예금</span>
+                      <span className="font-bold text-emerald-400">{bank.rate12M}%</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Interest Calculator Widget */}
+            {(() => {
+              const currentBank = VIETNAM_BANK_RATES.find(b => b.id === selectedBankId) || VIETNAM_BANK_RATES[0];
+              const rateToUse = calcMonths === 1 ? currentBank.rate1M : calcMonths === 6 ? currentBank.rate6M : currentBank.rate12M;
+              const result = calculateInterest(calcAmount, rateToUse, calcMonths);
+              return (
+                <div className="bg-navy-950 p-5 rounded-2xl border border-navy-800 space-y-4">
+                  <div className="flex items-center space-x-2 text-gold-400 font-bold text-sm">
+                    <Calculator className="w-4 h-4" />
+                    <span>선택 은행: {currentBank.name} 이자 자동 계산</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                      <label className="text-[11px] font-bold text-slate-400 block mb-1">예치 금액 (VND)</label>
+                      <input 
+                        type="number"
+                        value={calcAmount}
+                        onChange={(e) => setCalcAmount(e.target.value)}
+                        className="w-full bg-navy-900 border border-navy-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-gold-500"
+                        placeholder="예: 100000000"
+                      />
+                      <span className="text-[10px] text-slate-400 mt-1 block">
+                        = 약 {(Number(calcAmount) / 18520).toFixed(0).toLocaleString()} 만원 (KRW)
+                      </span>
+                    </div>
+
+                    <div>
+                      <label className="text-[11px] font-bold text-slate-400 block mb-1">예치 기간</label>
+                      <select
+                        value={calcMonths}
+                        onChange={(e) => setCalcMonths(Number(e.target.value))}
+                        className="w-full bg-navy-900 border border-navy-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-gold-500"
+                      >
+                        <option value={1}>1개월 (연 {currentBank.rate1M}%)</option>
+                        <option value={6}>6개월 (연 {currentBank.rate6M}%)</option>
+                        <option value={12}>12개월 (연 {currentBank.rate12M}%)</option>
+                      </select>
+                    </div>
+
+                    <div className="bg-navy-900 p-3 rounded-xl border border-gold-500/30 flex flex-col justify-center">
+                      <span className="text-[10px] text-slate-400">만기 세후 예상 이자 수령액 (0% 비과세)</span>
+                      <span className="text-base font-black text-emerald-400">
+                        {result.netInterest.toLocaleString()} VND
+                      </span>
+                      <span className="text-[10px] text-gold-400">
+                        = 약 {Math.round(result.netInterest / 18.52).toLocaleString()} 원 (KRW)
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+        )}
 
         {/* BEST PICK Section if category is BEST_PICK */}
         {activeCategory === 'BEST_PICK' && (
