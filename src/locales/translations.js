@@ -5,6 +5,7 @@ export const translations = {
       business: "Lĩnh vực kinh doanh",
       services: "Dịch vụ",
       aiManagement: "AI 경영관리 (AI Management)",
+      megazine: "BEST MEGAZINE (Tạp chí AI)",
       login: "Đăng nhập Google",
       logout: "Đăng xuất",
       callUs: "Hotline: 0988-123-456"
@@ -227,6 +228,7 @@ export const translations = {
       business: "사업분야",
       services: "서비스",
       aiManagement: "AI경영관리",
+      megazine: "BEST MEGAZINE (AI 매거진)",
       login: "구글 로그인",
       logout: "로그아웃",
       callUs: "직통전화: 0988-123-456"
@@ -449,6 +451,7 @@ export const translations = {
       business: "Business Areas",
       services: "Services",
       aiManagement: "AI Management",
+      megazine: "BEST MEGAZINE (AI Expat Magazine)",
       login: "Google Login",
       logout: "Logout",
       callUs: "Hotline: 0988-123-456"

@@ -42,6 +42,12 @@ export default function Header({ currentLang, setLang, t }) {
       name: isVi ? 'Quản lý AI (AI Management System)' : isKo ? 'AI경영관리 (AI Management System)' : 'AI Management System', 
       tag: 'AI Enterprise' 
     },
+    { 
+      id: 'megazine', 
+      path: '/megazine', 
+      name: isVi ? 'BEST MEGAZINE (Tạp chí AI)' : isKo ? 'BEST MEGAZINE (AI 매거진)' : 'BEST MEGAZINE (AI Expat Magazine)', 
+      tag: '5x Daily AI' 
+    },
   ];
 
   const handleNavClick = (path) => {
