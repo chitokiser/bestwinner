@@ -27,7 +27,10 @@ import {
   Cpu,
   ShieldAlert,
   Save,
-  RefreshCw
+  RefreshCw,
+  X,
+  FileText,
+  Eye
 } from 'lucide-react';
 
 export default function MegazineAdminPage({ t }) {
@@ -35,8 +38,11 @@ export default function MegazineAdminPage({ t }) {
   const [articles, setArticles] = useState([]);
   const [settings, setSettings] = useState(getMegazineSettings());
   const [loading, setLoading] = useState(false);
-  const [selectedArticle, setSelectedArticle] = useState(null);
   
+  // Article Editor Modal State
+  const [editingArticle, setEditingArticle] = useState(null); // Article object being edited/created
+  const [isSaving, setIsSaving] = useState(false);
+
   // Manual AI Article Generator Form State
   const [genTopic, setGenTopic] = useState('');
   const [genCategory, setGenCategory] = useState('BUSINESS');
@@ -69,10 +75,50 @@ export default function MegazineAdminPage({ t }) {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('정말 이 기사를 삭제하시겠습니까?')) {
+    if (window.confirm('정말 이 기사를 삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다.')) {
       await removeArticle(id);
       loadData();
+      if (editingArticle && editingArticle.id === id) {
+        setEditingArticle(null);
+      }
     }
+  };
+
+  const handleOpenNewArticleForm = () => {
+    setEditingArticle({
+      id: '',
+      title: '',
+      subtitle: '',
+      category: 'BUSINESS',
+      edition: 'BEST BUSINESS',
+      summary: '',
+      content: '',
+      whyItMatters: '',
+      impactOnExpats: '',
+      actionRequired: '',
+      thumbnail: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80',
+      status: 'published',
+      factChecked: true,
+      importanceScore: 90
+    });
+  };
+
+  const handleSaveArticle = async (e) => {
+    e.preventDefault();
+    if (!editingArticle.title.trim()) {
+      alert('기사 제목을 입력해주세요.');
+      return;
+    }
+    setIsSaving(true);
+    try {
+      await saveArticle(editingArticle);
+      alert('✓ 기사 내용이 성공적으로 저장되었습니다.');
+      setEditingArticle(null);
+      loadData();
+    } catch (err) {
+      alert('기사 저장 중 오류가 발생했습니다: ' + err.message);
+    }
+    setIsSaving(false);
   };
 
   const handleTriggerManualAi = async (e) => {
@@ -127,6 +173,13 @@ export default function MegazineAdminPage({ t }) {
           </div>
 
           <div className="flex items-center space-x-2 text-xs">
+            <button
+              onClick={handleOpenNewArticleForm}
+              className="px-3.5 py-2 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-black flex items-center space-x-1.5 shadow-md transition-all"
+            >
+              <Plus className="w-4 h-4" />
+              <span>기사 수동 직접 등록</span>
+            </button>
             <span className="bg-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-xl border border-emerald-500/30 font-bold flex items-center">
               <CheckCircle2 className="w-3.5 h-3.5 mr-1" />
               API Operational
@@ -141,7 +194,7 @@ export default function MegazineAdminPage({ t }) {
         <div className="flex items-center space-x-2 border-b border-navy-800 pb-4 overflow-x-auto">
           {[
             { id: 'DASHBOARD', label: '대시보드', icon: LayoutDashboard },
-            { id: 'ARTICLES', label: '기사 관리', icon: Newspaper },
+            { id: 'ARTICLES', label: '기사 관리 (수정·삭제)', icon: Newspaper },
             { id: 'GENERATE', label: '수동 AI 기사 생성', icon: Sparkles },
             { id: 'SCHEDULE', label: '발행 스케줄 관리', icon: Clock },
             { id: 'PROMPTS', label: 'AI Prompt 관리', icon: Sliders }
@@ -191,11 +244,18 @@ export default function MegazineAdminPage({ t }) {
               <h3 className="text-base font-bold text-white">빠른 제어</h3>
               <div className="flex flex-wrap gap-3">
                 <button
+                  onClick={handleOpenNewArticleForm}
+                  className="px-4 py-2.5 rounded-xl bg-gold-500 text-navy-950 text-xs font-bold flex items-center space-x-2 shadow-md hover:bg-gold-400"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>새 기사 직접 작성하기</span>
+                </button>
+                <button
                   onClick={() => setActiveTab('GENERATE')}
-                  className="px-4 py-2.5 rounded-xl bg-gold-500 text-navy-950 text-xs font-bold flex items-center space-x-2"
+                  className="px-4 py-2.5 rounded-xl bg-navy-950 border border-gold-500/30 text-gold-400 text-xs font-bold flex items-center space-x-2"
                 >
                   <Sparkles className="w-4 h-4" />
-                  <span>새 AI 기사 작성하기</span>
+                  <span>AI 기사 자동 생성 요청</span>
                 </button>
                 <button
                   onClick={loadData}
@@ -211,10 +271,20 @@ export default function MegazineAdminPage({ t }) {
 
         {/* Tab 2: ARTICLES MANAGEMENT */}
         {activeTab === 'ARTICLES' && (
-          <div className="bg-navy-900 rounded-3xl border border-navy-800 overflow-hidden shadow-xl">
+          <div className="bg-navy-900 rounded-3xl border border-navy-800 overflow-hidden shadow-xl space-y-4">
             <div className="p-5 border-b border-navy-800 flex items-center justify-between">
-              <h3 className="text-base font-bold text-white">전체 기사 목록 및 상태 제어</h3>
-              <span className="text-xs text-slate-400">총 {articles.length}건</span>
+              <div>
+                <h3 className="text-base font-bold text-white">기사 목록 및 수정·삭제 제어</h3>
+                <p className="text-xs text-slate-400 mt-0.5">각 기사의 [수정] 버튼을 누르면 제목, 요약, 본문 및 주요 항목을 직접 편집할 수 있습니다.</p>
+              </div>
+              
+              <button
+                onClick={handleOpenNewArticleForm}
+                className="px-3.5 py-2 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 text-xs font-bold flex items-center space-x-1.5 shadow-md"
+              >
+                <Plus className="w-4 h-4" />
+                <span>새 기사 등록</span>
+              </button>
             </div>
 
             <div className="overflow-x-auto">
@@ -225,7 +295,7 @@ export default function MegazineAdminPage({ t }) {
                     <th className="p-4">카테고리</th>
                     <th className="p-4">상태</th>
                     <th className="p-4">작성일</th>
-                    <th className="p-4 text-right">제어</th>
+                    <th className="p-4 text-right">수정 / 삭제 / 발행</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-navy-800">
@@ -250,18 +320,32 @@ export default function MegazineAdminPage({ t }) {
                       <td className="p-4 text-slate-400">
                         {new Date(art.publishedAt || art.createdAt).toLocaleDateString()}
                       </td>
-                      <td className="p-4 text-right space-x-1">
+                      <td className="p-4 text-right space-x-1.5">
+                        {/* Edit Button */}
+                        <button
+                          onClick={() => setEditingArticle({ ...art })}
+                          className="px-2.5 py-1.5 bg-navy-950 hover:bg-navy-800 text-gold-400 border border-gold-500/40 rounded-xl font-bold flex items-center space-x-1 inline-flex"
+                          title="기사 수정"
+                        >
+                          <Edit3 className="w-3.5 h-3.5" />
+                          <span>수정</span>
+                        </button>
+
+                        {/* Status Change Button */}
                         {art.status !== 'published' && (
                           <button
                             onClick={() => handleStatusChange(art.id, 'published')}
-                            className="px-2.5 py-1 bg-emerald-500 text-navy-950 font-bold rounded-lg hover:bg-emerald-400"
+                            className="px-2.5 py-1.5 bg-emerald-500 text-navy-950 font-bold rounded-xl hover:bg-emerald-400 inline-flex"
                           >
-                            승인/발행
+                            발행
                           </button>
                         )}
+
+                        {/* Delete Button */}
                         <button
                           onClick={() => handleDelete(art.id)}
-                          className="p-1.5 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30"
+                          className="p-1.5 bg-red-500/20 text-red-400 rounded-xl hover:bg-red-500/30 border border-red-500/30 inline-flex"
+                          title="기사 삭제"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -422,6 +506,213 @@ export default function MegazineAdminPage({ t }) {
         )}
 
       </div>
+
+      {/* ARTICLE EDIT / CREATE MODAL */}
+      {editingArticle && (
+        <div className="fixed inset-0 z-50 bg-navy-950/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+          <div 
+            className="bg-navy-900 border border-gold-500/40 rounded-3xl max-w-4xl w-full max-h-[92vh] flex flex-col overflow-hidden shadow-2xl relative animate-in fade-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Sticky Header */}
+            <div className="p-5 border-b border-navy-800 flex items-center justify-between bg-navy-950/90 sticky top-0 z-10">
+              <div className="flex items-center space-x-2">
+                <Edit3 className="w-5 h-5 text-gold-400" />
+                <h2 className="text-lg font-black text-white">
+                  {editingArticle.id ? '기사 내용 수정 (Edit Article)' : '새 기사 직접 등록 (New Article)'}
+                </h2>
+              </div>
+              <button
+                onClick={() => setEditingArticle(null)}
+                className="p-2 rounded-xl bg-navy-900 hover:bg-navy-800 text-slate-400 hover:text-white border border-navy-700"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Body Form */}
+            <form onSubmit={handleSaveArticle} className="p-6 overflow-y-auto space-y-5 text-xs">
+              
+              {/* Title & Subtitle */}
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-slate-300 font-bold mb-1">기사 제목 (Title) *</label>
+                  <input
+                    type="text"
+                    value={editingArticle.title || ''}
+                    onChange={(e) => setEditingArticle({ ...editingArticle, title: e.target.value })}
+                    placeholder="기사 제목을 입력하세요"
+                    className="w-full bg-navy-950 border border-navy-700 focus:border-gold-500 rounded-xl p-3 text-white outline-none text-sm font-bold"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-slate-300 font-bold mb-1">부제목 (Subtitle)</label>
+                  <input
+                    type="text"
+                    value={editingArticle.subtitle || ''}
+                    onChange={(e) => setEditingArticle({ ...editingArticle, subtitle: e.target.value })}
+                    placeholder="부제목을 입력하세요"
+                    className="w-full bg-navy-950 border border-navy-700 focus:border-gold-500 rounded-xl p-2.5 text-slate-200 outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Category, Edition & Status */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-slate-300 font-bold mb-1">카테고리 (Category)</label>
+                  <select
+                    value={editingArticle.category || 'BUSINESS'}
+                    onChange={(e) => setEditingArticle({ ...editingArticle, category: e.target.value })}
+                    className="w-full bg-navy-950 border border-navy-700 rounded-xl p-2.5 text-white outline-none font-bold"
+                  >
+                    {DEFAULT_CATEGORIES.map(c => (
+                      <option key={c.id} value={c.id}>{c.label}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-slate-300 font-bold mb-1">발행 에디션 (Edition)</label>
+                  <select
+                    value={editingArticle.edition || 'BEST BUSINESS'}
+                    onChange={(e) => setEditingArticle({ ...editingArticle, edition: e.target.value })}
+                    className="w-full bg-navy-950 border border-navy-700 rounded-xl p-2.5 text-white outline-none font-bold"
+                  >
+                    <option value="BEST MORNING">BEST MORNING (07:00)</option>
+                    <option value="BEST BUSINESS">BEST BUSINESS (11:00)</option>
+                    <option value="BEST LIFE">BEST LIFE (14:00)</option>
+                    <option value="BEST NOW">BEST NOW (18:00)</option>
+                    <option value="BEST MEGAZINE">BEST MEGAZINE (21:00)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-slate-300 font-bold mb-1">발행 상태 (Status)</label>
+                  <select
+                    value={editingArticle.status || 'published'}
+                    onChange={(e) => setEditingArticle({ ...editingArticle, status: e.target.value })}
+                    className="w-full bg-navy-950 border border-navy-700 rounded-xl p-2.5 text-white outline-none font-bold"
+                  >
+                    <option value="published">게시 완료 (published)</option>
+                    <option value="review">검수 대기 (review)</option>
+                    <option value="draft">임시 저장 (draft)</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Thumbnail URL */}
+              <div>
+                <label className="block text-slate-300 font-bold mb-1">대표 이미지 URL (Thumbnail URL)</label>
+                <input
+                  type="text"
+                  value={editingArticle.thumbnail || ''}
+                  onChange={(e) => setEditingArticle({ ...editingArticle, thumbnail: e.target.value })}
+                  placeholder="https://images.unsplash.com/..."
+                  className="w-full bg-navy-950 border border-navy-700 rounded-xl p-2.5 text-white outline-none font-mono"
+                />
+              </div>
+
+              {/* Structured News Sections */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-navy-950 p-4 rounded-2xl border border-navy-800">
+                <div>
+                  <label className="block text-amber-400 font-bold mb-1">왜 중요한가 (Why it matters)</label>
+                  <textarea
+                    rows={3}
+                    value={editingArticle.whyItMatters || ''}
+                    onChange={(e) => setEditingArticle({ ...editingArticle, whyItMatters: e.target.value })}
+                    className="w-full bg-navy-900 border border-navy-700 rounded-xl p-2 text-white outline-none"
+                    placeholder="이 기사가 중요한 이유..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-cyan-400 font-bold mb-1">교민 영향 (Expat impact)</label>
+                  <textarea
+                    rows={3}
+                    value={editingArticle.impactOnExpats || ''}
+                    onChange={(e) => setEditingArticle({ ...editingArticle, impactOnExpats: e.target.value })}
+                    className="w-full bg-navy-900 border border-navy-700 rounded-xl p-2 text-white outline-none"
+                    placeholder="교민들에게 미치는 실질적 영향..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-emerald-400 font-bold mb-1">행정/실천 가이드 (Action)</label>
+                  <textarea
+                    rows={3}
+                    value={editingArticle.actionRequired || ''}
+                    onChange={(e) => setEditingArticle({ ...editingArticle, actionRequired: e.target.value })}
+                    className="w-full bg-navy-900 border border-navy-700 rounded-xl p-2 text-white outline-none"
+                    placeholder="준비해야 할 체크리스트..."
+                  />
+                </div>
+              </div>
+
+              {/* Summary */}
+              <div>
+                <label className="block text-slate-300 font-bold mb-1">기사 요약 (Summary)</label>
+                <textarea
+                  rows={2}
+                  value={editingArticle.summary || ''}
+                  onChange={(e) => setEditingArticle({ ...editingArticle, summary: e.target.value })}
+                  className="w-full bg-navy-950 border border-navy-700 rounded-xl p-2.5 text-white outline-none"
+                  placeholder="카드 뉴스용 한눈에 보는 기사 요약"
+                />
+              </div>
+
+              {/* Main Content Body */}
+              <div>
+                <label className="block text-gold-400 font-black text-sm mb-1">기사 본문 내용 (Main Content - Markdown 지원) *</label>
+                <textarea
+                  rows={12}
+                  value={editingArticle.content || ''}
+                  onChange={(e) => setEditingArticle({ ...editingArticle, content: e.target.value })}
+                  placeholder="기사 전체 본문을 입력하세요. 마크다운(### 제목, - 리스트, **강조**) 작성이 가능합니다."
+                  className="w-full bg-navy-950 border border-navy-700 focus:border-gold-500 rounded-xl p-3.5 text-white outline-none leading-relaxed font-sans text-xs"
+                />
+              </div>
+
+              {/* Modal Footer Controls */}
+              <div className="pt-4 border-t border-navy-800 flex items-center justify-between gap-3">
+                {editingArticle.id ? (
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(editingArticle.id)}
+                    className="px-4 py-2.5 bg-red-500/20 hover:bg-red-500/40 text-red-400 font-bold rounded-xl border border-red-500/30 flex items-center space-x-1.5"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    <span>기사 삭제</span>
+                  </button>
+                ) : <div />}
+
+                <div className="flex items-center space-x-2">
+                  <button
+                    type="button"
+                    onClick={() => setEditingArticle(null)}
+                    className="px-5 py-2.5 bg-navy-950 hover:bg-navy-800 text-slate-300 font-bold rounded-xl border border-navy-700"
+                  >
+                    취소
+                  </button>
+
+                  <button
+                    type="submit"
+                    disabled={isSaving}
+                    className="px-6 py-2.5 bg-gold-500 hover:bg-gold-400 text-navy-950 font-black rounded-xl shadow-lg flex items-center space-x-1.5"
+                  >
+                    {isSaving ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                    <span>기사 저장 및 동기화</span>
+                  </button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

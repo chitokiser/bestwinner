@@ -16,7 +16,8 @@ import {
   Lock,
   Send,
   User,
-  LogIn
+  LogIn,
+  Edit3
 } from 'lucide-react';
 import BestPickCard from './BestPickCard';
 import AudioBriefingPlayer from './AudioBriefingPlayer';
@@ -200,6 +201,19 @@ BEST MEGAZINE AI 취재팀은 하루 5회(07:00, 11:00, 14:00, 18:00, 21:00) 베
           </div>
 
           <div className="flex items-center space-x-2">
+            {/* Admin Edit Shortcut Button */}
+            <button
+              onClick={() => {
+                onClose();
+                window.location.hash = '#/megazine/admin';
+              }}
+              className="p-2 rounded-xl bg-navy-900 hover:bg-gold-500 hover:text-navy-950 text-gold-400 border border-gold-500/40 flex items-center space-x-1.5 text-xs font-bold transition-all"
+              title="관리자 기사 수정"
+            >
+              <Edit3 className="w-4 h-4" />
+              <span className="hidden sm:inline">기사 수정</span>
+            </button>
+
             {/* Like Button Header */}
             <button
               onClick={handleToggleLike}
