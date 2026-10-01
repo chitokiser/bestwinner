@@ -7,11 +7,12 @@ import {
   CheckCircle2, 
   Clock, 
   Bookmark,
-  Flame
+  Flame,
+  Trash2
 } from 'lucide-react';
 import { getDefaultThumbnail } from '../../services/megazineService';
 
-export default function ArticleCard({ article, onOpen, onShare }) {
+export default function ArticleCard({ article, onOpen, onShare, onDelete }) {
   const publishedDate = article.publishedAt 
     ? new Date(article.publishedAt).toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })
     : '방금 전';
@@ -46,8 +47,24 @@ export default function ArticleCard({ article, onOpen, onShare }) {
             )}
           </div>
 
+          {/* Quick Delete Button for Admins / Users */}
+          {onDelete && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                if (window.confirm(`'${article.title}' 기사를 삭제하시겠습니까?`)) {
+                  onDelete(article);
+                }
+              }}
+              className="absolute top-3 right-3 p-1.5 rounded-full bg-navy-950/90 text-rose-400 hover:text-white hover:bg-rose-600 border border-rose-500/40 transition-all shadow-md backdrop-blur-md z-10"
+              title="기사 삭제"
+            >
+              <Trash2 className="w-3.5 h-3.5 text-rose-400 hover:text-white" />
+            </button>
+          )}
+
           {/* AI Fact Checked Badge */}
-          {article.factChecked && (
+          {article.factChecked && !onDelete && (
             <div className="absolute top-3 right-3 bg-navy-950/90 text-emerald-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-500/40 flex items-center space-x-1 shadow-md backdrop-blur-md">
               <CheckCircle2 className="w-3 h-3 text-emerald-400" />
               <span>AI FACT CHECKED</span>

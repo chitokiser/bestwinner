@@ -33,6 +33,29 @@ export function ensureArticleThumbnail(article) {
   return article;
 }
 
+export function deduplicateArticles(list) {
+  if (!Array.isArray(list)) return [];
+  const seenIds = new Set();
+  const seenTitles = new Set();
+  const result = [];
+
+  for (const art of list) {
+    if (!art || !art.title) continue;
+    const idStr = String(art.id);
+    const normTitle = art.title.replace(/\s+/g, '').toLowerCase();
+
+    if (seenIds.has(idStr) || seenTitles.has(normTitle)) {
+      continue; // Skip duplicate!
+    }
+
+    seenIds.add(idStr);
+    seenTitles.add(normTitle);
+    result.push(art);
+  }
+
+  return result;
+}
+
 export const DEFAULT_SCHEDULE_TIMES = {
   MORNING: '07:00',
   BUSINESS: '11:00',
@@ -78,10 +101,10 @@ export async function getArticles() {
     list = [...INITIAL_ARTICLES];
   }
 
-  // Ensure every article has a valid thumbnail
-  const processedList = list.map(ensureArticleThumbnail);
+  // Ensure every article has a valid thumbnail & deduplicate by title/ID
+  const processedList = deduplicateArticles(list.map(ensureArticleThumbnail));
 
-  // Sync back to local storage if any article was missing a thumbnail
+  // Sync back to local storage
   if (typeof window !== 'undefined') {
     localStorage.setItem(LOCAL_STORAGE_ARTICLES_KEY, JSON.stringify(processedList));
   }
@@ -158,17 +181,29 @@ export async function updateArticleStatus(id, newStatus) {
 /**
  * Delete Article
  */
-export async function removeArticle(id) {
+export async function removeArticle(idOrTitle) {
   try {
-    await deleteDocument('articles', id);
+    await deleteDocument('articles', idOrTitle);
   } catch (e) {
     console.warn('[MegazineService] Firebase delete error:', e);
   }
 
   if (typeof window !== 'undefined') {
-    const articles = await getArticles();
-    const filtered = articles.filter(a => String(a.id) !== String(id));
-    localStorage.setItem(LOCAL_STORAGE_ARTICLES_KEY, JSON.stringify(filtered));
+    const raw = localStorage.getItem(LOCAL_STORAGE_ARTICLES_KEY);
+    if (raw) {
+      try {
+        const articles = JSON.parse(raw);
+        const targetStr = String(idOrTitle).trim();
+        const normTarget = targetStr.replace(/\s+/g, '').toLowerCase();
+        
+        const filtered = articles.filter(a => {
+          const normId = String(a.id || '').replace(/\s+/g, '').toLowerCase();
+          const normTitle = String(a.title || '').replace(/\s+/g, '').toLowerCase();
+          return normId !== normTarget && normTitle !== normTarget && String(a.id) !== targetStr;
+        });
+        localStorage.setItem(LOCAL_STORAGE_ARTICLES_KEY, JSON.stringify(filtered));
+      } catch (err) {}
+    }
   }
   return true;
 }

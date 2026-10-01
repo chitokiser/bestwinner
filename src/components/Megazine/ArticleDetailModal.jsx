@@ -17,14 +17,15 @@ import {
   Send,
   User,
   LogIn,
-  Edit3
+  Edit3,
+  Trash2
 } from 'lucide-react';
 import BestPickCard from './BestPickCard';
 import AudioBriefingPlayer from './AudioBriefingPlayer';
 import { INITIAL_BEST_PICKS } from '../../data/megazineInitialData';
-import { getDefaultThumbnail } from '../../services/megazineService';
+import { getDefaultThumbnail, removeArticle } from '../../services/megazineService';
 
-export default function ArticleDetailModal({ article, onClose, user, onOpenAuth }) {
+export default function ArticleDetailModal({ article, onClose, user, onOpenAuth, onDeleteArticle }) {
   const [copied, setCopied] = useState(false);
   const [authRequiredNotice, setAuthRequiredNotice] = useState(null); // String notice when non-member clicks
 
@@ -213,6 +214,24 @@ BEST MEGAZINE AI 취재팀은 하루 5회(07:00, 11:00, 14:00, 18:00, 21:00) 베
             >
               <Edit3 className="w-4 h-4" />
               <span className="hidden sm:inline">기사 수정</span>
+            </button>
+
+            {/* Delete Article Button */}
+            <button
+              onClick={async () => {
+                if (window.confirm(`'${article.title}' 기사를 정말 삭제하시겠습니까?`)) {
+                  await removeArticle(article.id);
+                  if (onDeleteArticle) {
+                    onDeleteArticle(article.id);
+                  }
+                  onClose();
+                }
+              }}
+              className="p-2 rounded-xl bg-navy-900 hover:bg-rose-600 hover:text-white text-rose-400 border border-rose-500/40 flex items-center space-x-1.5 text-xs font-bold transition-all"
+              title="기사 즉시 삭제"
+            >
+              <Trash2 className="w-4 h-4" />
+              <span className="hidden sm:inline">기사 삭제</span>
             </button>
 
             {/* Like Button Header */}

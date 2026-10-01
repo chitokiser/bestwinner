@@ -4,7 +4,7 @@ import MegazineHeaderBanner from '../components/Megazine/MegazineHeaderBanner';
 import ArticleCard from '../components/Megazine/ArticleCard';
 import ArticleDetailModal from '../components/Megazine/ArticleDetailModal';
 import BestPickCard from '../components/Megazine/BestPickCard';
-import { getArticles, checkAndAutoPublishArticles, triggerAiArticleJob } from '../services/megazineService';
+import { getArticles, checkAndAutoPublishArticles, triggerAiArticleJob, removeArticle } from '../services/megazineService';
 import { fetchHanoiWeather, fetchExchangeRates } from '../services/weatherExchangeService';
 import { fetchHanoiAQI } from '../services/airQualityService';
 import { VIETNAM_BANK_RATES, calculateInterest } from '../services/vietnamBankRatesService';
@@ -78,6 +78,16 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
       console.error('[Manual AI Generate Error]', err);
     }
     setIsAutoPublishing(false);
+  };
+
+  const handleDeleteArticle = async (articleOrId) => {
+    const targetId = typeof articleOrId === 'object' ? articleOrId.id : articleOrId;
+    const targetTitle = typeof articleOrId === 'object' ? articleOrId.title : targetId;
+    await removeArticle(targetId || targetTitle);
+    if (selectedArticle && (selectedArticle.id === targetId || selectedArticle.title === targetTitle)) {
+      setSelectedArticle(null);
+    }
+    await loadData();
   };
 
   useEffect(() => {
@@ -366,6 +376,7 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
                 article={article}
                 onOpen={(art) => setSelectedArticle(art)}
                 onShare={(art) => setSelectedArticle(art)}
+                onDelete={handleDeleteArticle}
                 user={user}
                 onOpenAuth={onOpenAuth}
               />
@@ -382,6 +393,7 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
           onClose={() => setSelectedArticle(null)}
           user={user}
           onOpenAuth={onOpenAuth}
+          onDeleteArticle={handleDeleteArticle}
         />
       )}
 
