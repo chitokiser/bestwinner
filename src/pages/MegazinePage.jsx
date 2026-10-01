@@ -4,7 +4,7 @@ import MegazineHeaderBanner from '../components/Megazine/MegazineHeaderBanner';
 import ArticleCard from '../components/Megazine/ArticleCard';
 import ArticleDetailModal from '../components/Megazine/ArticleDetailModal';
 import BestPickCard from '../components/Megazine/BestPickCard';
-import { getArticles } from '../services/megazineService';
+import { getArticles, checkAndAutoPublishArticles, triggerAiArticleJob } from '../services/megazineService';
 import { fetchHanoiWeather, fetchExchangeRates } from '../services/weatherExchangeService';
 import { fetchHanoiAQI } from '../services/airQualityService';
 import { VIETNAM_BANK_RATES, calculateInterest } from '../services/vietnamBankRatesService';
@@ -20,7 +20,8 @@ import {
   Layers,
   ArrowRight,
   Landmark,
-  Calculator
+  Calculator,
+  Zap
 } from 'lucide-react';
 
 export default function MegazinePage({ t, user, onOpenAuth }) {
@@ -33,6 +34,7 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAutoPublishing, setIsAutoPublishing] = useState(false);
 
   // Deposit Calculator State
   const [calcAmount, setCalcAmount] = useState('100000000'); // 1억 VND default
@@ -41,6 +43,14 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
 
   const loadData = async () => {
     setLoading(true);
+    // 1. Run automated schedule check and publish due articles
+    try {
+      await checkAndAutoPublishArticles();
+    } catch (e) {
+      console.warn('[MegazinePage] Auto publish error:', e);
+    }
+
+    // 2. Load latest articles and environment metrics
     const [arts, w, ex, air] = await Promise.all([
       getArticles(),
       fetchHanoiWeather(),
@@ -54,8 +64,35 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
     setLoading(false);
   };
 
+  const handleManualAiGenerate = async () => {
+    setIsAutoPublishing(true);
+    try {
+      await triggerAiArticleJob({
+        jobType: activeEdition !== 'ALL' ? `BEST ${activeEdition}` : 'BEST MEGAZINE',
+        category: activeCategory !== 'ALL' ? activeCategory : 'TODAY',
+        topic: '하노이 및 베트남 교민을 위한 실시간 AI 데일리 포커스 뉴스',
+        providerName: 'gemini'
+      });
+      await loadData();
+    } catch (err) {
+      console.error('[Manual AI Generate Error]', err);
+    }
+    setIsAutoPublishing(false);
+  };
+
   useEffect(() => {
     loadData();
+
+    // Auto-check schedule every 60 seconds
+    const timer = setInterval(() => {
+      checkAndAutoPublishArticles().then(res => {
+        if (res?.publishedCount > 0) {
+          getArticles().then(arts => setArticles(arts));
+        }
+      });
+    }, 60000);
+
+    return () => clearInterval(timer);
   }, []);
 
   // Filtering articles
@@ -100,6 +137,16 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
 
           {/* Admin Link & Refresh */}
           <div className="flex items-center space-x-2 w-full sm:w-auto justify-end">
+            <button
+              onClick={handleManualAiGenerate}
+              disabled={isAutoPublishing}
+              className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-gold-500 to-amber-500 hover:from-gold-400 hover:to-amber-400 text-navy-950 font-black text-xs shadow-md transition-transform hover:scale-105 flex items-center space-x-1.5"
+              title="AI 신규 기사 즉시 생성 및 자동 게시"
+            >
+              <Sparkles className={`w-4 h-4 ${isAutoPublishing ? 'animate-spin' : ''}`} />
+              <span>{isAutoPublishing ? 'AI 기사 게시 중...' : '✨ AI 기사 실시간 게시'}</span>
+            </button>
+
             <button
               onClick={loadData}
               className="p-2 rounded-xl bg-navy-950 hover:bg-navy-800 text-slate-300 border border-navy-800"
