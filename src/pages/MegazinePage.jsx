@@ -151,10 +151,10 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
               onClick={handleManualAiGenerate}
               disabled={isAutoPublishing}
               className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-gold-500 to-amber-500 hover:from-gold-400 hover:to-amber-400 text-navy-950 font-black text-xs shadow-md transition-transform hover:scale-105 flex items-center space-x-1.5"
-              title="AI 신규 기사 즉시 생성 및 자동 게시"
+              title="신규 기사 즉시 생성 및 게시"
             >
               <Sparkles className={`w-4 h-4 ${isAutoPublishing ? 'animate-spin' : ''}`} />
-              <span>{isAutoPublishing ? 'AI 기사 게시 중...' : '✨ AI 기사 실시간 게시'}</span>
+              <span>{isAutoPublishing ? '기사 게시 중...' : '✨ 신규 기사 실시간 게시'}</span>
             </button>
 
             <button

@@ -33,16 +33,16 @@ export default function MegazineHeaderBanner({ weather, exchangeRates, aqi, t })
         <div className="space-y-1.5 text-center lg:text-left">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-bold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5 animate-pulse text-gold-400" />
-            <span>AI AUTOMATED EXPAT NEWS SYSTEM</span>
+            <span>EXPAT NEWS SYSTEM</span>
           </div>
           <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight flex items-center justify-center lg:justify-start gap-2">
             <span>BEST <span className="gold-gradient-text">MEGAZINE</span></span>
-            <span className="text-xs font-bold bg-navy-800 text-cyan-400 border border-cyan-500/30 px-2 py-0.5 rounded-md">DAILY 5x AI</span>
+            <span className="text-xs font-bold bg-navy-800 text-cyan-400 border border-cyan-500/30 px-2 py-0.5 rounded-md">DAILY 5x ISSUE</span>
           </h1>
           <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
             {isVi 
-              ? 'Tin tức & thông tin dành riêng cho cộng đồng người Hàn Quốc tại Hà Nội & Việt Nam được tự động cập nhật bởi AI.' 
-              : '하노이 & 베트남 교민 생활·비즈니스·행정 전문 AI 실시간 매거진 (하루 5회 자동 발행)'}
+              ? 'Tin tức & thông tin dành riêng cho cộng đồng người Hàn Quốc tại Hà Nội & Việt Nam được cập nhật liên tục.' 
+              : '하노이 & 베트남 교민 생활·비즈니스·행정 전문 실시간 매거진 (하루 5회 발행)'}
           </p>
         </div>
 
@@ -121,7 +121,7 @@ export default function MegazineHeaderBanner({ weather, exchangeRates, aqi, t })
       <div className="mt-5 max-w-7xl mx-auto pt-4 border-t border-navy-800/80 flex flex-wrap items-center justify-between gap-2 text-xs">
         <span className="text-[11px] font-bold text-slate-400 flex items-center">
           <Clock className="w-3.5 h-3.5 mr-1 text-gold-400" />
-          <span>하루 5회 자동 발행 스케줄:</span>
+          <span>하루 5회 발행 스케줄:</span>
         </span>
         
         <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
