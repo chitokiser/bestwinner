@@ -43,10 +43,10 @@ export default function Header({ currentLang, setLang, t }) {
       tag: 'AI Enterprise' 
     },
     { 
-      id: 'dropshipping', 
-      path: '/services/dropshipping', 
-      name: isVi ? 'CJ Dropshipping Mall (Thương mại điện tử)' : isKo ? 'CJ 드랍쉬핑 쇼핑몰 (CJ Dropshipping Mall)' : 'CJ Dropshipping Mall', 
-      tag: 'CJ API 2.0' 
+      id: 'best-mall', 
+      path: '/services/shop', 
+      name: isVi ? 'BEST Mall (Thương mại điện tử)' : isKo ? 'BEST Mall (쇼핑몰)' : 'BEST Mall (Shopping)', 
+      tag: 'BEST E-Store' 
     },
     { 
       id: 'megazine', 

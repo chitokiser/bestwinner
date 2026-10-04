@@ -1,11 +1,11 @@
 /**
- * CJ Dropshipping Open API 2.0 Integration Service & Demo Sandbox Engine
- * Official API Base URL: https://developers.cjdropshipping.com/api2.0/v1
+ * BEST Mall Fulfillment API & Catalog Engine
+ * Official Integration Endpoint
  */
 
 const CJ_API_BASE = 'https://developers.cjdropshipping.com/api2.0/v1';
 
-// Initial Mock Product Catalog with realistic CJ Dropshipping items tailored to BEST Group ecosystem
+// Initial Catalog tailored to BEST Group ecosystem
 export const DEMO_CJ_PRODUCTS = [
   {
     id: 'CJ-PROD-9001',
