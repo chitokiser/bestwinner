@@ -22,7 +22,14 @@ import {
   Sliders,
   Check,
   Eye,
-  EyeOff
+  EyeOff,
+  Star,
+  X,
+  ChevronRight,
+  Shield,
+  Clock,
+  RotateCcw,
+  Minus
 } from 'lucide-react';
 import { 
   CJDropshippingService, 
@@ -39,6 +46,12 @@ export default function DropshippingPage({ t, user }) {
   const [isAdminAuthModalOpen, setIsAdminAuthModalOpen] = useState(false);
   const [adminPinInput, setAdminPinInput] = useState('');
   const [adminAuthError, setAdminAuthError] = useState('');
+
+  // Product Detail Modal State
+  const [selectedProductDetail, setSelectedProductDetail] = useState(null);
+  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
+  const [detailQuantity, setDetailQuantity] = useState(1);
+  const [activeDetailTab, setActiveDetailTab] = useState('desc'); // 'desc', 'specs', 'shipping'
 
   // Admin Active Tab
   const [activeTab, setActiveTab] = useState('catalog'); // 'catalog', 'calculator', 'orders', 'settings'
@@ -103,10 +116,17 @@ export default function DropshippingPage({ t, user }) {
     setProducts(result);
   }, [selectedCategory, searchQuery, sortBy, isAdminMode]);
 
+  // Open Product Detail Modal
+  const openProductDetail = (product) => {
+    setSelectedProductDetail(product);
+    setSelectedVariantIndex(0);
+    setDetailQuantity(1);
+    setActiveDetailTab('desc');
+  };
+
   // Handle Admin Login / PIN Check
   const handleAdminLoginSubmit = (e) => {
     e.preventDefault();
-    // Default PIN: "admin1234" or "1234"
     if (adminPinInput.trim() === 'admin1234' || adminPinInput.trim() === '1234' || adminPinInput.trim() === 'best2026') {
       setIsAdminMode(true);
       localStorage.setItem('best_mall_admin_authenticated', 'true');
@@ -125,13 +145,14 @@ export default function DropshippingPage({ t, user }) {
   };
 
   // Cart operations
-  const addToCart = (product) => {
+  const addToCart = (product, quantity = 1, selectedVariant = null) => {
+    const variantName = selectedVariant || (product.variants && product.variants[0]) || '';
     setCart(prev => {
-      const exist = prev.find(item => item.id === product.id);
+      const exist = prev.find(item => item.id === product.id && item.selectedVariant === variantName);
       if (exist) {
-        return prev.map(item => item.id === product.id ? { ...item, qty: item.qty + 1 } : item);
+        return prev.map(item => (item.id === product.id && item.selectedVariant === variantName) ? { ...item, qty: item.qty + quantity } : item);
       }
-      return [...prev, { ...product, qty: 1 }];
+      return [...prev, { ...product, qty: quantity, selectedVariant: variantName }];
     });
   };
 
@@ -459,7 +480,8 @@ export default function DropshippingPage({ t, user }) {
                 return (
                   <div 
                     key={product.id}
-                    className="bg-navy-900 border border-navy-800 hover:border-gold-500/40 rounded-2xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col group"
+                    className="bg-navy-900 border border-navy-800 hover:border-gold-500/40 rounded-2xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col group cursor-pointer"
+                    onClick={() => openProductDetail(product)}
                   >
                     {/* Image & Tags */}
                     <div className="relative aspect-video sm:aspect-square overflow-hidden bg-navy-950">
@@ -469,12 +491,27 @@ export default function DropshippingPage({ t, user }) {
                         loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
+                      
+                      {/* Overlay Preview Badge */}
+                      <div className="absolute inset-0 bg-navy-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span className="px-3 py-1.5 rounded-xl bg-navy-900/90 text-gold-400 border border-gold-500/40 text-xs font-bold flex items-center space-x-1 shadow-xl">
+                          <Eye className="w-4 h-4" />
+                          <span>상세보기</span>
+                        </span>
+                      </div>
+
                       <div className="absolute top-2 left-2 flex flex-wrap gap-1">
                         {product.tags.map((tag, i) => (
                           <span key={i} className="px-2 py-0.5 rounded-md bg-navy-950/80 backdrop-blur-md text-[10px] font-bold text-gold-400 border border-gold-500/30">
                             {tag}
                           </span>
                         ))}
+                      </div>
+
+                      {/* Rating Badge */}
+                      <div className="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-navy-950/80 backdrop-blur-md text-[10px] font-bold text-amber-400 flex items-center space-x-1 border border-amber-500/20">
+                        <Star className="w-3 h-3 fill-amber-400" />
+                        <span>{product.rating}</span>
                       </div>
 
                       {isAdminMode && (
@@ -529,26 +566,22 @@ export default function DropshippingPage({ t, user }) {
                       )}
 
                       {/* Actions */}
-                      <div className="flex items-center space-x-2 pt-2">
-                        {isAdminMode && (
-                          <button
-                            onClick={() => {
-                              setSelectedProductForCalc(product);
-                              setActiveTab('calculator');
-                            }}
-                            className="py-2 px-3 rounded-xl bg-navy-800 hover:bg-navy-700 text-slate-200 text-xs font-bold transition-colors flex items-center justify-center min-h-[40px]"
-                            title="마진 산출기"
-                          >
-                            <Calculator className="w-4 h-4 text-gold-400" />
-                          </button>
-                        )}
+                      <div className="flex items-center space-x-2 pt-2" onClick={(e) => e.stopPropagation()}>
+                        <button
+                          onClick={() => openProductDetail(product)}
+                          className="py-2.5 px-3 rounded-xl bg-navy-800 hover:bg-navy-700 text-slate-200 text-xs font-bold transition-colors flex items-center justify-center space-x-1 min-h-[40px]"
+                          title="상세보기"
+                        >
+                          <Eye className="w-3.5 h-3.5 text-gold-400" />
+                          <span className="hidden sm:inline">상세</span>
+                        </button>
 
                         <button
                           onClick={() => addToCart(product)}
                           className="flex-1 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 text-xs font-extrabold transition-colors flex items-center justify-center space-x-1 min-h-[40px]"
                         >
                           <Plus className="w-4 h-4" />
-                          <span>{isAdminMode ? '발송 담기' : '장바구니 담기'}</span>
+                          <span>담기</span>
                         </button>
                       </div>
                     </div>
@@ -562,8 +595,6 @@ export default function DropshippingPage({ t, user }) {
         {/* ADMIN TAB: MARGIN & LOGISTICS CALCULATOR */}
         {isAdminMode && activeTab === 'calculator' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
-            {/* Controls Side */}
             <div className="lg:col-span-1 bg-navy-900 border border-navy-800 rounded-2xl p-6 space-y-6">
               <div>
                 <h3 className="text-lg font-bold text-white flex items-center space-x-2">
@@ -575,7 +606,6 @@ export default function DropshippingPage({ t, user }) {
                 </p>
               </div>
 
-              {/* Product Selector */}
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-300 block">대상 상품 선택</label>
                 <select
@@ -592,7 +622,6 @@ export default function DropshippingPage({ t, user }) {
                 </select>
               </div>
 
-              {/* Shipping Method */}
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-300 block">물류 배송 수단</label>
                 <select
@@ -608,7 +637,6 @@ export default function DropshippingPage({ t, user }) {
                 </select>
               </div>
 
-              {/* Margin Slider */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center text-xs">
                   <span className="font-bold text-slate-300">목표 마진율 (%)</span>
@@ -635,7 +663,6 @@ export default function DropshippingPage({ t, user }) {
               </div>
             </div>
 
-            {/* Results Visualization Side */}
             <div className="lg:col-span-2 space-y-6">
               <div className="bg-navy-900 border border-navy-800 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-6">
                 <img 
@@ -814,6 +841,284 @@ export default function DropshippingPage({ t, user }) {
 
       </div>
 
+      {/* 🌟 PRODUCT DETAIL MODAL (NEW FEATURE) */}
+      {selectedProductDetail && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md">
+          <div className="bg-navy-900 border border-gold-500/40 rounded-3xl w-full max-w-4xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+            
+            {/* Modal Top Close Bar */}
+            <div className="px-6 py-4 border-b border-navy-800 flex items-center justify-between bg-navy-950/60">
+              <div className="flex items-center space-x-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/30 text-[10px] font-bold uppercase">
+                  BEST Mall Select
+                </span>
+                <span className="text-xs text-slate-400">카테고리: {selectedProductDetail.category}</span>
+              </div>
+
+              <button
+                onClick={() => setSelectedProductDetail(null)}
+                className="p-2 rounded-xl bg-navy-800 hover:bg-navy-700 text-slate-300 hover:text-white transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Scrollable Content */}
+            <div className="p-6 overflow-y-auto space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                {/* Left: Product Image & Badges */}
+                <div className="space-y-4">
+                  <div className="relative aspect-square rounded-2xl overflow-hidden border border-navy-800 bg-navy-950">
+                    <img 
+                      src={selectedProductDetail.image} 
+                      alt={selectedProductDetail.name.ko} 
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                      {selectedProductDetail.tags?.map((t, idx) => (
+                        <span key={idx} className="px-2.5 py-1 rounded-lg bg-navy-950/90 text-gold-400 border border-gold-500/30 text-xs font-bold backdrop-blur-md">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Trust Badges Bar */}
+                  <div className="grid grid-cols-3 gap-2 text-center text-[11px] text-slate-300">
+                    <div className="p-2.5 rounded-xl bg-navy-950 border border-navy-800 space-y-1">
+                      <Truck className="w-4 h-4 text-cyan-400 mx-auto" />
+                      <p className="font-bold">4-7일 직송</p>
+                      <p className="text-[9px] text-slate-500">안전 무료배송</p>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-navy-950 border border-navy-800 space-y-1">
+                      <Shield className="w-4 h-4 text-emerald-400 mx-auto" />
+                      <p className="font-bold">100% 품질검수</p>
+                      <p className="text-[9px] text-slate-500">품질 보증서</p>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-navy-950 border border-navy-800 space-y-1">
+                      <Clock className="w-4 h-4 text-gold-400 mx-auto" />
+                      <p className="font-bold">24/7 CS지원</p>
+                      <p className="text-[9px] text-slate-500">베트남 현지 A/S</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right: Info, Price & Options */}
+                <div className="space-y-6 flex flex-col justify-between">
+                  <div className="space-y-4">
+                    
+                    <div>
+                      <div className="flex items-center space-x-2 text-amber-400 text-xs font-bold mb-1">
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                          ))}
+                        </div>
+                        <span>{selectedProductDetail.rating} ({selectedProductDetail.reviewsCount}개 구매후기)</span>
+                      </div>
+
+                      <h2 className="text-xl font-extrabold text-white leading-snug">
+                        {selectedProductDetail.name.ko}
+                      </h2>
+                      <p className="text-xs text-slate-400 mt-1">
+                        {selectedProductDetail.name.vi}
+                      </p>
+                    </div>
+
+                    {/* Price Block */}
+                    <div className="p-4 rounded-2xl bg-navy-950 border border-navy-800 space-y-1">
+                      <p className="text-xs text-slate-400 font-semibold">소비자 공식 판매가</p>
+                      <div className="flex items-baseline space-x-3">
+                        <span className="text-2xl font-black text-gold-400">
+                          {Math.round(selectedProductDetail.suggestedRetailUSD * 25400).toLocaleString()} ₫
+                        </span>
+                        <span className="text-sm font-bold text-slate-400">
+                          (${selectedProductDetail.suggestedRetailUSD.toFixed(2)})
+                        </span>
+                      </div>
+                      
+                      {isAdminMode && (
+                        <div className="mt-3 pt-3 border-t border-navy-800 text-xs text-rose-300 space-y-1">
+                          <p>• 공급 원가: ${selectedProductDetail.supplierPriceUSD.toFixed(2)}</p>
+                          <p>• SKU: {selectedProductDetail.cjSku} | 재고: {selectedProductDetail.stock}개</p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Variants Selection */}
+                    {selectedProductDetail.variants && selectedProductDetail.variants.length > 0 && (
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold text-slate-300 block">상품 옵션 / 변형 선택:</label>
+                        <div className="flex flex-wrap gap-2">
+                          {selectedProductDetail.variants.map((v, i) => (
+                            <button
+                              key={i}
+                              onClick={() => setSelectedVariantIndex(i)}
+                              className={`px-3 py-2 rounded-xl text-xs font-bold transition-all min-h-[38px] ${
+                                selectedVariantIndex === i
+                                  ? 'bg-gold-500 text-navy-950 shadow-md'
+                                  : 'bg-navy-950 border border-navy-800 text-slate-300 hover:border-gold-500/40'
+                              }`}
+                            >
+                              {v}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Quantity Selector */}
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-slate-300 block">구매 수량:</label>
+                      <div className="flex items-center space-x-3">
+                        <div className="flex items-center bg-navy-950 border border-navy-800 rounded-xl p-1">
+                          <button
+                            onClick={() => setDetailQuantity(Math.max(1, detailQuantity - 1))}
+                            className="p-2 rounded-lg bg-navy-900 hover:bg-navy-800 text-slate-300 hover:text-white min-h-[36px] min-w-[36px] flex items-center justify-center"
+                          >
+                            <Minus className="w-4 h-4" />
+                          </button>
+                          <span className="w-12 text-center text-sm font-bold text-white">{detailQuantity}</span>
+                          <button
+                            onClick={() => setDetailQuantity(detailQuantity + 1)}
+                            className="p-2 rounded-lg bg-navy-900 hover:bg-navy-800 text-slate-300 hover:text-white min-h-[36px] min-w-[36px] flex items-center justify-center"
+                          >
+                            <Plus className="w-4 h-4" />
+                          </button>
+                        </div>
+
+                        <span className="text-xs text-slate-400 font-semibold">
+                          소계: <span className="text-gold-400 font-bold">{Math.round(selectedProductDetail.suggestedRetailUSD * detailQuantity * 25400).toLocaleString()} ₫</span>
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  {/* Modal Action Buttons */}
+                  <div className="flex items-center space-x-3 pt-4 border-t border-navy-800">
+                    <button
+                      onClick={() => {
+                        addToCart(
+                          selectedProductDetail, 
+                          detailQuantity, 
+                          selectedProductDetail.variants ? selectedProductDetail.variants[selectedVariantIndex] : null
+                        );
+                        alert(`${selectedProductDetail.name.ko} (${detailQuantity}개)가 장바구니에 추가되었습니다.`);
+                      }}
+                      className="flex-1 py-3 px-4 rounded-xl bg-navy-800 hover:bg-navy-700 text-slate-200 text-xs font-bold transition-all flex items-center justify-center space-x-2 min-h-[48px]"
+                    >
+                      <ShoppingBag className="w-4 h-4 text-gold-400" />
+                      <span>장바구니 담기</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        addToCart(
+                          selectedProductDetail, 
+                          detailQuantity, 
+                          selectedProductDetail.variants ? selectedProductDetail.variants[selectedVariantIndex] : null
+                        );
+                        setSelectedProductDetail(null);
+                        setIsOrderModalOpen(true);
+                      }}
+                      className="flex-1 py-3 px-4 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 text-xs font-extrabold transition-all flex items-center justify-center space-x-2 shadow-lg min-h-[48px]"
+                    >
+                      <Send className="w-4 h-4" />
+                      <span>바로 주문 신청</span>
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Bottom Tabs: Features, Specs, Shipping */}
+              <div className="border-t border-navy-800 pt-6 space-y-4">
+                <div className="flex border-b border-navy-800 space-x-4">
+                  {[
+                    { id: 'desc', label: '상품 핵심 특징' },
+                    { id: 'specs', label: '스펙 및 사양' },
+                    { id: 'shipping', label: '배송 및 교환/반품' }
+                  ].map(tab => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveDetailTab(tab.id)}
+                      className={`pb-3 text-xs font-bold transition-all relative ${
+                        activeDetailTab === tab.id
+                          ? 'text-gold-400 border-b-2 border-gold-500'
+                          : 'text-slate-400 hover:text-slate-200'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Tab 1: Description & Features */}
+                {activeDetailTab === 'desc' && (
+                  <div className="space-y-3 text-xs text-slate-300 leading-relaxed bg-navy-950/60 p-4 rounded-2xl border border-navy-800">
+                    <p className="font-bold text-white">✨ BEST winner Group 프리미엄 큐레이션</p>
+                    <p>본 제품은 한국 정밀 품질 규격 및 베트남 현지 공정 표준에 맞추어 엄격하게 검증된 프리미엄 상품입니다.</p>
+                    <ul className="space-y-1.5 pt-2 text-slate-400">
+                      <li className="flex items-center space-x-2">
+                        <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                        <span>한국 및 베트남 주요 품질/안전 인증 완료</span>
+                      </li>
+                      <li className="flex items-center space-x-2">
+                        <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                        <span>초고속 해외 직구 풀필먼트 시스템으로 4~7일 내 무료 직송</span>
+                      </li>
+                      <li className="flex items-center space-x-2">
+                        <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                        <span>BEST winner Group 24시간 직영 A/S 기술 지원 파이프라인 연계</span>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+
+                {/* Tab 2: Specs */}
+                {activeDetailTab === 'specs' && (
+                  <div className="grid grid-cols-2 gap-3 text-xs bg-navy-950/60 p-4 rounded-2xl border border-navy-800">
+                    <div>
+                      <span className="text-slate-400 block">무게 (Weight):</span>
+                      <span className="font-bold text-white">{selectedProductDetail.weightKg} kg</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block">재고 상태 (Stock):</span>
+                      <span className="font-bold text-emerald-400">실시간 직송 가능 ({selectedProductDetail.stock}개)</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block">무상 보증 기간:</span>
+                      <span className="font-bold text-gold-400">12개월 (1년) 무상 보증</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block">원산지 / 제조국:</span>
+                      <span className="font-bold text-white">Best Certified Logistics</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Tab 3: Shipping & Returns */}
+                {activeDetailTab === 'shipping' && (
+                  <div className="space-y-2 text-xs text-slate-400 bg-navy-950/60 p-4 rounded-2xl border border-navy-800">
+                    <p className="font-bold text-white">🚚 배송 및 A/S 안내</p>
+                    <p>• 주문 결제 완료 후 24시간 이내 포장 및 송장 발급이 진행됩니다.</p>
+                    <p>• 베트남 및 한국 전지역 평균 4~7일 소요됩니다 (특수 도서산간 제외).</p>
+                    <p>• 제품 초기 불량 시 7일 이내 무상 교환 및 1년 직영 A/S가 지원됩니다.</p>
+                  </div>
+                )}
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      )}
+
       {/* ADMIN LOGIN PIN MODAL */}
       {isAdminAuthModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-sm">
@@ -930,7 +1235,7 @@ export default function DropshippingPage({ t, user }) {
               <p className="font-bold text-gold-400">선택하신 품목 목록:</p>
               {cart.map(item => (
                 <div key={item.id} className="flex justify-between items-center text-slate-300">
-                  <span>{item.name.ko} (x{item.qty})</span>
+                  <span>{item.name.ko} {item.selectedVariant ? `(${item.selectedVariant})` : ''} (x{item.qty})</span>
                   <div className="flex items-center space-x-2">
                     <span className="font-bold text-white">
                       {Math.round(item.suggestedRetailUSD * item.qty * 25400).toLocaleString()} ₫
