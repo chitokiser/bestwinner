@@ -36,6 +36,8 @@ export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
 
+import { UserService } from '../services/userService';
+
 /**
  * Real Google OAuth 2.0 Sign In via Firebase Auth
  */
@@ -50,8 +52,10 @@ export async function loginWithGoogle() {
       avatar: user.photoURL || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
       provider: 'Google OAuth 2.0'
     };
-    localStorage.setItem('best_user_session', JSON.stringify(userData));
-    return userData;
+    
+    // Automatically sync to Firebase Firestore 'users' collection with AIM119 & JUMPER handles
+    const syncedData = await UserService.syncUserToFirestore(userData);
+    return syncedData || userData;
   } catch (error) {
     console.error('[Firebase Auth Error]', error);
     throw error;

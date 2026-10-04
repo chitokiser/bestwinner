@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { X, LogOut, CheckCircle2, Globe, Sparkles } from 'lucide-react';
+import { X, LogOut, CheckCircle2, Globe, Sparkles, Shield, Cpu, Truck } from 'lucide-react';
 import { loginWithGoogle, logoutFirebase } from '../lib/firebase';
+import { UserService } from '../services/userService';
 
 export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
   const isVi = t?.lang === 'vi' || !t?.lang;
@@ -12,7 +13,7 @@ export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
   if (!isOpen) return null;
 
   // Real Google Chrome Account Authenticated Session
-  const handleGoogleAccountLogin = (targetEmail) => {
+  const handleGoogleAccountLogin = async (targetEmail) => {
     const emailToUse = (targetEmail || chromeEmail || 'chitokiser@gmail.com').trim();
     const namePart = emailToUse.split('@')[0];
     const formattedName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
@@ -26,8 +27,8 @@ export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
     };
 
     localStorage.setItem('best_saved_chrome_email', emailToUse);
-    localStorage.setItem('best_user_session', JSON.stringify(googleUserData));
-    setUser(googleUserData);
+    const synced = await UserService.syncUserToFirestore(googleUserData);
+    setUser(synced || googleUserData);
     setIsSigningIn(false);
     onClose();
   };
@@ -56,6 +57,9 @@ export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
     onClose();
   };
 
+  const aim119Id = user?.aim119Id || (user?.uid ? `AIM119-${user.uid.slice(0, 8).toUpperCase()}` : '');
+  const jumperId = user?.jumperId || (user?.uid ? `JUMPER-${user.uid.slice(0, 8).toUpperCase()}` : '');
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md animate-in fade-in duration-200">
       <div className="glass-card-chrome max-w-sm w-full p-6 sm:p-8 rounded-3xl border border-chrome-300/40 relative shadow-2xl space-y-6">
@@ -83,12 +87,28 @@ export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
               <p className="text-xs text-chrome-300 font-mono mt-0.5">{user.email}</p>
             </div>
 
-            <div className="p-3 rounded-xl bg-navy-900 border border-navy-800 text-xs text-slate-300 space-y-1">
-              <div className="flex items-center justify-center space-x-1.5 text-emeraldGreen-400 font-semibold">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Google 계정 로그인 완료</span>
+            {/* AIM119 & JUMPER Pipeline Sync Status Card */}
+            <div className="p-3 rounded-2xl bg-navy-900/90 border border-gold-500/30 text-xs text-slate-300 space-y-2">
+              <div className="flex items-center justify-center space-x-1.5 text-emerald-400 font-bold">
+                <CheckCircle2 className="w-4 h-4" />
+                <span>회원 DB & 파이프라인 동기화 완료</span>
               </div>
-              <p className="text-[11px] text-slate-400">{isVi ? "Tài khoản hỗ trợ ưu tiên bản vẽ CAD & Báo giá." : "기사 댓글, 좋아요, CAD 도면 및 견적서 열람이 가능한 정식 인증 계정입니다."}</p>
+
+              <div className="grid grid-cols-2 gap-2 pt-1 border-t border-navy-800 text-[10px]">
+                <div className="bg-navy-950 p-2 rounded-xl border border-cyan-500/30 text-left">
+                  <span className="text-cyan-400 font-bold flex items-center gap-1">
+                    <Cpu className="w-3 h-3" /> AIM119 ID
+                  </span>
+                  <span className="text-slate-300 font-mono block mt-0.5 truncate">{aim119Id}</span>
+                </div>
+
+                <div className="bg-navy-950 p-2 rounded-xl border border-purple-500/30 text-left">
+                  <span className="text-purple-400 font-bold flex items-center gap-1">
+                    <Truck className="w-3 h-3" /> JUMPER ID
+                  </span>
+                  <span className="text-slate-300 font-mono block mt-0.5 truncate">{jumperId}</span>
+                </div>
+              </div>
             </div>
 
             <button

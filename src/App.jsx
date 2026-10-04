@@ -25,6 +25,7 @@ import ContactPage from './pages/ContactPage';
 
 import { auth } from './lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
+import { UserService } from './services/userService';
 import { translations } from './locales/translations';
 
 export default function App() {
@@ -39,7 +40,7 @@ export default function App() {
   });
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         const userData = {
           uid: firebaseUser.uid,
@@ -48,8 +49,8 @@ export default function App() {
           avatar: firebaseUser.photoURL || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
           provider: 'Google OAuth 2.0'
         };
-        setUser(userData);
-        localStorage.setItem('best_user_session', JSON.stringify(userData));
+        const synced = await UserService.syncUserToFirestore(userData);
+        setUser(synced || userData);
       }
     });
     return () => unsubscribe();
