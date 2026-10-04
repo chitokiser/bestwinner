@@ -112,7 +112,7 @@ export const DEMO_CJ_PRODUCTS = [
     cjSku: 'CJ-ELEV-MIRROR-06',
     name: {
       ko: '스마트 승강기/건물 안심 보안 무선 서베이 카메라',
-      vi: 'Camera An Ninh Thông Minh Dành Cho Thang Máy',
+      vi: 'Camera An Ninh Thông Minh Dành Cho Thang Thang Máy',
       en: 'Wireless Smart Security Camera for Elevators & Entry'
     },
     category: 'elevator',
@@ -169,6 +169,111 @@ export const DEMO_CJ_PRODUCTS = [
   }
 ];
 
+// Global CJ Database Pool for Live Searching and Importing into BEST Mall
+export const GLOBAL_CJ_DB_POOL = [
+  ...DEMO_CJ_PRODUCTS,
+  {
+    id: 'CJ-DB-1001',
+    cjSku: 'CJ-HOME-ROBOT-01',
+    name: {
+      ko: '스마트 습식 무선 로봇 청소기 5000Pa',
+      vi: 'Robot Hút Bụi Thần Tốc 5000Pa Cảm Biến Laser',
+      en: 'Smart Wet/Dry Robotic Vacuum 5000Pa Laser'
+    },
+    category: 'interior',
+    supplierPriceUSD: 85.00,
+    suggestedRetailUSD: 199.00,
+    weightKg: 3.50,
+    rating: 4.9,
+    reviewsCount: 520,
+    stock: 1200,
+    shippingEstDays: '4-7일',
+    image: 'https://images.unsplash.com/photo-1589923188900-85dae523342b?auto=format&fit=crop&w=600&q=80',
+    tags: ['AI Smart', 'Top Recommended'],
+    variants: ['White Ultra', 'Space Black']
+  },
+  {
+    id: 'CJ-DB-1002',
+    cjSku: 'CJ-PARK-BARRIER-02',
+    name: {
+      ko: '무선 스마트 주차 차단기 & 번호판 센서',
+      vi: 'Cổng Barrier Đỗ Xe Tự Động & Nhận Diện Biển Số',
+      en: 'Wireless Auto Barrier & License Plate Sensor'
+    },
+    category: 'parking',
+    supplierPriceUSD: 120.00,
+    suggestedRetailUSD: 299.00,
+    weightKg: 6.80,
+    rating: 4.8,
+    reviewsCount: 65,
+    stock: 450,
+    shippingEstDays: '5-9일',
+    image: 'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=600&q=80',
+    tags: ['B2B Heavy', 'AI LPR'],
+    variants: ['Single Gate 3M', 'Dual Gate 6M']
+  },
+  {
+    id: 'CJ-DB-1003',
+    cjSku: 'CJ-SOLAR-BALCONY-03',
+    name: {
+      ko: '발코니 미니 3D PVT 태양광 발전 킷 400W',
+      vi: 'Bộ Năng Lượng Mặt Trời Ban Công 3D PVT 400W',
+      en: 'Balcony 3D PVT Mini Solar Power Kit 400W'
+    },
+    category: 'energy',
+    supplierPriceUSD: 145.00,
+    suggestedRetailUSD: 349.00,
+    weightKg: 7.20,
+    rating: 5.0,
+    reviewsCount: 380,
+    stock: 890,
+    shippingEstDays: '4-7일',
+    image: 'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=600&q=80',
+    tags: ['3D Solar', 'ESG Eco'],
+    variants: ['400W Standard', '800W Dual Panel']
+  },
+  {
+    id: 'CJ-DB-1004',
+    cjSku: 'CJ-FIRE-MASK-04',
+    name: {
+      ko: '화재 비상 대피용 방독면 & 내화 타월 킷',
+      vi: 'Mặt Nạ Phòng Độc PCCC & Khăn Thảm Chống Cháy',
+      en: 'Fire Smoke Escape Mask & Flame Resistant Kit'
+    },
+    category: 'firefighting',
+    supplierPriceUSD: 9.50,
+    suggestedRetailUSD: 28.00,
+    weightKg: 0.60,
+    rating: 4.9,
+    reviewsCount: 890,
+    stock: 5400,
+    shippingEstDays: '3-5일',
+    image: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=600&q=80',
+    tags: ['QCVN Certified', 'Essential'],
+    variants: ['Single Mask Pack', 'Family 4-Pack Box']
+  },
+  {
+    id: 'CJ-DB-1005',
+    cjSku: 'CJ-WATER-TAPE-05',
+    name: {
+      ko: '고점착 침투형 방수 아스팔트 바인딩 테이프 10m',
+      vi: 'Băng Keo Chống Thấm Mái Nhà Siêu Dính 10m',
+      en: 'Super Adhesive Waterproof Asphalt Repair Tape 10m'
+    },
+    category: 'waterproofing',
+    supplierPriceUSD: 6.80,
+    suggestedRetailUSD: 22.00,
+    weightKg: 0.90,
+    rating: 4.7,
+    reviewsCount: 1100,
+    stock: 6700,
+    shippingEstDays: '3-6일',
+    image: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80',
+    tags: ['Fast Seller', 'High Margin'],
+    variants: ['Width 10cm x 10m', 'Width 20cm x 10m']
+  }
+];
+
 // Logistics Shipping Options
 export const SHIPPING_METHODS = [
   { code: 'CJPacket_Standard', name: 'CJ Packet Standard', baseFeeUSD: 4.50, costPerKgUSD: 3.20, estDays: '5-8일' },
@@ -193,7 +298,7 @@ export class CJDropshippingService {
       email: '',
       accessToken: '',
       isDemoMode: true,
-      marginPercent: 30, // Default margin 30%
+      marginPercent: 30,
       usdToVndRate: 25400,
       usdToKrwRate: 1350
     };
@@ -248,7 +353,6 @@ export class CJDropshippingService {
       }
     } catch (err) {
       console.warn('CJ Auth Fallback to simulation:', err.message);
-      // If network fails or CORS prevents direct client call, provide informative response
       return {
         success: false,
         message: err.message || 'Network issue connecting to CJ API. Switching to Sandbox Simulation Mode.'
@@ -257,12 +361,96 @@ export class CJDropshippingService {
   }
 
   /**
-   * Get Product Catalog (Supports Real API or Demo Fallback)
+   * Search CJ Global Database Engine
+   */
+  static async searchCJGlobalDatabase({ keyword = '', category = 'all' }) {
+    let results = [...GLOBAL_CJ_DB_POOL];
+
+    if (category && category !== 'all') {
+      results = results.filter(p => p.category === category);
+    }
+
+    if (keyword && keyword.trim()) {
+      const q = keyword.toLowerCase().trim();
+      results = results.filter(p =>
+        p.name.ko.toLowerCase().includes(q) ||
+        p.name.vi.toLowerCase().includes(q) ||
+        p.name.en.toLowerCase().includes(q) ||
+        p.cjSku.toLowerCase().includes(q)
+      );
+    }
+
+    return results;
+  }
+
+  /**
+   * Register/Import product into BEST Mall Store Catalog
+   */
+  static registerProductToStore(productData) {
+    try {
+      const customProducts = this.getRegisteredCustomProducts();
+      const existIndex = customProducts.findIndex(p => p.cjSku === productData.cjSku || p.id === productData.id);
+      
+      const newProduct = {
+        ...productData,
+        id: productData.id || `CJ-CUSTOM-${Date.now()}`,
+        registeredAt: new Date().toISOString(),
+        isCustomRegistered: true
+      };
+
+      if (existIndex >= 0) {
+        customProducts[existIndex] = newProduct;
+      } else {
+        customProducts.unshift(newProduct);
+      }
+
+      localStorage.setItem('best_mall_custom_products', JSON.stringify(customProducts));
+      return newProduct;
+    } catch (e) {
+      console.error('Failed to register product to store:', e);
+      return null;
+    }
+  }
+
+  /**
+   * Get custom registered products from LocalStorage
+   */
+  static getRegisteredCustomProducts() {
+    try {
+      const saved = localStorage.getItem('best_mall_custom_products');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  /**
+   * Delete registered product
+   */
+  static deleteRegisteredProduct(id) {
+    try {
+      const customProducts = this.getRegisteredCustomProducts().filter(p => p.id !== id);
+      localStorage.setItem('best_mall_custom_products', JSON.stringify(customProducts));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * Get Combined Store Catalog Products
    */
   static async getProducts({ category = 'all', keyword = '', isDemo = true }) {
-    // Return simulated catalog if Demo mode or no real API token
-    const config = this.getStoredConfig();
-    let products = [...DEMO_CJ_PRODUCTS];
+    const customRegistered = this.getRegisteredCustomProducts();
+    let products = [...customRegistered, ...DEMO_CJ_PRODUCTS];
+
+    const seen = new Set();
+    products = products.filter(p => {
+      const key = p.cjSku || p.id;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
 
     if (category && category !== 'all') {
       products = products.filter(p => p.category === category);
@@ -282,7 +470,7 @@ export class CJDropshippingService {
   }
 
   /**
-   * Calculate Shipping Cost based on weight and courier
+   * Calculate Shipping Fee
    */
   static calculateShippingFee(weightKg, shippingMethodCode = 'CJPacket_Standard') {
     const method = SHIPPING_METHODS.find(m => m.code === shippingMethodCode) || SHIPPING_METHODS[0];
@@ -303,7 +491,6 @@ export class CJDropshippingService {
     const shippingInfo = this.calculateShippingFee(weightKg, shippingMethodCode);
     
     const costUSD = supplierPriceUSD + shippingInfo.feeUSD;
-    // Price = Cost / (1 - marginRatio) or Cost * (1 + marginRatio)
     const sellingPriceUSD = Number((costUSD * (1 + marginRatio)).toFixed(2));
     const profitUSD = Number((sellingPriceUSD - costUSD).toFixed(2));
 
@@ -318,7 +505,6 @@ export class CJDropshippingService {
       profitUSD,
       marginPercent: marginPercent || 30,
       
-      // Converted local values
       sellingPriceVND: Math.round(sellingPriceUSD * usdToVnd),
       profitVND: Math.round(profitUSD * usdToVnd),
       sellingPriceKRW: Math.round(sellingPriceUSD * usdToKrw),
@@ -350,7 +536,6 @@ export class CJDropshippingService {
       courier: orderData.courier || 'CJ Packet Standard'
     };
 
-    // Store order in LocalStorage
     try {
       const existing = JSON.parse(localStorage.getItem('cj_orders_history') || '[]');
       existing.unshift(orderRecord);

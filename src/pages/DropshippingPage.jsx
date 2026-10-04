@@ -29,12 +29,16 @@ import {
   Shield,
   Clock,
   RotateCcw,
-  Minus
+  Minus,
+  Database,
+  PlusCircle,
+  Download
 } from 'lucide-react';
 import { 
   CJDropshippingService, 
   DEMO_CJ_PRODUCTS, 
-  SHIPPING_METHODS 
+  SHIPPING_METHODS,
+  GLOBAL_CJ_DB_POOL
 } from '../services/cjDropshippingService';
 import { isSuperAdminEmail } from '../services/userService';
 
@@ -64,9 +68,17 @@ export default function DropshippingPage({ t, user }) {
   const [activeDetailTab, setActiveDetailTab] = useState('desc'); // 'desc', 'specs', 'shipping'
 
   // Admin Active Tab
-  const [activeTab, setActiveTab] = useState('catalog'); // 'catalog', 'calculator', 'orders', 'settings'
+  const [activeTab, setActiveTab] = useState('catalog'); // 'catalog', 'import', 'calculator', 'orders', 'settings'
   
-  // Filter & Search
+  // CJ DB Import / Search State for Admin
+  const [dbSearchQuery, setDbSearchQuery] = useState('');
+  const [dbCategoryFilter, setDbCategoryFilter] = useState('all');
+  const [dbSearchResults, setDbSearchResults] = useState(GLOBAL_CJ_DB_POOL);
+  const [registeringProduct, setRegisteringProduct] = useState(null);
+  const [customMarginPercent, setCustomMarginPercent] = useState(35);
+  const [customCategory, setCustomCategory] = useState('interior');
+
+  // Filter & Search for Main Store Catalog
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('popular'); // 'popular', 'price-low', 'price-high', 'margin'
@@ -95,26 +107,17 @@ export default function DropshippingPage({ t, user }) {
   const [calcMarginPercent, setCalcMarginPercent] = useState(35);
   const [calcShippingMethod, setCalcShippingMethod] = useState('CJPacket_Standard');
 
-  // Filtered Products
+  // Filtered Main Store Products
   const [products, setProducts] = useState(DEMO_CJ_PRODUCTS);
 
-  useEffect(() => {
-    let result = [...DEMO_CJ_PRODUCTS];
+  // Load Main Catalog Products
+  const loadProducts = async () => {
+    const list = await CJDropshippingService.getProducts({
+      category: selectedCategory,
+      keyword: searchQuery
+    });
 
-    if (selectedCategory !== 'all') {
-      result = result.filter(p => p.category === selectedCategory);
-    }
-
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase().trim();
-      result = result.filter(p => 
-        p.name.ko.toLowerCase().includes(q) ||
-        p.name.vi.toLowerCase().includes(q) ||
-        p.name.en.toLowerCase().includes(q) ||
-        p.cjSku.toLowerCase().includes(q)
-      );
-    }
-
+    let result = [...list];
     if (sortBy === 'price-low') {
       result.sort((a, b) => a.suggestedRetailUSD - b.suggestedRetailUSD);
     } else if (sortBy === 'price-high') {
@@ -124,7 +127,30 @@ export default function DropshippingPage({ t, user }) {
     }
 
     setProducts(result);
+  };
+
+  useEffect(() => {
+    loadProducts();
   }, [selectedCategory, searchQuery, sortBy, isAdminMode]);
+
+  // Live CJ Global DB Search for Admin
+  useEffect(() => {
+    let list = [...GLOBAL_CJ_DB_POOL];
+    if (dbCategoryFilter !== 'all') {
+      list = list.filter(p => p.category === dbCategoryFilter);
+    }
+
+    if (dbSearchQuery.trim()) {
+      const q = dbSearchQuery.toLowerCase().trim();
+      list = list.filter(p => 
+        p.name.ko.toLowerCase().includes(q) ||
+        p.name.vi.toLowerCase().includes(q) ||
+        p.name.en.toLowerCase().includes(q) ||
+        p.cjSku.toLowerCase().includes(q)
+      );
+    }
+    setDbSearchResults(list);
+  }, [dbSearchQuery, dbCategoryFilter]);
 
   // Open Product Detail Modal
   const openProductDetail = (product) => {
@@ -132,6 +158,40 @@ export default function DropshippingPage({ t, user }) {
     setSelectedVariantIndex(0);
     setDetailQuantity(1);
     setActiveDetailTab('desc');
+  };
+
+  // Register Product to BEST Mall Catalog
+  const handleConfirmRegisterProduct = (e) => {
+    e.preventDefault();
+    if (!registeringProduct) return;
+
+    const marginCalc = CJDropshippingService.calculateMargin({
+      supplierPriceUSD: registeringProduct.supplierPriceUSD,
+      weightKg: registeringProduct.weightKg,
+      shippingMethodCode: 'CJPacket_Standard',
+      marginPercent: customMarginPercent
+    });
+
+    const finalProduct = {
+      ...registeringProduct,
+      category: customCategory || registeringProduct.category,
+      suggestedRetailUSD: marginCalc.sellingPriceUSD,
+      customMarginPercent
+    };
+
+    const registered = CJDropshippingService.registerProductToStore(finalProduct);
+    if (registered) {
+      loadProducts();
+      setRegisteringProduct(null);
+      alert(`[${finalProduct.name.ko}] 상품이 BEST Mall 카탈로그에 성공적으로 직접 등록되었습니다!`);
+    }
+  };
+
+  const handleDeleteRegisteredProduct = (id, name) => {
+    if (window.confirm(`[${name}] 상품을 쇼핑몰 카탈로그에서 삭제하시겠습니까?`)) {
+      CJDropshippingService.deleteRegisteredProduct(id);
+      loadProducts();
+    }
   };
 
   // Handle Admin Login / PIN Check
@@ -226,6 +286,8 @@ export default function DropshippingPage({ t, user }) {
   const cartTotalUSD = cart.reduce((sum, item) => sum + (item.suggestedRetailUSD * item.qty), 0);
   const cartTotalVND = Math.round(cartTotalUSD * 25400);
 
+  const registeredCustomIds = CJDropshippingService.getRegisteredCustomProducts().map(p => p.cjSku || p.id);
+
   return (
     <div className="min-h-screen bg-navy-950 text-slate-100 py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -252,7 +314,7 @@ export default function DropshippingPage({ t, user }) {
 
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
                 {isAdminMode 
-                  ? 'BEST Mall 스마트 쇼핑몰 관리자 모드입니다. 풀필먼트 API 설정, 마진율 산출, 원가 분석 및 물류 주문 자동 발송을 관제할 수 있습니다.'
+                  ? 'BEST Mall 스마트 쇼핑몰 관리자 모드입니다. 글로벌 CJ DB 상품 검색 & 직접 등록, 원가/마진 분석 및 풀필먼트 주문 자동 발송을 관제할 수 있습니다.'
                   : '스마트 하우징, 프리미엄 공간 인테리어, 소방/안전용품 및 차세대 태양광 에너지를 포함한 BEST winner Group 종합 셀렉트 숍입니다.'}
               </p>
             </div>
@@ -354,7 +416,19 @@ export default function DropshippingPage({ t, user }) {
                 }`}
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span>상품 관리 카탈로그 ({products.length})</span>
+                <span>상점 등록 카탈로그 ({products.length})</span>
+              </button>
+
+              <button
+                onClick={() => setActiveTab('import')}
+                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center space-x-2 min-h-[44px] ${
+                  activeTab === 'import'
+                    ? 'bg-gold-500 text-navy-950 shadow-lg shadow-gold-500/20'
+                    : 'bg-navy-900 text-slate-300 hover:bg-navy-800 hover:text-white border border-navy-800'
+                }`}
+              >
+                <Database className="w-4 h-4 text-cyan-400" />
+                <span>🔍 CJ DB 검색 & 직접 등록</span>
               </button>
 
               <button
@@ -482,7 +556,7 @@ export default function DropshippingPage({ t, user }) {
                   supplierPriceUSD: product.supplierPriceUSD,
                   weightKg: product.weightKg,
                   shippingMethodCode: 'CJPacket_Standard',
-                  marginPercent: 35
+                  marginPercent: product.customMarginPercent || 35
                 });
 
                 const retailVND = Math.round(product.suggestedRetailUSD * 25400);
@@ -525,8 +599,22 @@ export default function DropshippingPage({ t, user }) {
                       </div>
 
                       {isAdminMode && (
-                        <div className="absolute bottom-2 right-2 bg-rose-500/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-white">
-                          SKU: {product.cjSku}
+                        <div className="absolute bottom-2 right-2 flex items-center space-x-1">
+                          {product.isCustomRegistered && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeleteRegisteredProduct(product.id, product.name.ko);
+                              }}
+                              className="bg-rose-600 hover:bg-rose-500 text-white p-1 rounded text-[10px] font-bold"
+                              title="카탈로그 등록 삭제"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                          <span className="bg-rose-500/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-white">
+                            SKU: {product.cjSku}
+                          </span>
                         </div>
                       )}
                     </div>
@@ -599,6 +687,138 @@ export default function DropshippingPage({ t, user }) {
                 );
               })}
             </div>
+          </div>
+        )}
+
+        {/* 🔍 ADMIN TAB: CJ GLOBAL DB SEARCH & DIRECT IMPORT */}
+        {isAdminMode && activeTab === 'import' && (
+          <div className="space-y-6">
+            
+            <div className="bg-navy-900 border border-navy-800 rounded-2xl p-6 space-y-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div>
+                  <h3 className="text-lg font-bold text-white flex items-center space-x-2">
+                    <Database className="w-5 h-5 text-cyan-400" />
+                    <span>CJ 글로벌 데이터베이스 실시간 검색 & 직접 등록</span>
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-1">
+                    CJ 글로벌 Dropshipping DB에서 원하는 상품을 찾아 BEST Mall 상점에 직접 등록하고 마진율을 설정합니다.
+                  </p>
+                </div>
+              </div>
+
+              {/* DB Search & Category Filter */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                <div className="sm:col-span-2 relative">
+                  <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="text"
+                    value={dbSearchQuery}
+                    onChange={(e) => setDbSearchQuery(e.target.value)}
+                    placeholder="글로벌 CJ DB 키워드 또는 SKU 검색 (예: 로봇 청소기, 태양광, 소방, AI)..."
+                    className="w-full pl-10 pr-4 py-2.5 bg-navy-950 border border-navy-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500/50"
+                  />
+                </div>
+
+                <select
+                  value={dbCategoryFilter}
+                  onChange={(e) => setDbCategoryFilter(e.target.value)}
+                  className="px-3 py-2.5 bg-navy-950 border border-navy-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-cyan-500/50"
+                >
+                  <option value="all">전체 DB 카테고리</option>
+                  <option value="interior">맞춤 인테리어</option>
+                  <option value="parking">AI 주차/차량</option>
+                  <option value="energy">3D 태양광</option>
+                  <option value="firefighting">소방/안전</option>
+                  <option value="waterproofing">건축 방수</option>
+                </select>
+              </div>
+            </div>
+
+            {/* CJ DB Search Results Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {dbSearchResults.map((dbProduct) => {
+                const isAlreadyRegistered = registeredCustomIds.includes(dbProduct.cjSku || dbProduct.id);
+                const marginData = CJDropshippingService.calculateMargin({
+                  supplierPriceUSD: dbProduct.supplierPriceUSD,
+                  weightKg: dbProduct.weightKg,
+                  shippingMethodCode: 'CJPacket_Standard',
+                  marginPercent: 35
+                });
+
+                return (
+                  <div
+                    key={dbProduct.id}
+                    className="bg-navy-900 border border-navy-800 hover:border-cyan-500/40 rounded-2xl p-5 space-y-4 shadow-xl flex flex-col justify-between"
+                  >
+                    <div className="space-y-3">
+                      <div className="relative aspect-video rounded-xl overflow-hidden bg-navy-950 border border-navy-800">
+                        <img 
+                          src={dbProduct.image} 
+                          alt={dbProduct.name.ko} 
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute top-2 left-2 bg-navy-950/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-cyan-400 border border-cyan-500/30">
+                          SKU: {dbProduct.cjSku}
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-bold text-gold-400 bg-gold-500/10 px-2 py-0.5 rounded border border-gold-500/30">
+                          카테고리: {dbProduct.category}
+                        </span>
+                        <h4 className="text-sm font-bold text-white line-clamp-2 pt-1">{dbProduct.name.ko}</h4>
+                        <p className="text-xs text-slate-400 line-clamp-1">{dbProduct.name.vi}</p>
+                      </div>
+
+                      {/* Specs */}
+                      <div className="bg-navy-950 p-3 rounded-xl border border-navy-800 text-xs space-y-1.5">
+                        <div className="flex justify-between text-slate-400">
+                          <span>CJ 도매 원가:</span>
+                          <span className="font-bold text-white">${dbProduct.supplierPriceUSD.toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between text-slate-400">
+                          <span>권장 소비자 판매가:</span>
+                          <span className="font-bold text-emerald-400">${marginData.sellingPriceUSD} (≈ {marginData.sellingPriceVND.toLocaleString()}₫)</span>
+                        </div>
+                        <div className="flex justify-between text-slate-400 border-t border-navy-800 pt-1">
+                          <span>예상 마진:</span>
+                          <span className="font-extrabold text-gold-400">+${marginData.profitUSD} (35%)</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Import Button */}
+                    <button
+                      onClick={() => {
+                        setRegisteringProduct(dbProduct);
+                        setCustomMarginPercent(35);
+                        setCustomCategory(dbProduct.category || 'interior');
+                      }}
+                      disabled={isAlreadyRegistered}
+                      className={`w-full py-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-1 min-h-[44px] ${
+                        isAlreadyRegistered
+                          ? 'bg-navy-950 text-emerald-400 border border-emerald-500/30 cursor-default'
+                          : 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-navy-950 font-extrabold shadow-lg'
+                      }`}
+                    >
+                      {isAlreadyRegistered ? (
+                        <>
+                          <Check className="w-4 h-4" />
+                          <span>BEST Mall 등록 완료</span>
+                        </>
+                      ) : (
+                        <>
+                          <PlusCircle className="w-4 h-4" />
+                          <span>BEST Mall에 직접 등록</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
           </div>
         )}
 
@@ -851,7 +1071,92 @@ export default function DropshippingPage({ t, user }) {
 
       </div>
 
-      {/* 🌟 PRODUCT DETAIL MODAL (NEW FEATURE) */}
+      {/* 🌟 REGISTER PRODUCT MODAL (NEW FEATURE FOR ADMIN) */}
+      {registeringProduct && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md">
+          <div className="bg-navy-900 border border-cyan-500/40 rounded-3xl p-6 w-full max-w-lg space-y-4 shadow-2xl">
+            <h3 className="text-base font-bold text-white flex items-center space-x-2">
+              <PlusCircle className="w-5 h-5 text-cyan-400" />
+              <span>BEST Mall 카탈로그 직접 등록 설정</span>
+            </h3>
+
+            <div className="p-4 bg-navy-950 rounded-2xl border border-navy-800 space-y-2 text-xs">
+              <div className="flex items-center space-x-3">
+                <img src={registeringProduct.image} alt="" className="w-14 h-14 object-cover rounded-xl" />
+                <div>
+                  <p className="font-bold text-white">{registeringProduct.name.ko}</p>
+                  <p className="text-slate-400">{registeringProduct.name.vi}</p>
+                  <p className="text-cyan-400 mt-0.5">CJ 도매원가: ${registeringProduct.supplierPriceUSD}</p>
+                </div>
+              </div>
+            </div>
+
+            <form onSubmit={handleConfirmRegisterProduct} className="space-y-4 text-xs">
+              <div>
+                <label className="font-bold text-slate-300 block mb-1">상점 노출 카테고리 지정</label>
+                <select
+                  value={customCategory}
+                  onChange={(e) => setCustomCategory(e.target.value)}
+                  className="w-full p-2.5 bg-navy-950 border border-navy-800 rounded-xl text-white"
+                >
+                  <option value="interior">맞춤 인테리어</option>
+                  <option value="parking">AI 주차/차량</option>
+                  <option value="energy">3D 태양광</option>
+                  <option value="firefighting">소방/안전</option>
+                  <option value="waterproofing">건축 방수</option>
+                  <option value="elevator">승강기 보안</option>
+                </select>
+              </div>
+
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="font-bold text-slate-300">목표 마진율 (%) 지정</label>
+                  <span className="font-extrabold text-gold-400 text-sm">{customMarginPercent}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="10"
+                  max="100"
+                  step="5"
+                  value={customMarginPercent}
+                  onChange={(e) => setCustomMarginPercent(Number(e.target.value))}
+                  className="w-full accent-gold-500 bg-navy-950 cursor-pointer"
+                />
+              </div>
+
+              <div className="p-3 bg-navy-950 rounded-xl border border-gold-500/30 text-xs space-y-1">
+                <p className="text-slate-400">최종 계산된 소비자 판매가:</p>
+                <p className="text-lg font-black text-gold-400">
+                  {Math.round(CJDropshippingService.calculateMargin({
+                    supplierPriceUSD: registeringProduct.supplierPriceUSD,
+                    weightKg: registeringProduct.weightKg,
+                    shippingMethodCode: 'CJPacket_Standard',
+                    marginPercent: customMarginPercent
+                  }).sellingPriceUSD * 25400).toLocaleString()} ₫
+                </p>
+              </div>
+
+              <div className="flex space-x-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setRegisteringProduct(null)}
+                  className="flex-1 py-3 bg-navy-800 text-slate-300 font-bold rounded-xl min-h-[44px]"
+                >
+                  취소
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-navy-950 font-extrabold rounded-xl min-h-[44px]"
+                >
+                  BEST Mall에 등록 완료
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* 🌟 PRODUCT DETAIL MODAL */}
       {selectedProductDetail && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md">
           <div className="bg-navy-900 border border-gold-500/40 rounded-3xl w-full max-w-4xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
