@@ -6,6 +6,19 @@
 import { db, COLLECTIONS, addDocument } from '../lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp, collection, getDocs } from 'firebase/firestore';
 
+export const SUPER_ADMIN_EMAILS = [
+  'daguri75@gamil.com',
+  'daguri75@gmail.com',
+  'chitokiser@gmail.com',
+  'admin@bestwinnervn.com'
+];
+
+export function isSuperAdminEmail(email) {
+  if (!email) return false;
+  const normalized = email.trim().toLowerCase();
+  return SUPER_ADMIN_EMAILS.some(e => e.toLowerCase() === normalized);
+}
+
 export class UserService {
   /**
    * Sync & Upsert user data into Firebase Firestore ('users' collection)
@@ -25,6 +38,7 @@ export class UserService {
       const jumperId = `JUMPER-${userData.uid.slice(0, 8).toUpperCase()}`;
 
       const now = new Date().toISOString();
+      const isSuperAdmin = isSuperAdminEmail(userData.email);
 
       const userRecord = {
         uid: userData.uid,
@@ -43,7 +57,8 @@ export class UserService {
         },
         
         // Role & Metadata
-        role: (userData.email && (userData.email.includes('admin') || userData.email.includes('bestwinner'))) ? 'admin' : 'member',
+        role: isSuperAdmin ? 'super_admin' : (userData.email && (userData.email.includes('admin') || userData.email.includes('bestwinner'))) ? 'admin' : 'member',
+        isSuperAdmin,
         lastLoginAt: now,
         updatedAt: now
       };

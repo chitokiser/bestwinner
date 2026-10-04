@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { X, LogOut, CheckCircle2, Globe, Sparkles, Shield, Cpu, Truck } from 'lucide-react';
 import { loginWithGoogle, logoutFirebase } from '../lib/firebase';
-import { UserService } from '../services/userService';
+import { UserService, isSuperAdminEmail } from '../services/userService';
 
 export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
   const isVi = t?.lang === 'vi' || !t?.lang;
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [chromeEmail, setChromeEmail] = useState(() => {
-    return localStorage.getItem('best_saved_chrome_email') || 'chitokiser@gmail.com';
+    return localStorage.getItem('best_saved_chrome_email') || 'daguri75@gamil.com';
   });
 
   if (!isOpen) return null;
 
   // Real Google Chrome Account Authenticated Session
   const handleGoogleAccountLogin = async (targetEmail) => {
-    const emailToUse = (targetEmail || chromeEmail || 'chitokiser@gmail.com').trim();
+    const emailToUse = (targetEmail || chromeEmail || 'daguri75@gamil.com').trim();
     const namePart = emailToUse.split('@')[0];
     const formattedName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
     
@@ -59,6 +59,7 @@ export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
 
   const aim119Id = user?.aim119Id || (user?.uid ? `AIM119-${user.uid.slice(0, 8).toUpperCase()}` : '');
   const jumperId = user?.jumperId || (user?.uid ? `JUMPER-${user.uid.slice(0, 8).toUpperCase()}` : '');
+  const isSuperAdmin = isSuperAdminEmail(user?.email);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md animate-in fade-in duration-200">
@@ -74,15 +75,21 @@ export default function GoogleAuthModal({ isOpen, onClose, user, setUser, t }) {
         {user ? (
           /* Signed In State */
           <div className="text-center space-y-4">
-            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-gold-400 mx-auto shadow-gold-glow bg-navy-900">
+            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-gold-400 mx-auto shadow-gold-glow bg-navy-900 relative">
               <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
             </div>
 
             <div>
-              <span className="text-[10px] font-bold text-gold-400 bg-gold-500/10 px-2.5 py-0.5 rounded-full border border-gold-500/30 inline-flex items-center gap-1">
-                <CheckCircle2 className="w-3 h-3 text-gold-400" />
-                Google Authenticated
-              </span>
+              {isSuperAdmin ? (
+                <span className="text-[11px] font-extrabold text-gold-950 bg-gradient-to-r from-amber-300 via-gold-400 to-amber-500 px-3 py-1 rounded-full border border-gold-300 inline-flex items-center gap-1 shadow-lg">
+                  👑 최고 관리자 (Super Admin)
+                </span>
+              ) : (
+                <span className="text-[10px] font-bold text-gold-400 bg-gold-500/10 px-2.5 py-0.5 rounded-full border border-gold-500/30 inline-flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3 text-gold-400" />
+                  Google Authenticated
+                </span>
+              )}
               <h3 className="text-lg font-extrabold text-white mt-2">{user.name}</h3>
               <p className="text-xs text-chrome-300 font-mono mt-0.5">{user.email}</p>
             </div>

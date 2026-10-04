@@ -36,12 +36,22 @@ import {
   DEMO_CJ_PRODUCTS, 
   SHIPPING_METHODS 
 } from '../services/cjDropshippingService';
+import { isSuperAdminEmail } from '../services/userService';
 
 export default function DropshippingPage({ t, user }) {
   // Mode State: false = General Customer View, true = Admin Control Mode
   const [isAdminMode, setIsAdminMode] = useState(() => {
-    return localStorage.getItem('best_mall_admin_authenticated') === 'true';
+    const saved = localStorage.getItem('best_mall_admin_authenticated') === 'true';
+    if (user && isSuperAdminEmail(user.email)) return true;
+    return saved;
   });
+
+  useEffect(() => {
+    if (user && isSuperAdminEmail(user.email)) {
+      setIsAdminMode(true);
+      localStorage.setItem('best_mall_admin_authenticated', 'true');
+    }
+  }, [user]);
 
   const [isAdminAuthModalOpen, setIsAdminAuthModalOpen] = useState(false);
   const [adminPinInput, setAdminPinInput] = useState('');
