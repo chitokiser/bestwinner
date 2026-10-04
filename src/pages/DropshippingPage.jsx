@@ -322,17 +322,23 @@ export default function DropshippingPage({ t, user }) {
               {isAdminMode ? (
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-xs font-bold text-emerald-400">운영자 관리 모드</span>
+                    <div className={`w-3 h-3 rounded-full animate-pulse ${config.accessToken ? 'bg-emerald-500' : 'bg-cyan-400'}`} />
+                    <span className={`text-xs font-bold ${config.accessToken ? 'text-emerald-400' : 'text-cyan-300'}`}>
+                      {config.accessToken ? 'CJ 라이브 API 연동됨' : '샌드박스 시뮬레이션 모드'}
+                    </span>
                   </div>
                   
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => setIsApiModalOpen(true)}
-                      className="px-3 py-2 rounded-xl bg-navy-800 hover:bg-navy-700 text-slate-200 text-xs font-bold transition-all flex items-center justify-center space-x-1 min-h-[40px]"
+                      className={`px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-1 min-h-[40px] ${
+                        config.accessToken 
+                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' 
+                          : 'bg-navy-800 hover:bg-navy-700 text-slate-200 border border-navy-700'
+                      }`}
                     >
                       <Settings className="w-3.5 h-3.5 text-gold-400" />
-                      <span>API 연동</span>
+                      <span>{config.accessToken ? 'API 연동 완료' : 'API 연동 설정'}</span>
                     </button>
 
                     <button
