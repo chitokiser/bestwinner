@@ -5,6 +5,15 @@
 
 const CJ_API_BASE = 'https://developers.cjdropshipping.com/api2.0/v1';
 
+export const CATEGORY_MAP = {
+  interior: { ko: '맞춤 인테리어', vi: 'Nội Thất Thông Minh', en: 'Custom Interior' },
+  parking: { ko: 'AI 주차/차량', vi: 'Đỗ Xe & Ô Tô AI', en: 'AI Parking & Vehicle' },
+  energy: { ko: '3D 태양광', vi: 'Năng Lượng Mặt Trời 3D', en: '3D Solar Energy' },
+  firefighting: { ko: '소방/안전', vi: 'PCCC & An Toàn', en: 'Fire & Safety' },
+  waterproofing: { ko: '건축 방수', vi: 'Chống Thấm Xây Dựng', en: 'Building Waterproofing' },
+  elevator: { ko: '승강기 보안', vi: 'An Ninh Thang Máy', en: 'Elevator Security' }
+};
+
 // Initial Catalog tailored to BEST Group ecosystem
 export const DEMO_CJ_PRODUCTS = [
   {
@@ -24,7 +33,7 @@ export const DEMO_CJ_PRODUCTS = [
     stock: 2450,
     shippingEstDays: '4-7일',
     image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80',
-    tags: ['Best Seller', 'K-Design', 'QCVN Ready'],
+    tags: ['Best Seller', 'K-Design', 'QCVN Ready', '인테리어', '조명'],
     variants: ['Warm White', 'RGB Smart App Control', 'Emergency Battery Pack']
   },
   {
@@ -44,7 +53,7 @@ export const DEMO_CJ_PRODUCTS = [
     stock: 1120,
     shippingEstDays: '5-8일',
     image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80',
-    tags: ['AI Smart', 'Hot Item'],
+    tags: ['AI Smart', 'Hot Item', '주차', '차량'],
     variants: ['Front 4K + Rear 1080P', '4K + Solar Assist']
   },
   {
@@ -64,7 +73,7 @@ export const DEMO_CJ_PRODUCTS = [
     stock: 580,
     shippingEstDays: '4-6일',
     image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=600&q=80',
-    tags: ['3D Solar', 'High Margin'],
+    tags: ['3D Solar', 'High Margin', '태양광', '에너지'],
     variants: ['Standard Matte Black', 'Rugged Waterproof Camo']
   },
   {
@@ -84,7 +93,7 @@ export const DEMO_CJ_PRODUCTS = [
     stock: 4200,
     shippingEstDays: '3-6일',
     image: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80',
-    tags: ['Fire Safety', 'QCVN Approved'],
+    tags: ['Fire Safety', 'QCVN Approved', '소방', '안전'],
     variants: ['Red Fire Signal', 'Silver Metallic Elegance']
   },
   {
@@ -104,7 +113,7 @@ export const DEMO_CJ_PRODUCTS = [
     stock: 8900,
     shippingEstDays: '4-7일',
     image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80',
-    tags: ['High Volume', 'Fast Ship'],
+    tags: ['High Volume', 'Fast Ship', '방수', '건축'],
     variants: ['Clear Transparent', 'Black Protection']
   },
   {
@@ -112,7 +121,7 @@ export const DEMO_CJ_PRODUCTS = [
     cjSku: 'CJ-ELEV-MIRROR-06',
     name: {
       ko: '스마트 승강기/건물 안심 보안 무선 서베이 카메라',
-      vi: 'Camera An Ninh Thông Minh Dành Cho Thang Thang Máy',
+      vi: 'Camera An Ninh Thông Minh Dành Cho Thang Máy',
       en: 'Wireless Smart Security Camera for Elevators & Entry'
     },
     category: 'elevator',
@@ -124,7 +133,7 @@ export const DEMO_CJ_PRODUCTS = [
     stock: 930,
     shippingEstDays: '5-9일',
     image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=600&q=80',
-    tags: ['AI Security', 'Premium'],
+    tags: ['AI Security', 'Premium', '승강기', '보안'],
     variants: ['Night Vision 4K', 'Dual Lens 360 Wide']
   },
   {
@@ -144,7 +153,7 @@ export const DEMO_CJ_PRODUCTS = [
     stock: 1650,
     shippingEstDays: '3-6일',
     image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80',
-    tags: ['Luxury', 'Best Seller'],
+    tags: ['Luxury', 'Best Seller', '인테리어', '디퓨저'],
     variants: ['Nordic White Marble', 'Walnut Wood Grain']
   },
   {
@@ -164,7 +173,7 @@ export const DEMO_CJ_PRODUCTS = [
     stock: 3100,
     shippingEstDays: '4-7일',
     image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80',
-    tags: ['Solar PVT', 'Eco Friendly'],
+    tags: ['Solar PVT', 'Eco Friendly', '태양광', '조명'],
     variants: ['Sensor Motion Light', 'Dusk to Dawn Dusk Auto']
   }
 ];
@@ -189,7 +198,7 @@ export const GLOBAL_CJ_DB_POOL = [
     stock: 1200,
     shippingEstDays: '4-7일',
     image: 'https://images.unsplash.com/photo-1589923188900-85dae523342b?auto=format&fit=crop&w=600&q=80',
-    tags: ['AI Smart', 'Top Recommended'],
+    tags: ['AI Smart', 'Top Recommended', '인테리어', '청소기', '로봇'],
     variants: ['White Ultra', 'Space Black']
   },
   {
@@ -209,7 +218,7 @@ export const GLOBAL_CJ_DB_POOL = [
     stock: 450,
     shippingEstDays: '5-9일',
     image: 'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=600&q=80',
-    tags: ['B2B Heavy', 'AI LPR'],
+    tags: ['B2B Heavy', 'AI LPR', '주차', '차량'],
     variants: ['Single Gate 3M', 'Dual Gate 6M']
   },
   {
@@ -229,7 +238,7 @@ export const GLOBAL_CJ_DB_POOL = [
     stock: 890,
     shippingEstDays: '4-7일',
     image: 'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=600&q=80',
-    tags: ['3D Solar', 'ESG Eco'],
+    tags: ['3D Solar', 'ESG Eco', '태양광', '에너지'],
     variants: ['400W Standard', '800W Dual Panel']
   },
   {
@@ -249,7 +258,7 @@ export const GLOBAL_CJ_DB_POOL = [
     stock: 5400,
     shippingEstDays: '3-5일',
     image: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=600&q=80',
-    tags: ['QCVN Certified', 'Essential'],
+    tags: ['QCVN Certified', 'Essential', '소방', '방독면', '안전'],
     variants: ['Single Mask Pack', 'Family 4-Pack Box']
   },
   {
@@ -269,8 +278,108 @@ export const GLOBAL_CJ_DB_POOL = [
     stock: 6700,
     shippingEstDays: '3-6일',
     image: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80',
-    tags: ['Fast Seller', 'High Margin'],
+    tags: ['Fast Seller', 'High Margin', '방수', '테이프'],
     variants: ['Width 10cm x 10m', 'Width 20cm x 10m']
+  },
+  {
+    id: 'CJ-DB-1006',
+    cjSku: 'CJ-HOME-AIR-06',
+    name: {
+      ko: '스마트 공기 질 센서 & HEPA 13 공기청정기',
+      vi: 'Máy Lọc Không Khí HEPA 13 & Cảm Biến AI',
+      en: 'Smart Air Quality Monitor & HEPA 13 Purifier'
+    },
+    category: 'interior',
+    supplierPriceUSD: 55.00,
+    suggestedRetailUSD: 149.00,
+    weightKg: 2.10,
+    rating: 4.9,
+    reviewsCount: 420,
+    stock: 1500,
+    shippingEstDays: '4-7일',
+    image: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=600&q=80',
+    tags: ['Air Clean', 'AI Sensor', '인테리어', '공기청정기'],
+    variants: ['Standard White', 'Wood Trim Special']
+  },
+  {
+    id: 'CJ-DB-1007',
+    cjSku: 'CJ-FIRE-GLOVE-07',
+    name: {
+      ko: '고온 내화 방화 장갑 & 비상 도끼 킷',
+      vi: 'Găng Tay Chịu Nhiệt PCCC & Rìu Cứu Hộ Khẩn Cấp',
+      en: 'Heat Resistant Firefighting Gloves & Emergency Axe'
+    },
+    category: 'firefighting',
+    supplierPriceUSD: 18.50,
+    suggestedRetailUSD: 48.00,
+    weightKg: 1.10,
+    rating: 4.8,
+    reviewsCount: 230,
+    stock: 2100,
+    shippingEstDays: '3-6일',
+    image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=600&q=80',
+    tags: ['Heavy Duty', 'QCVN Ready', '소방', '안전', '장갑'],
+    variants: ['Medium Size', 'Large Size']
+  },
+  {
+    id: 'CJ-DB-1008',
+    cjSku: 'CJ-PARK-GUARD-08',
+    name: {
+      ko: '스마트 주차 안심 문콕 방지 도어 가드 센서',
+      vi: 'Cảm Biến Bảo Vệ Cửa Xe Chống Va Đập Khi Đỗ',
+      en: 'Smart Parking Door Guard & Impact Sensor'
+    },
+    category: 'parking',
+    supplierPriceUSD: 15.20,
+    suggestedRetailUSD: 39.00,
+    weightKg: 0.40,
+    rating: 4.8,
+    reviewsCount: 175,
+    stock: 2800,
+    shippingEstDays: '4-7일',
+    image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80',
+    tags: ['Parking Sensor', 'Smart Car', '주차', '차량'],
+    variants: ['Universal 4-Door Kit', 'Carbon Fiber Edition']
+  },
+  {
+    id: 'CJ-DB-1009',
+    cjSku: 'CJ-ELEV-VOICE-09',
+    name: {
+      ko: '승강기 비상 통화장치 & AI 음성인식 감지기',
+      vi: 'Bộ Đàm Thang Máy Khẩn Cấp & Nhận Diện Giọng Nói AI',
+      en: 'Elevator Emergency Intercom & AI Voice Detector'
+    },
+    category: 'elevator',
+    supplierPriceUSD: 45.00,
+    suggestedRetailUSD: 129.00,
+    weightKg: 0.95,
+    rating: 4.9,
+    reviewsCount: 110,
+    stock: 640,
+    shippingEstDays: '4-8일',
+    image: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=600&q=80',
+    tags: ['Elevator Safety', 'AI Voice', '승강기', '보안'],
+    variants: ['Standard Intercom', '4G Cellular Backup']
+  },
+  {
+    id: 'CJ-DB-1010',
+    cjSku: 'CJ-HOME-BLIND-10',
+    name: {
+      ko: '인테리어 스마트 블라인드 모터 & 홈IoT 킷',
+      vi: 'Động Cơ Rèm Cửa Thông Minh & Kết Nối Home IoT',
+      en: 'Interior Smart Blind Motor & Home IoT Kit'
+    },
+    category: 'interior',
+    supplierPriceUSD: 38.00,
+    suggestedRetailUSD: 98.00,
+    weightKg: 1.10,
+    rating: 4.9,
+    reviewsCount: 340,
+    stock: 1450,
+    shippingEstDays: '4-7일',
+    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80',
+    tags: ['Smart Home', 'Interior', '인테리어', '블라인드'],
+    variants: ['Tuya WiFi Direct', 'Zigbee Hub Included']
   }
 ];
 
@@ -298,7 +407,7 @@ export class CJDropshippingService {
       email: '',
       accessToken: '',
       isDemoMode: true,
-      marginPercent: 30,
+      marginPercent: 35,
       usdToVndRate: 25400,
       usdToKrwRate: 1350
     };
@@ -361,23 +470,39 @@ export class CJDropshippingService {
   }
 
   /**
-   * Search CJ Global Database Engine
+   * Search CJ Global Database Engine with multi-field Korean category and tag matching
    */
   static async searchCJGlobalDatabase({ keyword = '', category = 'all' }) {
     let results = [...GLOBAL_CJ_DB_POOL];
 
+    // Filter by Category if specified
     if (category && category !== 'all') {
       results = results.filter(p => p.category === category);
     }
 
+    // Keyword filtering
     if (keyword && keyword.trim()) {
       const q = keyword.toLowerCase().trim();
-      results = results.filter(p =>
-        p.name.ko.toLowerCase().includes(q) ||
-        p.name.vi.toLowerCase().includes(q) ||
-        p.name.en.toLowerCase().includes(q) ||
-        p.cjSku.toLowerCase().includes(q)
-      );
+
+      results = results.filter(p => {
+        const catInfo = CATEGORY_MAP[p.category] || {};
+        const catKo = catInfo.ko || '';
+        const catVi = catInfo.vi || '';
+        const catEn = catInfo.en || '';
+        const tagsStr = Array.isArray(p.tags) ? p.tags.join(' ') : '';
+        
+        return (
+          (p.name?.ko && p.name.ko.toLowerCase().includes(q)) ||
+          (p.name?.vi && p.name.vi.toLowerCase().includes(q)) ||
+          (p.name?.en && p.name.en.toLowerCase().includes(q)) ||
+          (p.cjSku && p.cjSku.toLowerCase().includes(q)) ||
+          (p.category && p.category.toLowerCase().includes(q)) ||
+          catKo.toLowerCase().includes(q) ||
+          catVi.toLowerCase().includes(q) ||
+          catEn.toLowerCase().includes(q) ||
+          tagsStr.toLowerCase().includes(q)
+        );
+      });
     }
 
     return results;
@@ -389,11 +514,14 @@ export class CJDropshippingService {
   static registerProductToStore(productData) {
     try {
       const customProducts = this.getRegisteredCustomProducts();
-      const existIndex = customProducts.findIndex(p => p.cjSku === productData.cjSku || p.id === productData.id);
+      const existIndex = customProducts.findIndex(p => 
+        (p.cjSku && p.cjSku === productData.cjSku) || (p.id && p.id === productData.id)
+      );
       
       const newProduct = {
         ...productData,
         id: productData.id || `CJ-CUSTOM-${Date.now()}`,
+        cjSku: productData.cjSku || `SKU-${Date.now()}`,
         registeredAt: new Date().toISOString(),
         isCustomRegistered: true
       };
@@ -429,7 +557,7 @@ export class CJDropshippingService {
    */
   static deleteRegisteredProduct(id) {
     try {
-      const customProducts = this.getRegisteredCustomProducts().filter(p => p.id !== id);
+      const customProducts = this.getRegisteredCustomProducts().filter(p => p.id !== id && p.cjSku !== id);
       localStorage.setItem('best_mall_custom_products', JSON.stringify(customProducts));
       return true;
     } catch (e) {
@@ -438,7 +566,7 @@ export class CJDropshippingService {
   }
 
   /**
-   * Get Combined Store Catalog Products
+   * Get Combined Store Catalog Products with multi-field search
    */
   static async getProducts({ category = 'all', keyword = '', isDemo = true }) {
     const customRegistered = this.getRegisteredCustomProducts();
@@ -458,12 +586,25 @@ export class CJDropshippingService {
 
     if (keyword && keyword.trim()) {
       const q = keyword.toLowerCase().trim();
-      products = products.filter(p => 
-        p.name.ko.toLowerCase().includes(q) ||
-        p.name.vi.toLowerCase().includes(q) ||
-        p.name.en.toLowerCase().includes(q) ||
-        p.cjSku.toLowerCase().includes(q)
-      );
+      products = products.filter(p => {
+        const catInfo = CATEGORY_MAP[p.category] || {};
+        const catKo = catInfo.ko || '';
+        const catVi = catInfo.vi || '';
+        const catEn = catInfo.en || '';
+        const tagsStr = Array.isArray(p.tags) ? p.tags.join(' ') : '';
+
+        return (
+          (p.name?.ko && p.name.ko.toLowerCase().includes(q)) ||
+          (p.name?.vi && p.name.vi.toLowerCase().includes(q)) ||
+          (p.name?.en && p.name.en.toLowerCase().includes(q)) ||
+          (p.cjSku && p.cjSku.toLowerCase().includes(q)) ||
+          (p.category && p.category.toLowerCase().includes(q)) ||
+          catKo.toLowerCase().includes(q) ||
+          catVi.toLowerCase().includes(q) ||
+          catEn.toLowerCase().includes(q) ||
+          tagsStr.toLowerCase().includes(q)
+        );
+      });
     }
 
     return products;
@@ -487,7 +628,7 @@ export class CJDropshippingService {
    */
   static calculateMargin({ supplierPriceUSD, weightKg, shippingMethodCode, marginPercent, currency = 'USD' }) {
     const config = this.getStoredConfig();
-    const marginRatio = (marginPercent || config.marginPercent || 30) / 100;
+    const marginRatio = (marginPercent || config.marginPercent || 35) / 100;
     const shippingInfo = this.calculateShippingFee(weightKg, shippingMethodCode);
     
     const costUSD = supplierPriceUSD + shippingInfo.feeUSD;
@@ -503,7 +644,7 @@ export class CJDropshippingService {
       totalCostUSD: Number(costUSD.toFixed(2)),
       sellingPriceUSD,
       profitUSD,
-      marginPercent: marginPercent || 30,
+      marginPercent: marginPercent || 35,
       
       sellingPriceVND: Math.round(sellingPriceUSD * usdToVnd),
       profitVND: Math.round(profitUSD * usdToVnd),
@@ -558,3 +699,4 @@ export class CJDropshippingService {
     }
   }
 }
+
