@@ -1,4 +1,4 @@
-const CACHE_NAME = 'best-winner-pwa-v2';
+const CACHE_NAME = 'best-winner-pwa-v3';
 const urlsToCache = [
   '/',
   '/manifest.json',
@@ -33,18 +33,19 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Only handle GET requests for same-origin or static assets
   if (event.request.method !== 'GET') return;
   
+  // Network first for HTML navigation to ensure latest route bundle
+  if (event.request.mode === 'navigate' || event.request.headers.get('accept')?.includes('text/html')) {
+    event.respondWith(
+      fetch(event.request)
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
   event.respondWith(
     fetch(event.request)
-      .then((response) => {
-        return response;
-      })
-      .catch(() => {
-        return caches.match(event.request).then((cachedResponse) => {
-          return cachedResponse || Response.error();
-        });
-      })
+      .catch(() => caches.match(event.request))
   );
 });
