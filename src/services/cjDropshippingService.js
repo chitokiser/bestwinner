@@ -19,60 +19,6 @@ export const DEMO_CJ_PRODUCTS = [];
 // Global CJ Database Pool for Live Searching and Importing into BEST Mall
 export const GLOBAL_CJ_DB_POOL = [
   {
-    "id": "CJ-REAL-CJJT3210149",
-    "pid": "2105007276961087489",
-    "cjSku": "CJJT3210149",
-    "name": {
-      "ko": "2-Piece Matte Black Resin Reindeer Sculptures Christmas Deer Statues For Living Room Bedroom Office Shelf And Desk Decor",
-      "vi": "2-Piece Matte Black Resin Reindeer Sculptures Christmas Deer Statues For Living Room Bedroom Office Shelf And Desk Decor",
-      "en": "2-Piece Matte Black Resin Reindeer Sculptures Christmas Deer Statues For Living Room Bedroom Office Shelf And Desk Decor",
-      "zh": "2-Piece Matte Black Resin Reindeer Sculptures Christmas Deer Statues For Living Room Bedroom Office Shelf And Desk Decor"
-    },
-    "category": "art",
-    "supplierPriceUSD": 43.99,
-    "suggestedRetailUSD": 61.59,
-    "supplierPriceVND": 1117346,
-    "weightKg": 400,
-    "rating": 4.9,
-    "reviewsCount": 40,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/90d83bd7-095e-4dc7-91ee-c3baeb002bda.jpg",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Home Office Storage"
-  },
-  {
-    "id": "CJ-REAL-CJSD3194763",
-    "pid": "2103261271040765954",
-    "cjSku": "CJSD3194763",
-    "name": {
-      "ko": "Crystal Fruit Figurine, Handmade Glass Sculpture Ornament For Desktop, Office, Home, Christmas And Holiday Decor",
-      "vi": "Crystal Fruit Figurine, Handmade Glass Sculpture Ornament For Desktop, Office, Home, Christmas And Holiday Decor",
-      "en": "Crystal Fruit Figurine, Handmade Glass Sculpture Ornament For Desktop, Office, Home, Christmas And Holiday Decor",
-      "zh": "Crystal Fruit Figurine, Handmade Glass Sculpture Ornament For Desktop, Office, Home, Christmas And Holiday Decor"
-    },
-    "category": "art",
-    "supplierPriceUSD": 45.56,
-    "suggestedRetailUSD": 63.78,
-    "supplierPriceVND": 1157224,
-    "weightKg": 400,
-    "rating": 4.9,
-    "reviewsCount": 49,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/03d8a15f-c6ae-4964-9862-568da3421a45.jpg",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
-  },
-  {
     "id": "CJ-REAL-CJJT3191464",
     "pid": "2102845824315916290",
     "cjSku": "CJJT3191464",
@@ -98,33 +44,6 @@ export const GLOBAL_CJ_DB_POOL = [
     ],
     "isCJRealProduct": true,
     "cjCategoryName": "Home Office Storage"
-  },
-  {
-    "id": "CJ-REAL-CJFU3188221",
-    "pid": "2102483830699896833",
-    "cjSku": "CJFU3188221",
-    "name": {
-      "ko": "Welcome Metal Wall Decor 12x4 Inch, Black Iron Wall Hanging With Bird Branch Silhouette For Garden, Balcony And Home",
-      "vi": "Welcome Metal Wall Decor 12x4 Inch, Black Iron Wall Hanging With Bird Branch Silhouette For Garden, Balcony And Home",
-      "en": "Welcome Metal Wall Decor 12x4 Inch, Black Iron Wall Hanging With Bird Branch Silhouette For Garden, Balcony And Home",
-      "zh": "Welcome Metal Wall Decor 12x4 Inch, Black Iron Wall Hanging With Bird Branch Silhouette For Garden, Balcony And Home"
-    },
-    "category": "art",
-    "supplierPriceUSD": 43.09,
-    "suggestedRetailUSD": 60.33,
-    "supplierPriceVND": 1094486,
-    "weightKg": 500,
-    "rating": 4.9,
-    "reviewsCount": 68,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/3ae7d407-05b6-418e-baf8-724cb8ef3ba4.jpg",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Furniture"
   },
   {
     "id": "CJ-REAL-CJJT3188186",
@@ -308,33 +227,6 @@ export const GLOBAL_CJ_DB_POOL = [
     "stock": 150,
     "shippingEstDays": "4-7일",
     "image": "https://cf.cjdropshipping.com/49c3f50d-3c6b-497d-b978-64ae0e3f28d3.jpg",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Home Office Storage"
-  },
-  {
-    "id": "CJ-REAL-CJJT3163389",
-    "pid": "2099603992041943041",
-    "cjSku": "CJJT3163389",
-    "name": {
-      "ko": "Abstract Person And Dog Head-to-Head Figurine, Sandstone-Style Decorative Sculpture For Home And Office",
-      "vi": "Abstract Person And Dog Head-to-Head Figurine, Sandstone-Style Decorative Sculpture For Home And Office",
-      "en": "Abstract Person And Dog Head-to-Head Figurine, Sandstone-Style Decorative Sculpture For Home And Office",
-      "zh": "Abstract Person And Dog Head-to-Head Figurine, Sandstone-Style Decorative Sculpture For Home And Office"
-    },
-    "category": "art",
-    "supplierPriceUSD": 44.99,
-    "suggestedRetailUSD": 62.99,
-    "supplierPriceVND": 1142746,
-    "weightKg": 500,
-    "rating": 4.9,
-    "reviewsCount": 76,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/3135114c-436b-4e74-95a3-352a1b1697d7.png",
     "tags": [
       "Luxury Art & Sculpture",
       "고품격 인테리어 조형물"
@@ -532,114 +424,6 @@ export const GLOBAL_CJ_DB_POOL = [
     "cjCategoryName": "Home Office Storage"
   },
   {
-    "id": "CJ-REAL-CJJT3095369",
-    "pid": "2092310819365470209",
-    "cjSku": "CJJT3095369",
-    "name": {
-      "ko": "2 Pcs Geometric Deer Sculpture Set, Gold Decorative Reindeer Ornaments For Fireplace, Dining Table And Living Room Decor",
-      "vi": "2 Pcs Geometric Deer Sculpture Set, Gold Decorative Reindeer Ornaments For Fireplace, Dining Table And Living Room Decor",
-      "en": "2 Pcs Geometric Deer Sculpture Set, Gold Decorative Reindeer Ornaments For Fireplace, Dining Table And Living Room Decor",
-      "zh": "2 Pcs Geometric Deer Sculpture Set, Gold Decorative Reindeer Ornaments For Fireplace, Dining Table And Living Room Decor"
-    },
-    "category": "art",
-    "supplierPriceUSD": 36.99,
-    "suggestedRetailUSD": 51.79,
-    "supplierPriceVND": 939546,
-    "weightKg": 700,
-    "rating": 4.9,
-    "reviewsCount": 50,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/56f21a31-1b06-4180-a101-b5d9472a4e57.jpg",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Home Office Storage"
-  },
-  {
-    "id": "CJ-REAL-CJSD3213701",
-    "pid": "2105592089215348737",
-    "cjSku": "CJSD3213701",
-    "name": {
-      "ko": "Christmas Acrylic Hanging Ornament Burgundy Bell Star Wreath Reindeer Butterfly Tree Bow Crown Holiday Decoration",
-      "vi": "Christmas Acrylic Hanging Ornament Burgundy Bell Star Wreath Reindeer Butterfly Tree Bow Crown Holiday Decoration",
-      "en": "Christmas Acrylic Hanging Ornament Burgundy Bell Star Wreath Reindeer Butterfly Tree Bow Crown Holiday Decoration",
-      "zh": "Christmas Acrylic Hanging Ornament Burgundy Bell Star Wreath Reindeer Butterfly Tree Bow Crown Holiday Decoration"
-    },
-    "category": "art",
-    "supplierPriceUSD": 35,
-    "suggestedRetailUSD": 49,
-    "supplierPriceVND": 889000,
-    "weightKg": 21,
-    "rating": 4.9,
-    "reviewsCount": 51,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cj-product-center.oss-accelerate.aliyuncs.com/supplier/1688/57c0b59c-d60f-40b4-904d-a6c88d8f28a7.jpg",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
-  },
-  {
-    "id": "CJ-REAL-CJJT3210197",
-    "pid": "2105028201407164418",
-    "cjSku": "CJJT3210197",
-    "name": {
-      "ko": "Stained Glass Peacock Crystal Christmas Ornament Round Faceted Hanging Keepsake For Xmas Tree And Elegant Home Decor",
-      "vi": "Stained Glass Peacock Crystal Christmas Ornament Round Faceted Hanging Keepsake For Xmas Tree And Elegant Home Decor",
-      "en": "Stained Glass Peacock Crystal Christmas Ornament Round Faceted Hanging Keepsake For Xmas Tree And Elegant Home Decor",
-      "zh": "Stained Glass Peacock Crystal Christmas Ornament Round Faceted Hanging Keepsake For Xmas Tree And Elegant Home Decor"
-    },
-    "category": "art",
-    "supplierPriceUSD": 38.99,
-    "suggestedRetailUSD": 54.59,
-    "supplierPriceVND": 990346,
-    "weightKg": 100,
-    "rating": 4.9,
-    "reviewsCount": 85,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/4007f02f-0db8-4a08-812e-61aa7ab3af6d.jpg",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Home Office Storage"
-  },
-  {
-    "id": "CJ-REAL-CJAC3194677",
-    "pid": "2103202613915987969",
-    "cjSku": "CJAC3194677",
-    "name": {
-      "ko": "Cute Swinging Ghost Car Mirror Hanging Ornament Halloween Car Interior Accessories Distressed Vintage Ghost",
-      "vi": "Cute Swinging Ghost Car Mirror Hanging Ornament Halloween Car Interior Accessories Distressed Vintage Ghost",
-      "en": "Cute Swinging Ghost Car Mirror Hanging Ornament Halloween Car Interior Accessories Distressed Vintage Ghost",
-      "zh": "Cute Swinging Ghost Car Mirror Hanging Ornament Halloween Car Interior Accessories Distressed Vintage Ghost"
-    },
-    "category": "art",
-    "supplierPriceUSD": 37.99,
-    "suggestedRetailUSD": 53.19,
-    "supplierPriceVND": 964946,
-    "weightKg": 200,
-    "rating": 4.9,
-    "reviewsCount": 48,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/24d3d483-c1ec-465b-ac32-96d0a99f027f.png",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Car Aromatherapy"
-  },
-  {
     "id": "CJ-REAL-CJAC3194689",
     "pid": "2103206030805741570",
     "cjSku": "CJAC3194689",
@@ -694,33 +478,6 @@ export const GLOBAL_CJ_DB_POOL = [
     "cjCategoryName": "Car Aromatherapy"
   },
   {
-    "id": "CJ-REAL-CJJT3194727",
-    "pid": "2103222321341313025",
-    "cjSku": "CJJT3194727",
-    "name": {
-      "ko": "Christmas Snowman Hanging Ornament Holiday Tree Decoration For Festive Home Decor",
-      "vi": "Christmas Snowman Hanging Ornament Holiday Tree Decoration For Festive Home Decor",
-      "en": "Christmas Snowman Hanging Ornament Holiday Tree Decoration For Festive Home Decor",
-      "zh": "Christmas Snowman Hanging Ornament Holiday Tree Decoration For Festive Home Decor"
-    },
-    "category": "art",
-    "supplierPriceUSD": 34.99,
-    "suggestedRetailUSD": 48.99,
-    "supplierPriceVND": 888746,
-    "weightKg": 100,
-    "rating": 4.9,
-    "reviewsCount": 22,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/a8ea3f60-fa4b-4494-9268-06978df01655.jpg",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Home Office Storage"
-  },
-  {
     "id": "CJ-REAL-CJJT3191472",
     "pid": "2102848181962313729",
     "cjSku": "CJJT3191472",
@@ -773,33 +530,6 @@ export const GLOBAL_CJ_DB_POOL = [
     ],
     "isCJRealProduct": true,
     "cjCategoryName": "Decorative Flowers & Wreaths"
-  },
-  {
-    "id": "CJ-REAL-CJSD3184999",
-    "pid": "2102099483683606530",
-    "cjSku": "CJSD3184999",
-    "name": {
-      "ko": "Christmas Bell Ornament 2026, Silver Angel Sleigh Bell Decoration, Merry Christmas Hanging Bell For Tree & Home",
-      "vi": "Christmas Bell Ornament 2026, Silver Angel Sleigh Bell Decoration, Merry Christmas Hanging Bell For Tree & Home",
-      "en": "Christmas Bell Ornament 2026, Silver Angel Sleigh Bell Decoration, Merry Christmas Hanging Bell For Tree & Home",
-      "zh": "Christmas Bell Ornament 2026, Silver Angel Sleigh Bell Decoration, Merry Christmas Hanging Bell For Tree & Home"
-    },
-    "category": "art",
-    "supplierPriceUSD": 48.99,
-    "suggestedRetailUSD": 68.59,
-    "supplierPriceVND": 1244346,
-    "weightKg": 120,
-    "rating": 4.9,
-    "reviewsCount": 76,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/09ed2f4b-4132-4fb1-8379-0022ffc908d4.png",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
   },
   {
     "id": "CJ-REAL-CJSN3173138",
@@ -883,60 +613,6 @@ export const GLOBAL_CJ_DB_POOL = [
     "cjCategoryName": "Night Lights"
   },
   {
-    "id": "CJ-REAL-CJSD3163422",
-    "pid": "2099633858820894722",
-    "cjSku": "CJSD3163422",
-    "name": {
-      "ko": "Christmas Snowman Ornament 2026, Dated Collectible Tree Decoration And Suncatcher Gift For Women And Men",
-      "vi": "Christmas Snowman Ornament 2026, Dated Collectible Tree Decoration And Suncatcher Gift For Women And Men",
-      "en": "Christmas Snowman Ornament 2026, Dated Collectible Tree Decoration And Suncatcher Gift For Women And Men",
-      "zh": "Christmas Snowman Ornament 2026, Dated Collectible Tree Decoration And Suncatcher Gift For Women And Men"
-    },
-    "category": "art",
-    "supplierPriceUSD": 34.99,
-    "suggestedRetailUSD": 48.99,
-    "supplierPriceVND": 888746,
-    "weightKg": 100,
-    "rating": 4.9,
-    "reviewsCount": 92,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/87008149-ba41-485b-ad01-d7cf638cd69f.jpg",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
-  },
-  {
-    "id": "CJ-REAL-CJSD3163278",
-    "pid": "2099536322963677185",
-    "cjSku": "CJSD3163278",
-    "name": {
-      "ko": "Dachshund Dog Christmas Ornament 1 PC, Personalized 2026 Holiday Gift For Dog Lovers Tree Decoration",
-      "vi": "Dachshund Dog Christmas Ornament 1 PC, Personalized 2026 Holiday Gift For Dog Lovers Tree Decoration",
-      "en": "Dachshund Dog Christmas Ornament 1 PC, Personalized 2026 Holiday Gift For Dog Lovers Tree Decoration",
-      "zh": "Dachshund Dog Christmas Ornament 1 PC, Personalized 2026 Holiday Gift For Dog Lovers Tree Decoration"
-    },
-    "category": "art",
-    "supplierPriceUSD": 34.99,
-    "suggestedRetailUSD": 48.99,
-    "supplierPriceVND": 888746,
-    "weightKg": 100,
-    "rating": 4.9,
-    "reviewsCount": 70,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/e6510cb3-0d9f-43e4-a8fc-8fe97b30720a.jpg",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
-  },
-  {
     "id": "CJ-REAL-CJJT3210125",
     "pid": "2104999067304128514",
     "cjSku": "CJJT3210125",
@@ -989,33 +665,6 @@ export const GLOBAL_CJ_DB_POOL = [
     ],
     "isCJRealProduct": true,
     "cjCategoryName": "Decor Paintings"
-  },
-  {
-    "id": "CJ-REAL-CJJT3210191",
-    "pid": "2105020585505517570",
-    "cjSku": "CJJT3210191",
-    "name": {
-      "ko": "Stainless Steel Flower And Bird Wreath Metal Wall Art Hanging Decor For Front Door Wall Farmhouse Home Decoration",
-      "vi": "Stainless Steel Flower And Bird Wreath Metal Wall Art Hanging Decor For Front Door Wall Farmhouse Home Decoration",
-      "en": "Stainless Steel Flower And Bird Wreath Metal Wall Art Hanging Decor For Front Door Wall Farmhouse Home Decoration",
-      "zh": "Stainless Steel Flower And Bird Wreath Metal Wall Art Hanging Decor For Front Door Wall Farmhouse Home Decoration"
-    },
-    "category": "art",
-    "supplierPriceUSD": 42.99,
-    "suggestedRetailUSD": 60.19,
-    "supplierPriceVND": 1091946,
-    "weightKg": 400,
-    "rating": 4.9,
-    "reviewsCount": 67,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/759e240b-8838-4f46-8f00-c61df677b21e.jpg",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Home Office Storage"
   },
   {
     "id": "CJ-REAL-CJSP3206706",
@@ -1396,60 +1045,6 @@ export const GLOBAL_CJ_DB_POOL = [
     "cjCategoryName": "Home Office Storage"
   },
   {
-    "id": "CJ-REAL-CJSD3217053",
-    "pid": "2106090079598473218",
-    "cjSku": "CJSD3217053",
-    "name": {
-      "ko": "Bronze Metal Christmas Tree Collar, Diamond Pattern, 20.8 27.5",
-      "vi": "Bronze Metal Christmas Tree Collar, Diamond Pattern, 20.8 27.5",
-      "en": "Bronze Metal Christmas Tree Collar, Diamond Pattern, 20.8 27.5",
-      "zh": "Bronze Metal Christmas Tree Collar, Diamond Pattern, 20.8 27.5"
-    },
-    "category": "art",
-    "supplierPriceUSD": 63.99,
-    "suggestedRetailUSD": 89.59,
-    "supplierPriceVND": 1625346,
-    "weightKg": 1500,
-    "rating": 4.9,
-    "reviewsCount": 73,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/fa887f6e-c437-4add-85e4-254440156e69.png",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
-  },
-  {
-    "id": "CJ-REAL-CJSD3217057",
-    "pid": "2106091241682612225",
-    "cjSku": "CJSD3217057",
-    "name": {
-      "ko": "Bronze Metal Christmas Tree Collar, Embossed Dots Pattern, 20.8 27.5",
-      "vi": "Bronze Metal Christmas Tree Collar, Embossed Dots Pattern, 20.8 27.5",
-      "en": "Bronze Metal Christmas Tree Collar, Embossed Dots Pattern, 20.8 27.5",
-      "zh": "Bronze Metal Christmas Tree Collar, Embossed Dots Pattern, 20.8 27.5"
-    },
-    "category": "art",
-    "supplierPriceUSD": 72.99,
-    "suggestedRetailUSD": 102.19,
-    "supplierPriceVND": 1853946,
-    "weightKg": 1500,
-    "rating": 4.9,
-    "reviewsCount": 61,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/1e5844c5-1761-4a07-8e00-7b04cf8cf299.png",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
-  },
-  {
     "id": "CJ-REAL-CJMS3156347",
     "pid": "2098359863851065345",
     "cjSku": "CJMS3156347",
@@ -1610,33 +1205,6 @@ export const GLOBAL_CJ_DB_POOL = [
     ],
     "isCJRealProduct": true,
     "cjCategoryName": "Seasonal products"
-  },
-  {
-    "id": "CJ-REAL-CJCC3136874",
-    "pid": "2096954902744162306",
-    "cjSku": "CJCC3136874",
-    "name": {
-      "ko": "Modern Marble ConsoleTablewith Power Outlet, Slim Sofa SideTableFeaturing Iron Tubes, Anti-TipDesign, and Triangular Support for Living Room, Hallway, Entryway, or Foyer",
-      "vi": "Modern Marble ConsoleTablewith Power Outlet, Slim Sofa SideTableFeaturing Iron Tubes, Anti-TipDesign, and Triangular Support for Living Room, Hallway, Entryway, or Foyer",
-      "en": "Modern Marble ConsoleTablewith Power Outlet, Slim Sofa SideTableFeaturing Iron Tubes, Anti-TipDesign, and Triangular Support for Living Room, Hallway, Entryway, or Foyer",
-      "zh": "Modern Marble ConsoleTablewith Power Outlet, Slim Sofa SideTableFeaturing Iron Tubes, Anti-TipDesign, and Triangular Support for Living Room, Hallway, Entryway, or Foyer"
-    },
-    "category": "art",
-    "supplierPriceUSD": 57.96,
-    "suggestedRetailUSD": 81.14,
-    "supplierPriceVND": 1472184,
-    "weightKg": 7003,
-    "rating": 4.9,
-    "reviewsCount": 44,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/doba-import/f54ce2f0a3d84059b96b3c5ab376c966.jpg",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Storage Bottles & Jars"
   },
   {
     "id": "CJ-REAL-CJFU3138270",
@@ -2314,114 +1882,6 @@ export const GLOBAL_CJ_DB_POOL = [
     "cjCategoryName": "Home Office Storage"
   },
   {
-    "id": "CJ-REAL-CJSD3217121",
-    "pid": "2106129044993011713",
-    "cjSku": "CJSD3217121",
-    "name": {
-      "ko": "20 Pcs Rustic Christmas Ornaments Wood Animals Reindeer Bear Wolf",
-      "vi": "20 Pcs Rustic Christmas Ornaments Wood Animals Reindeer Bear Wolf",
-      "en": "20 Pcs Rustic Christmas Ornaments Wood Animals Reindeer Bear Wolf",
-      "zh": "20 Pcs Rustic Christmas Ornaments Wood Animals Reindeer Bear Wolf"
-    },
-    "category": "art",
-    "supplierPriceUSD": 42.99,
-    "suggestedRetailUSD": 60.19,
-    "supplierPriceVND": 1091946,
-    "weightKg": 220,
-    "rating": 4.9,
-    "reviewsCount": 67,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/8233637a-1dcf-4968-a25c-08f8b551bf3f.png",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
-  },
-  {
-    "id": "CJ-REAL-CJJT3217130",
-    "pid": "2106135871730282497",
-    "cjSku": "CJJT3217130",
-    "name": {
-      "ko": "3-Piece Halloween Creepy Hand Wall Decor With Candles, Spooky Hanging Decorations",
-      "vi": "3-Piece Halloween Creepy Hand Wall Decor With Candles, Spooky Hanging Decorations",
-      "en": "3-Piece Halloween Creepy Hand Wall Decor With Candles, Spooky Hanging Decorations",
-      "zh": "3-Piece Halloween Creepy Hand Wall Decor With Candles, Spooky Hanging Decorations"
-    },
-    "category": "art",
-    "supplierPriceUSD": 44.99,
-    "suggestedRetailUSD": 62.99,
-    "supplierPriceVND": 1142746,
-    "weightKg": 400,
-    "rating": 4.9,
-    "reviewsCount": 56,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/8501e509-a516-4a04-851b-ea76e49d74a5.jpg",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Home Office Storage"
-  },
-  {
-    "id": "CJ-REAL-CJSD3217105",
-    "pid": "2106121072226971649",
-    "cjSku": "CJSD3217105",
-    "name": {
-      "ko": "18Pcs Rustic Christmas Tree Ornaments, Mini Wooden Pine Decor",
-      "vi": "18Pcs Rustic Christmas Tree Ornaments, Mini Wooden Pine Decor",
-      "en": "18Pcs Rustic Christmas Tree Ornaments, Mini Wooden Pine Decor",
-      "zh": "18Pcs Rustic Christmas Tree Ornaments, Mini Wooden Pine Decor"
-    },
-    "category": "art",
-    "supplierPriceUSD": 39.99,
-    "suggestedRetailUSD": 55.99,
-    "supplierPriceVND": 1015746,
-    "weightKg": 180,
-    "rating": 4.9,
-    "reviewsCount": 43,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/cbb728df-a91d-4b75-840a-f00578dc9944.png",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
-  },
-  {
-    "id": "CJ-REAL-CJSD3217124",
-    "pid": "2106131327554220034",
-    "cjSku": "CJSD3217124",
-    "name": {
-      "ko": "2Pcs Wooden Gingerbread Man Christmas Door Signs, Merry Christmas Decor",
-      "vi": "2Pcs Wooden Gingerbread Man Christmas Door Signs, Merry Christmas Decor",
-      "en": "2Pcs Wooden Gingerbread Man Christmas Door Signs, Merry Christmas Decor",
-      "zh": "2Pcs Wooden Gingerbread Man Christmas Door Signs, Merry Christmas Decor"
-    },
-    "category": "art",
-    "supplierPriceUSD": 32.99,
-    "suggestedRetailUSD": 46.19,
-    "supplierPriceVND": 837946,
-    "weightKg": 200,
-    "rating": 4.9,
-    "reviewsCount": 44,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/2f553feb-1110-4a21-9dd2-3c4d61b7cf10.png",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
-  },
-  {
     "id": "CJ-REAL-CJKD3217046",
     "pid": "2106086374094467074",
     "cjSku": "CJKD3217046",
@@ -2447,33 +1907,6 @@ export const GLOBAL_CJ_DB_POOL = [
     ],
     "isCJRealProduct": true,
     "cjCategoryName": "Cushion Covers"
-  },
-  {
-    "id": "CJ-REAL-CJSD3217061",
-    "pid": "2106095690723471361",
-    "cjSku": "CJSD3217061",
-    "name": {
-      "ko": "Gold Metal Christmas Tree Collar, Diamond Pattern, 20.8 27.5",
-      "vi": "Gold Metal Christmas Tree Collar, Diamond Pattern, 20.8 27.5",
-      "en": "Gold Metal Christmas Tree Collar, Diamond Pattern, 20.8 27.5",
-      "zh": "Gold Metal Christmas Tree Collar, Diamond Pattern, 20.8 27.5"
-    },
-    "category": "art",
-    "supplierPriceUSD": 63.99,
-    "suggestedRetailUSD": 89.59,
-    "supplierPriceVND": 1625346,
-    "weightKg": 1500,
-    "rating": 4.9,
-    "reviewsCount": 41,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/dcd9bfc1-c79d-40c0-bf4b-bd3654a5b679.png",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
   },
   {
     "id": "CJ-REAL-CJYL3217088",
@@ -2528,33 +1961,6 @@ export const GLOBAL_CJ_DB_POOL = [
     ],
     "isCJRealProduct": true,
     "cjCategoryName": "Cushion Covers"
-  },
-  {
-    "id": "CJ-REAL-CJSD3217111",
-    "pid": "2106122512081203202",
-    "cjSku": "CJSD3217111",
-    "name": {
-      "ko": "24Pcs Rustic Wooden Christmas Tree Ornaments, Farmhouse Brown Decor",
-      "vi": "24Pcs Rustic Wooden Christmas Tree Ornaments, Farmhouse Brown Decor",
-      "en": "24Pcs Rustic Wooden Christmas Tree Ornaments, Farmhouse Brown Decor",
-      "zh": "24Pcs Rustic Wooden Christmas Tree Ornaments, Farmhouse Brown Decor"
-    },
-    "category": "art",
-    "supplierPriceUSD": 46.99,
-    "suggestedRetailUSD": 65.79,
-    "supplierPriceVND": 1193546,
-    "weightKg": 250,
-    "rating": 4.9,
-    "reviewsCount": 69,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/4d8ebc5e-dea7-4710-a970-1b3e2df69ca3.png",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
   },
   {
     "id": "CJ-REAL-CJJT3217128",
@@ -2636,87 +2042,6 @@ export const GLOBAL_CJ_DB_POOL = [
     ],
     "isCJRealProduct": true,
     "cjCategoryName": "Cushion Covers"
-  },
-  {
-    "id": "CJ-REAL-CJSD3217126",
-    "pid": "2106132537556398082",
-    "cjSku": "CJSD3217126",
-    "name": {
-      "ko": "15-Inch Christmas Candy Cane Front Door Decor, Watercolor Style",
-      "vi": "15-Inch Christmas Candy Cane Front Door Decor, Watercolor Style",
-      "en": "15-Inch Christmas Candy Cane Front Door Decor, Watercolor Style",
-      "zh": "15-Inch Christmas Candy Cane Front Door Decor, Watercolor Style"
-    },
-    "category": "art",
-    "supplierPriceUSD": 48.99,
-    "suggestedRetailUSD": 68.59,
-    "supplierPriceVND": 1244346,
-    "weightKg": 200,
-    "rating": 4.9,
-    "reviewsCount": 30,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/1e69f033-8965-4008-a851-d583ba4a2556.png",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
-  },
-  {
-    "id": "CJ-REAL-CJSD3217071",
-    "pid": "2106099058083938305",
-    "cjSku": "CJSD3217071",
-    "name": {
-      "ko": "Buffalo Plaid Velvet Christmas Tree Collar, 15 25.6 Base Cover",
-      "vi": "Buffalo Plaid Velvet Christmas Tree Collar, 15 25.6 Base Cover",
-      "en": "Buffalo Plaid Velvet Christmas Tree Collar, 15 25.6 Base Cover",
-      "zh": "Buffalo Plaid Velvet Christmas Tree Collar, 15 25.6 Base Cover"
-    },
-    "category": "art",
-    "supplierPriceUSD": 65.99,
-    "suggestedRetailUSD": 92.39,
-    "supplierPriceVND": 1676146,
-    "weightKg": 300,
-    "rating": 4.9,
-    "reviewsCount": 77,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/15f6882b-a502-408d-b1bd-8263c48a6e5b.png",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
-  },
-  {
-    "id": "CJ-REAL-CJSD3217157",
-    "pid": "2106147002875166721",
-    "cjSku": "CJSD3217157",
-    "name": {
-      "ko": "16.5FT Red Christmas Garland With Berries, Beaded String Lights",
-      "vi": "16.5FT Red Christmas Garland With Berries, Beaded String Lights",
-      "en": "16.5FT Red Christmas Garland With Berries, Beaded String Lights",
-      "zh": "16.5FT Red Christmas Garland With Berries, Beaded String Lights"
-    },
-    "category": "art",
-    "supplierPriceUSD": 38.99,
-    "suggestedRetailUSD": 54.59,
-    "supplierPriceVND": 990346,
-    "weightKg": 350,
-    "rating": 4.9,
-    "reviewsCount": 91,
-    "stock": 150,
-    "shippingEstDays": "4-7일",
-    "image": "https://cf.cjdropshipping.com/48540f2f-7ca0-4ba4-98a6-7b5e709b890e.png",
-    "tags": [
-      "Luxury Art & Sculpture",
-      "고품격 인테리어 조형물"
-    ],
-    "isCJRealProduct": true,
-    "cjCategoryName": "Christmas Decoration Supplies"
   }
 ];
 
@@ -2729,6 +2054,33 @@ export const SHIPPING_METHODS = [
 ];
 
 export class CJDropshippingService {
+  /**
+   * Filter out apparel, footwear, jewelry, Christmas/holiday goods, toys, adult, pet, or cheap junk items
+   */
+  static isJunkOrApparelProduct(product) {
+    if (!product) return true;
+    const nameStr = (
+      typeof product === 'string' ? product :
+      (product.productName || product.productNameEn || product.name?.en || product.name?.ko || product.name || '')
+    ).toLowerCase();
+
+    const junkKeywords = [
+      'skirt', 'dress', 'shirt', 't-shirt', 'pant', 'trousers', 'jean', 'jacket', 'coat',
+      'sweater', 'hoodie', 'bra', 'underwear', 'sock', 'lingerie', 'swimsuit', 'pajama', 'pyjama',
+      'bikini', 'outfit', 'vest', 'sleeve', 'costume', 'cloth', 'apparel', 'garment', 'wear', 'shorts',
+      'briefs', 'panties', 'thong',
+      'shoe', 'boot', 'sneaker', 'sandal', 'slipper', 'heel', 'footwear', 'clog',
+      'ring', 'necklace', 'bracelet', 'earring', 'jewelry', 'jewel', 'pendant', 'brooch', 'handbag',
+      'purse', 'wallet', 'sunglasses', 'goggles', 'wig', 'hairpin', 'nail', 'cosmetic', 'makeup', 'lipstick',
+      'mascara', 'scrunchie', 'headband', 'tattoo',
+      'christmas', 'xmas', 'santa', 'reindeer', 'wreath', 'halloween', 'easter', 'holiday decor', 'toy', 'plush', 'doll', 'game', 'puzzle',
+      'vibrator', 'sex', 'pet', 'dog', 'cat', 'phone case', 'keychain', 'sticker', 'sponge', 'soap', 'toothbrush',
+      'toilet paper', 'tissue box', 'mop', 'broom', 'trash'
+    ];
+
+    return junkKeywords.some(kw => nameStr.includes(kw));
+  }
+
   /**
    * Load stored API Configs from LocalStorage
    */
@@ -2986,10 +2338,12 @@ export class CJDropshippingService {
       };
     });
 
+    const cleanProducts = transformedProducts.filter(p => !this.isJunkOrApparelProduct(p));
+
     return {
       success: true,
-      products: transformedProducts,
-      total: transformedProducts.length
+      products: cleanProducts,
+      total: cleanProducts.length
     };
   }
 
@@ -3005,10 +2359,7 @@ export class CJDropshippingService {
       const liveRes = await this.fetchLiveCJProducts({ keyword, category, pageNum, pageSize: 100, minPriceUSD, maxPriceUSD });
       if (liveRes.success && liveRes.products.length > 0) {
         // Filter live items to ensure non-art items are excluded
-        const cleanLive = liveRes.products.filter(p => {
-          const t = (p.name?.en || p.name?.ko || '').toLowerCase();
-          return !['skirt', 'dress', 'suitcase', 'chair', 'desk', 'vibrator', 'cabinet'].some(w => t.includes(w));
-        });
+        const cleanLive = liveRes.products.filter(p => !this.isJunkOrApparelProduct(p));
         results = [...cleanLive, ...results];
       }
     } catch (err) {
@@ -3260,6 +2611,7 @@ export class CJDropshippingService {
 
     const seen = new Set();
     products = products.filter(p => {
+      if (this.isJunkOrApparelProduct(p)) return false;
       const key = p.cjSku || p.id;
       if (deletedSet.has(p.id) || deletedSet.has(p.cjSku) || deletedSet.has(key)) return false;
       if (seen.has(key)) return false;
