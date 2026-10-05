@@ -2054,6 +2054,8 @@ export const SHIPPING_METHODS = [
 ];
 
 export class CJDropshippingService {
+  static CATEGORY_MAP = CATEGORY_MAP;
+
   /**
    * Filter out apparel, footwear, jewelry, Christmas/holiday goods, toys, adult, pet, or cheap junk items
    */

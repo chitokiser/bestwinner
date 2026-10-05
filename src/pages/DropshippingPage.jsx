@@ -40,7 +40,8 @@ import {
   CJDropshippingService, 
   DEMO_CJ_PRODUCTS, 
   SHIPPING_METHODS,
-  GLOBAL_CJ_DB_POOL
+  GLOBAL_CJ_DB_POOL,
+  CATEGORY_MAP
 } from '../services/cjDropshippingService';
 import { isSuperAdminEmail } from '../services/userService';
 
@@ -302,7 +303,8 @@ export default function DropshippingPage({ t, user }) {
       if (registered) {
         loadProducts();
         setRegisteredCustomIds(prev => [...prev, prodId]);
-        const catName = CJDropshippingService.CATEGORY_MAP[chosenCategory]?.ko || chosenCategory;
+        const catInfo = CATEGORY_MAP[chosenCategory] || CJDropshippingService.CATEGORY_MAP?.[chosenCategory];
+        const catName = catInfo?.ko || catInfo?.en || chosenCategory;
         alert(`⚡ [${getProductName(finalProduct)}] 상품이 [${catName}] 카테고리에 성공적으로 등록되었습니다!`);
       }
     } catch (err) {
