@@ -1078,192 +1078,213 @@ export default function DropshippingPage({ t, user }) {
                   전체 CJ DB 목록 보기
                 </button>
               </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {dbSearchResults.map((dbProduct) => {
-                  const isAlreadyRegistered = registeredCustomIds.includes(dbProduct.cjSku) || registeredCustomIds.includes(dbProduct.id);
-                  const marginData = CJDropshippingService.calculateMargin({
-                    supplierPriceUSD: dbProduct.supplierPriceUSD,
-                    weightKg: dbProduct.weightKg,
-                    shippingMethodCode: 'CJPacket_Standard',
-                    marginPercent: 35
-                  });
+            ) : ((() => {
+              const itemsPerPage = 12;
+              const totalDbPages = Math.max(1, Math.ceil(dbSearchResults.length / itemsPerPage));
+              const safePageNum = Math.min(dbPageNum, totalDbPages);
+              const currentPageItems = dbSearchResults.slice((safePageNum - 1) * itemsPerPage, safePageNum * itemsPerPage);
+              const pageNumbers = Array.from({ length: totalDbPages }, (_, i) => i + 1);
 
-                  return (
-                    <div
-                      key={dbProduct.id}
-                      className="bg-navy-900 border border-navy-800 hover:border-cyan-500/40 rounded-2xl p-5 space-y-4 shadow-xl flex flex-col justify-between"
-                    >
-                      <div className="space-y-3">
-                        <div className="relative aspect-video rounded-xl overflow-hidden bg-navy-950 border border-navy-800">
-                          <img 
-                            src={dbProduct.image || FALLBACK_IMAGE} 
-                            alt={dbProduct.name?.ko || '상품 이미지'} 
-                            loading="lazy"
-                            onError={(e) => { e.target.src = FALLBACK_IMAGE; }}
-                            className="w-full h-full object-cover"
-                          />
-                          <div className="absolute top-2 left-2 flex items-center space-x-1.5 z-10">
-                            {isAlreadyRegistered ? (
-                              <span className="bg-emerald-950/90 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded text-[10px] font-bold flex items-center space-x-1 backdrop-blur-md shadow-md">
-                                <CheckCircle className="w-3 h-3 text-emerald-400" />
-                                <span>상점 등록 완료</span>
-                              </span>
-                            ) : (
-                              <span className="bg-navy-950/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-slate-300 border border-slate-700">
-                                미등록 상품
-                              </span>
-                            )}
-                            <span className="bg-navy-950/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-cyan-400 border border-cyan-500/30">
-                              SKU: {dbProduct.cjSku}
-                            </span>
-                          </div>
-                        </div>
+              return (
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {currentPageItems.map((dbProduct) => {
+                      const isAlreadyRegistered = registeredCustomIds.includes(dbProduct.cjSku) || registeredCustomIds.includes(dbProduct.id);
+                      const marginData = CJDropshippingService.calculateMargin({
+                        supplierPriceUSD: dbProduct.supplierPriceUSD,
+                        weightKg: dbProduct.weightKg,
+                        shippingMethodCode: 'CJPacket_Standard',
+                        marginPercent: 35
+                      });
 
-                        <div className="space-y-1">
-                          <span className="text-[10px] font-bold text-gold-400 bg-gold-500/10 px-2 py-0.5 rounded border border-gold-500/30">
-                            카테고리: {dbProduct.category}
-                          </span>
-                          <h4 className="text-sm font-bold text-white line-clamp-2 pt-1">{dbProduct.name?.ko || dbProduct.name}</h4>
-                          <p className="text-xs text-slate-400 line-clamp-1">{dbProduct.name?.vi || ''}</p>
-                        </div>
-
-                        {/* Specs */}
-                        <div className="bg-navy-950 p-3 rounded-xl border border-navy-800 text-xs space-y-1.5">
-                          <div className="flex justify-between text-slate-400">
-                            <span>CJ 도매 원가:</span>
-                            <span className="font-bold text-white">{CJDropshippingService.formatVND(dbProduct.supplierPriceUSD)}</span>
-                          </div>
-                          <div className="flex justify-between text-slate-400">
-                            <span>권장 소비자 판매가:</span>
-                            <span className="font-bold text-emerald-400">{CJDropshippingService.formatVND(marginData.sellingPriceUSD)}</span>
-                          </div>
-                          <div className="flex justify-between text-slate-400 border-t border-navy-800 pt-1">
-                            <span>예상 마진:</span>
-                            <span className="font-extrabold text-gold-400">+{CJDropshippingService.formatVND(marginData.profitUSD)} (35%)</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Category Selection Dropdown */}
-                      <div className="flex items-center space-x-2 bg-navy-950 p-2 rounded-xl border border-navy-800 text-xs">
-                        <span className="text-[11px] font-bold text-slate-400 whitespace-nowrap">등록 카테고리:</span>
-                        <select
-                          value={itemTargetCategories[dbProduct.id || dbProduct.cjSku] || dbProduct.category || 'art'}
-                          onChange={(e) => setItemTargetCategories({
-                            ...itemTargetCategories,
-                            [dbProduct.id || dbProduct.cjSku]: e.target.value
-                          })}
-                          disabled={isAlreadyRegistered}
-                          className="w-full bg-navy-900 border border-navy-700 rounded-lg text-xs font-bold text-gold-400 py-1.5 px-2 focus:outline-none focus:border-gold-500/50"
+                      return (
+                        <div
+                          key={dbProduct.id}
+                          className="bg-navy-900 border border-navy-800 hover:border-cyan-500/40 rounded-2xl p-5 space-y-4 shadow-xl flex flex-col justify-between"
                         >
-                          <option value="art">🎨 아트 (Art)</option>
-                          <option value="interior">🛋️ 인테리어 (Interior)</option>
-                          <option value="lighting">💡 조명 (Lighting)</option>
-                          <option value="construction">🏗️ 건축 (Construction)</option>
-                          <option value="etc">📦 기타 (Others)</option>
-                        </select>
-                      </div>
+                          <div className="space-y-3">
+                            <div className="relative aspect-video rounded-xl overflow-hidden bg-navy-950 border border-navy-800">
+                              <img 
+                                src={dbProduct.image || FALLBACK_IMAGE} 
+                                alt={dbProduct.name?.ko || '상품 이미지'} 
+                                loading="lazy"
+                                onError={(e) => { e.target.src = FALLBACK_IMAGE; }}
+                                className="w-full h-full object-cover"
+                              />
+                              <div className="absolute top-2 left-2 flex items-center space-x-1.5 z-10">
+                                {isAlreadyRegistered ? (
+                                  <span className="bg-emerald-950/90 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded text-[10px] font-bold flex items-center space-x-1 backdrop-blur-md shadow-md">
+                                    <CheckCircle className="w-3 h-3 text-emerald-400" />
+                                    <span>상점 등록 완료</span>
+                                  </span>
+                                ) : (
+                                  <span className="bg-navy-950/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-slate-300 border border-slate-700">
+                                    미등록 상품
+                                  </span>
+                                )}
+                                <span className="bg-navy-950/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-cyan-400 border border-cyan-500/30">
+                                  SKU: {dbProduct.cjSku}
+                                </span>
+                              </div>
+                            </div>
 
-                      {/* Import Action Buttons */}
-                      <div className="flex items-center space-x-2">
-                        {(() => {
-                          const isRegistering = registeringProductIds.includes(dbProduct.cjSku) || registeringProductIds.includes(dbProduct.id);
-                          const chosenCat = itemTargetCategories[dbProduct.id || dbProduct.cjSku] || dbProduct.category || 'art';
-                          return (
-                            <button
-                              onClick={() => handleQuickRegisterProduct(dbProduct, 35, chosenCat)}
-                              disabled={isAlreadyRegistered || isRegistering}
-                              className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-1 shadow-md min-h-[42px] ${
-                                isAlreadyRegistered
-                                  ? 'bg-navy-950 text-slate-500 border border-navy-800 cursor-not-allowed'
-                                  : isRegistering
-                                  ? 'bg-emerald-600/50 text-white cursor-wait border border-emerald-500/30'
-                                  : 'bg-emerald-500 hover:bg-emerald-400 text-navy-950 shadow-emerald-500/20'
-                              }`}
+                            <div className="space-y-1">
+                              <span className="text-[10px] font-bold text-gold-400 bg-gold-500/10 px-2 py-0.5 rounded border border-gold-500/30">
+                                카테고리: {dbProduct.category}
+                              </span>
+                              <h4 className="text-sm font-bold text-white line-clamp-2 pt-1">{dbProduct.name?.ko || dbProduct.name}</h4>
+                              <p className="text-xs text-slate-400 line-clamp-1">{dbProduct.name?.vi || ''}</p>
+                            </div>
+
+                            {/* Specs */}
+                            <div className="bg-navy-950 p-3 rounded-xl border border-navy-800 text-xs space-y-1.5">
+                              <div className="flex justify-between text-slate-400">
+                                <span>CJ 도매 원가:</span>
+                                <span className="font-bold text-white">{CJDropshippingService.formatVND(dbProduct.supplierPriceUSD)}</span>
+                              </div>
+                              <div className="flex justify-between text-slate-400">
+                                <span>권장 소비자 판매가:</span>
+                                <span className="font-bold text-emerald-400">{CJDropshippingService.formatVND(marginData.sellingPriceUSD)}</span>
+                              </div>
+                              <div className="flex justify-between text-slate-400 border-t border-navy-800 pt-1">
+                                <span>예상 마진:</span>
+                                <span className="font-extrabold text-gold-400">+{CJDropshippingService.formatVND(marginData.profitUSD)} (35%)</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Category Selection Dropdown */}
+                          <div className="flex items-center space-x-2 bg-navy-950 p-2 rounded-xl border border-navy-800 text-xs">
+                            <span className="text-[11px] font-bold text-slate-400 whitespace-nowrap">등록 카테고리:</span>
+                            <select
+                              value={itemTargetCategories[dbProduct.id || dbProduct.cjSku] || dbProduct.category || 'art'}
+                              onChange={(e) => setItemTargetCategories({
+                                ...itemTargetCategories,
+                                [dbProduct.id || dbProduct.cjSku]: e.target.value
+                              })}
+                              disabled={isAlreadyRegistered}
+                              className="w-full bg-navy-900 border border-navy-700 rounded-lg text-xs font-bold text-gold-400 py-1.5 px-2 focus:outline-none focus:border-gold-500/50"
                             >
-                              <Sparkles className={`w-3.5 h-3.5 ${isRegistering ? 'animate-spin' : ''}`} />
-                              <span>{isRegistering ? '등록 중...' : isAlreadyRegistered ? '상점 등록 완료' : '⚡ 1-Click 실시간 등록'}</span>
-                            </button>
-                          );
-                        })()}
+                              <option value="art">🎨 아트 (Art)</option>
+                              <option value="interior">🛋️ 인테리어 (Interior)</option>
+                              <option value="lighting">💡 조명 (Lighting)</option>
+                              <option value="construction">🏗️ 건축 (Construction)</option>
+                              <option value="etc">📦 기타 (Others)</option>
+                            </select>
+                          </div>
 
-                        {isAlreadyRegistered ? (
-                          <button
-                            onClick={() => handleDeleteProduct(dbProduct.id || dbProduct.cjSku, getProductName(dbProduct))}
-                            className="px-3 py-2.5 bg-rose-600/90 hover:bg-rose-500 text-white text-xs font-bold rounded-xl border border-rose-500/40 transition-all flex items-center justify-center space-x-1 min-h-[42px] shadow-md hover:scale-105 whitespace-nowrap"
-                            title="상점 카탈로그에서 상품 삭제"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                            <span>카탈로그 삭제</span>
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => {
+                          {/* Import Action Buttons */}
+                          <div className="flex items-center space-x-2">
+                            {(() => {
+                              const isRegistering = registeringProductIds.includes(dbProduct.cjSku) || registeringProductIds.includes(dbProduct.id);
                               const chosenCat = itemTargetCategories[dbProduct.id || dbProduct.cjSku] || dbProduct.category || 'art';
-                              setRegisteringProduct(dbProduct);
-                              setCustomMarginPercent(35);
-                              setCustomCategory(chosenCat);
-                            }}
-                            className="px-3 py-2.5 bg-navy-800 hover:bg-navy-700 text-gold-400 text-xs font-bold rounded-xl border border-navy-700 transition-colors flex items-center justify-center space-x-1 min-h-[42px]"
-                            title="마진율 직접 설정 후 등록"
-                          >
-                            <Sliders className="w-3.5 h-3.5" />
-                            <span>마진설정</span>
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+                              return (
+                                <button
+                                  onClick={() => handleQuickRegisterProduct(dbProduct, 35, chosenCat)}
+                                  disabled={isAlreadyRegistered || isRegistering}
+                                  className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-1 shadow-md min-h-[42px] ${
+                                    isAlreadyRegistered
+                                      ? 'bg-navy-950 text-slate-500 border border-navy-800 cursor-not-allowed'
+                                      : isRegistering
+                                      ? 'bg-emerald-600/50 text-white cursor-wait border border-emerald-500/30'
+                                      : 'bg-emerald-500 hover:bg-emerald-400 text-navy-950 shadow-emerald-500/20'
+                                  }`}
+                                >
+                                  <Sparkles className={`w-3.5 h-3.5 ${isRegistering ? 'animate-spin' : ''}`} />
+                                  <span>{isRegistering ? '등록 중...' : isAlreadyRegistered ? '상점 등록 완료' : '⚡ 1-Click 실시간 등록'}</span>
+                                </button>
+                              );
+                            })()}
 
-            {/* CJ DB Search Pagination Controls */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-6 mt-6 border-t border-navy-800">
-              <div className="text-xs text-slate-400 font-bold">
-                현재 페이지: <span className="text-gold-400 font-extrabold">{dbPageNum}</span> (불러온 상품: {dbSearchResults.length}개)
-              </div>
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => setDbPageNum(p => Math.max(1, p - 1))}
-                  disabled={dbPageNum <= 1 || isSearchingDb}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all ${
-                    dbPageNum <= 1 || isSearchingDb
-                      ? 'bg-navy-950 text-slate-600 border-navy-900 cursor-not-allowed'
-                      : 'bg-navy-800 hover:bg-navy-700 text-slate-200 border-navy-700'
-                  }`}
-                >
-                  ◀ 이전 페이지
-                </button>
-                <div className="flex items-center space-x-1">
-                  {[1, 2, 3, 4, 5].map(page => (
-                    <button
-                      key={page}
-                      onClick={() => setDbPageNum(page)}
-                      className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${
-                        dbPageNum === page
-                          ? 'bg-gold-500 text-navy-950 font-extrabold shadow-md scale-105'
-                          : 'bg-navy-900 text-slate-400 hover:bg-navy-800 hover:text-white border border-navy-800'
-                      }`}
-                    >
-                      {page}
-                    </button>
-                  ))}
-                </div>
-                <button
-                  onClick={() => setDbPageNum(p => p + 1)}
-                  disabled={isSearchingDb || dbSearchResults.length === 0}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all ${
-                    isSearchingDb || dbSearchResults.length === 0
-                      ? 'bg-navy-950 text-slate-600 border-navy-900 cursor-not-allowed'
-                      : 'bg-gold-500/20 hover:bg-gold-500/30 text-gold-300 border-gold-500/40'
-                  }`}
-                >
-                  다음 페이지 (100개 더보기) ▶
-                </button>
-              </div>
-            </div>
+                            {isAlreadyRegistered ? (
+                              <button
+                                onClick={() => handleDeleteProduct(dbProduct.id || dbProduct.cjSku, getProductName(dbProduct))}
+                                className="px-3 py-2.5 bg-rose-600/90 hover:bg-rose-500 text-white text-xs font-bold rounded-xl border border-rose-500/40 transition-all flex items-center justify-center space-x-1 min-h-[42px] shadow-md hover:scale-105 whitespace-nowrap"
+                                title="상점 카탈로그에서 상품 삭제"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                                <span>카탈로그 삭제</span>
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => {
+                                  const chosenCat = itemTargetCategories[dbProduct.id || dbProduct.cjSku] || dbProduct.category || 'art';
+                                  setRegisteringProduct(dbProduct);
+                                  setCustomMarginPercent(35);
+                                  setCustomCategory(chosenCat);
+                                }}
+                                className="px-3 py-2.5 bg-navy-800 hover:bg-navy-700 text-gold-400 text-xs font-bold rounded-xl border border-navy-700 transition-colors flex items-center justify-center space-x-1 min-h-[42px]"
+                                title="마진율 직접 설정 후 등록"
+                              >
+                                <Sliders className="w-3.5 h-3.5" />
+                                <span>마진설정</span>
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* CJ DB Search Pagination Controls */}
+                  <div className="flex flex-wrap items-center justify-between gap-4 pt-6 mt-6 border-t border-navy-800">
+                    <div className="text-xs text-slate-400 font-bold">
+                      현재 페이지: <span className="text-gold-400 font-extrabold">{safePageNum}</span> / {totalDbPages} (전체 {dbSearchResults.length}개 중 {currentPageItems.length}개 표시)
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => {
+                          setDbPageNum(p => Math.max(1, p - 1));
+                          window.scrollTo({ top: 350, behavior: 'smooth' });
+                        }}
+                        disabled={safePageNum <= 1 || isSearchingDb}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all ${
+                          safePageNum <= 1 || isSearchingDb
+                            ? 'bg-navy-950 text-slate-600 border-navy-900 cursor-not-allowed'
+                            : 'bg-navy-800 hover:bg-navy-700 text-slate-200 border-navy-700'
+                        }`}
+                      >
+                        ◀ 이전 페이지
+                      </button>
+
+                      <div className="flex items-center space-x-1">
+                        {pageNumbers.map(page => (
+                          <button
+                            key={page}
+                            onClick={() => {
+                              setDbPageNum(page);
+                              window.scrollTo({ top: 350, behavior: 'smooth' });
+                            }}
+                            className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${
+                              safePageNum === page
+                                ? 'bg-gold-500 text-navy-950 font-extrabold shadow-md scale-105'
+                                : 'bg-navy-900 text-slate-400 hover:bg-navy-800 hover:text-white border border-navy-800'
+                            }`}
+                          >
+                            {page}
+                          </button>
+                        ))}
+                      </div>
+
+                      <button
+                        onClick={() => {
+                          setDbPageNum(p => Math.min(totalDbPages, p + 1));
+                          window.scrollTo({ top: 350, behavior: 'smooth' });
+                        }}
+                        disabled={safePageNum >= totalDbPages || isSearchingDb}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all ${
+                          safePageNum >= totalDbPages || isSearchingDb
+                            ? 'bg-navy-950 text-slate-600 border-navy-900 cursor-not-allowed'
+                            : 'bg-gold-500/20 hover:bg-gold-500/30 text-gold-300 border-gold-500/40'
+                        }`}
+                      >
+                        다음 페이지 ▶
+                      </button>
+                    </div>
+                  </div>
+                </>
+              );
+            })())}
 
           </div>
         )}
