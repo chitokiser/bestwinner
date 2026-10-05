@@ -57,10 +57,9 @@ export default function DropshippingPage({ t, user }) {
 
   const getSecondaryName = (product) => {
     if (!product || !product.name || typeof product.name === 'string') return '';
-    if (currentLang === 'zh') return product.name.ko || product.name.en || product.name.vi || '';
-    if (currentLang === 'vi') return product.name.ko || product.name.zh || product.name.en || '';
-    if (currentLang === 'ko') return product.name.zh || product.name.vi || product.name.en || '';
-    return product.name.zh || product.name.ko || product.name.vi || '';
+    if (currentLang === 'vi') return product.name.ko || product.name.en || '';
+    if (currentLang === 'ko') return product.name.vi || product.name.en || '';
+    return product.name.ko || product.name.vi || '';
   };
 
   // Mode State: false = General Customer View, true = Admin Control Mode
