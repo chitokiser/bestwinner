@@ -20,6 +20,7 @@ export default function Header({ currentLang, setLang, t }) {
     { code: 'vi', label: 'Tiếng Việt', flag: '🇻🇳' },
     { code: 'ko', label: '한국어', flag: '🇰🇷' },
     { code: 'en', label: 'English', flag: '🇺🇸' },
+    { code: 'zh', label: '中文', flag: '🇨🇳' },
   ];
 
   // 6 Business Units

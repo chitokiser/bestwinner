@@ -3,7 +3,35 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    {
+      name: 'netlify-functions-dev-proxy',
+      configureServer(server) {
+        server.middlewares.use('/.netlify/functions/cj-proxy', async (req, res) => {
+          let bodyStr = '';
+          req.on('data', chunk => { bodyStr += chunk; });
+          req.on('end', async () => {
+            try {
+              const cjProxy = await import('./netlify/functions/cj-proxy.js');
+              const handler = cjProxy.default?.handler || cjProxy.handler;
+              const result = await handler({
+                httpMethod: req.method,
+                headers: req.headers,
+                body: bodyStr
+              });
+              res.statusCode = result.statusCode || 200;
+              Object.entries(result.headers || {}).forEach(([k, v]) => res.setHeader(k, v));
+              res.end(result.body);
+            } catch (err) {
+              res.statusCode = 500;
+              res.end(JSON.stringify({ code: 500, message: err.message }));
+            }
+          });
+        });
+      }
+    }
+  ],
   server: {
     port: 3000,
     host: true

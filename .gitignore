@@ -34,9 +34,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# IDE and OS files
+# IDE, OS, Scratch and Agent files
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+scratch/
+.agents/
 

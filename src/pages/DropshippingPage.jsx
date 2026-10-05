@@ -33,6 +33,7 @@ import {
   Database,
   PlusCircle,
   Download,
+  Edit3,
   Image as ImageIcon
 } from 'lucide-react';
 import { 
@@ -46,6 +47,22 @@ import { isSuperAdminEmail } from '../services/userService';
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80';
 
 export default function DropshippingPage({ t, user }) {
+  const currentLang = t?.lang || 'vi';
+
+  const getProductName = (product) => {
+    if (!product || !product.name) return 'Product';
+    if (typeof product.name === 'string') return product.name;
+    return product.name[currentLang] || product.name.zh || product.name.ko || product.name.en || product.name.vi || 'Product';
+  };
+
+  const getSecondaryName = (product) => {
+    if (!product || !product.name || typeof product.name === 'string') return '';
+    if (currentLang === 'zh') return product.name.ko || product.name.en || product.name.vi || '';
+    if (currentLang === 'vi') return product.name.ko || product.name.zh || product.name.en || '';
+    if (currentLang === 'ko') return product.name.zh || product.name.vi || product.name.en || '';
+    return product.name.zh || product.name.ko || product.name.vi || '';
+  };
+
   // Mode State: false = General Customer View, true = Admin Control Mode
   const [isAdminMode, setIsAdminMode] = useState(() => {
     const saved = localStorage.getItem('best_mall_admin_authenticated') === 'true';
@@ -76,15 +93,20 @@ export default function DropshippingPage({ t, user }) {
   // CJ DB Import / Search State for Admin
   const [dbSearchQuery, setDbSearchQuery] = useState('');
   const [dbCategoryFilter, setDbCategoryFilter] = useState('all');
-  const [dbSearchResults, setDbSearchResults] = useState(GLOBAL_CJ_DB_POOL);
+  const [dbPageNum, setDbPageNum] = useState(1);
+  const [dbSearchResults, setDbSearchResults] = useState([]);
   const [registeringProduct, setRegisteringProduct] = useState(null);
   const [customMarginPercent, setCustomMarginPercent] = useState(35);
-  const [customCategory, setCustomCategory] = useState('interior');
+  const [customCategory, setCustomCategory] = useState('art');
+  const [itemTargetCategories, setItemTargetCategories] = useState({});
 
   // Filter & Search for Main Store Catalog
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('popular'); // 'popular', 'price-low', 'price-high', 'margin'
+  const [priceFilterOption, setPriceFilterOption] = useState('all'); // 'all', 'under500k', '500k-1.5m', '1.5m-3m', 'over3m', 'custom'
+  const [minPriceVndInput, setMinPriceVndInput] = useState('');
+  const [maxPriceVndInput, setMaxPriceVndInput] = useState('');
 
   // Config & API Settings (Admin only)
   const [config, setConfig] = useState(() => CJDropshippingService.getStoredConfig());
@@ -106,51 +128,108 @@ export default function DropshippingPage({ t, user }) {
   const [orderSubmitting, setOrderSubmitting] = useState(false);
 
   // Admin Margin Calculator Interactive State
-  const [selectedProductForCalc, setSelectedProductForCalc] = useState(DEMO_CJ_PRODUCTS[0]);
+  const [selectedProductForCalc, setSelectedProductForCalc] = useState(null);
   const [calcMarginPercent, setCalcMarginPercent] = useState(35);
   const [calcShippingMethod, setCalcShippingMethod] = useState('CJPacket_Standard');
 
+  // Admin Product Edit Modal State
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   // Filtered Main Store Products
-  const [products, setProducts] = useState(DEMO_CJ_PRODUCTS);
+  const [products, setProducts] = useState([]);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(false);
+  const [isSearchingDb, setIsSearchingDb] = useState(false);
+  const [registeringProductIds, setRegisteringProductIds] = useState([]);
   const [registeredCustomIds, setRegisteredCustomIds] = useState(() => 
     CJDropshippingService.getRegisteredCustomProducts().map(p => p.cjSku || p.id)
   );
 
-  // Load Main Catalog Products
-  const loadProducts = async () => {
-    const list = await CJDropshippingService.getProducts({
-      category: selectedCategory,
-      keyword: searchQuery
-    });
+  const getUsdPriceBounds = () => {
+    let minPriceUSD = undefined;
+    let maxPriceUSD = undefined;
 
-    let result = [...list];
-    if (sortBy === 'price-low') {
-      result.sort((a, b) => a.suggestedRetailUSD - b.suggestedRetailUSD);
-    } else if (sortBy === 'price-high') {
-      result.sort((a, b) => b.suggestedRetailUSD - a.suggestedRetailUSD);
-    } else if (sortBy === 'margin' && isAdminMode) {
-      result.sort((a, b) => (b.suggestedRetailUSD - b.supplierPriceUSD) - (a.suggestedRetailUSD - a.supplierPriceUSD));
+    if (priceFilterOption === 'under500k') {
+      maxPriceUSD = 500000 / 25400;
+    } else if (priceFilterOption === '500k-1.5m') {
+      minPriceUSD = 500000 / 25400;
+      maxPriceUSD = 1500000 / 25400;
+    } else if (priceFilterOption === '1.5m-3m') {
+      minPriceUSD = 1500000 / 25400;
+      maxPriceUSD = 3000000 / 25400;
+    } else if (priceFilterOption === 'over3m') {
+      minPriceUSD = 3000000 / 25400;
+    } else if (priceFilterOption === 'custom') {
+      if (minPriceVndInput) minPriceUSD = parseFloat(minPriceVndInput) / 25400;
+      if (maxPriceVndInput) maxPriceUSD = parseFloat(maxPriceVndInput) / 25400;
     }
 
-    setProducts(result);
-    setRegisteredCustomIds(CJDropshippingService.getRegisteredCustomProducts().map(p => p.cjSku || p.id));
+    return { minPriceUSD, maxPriceUSD };
+  };
+
+  // Load Main Catalog Products
+  const loadProducts = async () => {
+    setIsLoadingProducts(true);
+    try {
+      const { minPriceUSD, maxPriceUSD } = getUsdPriceBounds();
+      const list = await CJDropshippingService.getProducts({
+        category: selectedCategory,
+        keyword: searchQuery,
+        minPriceUSD,
+        maxPriceUSD
+      });
+
+      let result = [...list];
+      if (sortBy === 'price-low') {
+        result.sort((a, b) => a.suggestedRetailUSD - b.suggestedRetailUSD);
+      } else if (sortBy === 'price-high') {
+        result.sort((a, b) => b.suggestedRetailUSD - a.suggestedRetailUSD);
+      } else if (sortBy === 'margin' && isAdminMode) {
+        result.sort((a, b) => (b.suggestedRetailUSD - b.supplierPriceUSD) - (a.suggestedRetailUSD - a.supplierPriceUSD));
+      }
+
+      setProducts(result);
+      setRegisteredCustomIds(CJDropshippingService.getRegisteredCustomProducts().map(p => p.cjSku || p.id));
+    } catch (e) {
+      console.error('Error loading catalog products:', e);
+    } finally {
+      setIsLoadingProducts(false);
+    }
   };
 
   useEffect(() => {
     loadProducts();
-  }, [selectedCategory, searchQuery, sortBy, isAdminMode]);
+  }, [selectedCategory, searchQuery, sortBy, priceFilterOption, minPriceVndInput, maxPriceVndInput, isAdminMode]);
 
-  // Live CJ Global DB Search for Admin
+  // Reset DB page to 1 on search or category filter change
   useEffect(() => {
-    const fetchDbResults = async () => {
-      const results = await CJDropshippingService.searchCJGlobalDatabase({
-        keyword: dbSearchQuery,
-        category: dbCategoryFilter
-      });
-      setDbSearchResults(results);
-    };
-    fetchDbResults();
+    setDbPageNum(1);
   }, [dbSearchQuery, dbCategoryFilter]);
+
+  // Live CJ Global DB Search for Admin (With 400ms Debounce)
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      setIsSearchingDb(true);
+      try {
+        const { minPriceUSD, maxPriceUSD } = getUsdPriceBounds();
+        const results = await CJDropshippingService.searchCJGlobalDatabase({
+          keyword: dbSearchQuery,
+          category: dbCategoryFilter,
+          pageNum: dbPageNum,
+          pageSize: 100,
+          minPriceUSD,
+          maxPriceUSD
+        });
+        setDbSearchResults(results);
+      } catch (e) {
+        console.error('Error searching CJ DB:', e);
+      } finally {
+        setIsSearchingDb(false);
+      }
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [dbSearchQuery, dbCategoryFilter, dbPageNum, priceFilterOption, minPriceVndInput, maxPriceVndInput]);
 
   // Open Product Detail Modal
   const openProductDetail = (product) => {
@@ -160,14 +239,14 @@ export default function DropshippingPage({ t, user }) {
     setActiveDetailTab('desc');
   };
 
-  // Register Product to BEST Mall Catalog
+  // Register Product to BEST Mall Catalog (With Live Tab Switch)
   const handleConfirmRegisterProduct = (e) => {
     e.preventDefault();
     if (!registeringProduct) return;
 
     const marginCalc = CJDropshippingService.calculateMargin({
       supplierPriceUSD: registeringProduct.supplierPriceUSD,
-      weightKg: registeringProduct.weightKg,
+      weightKg: registeringProduct.weightKg || 0.5,
       shippingMethodCode: 'CJPacket_Standard',
       marginPercent: customMarginPercent
     });
@@ -183,14 +262,108 @@ export default function DropshippingPage({ t, user }) {
     if (registered) {
       loadProducts();
       setRegisteringProduct(null);
-      alert(`[${finalProduct.name.ko}] 상품이 BEST Mall 카탈로그에 성공적으로 등록되었습니다!\n상점 카탈로그 탭에서 즉시 확인 가능합니다.`);
+      setActiveTab('catalog'); // Auto switch to main catalog to see live registered product!
+      alert(`⚡ [${getProductName(finalProduct)}] 상품이 BEST Mall 상점에 실시간으로 즉시 등록되었습니다!\n상점 카탈로그 탭에서 수동 갱신 없이 곧바로 확인하실 수 있습니다.`);
+    }
+  };
+
+  // 1-Click Quick Register Helper
+  const handleQuickRegisterProduct = async (product, marginPercent = 35, targetCategory = null) => {
+    const prodId = product.cjSku || product.id;
+    setRegisteringProductIds(prev => [...prev, prodId]);
+
+    const chosenCategory = targetCategory || itemTargetCategories[prodId] || product.category || customCategory || 'art';
+
+    try {
+      const importedData = await CJDropshippingService.importProduct({
+        pid: product.pid || product.id,
+        cjSku: product.cjSku,
+        name: product.name,
+        category: chosenCategory,
+        supplierPriceUSD: product.supplierPriceUSD,
+        weightKg: product.weightKg,
+        marginPercent
+      });
+
+      const marginCalc = CJDropshippingService.calculateMargin({
+        supplierPriceUSD: product.supplierPriceUSD,
+        weightKg: product.weightKg || 0.5,
+        shippingMethodCode: 'CJPacket_Standard',
+        marginPercent: marginPercent
+      });
+
+      const finalProduct = importedData ? { ...importedData, category: chosenCategory } : {
+        ...product,
+        category: chosenCategory,
+        suggestedRetailUSD: marginCalc.sellingPriceUSD,
+        customMarginPercent: marginPercent
+      };
+
+      const registered = CJDropshippingService.registerProductToStore(finalProduct);
+      if (registered) {
+        loadProducts();
+        setRegisteredCustomIds(prev => [...prev, prodId]);
+        const catName = CJDropshippingService.CATEGORY_MAP[chosenCategory]?.ko || chosenCategory;
+        alert(`⚡ [${getProductName(finalProduct)}] 상품이 [${catName}] 카테고리에 성공적으로 등록되었습니다!`);
+      }
+    } catch (err) {
+      console.error('Import failed:', err);
+      alert('상품 등록 중 오류가 발생했습니다.');
+    } finally {
+      setRegisteringProductIds(prev => prev.filter(id => id !== prodId));
+    }
+  };
+
+  const handleOpenEditModal = (product) => {
+    const clone = JSON.parse(JSON.stringify(product));
+    if (typeof clone.name === 'string') {
+      clone.name = { ko: clone.name, en: clone.name, vi: clone.name, zh: clone.name };
+    }
+    setEditingProduct(clone);
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveProductEdit = (e) => {
+    e.preventDefault();
+    if (!editingProduct) return;
+
+    const rate = config.usdToVndRate || 25400;
+    const updated = {
+      ...editingProduct,
+      supplierPriceUSD: parseFloat(editingProduct.supplierPriceUSD) || 0,
+      suggestedRetailUSD: parseFloat(editingProduct.suggestedRetailUSD) || 0,
+      supplierPriceVND: Math.round((parseFloat(editingProduct.suggestedRetailUSD) || 0) * rate)
+    };
+
+    const success = CJDropshippingService.updateProduct(updated);
+    if (success) {
+      setIsEditModalOpen(false);
+      setEditingProduct(null);
+      loadProducts();
+      alert(`⚡ [${getProductName(updated)}] 상품 정보가 성공적으로 수정/저장되었습니다!`);
+    } else {
+      alert('상품 정보 수정 중 오류가 발생했습니다.');
+    }
+  };
+
+  const handleDeleteProduct = (id, name) => {
+    if (window.confirm(`[${name}] 상품을 쇼핑몰 카탈로그에서 완전히 삭제하시겠습니까?`)) {
+      CJDropshippingService.deleteProduct(id);
+      loadProducts();
+      alert(`⚡ [${name}] 상품이 성공적으로 삭제되었습니다.`);
     }
   };
 
   const handleDeleteRegisteredProduct = (id, name) => {
-    if (window.confirm(`[${name}] 상품을 쇼핑몰 카탈로그에서 삭제하시겠습니까?`)) {
-      CJDropshippingService.deleteRegisteredProduct(id);
+    handleDeleteProduct(id, name);
+  };
+
+  const handleClearAllRegisteredCustomProducts = () => {
+    if (window.confirm('임의로 추가/등록된 모든 상품을 쇼핑몰 카탈로그에서 초기화 삭제하시겠습니까?')) {
+      CJDropshippingService.clearAllRegisteredCustomProducts();
+      setRegisteredCustomIds([]);
       loadProducts();
+      alert('⚡ 임의 등록 상품이 모두 깨끗하게 삭제되었습니다.');
     }
   };
 
@@ -204,7 +377,7 @@ export default function DropshippingPage({ t, user }) {
       setAdminPinInput('');
       setAdminAuthError('');
     } else {
-      setAdminAuthError('비밀번호가 올바르지 않습니다. (기본 핀: admin1234)');
+      setAdminAuthError('비밀번호가 올바르지 않습니다.');
     }
   };
 
@@ -243,7 +416,8 @@ export default function DropshippingPage({ t, user }) {
     if (result.success) {
       const updated = CJDropshippingService.getStoredConfig();
       setConfig(updated);
-      setAuthStatus({ loading: false, error: null, successMsg: 'BEST Mall 풀필먼트 API 연동이 완료되었습니다!' });
+      setAuthStatus({ loading: false, error: null, successMsg: 'BEST Mall 풀필먼트 실시간 API 연동이 완료되었습니다!' });
+      loadProducts();
       setTimeout(() => setIsApiModalOpen(false), 1200);
     } else {
       setAuthStatus({ loading: false, error: result.message, successMsg: null });
@@ -276,12 +450,13 @@ export default function DropshippingPage({ t, user }) {
     alert(`주문이 성공적으로 접수되었습니다!\n주문 번호: ${newOrder.orderId}\n담당자가 확인 후 신속하게 배송 절차를 진행합니다.`);
   };
 
-  const marginCalculation = CJDropshippingService.calculateMargin({
-    supplierPriceUSD: selectedProductForCalc.supplierPriceUSD,
-    weightKg: selectedProductForCalc.weightKg,
+  const calcTarget = selectedProductForCalc || (products.length > 0 ? products[0] : null);
+  const marginCalculation = calcTarget ? CJDropshippingService.calculateMargin({
+    supplierPriceUSD: calcTarget.supplierPriceUSD || 10,
+    weightKg: calcTarget.weightKg || 0.5,
     shippingMethodCode: calcShippingMethod,
     marginPercent: calcMarginPercent
-  });
+  }) : null;
 
   const cartTotalUSD = cart.reduce((sum, item) => sum + (item.suggestedRetailUSD * item.qty), 0);
   const cartTotalVND = Math.round(cartTotalUSD * 25400);
@@ -470,6 +645,17 @@ export default function DropshippingPage({ t, user }) {
                 <Settings className="w-4 h-4" />
                 <span>풀필먼트 API 콘솔</span>
               </button>
+
+              {registeredCustomIds.length > 0 && (
+                <button
+                  onClick={handleClearAllRegisteredCustomProducts}
+                  className="px-3 py-2.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 text-xs font-bold transition-all flex items-center space-x-1.5 border border-rose-500/40 min-h-[44px]"
+                  title="임의 등록된 상품 전체 삭제"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  <span>등록 상품 전체 초기화 ({registeredCustomIds.length})</span>
+                </button>
+              )}
             </div>
 
             {cart.length > 0 && (
@@ -488,59 +674,107 @@ export default function DropshippingPage({ t, user }) {
         {(!isAdminMode || activeTab === 'catalog') && (
           <div className="space-y-6">
             
-            {/* Filter & Search Bar */}
-            <div className="bg-navy-900/90 border border-navy-800 rounded-2xl p-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+            {/* Filter & Search Bar with Price Ranges */}
+            <div className="bg-navy-900/90 border border-navy-800 rounded-2xl p-4 space-y-4">
               
-              {/* Category Pills */}
-              <div className="flex items-center space-x-2 overflow-x-auto pb-1 max-w-full">
-                {[
-                  { id: 'all', label: '전체 상품' },
-                  { id: 'interior', label: '맞춤 인테리어' },
-                  { id: 'parking', label: 'AI 주차/차량' },
-                  { id: 'energy', label: '3D 태양광' },
-                  { id: 'firefighting', label: '소방/안전' },
-                  { id: 'waterproofing', label: '건축 방수' },
-                  { id: 'elevator', label: '승강기 보안' }
-                ].map(cat => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setSelectedCategory(cat.id)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-colors min-h-[36px] ${
-                      selectedCategory === cat.id
-                        ? 'bg-gold-500/20 text-gold-400 border border-gold-500/40'
-                        : 'bg-navy-950 text-slate-400 hover:text-slate-200 border border-navy-800'
-                    }`}
-                  >
-                    {cat.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Search & Order controls */}
-              <div className="flex items-center space-x-3">
-                <div className="relative flex-grow md:w-64">
-                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="상품명 검색..."
-                    className="w-full pl-9 pr-3 py-2 bg-navy-950 border border-navy-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500/50"
-                  />
+              <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+                {/* Category Pills */}
+                <div className="flex items-center space-x-2 overflow-x-auto pb-1 max-w-full">
+                  {[
+                    { id: 'all', label: '전체 상품' },
+                    { id: 'interior', label: '인테리어' },
+                    { id: 'art', label: '아트' },
+                    { id: 'lighting', label: '조명' },
+                    { id: 'construction', label: '건축' },
+                    { id: 'solar', label: '태양광' },
+                    { id: 'etc', label: '기타' }
+                  ].map(cat => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.id)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-colors min-h-[36px] ${
+                        selectedCategory === cat.id
+                          ? 'bg-gold-500/20 text-gold-400 border border-gold-500/40'
+                          : 'bg-navy-950 text-slate-400 hover:text-slate-200 border border-navy-800'
+                      }`}
+                    >
+                      {cat.label}
+                    </button>
+                  ))}
                 </div>
 
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="px-3 py-2 bg-navy-950 border border-navy-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-gold-500/50"
-                >
-                  <option value="popular">인기순 정렬</option>
-                  <option value="price-low">가격 낮은순</option>
-                  <option value="price-high">가격 높은순</option>
-                  {isAdminMode && <option value="margin">관리자 마진율순</option>}
-                </select>
+                {/* Search & Order controls */}
+                <div className="flex items-center space-x-3">
+                  <div className="relative flex-grow md:w-64">
+                    <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="상품명 또는 키워드(예: ART, 조명, 센서) 검색..."
+                      className="w-full pl-9 pr-3 py-2 bg-navy-950 border border-navy-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500/50"
+                    />
+                  </div>
+
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="px-3 py-2 bg-navy-950 border border-navy-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-gold-500/50"
+                  >
+                    <option value="popular">인기순 정렬</option>
+                    <option value="price-low">가격 낮은순</option>
+                    <option value="price-high">가격 높은순</option>
+                    {isAdminMode && <option value="margin">관리자 마진율순</option>}
+                  </select>
+                </div>
               </div>
 
+              {/* Price Range Filter Bar */}
+              <div className="pt-2 border-t border-navy-800/80 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 text-xs">
+                <div className="flex items-center space-x-2 overflow-x-auto pb-1">
+                  <span className="text-slate-400 font-bold flex-shrink-0">💰 가격대:</span>
+                  {[
+                    { id: 'all', label: '전체' },
+                    { id: 'under500k', label: '50만 ₫ 이하' },
+                    { id: '500k-1.5m', label: '50만 ~ 150만 ₫' },
+                    { id: '1.5m-3m', label: '150만 ~ 300만 ₫' },
+                    { id: 'over3m', label: '300만 ₫ 이상' },
+                    { id: 'custom', label: '직접 입력' }
+                  ].map(p => (
+                    <button
+                      key={p.id}
+                      onClick={() => setPriceFilterOption(p.id)}
+                      className={`px-2.5 py-1 rounded-md text-[11px] font-bold whitespace-nowrap transition-all ${
+                        priceFilterOption === p.id
+                          ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm'
+                          : 'bg-navy-950 text-slate-400 hover:text-slate-200 border border-navy-800'
+                      }`}
+                    >
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+
+                {priceFilterOption === 'custom' && (
+                  <div className="flex items-center space-x-2 bg-navy-950 p-1.5 rounded-xl border border-navy-800">
+                    <input
+                      type="number"
+                      value={minPriceVndInput}
+                      onChange={(e) => setMinPriceVndInput(e.target.value)}
+                      placeholder="최소 ₫"
+                      className="w-24 px-2 py-1 bg-navy-900 border border-navy-800 rounded text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500/50"
+                    />
+                    <span className="text-slate-500">~</span>
+                    <input
+                      type="number"
+                      value={maxPriceVndInput}
+                      onChange={(e) => setMaxPriceVndInput(e.target.value)}
+                      placeholder="최대 ₫"
+                      className="w-24 px-2 py-1 bg-navy-900 border border-navy-800 rounded text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500/50"
+                    />
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Product Cards Grid */}
@@ -558,6 +792,26 @@ export default function DropshippingPage({ t, user }) {
                 >
                   검색 및 카테고리 초기화
                 </button>
+              </div>
+            ) : products.length === 0 ? (
+              <div className="bg-navy-900 border border-navy-800 rounded-2xl p-12 text-center space-y-4">
+                <div className="w-16 h-16 bg-navy-950 rounded-2xl flex items-center justify-center mx-auto text-slate-500 border border-navy-800">
+                  <Package className="w-8 h-8" />
+                </div>
+                <h3 className="text-base font-bold text-white">등록된 상품이 없습니다</h3>
+                <p className="text-xs text-slate-400 max-w-md mx-auto">
+                  {isAdminMode
+                    ? "상점 카탈로그에 등록된 상품이 없습니다. 'CJ DB 실시간 검색 & 등록' 탭에서 CJ Dropshipping 상품을 실시간 등록해보세요."
+                    : "현재 상점 카탈로그에 등록된 상품이 없습니다."}
+                </p>
+                {isAdminMode && (
+                  <button
+                    onClick={() => setActiveTab('import')}
+                    className="px-4 py-2 bg-gold-500 text-navy-950 font-bold rounded-xl text-xs hover:bg-gold-400 transition-colors"
+                  >
+                    CJ DB 상품 검색 & 등록하러 가기
+                  </button>
+                )}
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -595,8 +849,16 @@ export default function DropshippingPage({ t, user }) {
                           </span>
                         </div>
 
-                        <div className="absolute top-2 left-2 flex flex-wrap gap-1">
-                          {product.tags?.map((tag, i) => (
+                        <div className="absolute top-2 left-2 flex flex-wrap gap-1 items-center z-10">
+                          {isAdminMode && (
+                            <span className="px-2 py-0.5 rounded-md bg-emerald-950/90 text-emerald-400 border border-emerald-500/40 text-[10px] font-bold flex items-center space-x-1 shadow-md backdrop-blur-md">
+                              <CheckCircle className="w-3 h-3 text-emerald-400" />
+                              <span>상점 등록 완료</span>
+                            </span>
+                          )}
+                          {product.tags?.filter(tag => 
+                            !/cj/i.test(tag) && !/api/i.test(tag) && !/dropshipping/i.test(tag)
+                          ).map((tag, i) => (
                             <span key={i} className="px-2 py-0.5 rounded-md bg-navy-950/80 backdrop-blur-md text-[10px] font-bold text-gold-400 border border-gold-500/30">
                               {tag}
                             </span>
@@ -610,22 +872,29 @@ export default function DropshippingPage({ t, user }) {
                         </div>
 
                         {isAdminMode && (
-                          <div className="absolute bottom-2 right-2 flex items-center space-x-1">
-                            {product.isCustomRegistered && (
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleDeleteRegisteredProduct(product.id, product.name.ko);
-                                }}
-                                className="bg-rose-600 hover:bg-rose-500 text-white p-1 rounded text-[10px] font-bold"
-                                title="카탈로그 등록 삭제"
-                              >
-                                <Trash2 className="w-3.5 h-3.5" />
-                              </button>
-                            )}
-                            <span className="bg-rose-500/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-white">
-                              SKU: {product.cjSku}
-                            </span>
+                          <div className="absolute bottom-2 right-2 flex items-center space-x-1.5 z-10">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleOpenEditModal(product);
+                              }}
+                              className="bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 rounded-md text-[10px] font-bold flex items-center space-x-1 shadow-md transition-all hover:scale-105"
+                              title="상품 정보 수정"
+                            >
+                              <Edit3 className="w-3.5 h-3.5" />
+                              <span>수정</span>
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeleteProduct(product.id || product.cjSku, getProductName(product));
+                              }}
+                              className="bg-rose-600 hover:bg-rose-500 text-white px-2 py-1 rounded-md text-[10px] font-bold flex items-center space-x-1 shadow-md transition-all hover:scale-105"
+                              title="상품 카탈로그 삭제"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                              <span>삭제</span>
+                            </button>
                           </div>
                         )}
                       </div>
@@ -634,23 +903,20 @@ export default function DropshippingPage({ t, user }) {
                       <div className="p-4 flex-grow flex flex-col justify-between space-y-4">
                         <div className="space-y-2">
                           <h3 className="text-sm font-bold text-white line-clamp-2 group-hover:text-gold-400 transition-colors">
-                            {product.name?.ko || product.name}
+                            {getProductName(product)}
                           </h3>
                           <p className="text-xs text-slate-400 line-clamp-1">
-                            {product.name?.vi || ''}
+                            {getSecondaryName(product)}
                           </p>
                         </div>
 
                         {/* General Customer Price Display */}
                         {!isAdminMode ? (
                           <div className="bg-navy-950/70 border border-navy-800 rounded-xl p-3 space-y-1">
-                            <p className="text-[11px] text-slate-400">소비자 판매가</p>
+                            <p className="text-[11px] text-slate-400">소비자 판매가 (VND)</p>
                             <div className="flex items-baseline justify-between">
                               <span className="text-lg font-extrabold text-gold-400">
-                                {retailVND.toLocaleString()} ₫
-                              </span>
-                              <span className="text-xs font-semibold text-slate-400">
-                                (${product.suggestedRetailUSD.toFixed(2)})
+                                {CJDropshippingService.formatVND(product.suggestedRetailUSD)}
                               </span>
                             </div>
                           </div>
@@ -658,17 +924,17 @@ export default function DropshippingPage({ t, user }) {
                           /* Admin Mode Specs & Margin View */
                           <div className="bg-navy-950/70 border border-rose-500/30 rounded-xl p-3 space-y-2 text-xs">
                             <div className="flex justify-between items-center text-slate-400">
-                              <span>원가 (Supplier):</span>
-                              <span className="font-bold text-white">${product.supplierPriceUSD.toFixed(2)}</span>
+                              <span>공급 원가 (Supplier):</span>
+                              <span className="font-bold text-white">{CJDropshippingService.formatVND(product.supplierPriceUSD)}</span>
                             </div>
                             <div className="flex justify-between items-center text-slate-400">
-                              <span>소비자가격:</span>
-                              <span className="font-bold text-emerald-400">${product.suggestedRetailUSD.toFixed(2)}</span>
+                              <span>소비자 판매가:</span>
+                              <span className="font-bold text-emerald-400">{CJDropshippingService.formatVND(product.suggestedRetailUSD)}</span>
                             </div>
                             <div className="flex justify-between items-center border-t border-navy-800 pt-1 text-slate-300">
                               <span>예상 마진수익:</span>
                               <span className="font-extrabold text-gold-400">
-                                +${marginData.profitUSD} ({marginData.profitVND.toLocaleString()}₫)
+                                +{CJDropshippingService.formatVND(marginData.profitUSD)}
                               </span>
                             </div>
                           </div>
@@ -727,7 +993,7 @@ export default function DropshippingPage({ t, user }) {
                     type="text"
                     value={dbSearchQuery}
                     onChange={(e) => setDbSearchQuery(e.target.value)}
-                    placeholder="글로벌 CJ DB 키워드 또는 SKU 검색 (예: 인테리어, 로봇 청소기, 태양광, 소방, AI)..."
+                    placeholder="글로벌 CJ DB 키워드 또는 SKU 검색 (예: ART, 인테리어, 청소기, 태양광, 소방, AI)..."
                     className="w-full pl-10 pr-4 py-2.5 bg-navy-950 border border-navy-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500/50"
                   />
                 </div>
@@ -737,14 +1003,61 @@ export default function DropshippingPage({ t, user }) {
                   onChange={(e) => setDbCategoryFilter(e.target.value)}
                   className="px-3 py-2.5 bg-navy-950 border border-navy-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-cyan-500/50"
                 >
-                  <option value="all">전체 DB 카테고리 ({GLOBAL_CJ_DB_POOL.length}개)</option>
-                  <option value="interior">맞춤 인테리어</option>
-                  <option value="parking">AI 주차/차량</option>
-                  <option value="energy">3D 태양광</option>
-                  <option value="firefighting">소방/안전</option>
-                  <option value="waterproofing">건축 방수</option>
-                  <option value="elevator">승강기 보안</option>
+                  <option value="all">전체 카테고리 ({dbSearchResults.length}개)</option>
+                  <option value="interior">인테리어</option>
+                  <option value="art">아트</option>
+                  <option value="lighting">조명</option>
+                  <option value="construction">건축</option>
+                  <option value="solar">태양광</option>
+                  <option value="etc">기타</option>
                 </select>
+              </div>
+
+              {/* Price Range Controls for DB Search */}
+              <div className="pt-2 border-t border-navy-800/80 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 text-xs">
+                <div className="flex items-center space-x-2 overflow-x-auto pb-1">
+                  <span className="text-slate-400 font-bold flex-shrink-0">💰 가격 필터:</span>
+                  {[
+                    { id: 'all', label: '전체 가격' },
+                    { id: 'under500k', label: '50만 ₫ 이하' },
+                    { id: '500k-1.5m', label: '50만 ~ 150만 ₫' },
+                    { id: '1.5m-3m', label: '150만 ~ 300만 ₫' },
+                    { id: 'over3m', label: '300만 ₫ 이상' },
+                    { id: 'custom', label: '직접 입력' }
+                  ].map(p => (
+                    <button
+                      key={p.id}
+                      onClick={() => setPriceFilterOption(p.id)}
+                      className={`px-2.5 py-1 rounded-md text-[11px] font-bold whitespace-nowrap transition-all ${
+                        priceFilterOption === p.id
+                          ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm'
+                          : 'bg-navy-950 text-slate-400 hover:text-slate-200 border border-navy-800'
+                      }`}
+                    >
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+
+                {priceFilterOption === 'custom' && (
+                  <div className="flex items-center space-x-2 bg-navy-950 p-1.5 rounded-xl border border-navy-800">
+                    <input
+                      type="number"
+                      value={minPriceVndInput}
+                      onChange={(e) => setMinPriceVndInput(e.target.value)}
+                      placeholder="최소 ₫"
+                      className="w-24 px-2 py-1 bg-navy-900 border border-navy-800 rounded text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50"
+                    />
+                    <span className="text-slate-500">~</span>
+                    <input
+                      type="number"
+                      value={maxPriceVndInput}
+                      onChange={(e) => setMaxPriceVndInput(e.target.value)}
+                      placeholder="최대 ₫"
+                      className="w-24 px-2 py-1 bg-navy-900 border border-navy-800 rounded text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50"
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
@@ -789,8 +1102,20 @@ export default function DropshippingPage({ t, user }) {
                             onError={(e) => { e.target.src = FALLBACK_IMAGE; }}
                             className="w-full h-full object-cover"
                           />
-                          <div className="absolute top-2 left-2 bg-navy-950/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-cyan-400 border border-cyan-500/30">
-                            SKU: {dbProduct.cjSku}
+                          <div className="absolute top-2 left-2 flex items-center space-x-1.5 z-10">
+                            {isAlreadyRegistered ? (
+                              <span className="bg-emerald-950/90 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded text-[10px] font-bold flex items-center space-x-1 backdrop-blur-md shadow-md">
+                                <CheckCircle className="w-3 h-3 text-emerald-400" />
+                                <span>상점 등록 완료</span>
+                              </span>
+                            ) : (
+                              <span className="bg-navy-950/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-slate-300 border border-slate-700">
+                                미등록 상품
+                              </span>
+                            )}
+                            <span className="bg-navy-950/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-cyan-400 border border-cyan-500/30">
+                              SKU: {dbProduct.cjSku}
+                            </span>
                           </div>
                         </div>
 
@@ -806,50 +1131,138 @@ export default function DropshippingPage({ t, user }) {
                         <div className="bg-navy-950 p-3 rounded-xl border border-navy-800 text-xs space-y-1.5">
                           <div className="flex justify-between text-slate-400">
                             <span>CJ 도매 원가:</span>
-                            <span className="font-bold text-white">${dbProduct.supplierPriceUSD.toFixed(2)}</span>
+                            <span className="font-bold text-white">{CJDropshippingService.formatVND(dbProduct.supplierPriceUSD)}</span>
                           </div>
                           <div className="flex justify-between text-slate-400">
                             <span>권장 소비자 판매가:</span>
-                            <span className="font-bold text-emerald-400">${marginData.sellingPriceUSD} (≈ {marginData.sellingPriceVND.toLocaleString()}₫)</span>
+                            <span className="font-bold text-emerald-400">{CJDropshippingService.formatVND(marginData.sellingPriceUSD)}</span>
                           </div>
                           <div className="flex justify-between text-slate-400 border-t border-navy-800 pt-1">
                             <span>예상 마진:</span>
-                            <span className="font-extrabold text-gold-400">+${marginData.profitUSD} (35%)</span>
+                            <span className="font-extrabold text-gold-400">+{CJDropshippingService.formatVND(marginData.profitUSD)} (35%)</span>
                           </div>
                         </div>
                       </div>
 
-                      {/* Import Button */}
-                      <button
-                        onClick={() => {
-                          setRegisteringProduct(dbProduct);
-                          setCustomMarginPercent(35);
-                          setCustomCategory(dbProduct.category || 'interior');
-                        }}
-                        disabled={isAlreadyRegistered}
-                        className={`w-full py-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-1 min-h-[44px] ${
-                          isAlreadyRegistered
-                            ? 'bg-navy-950 text-emerald-400 border border-emerald-500/30 cursor-default'
-                            : 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-navy-950 font-extrabold shadow-lg'
-                        }`}
-                      >
+                      {/* Category Selection Dropdown */}
+                      <div className="flex items-center space-x-2 bg-navy-950 p-2 rounded-xl border border-navy-800 text-xs">
+                        <span className="text-[11px] font-bold text-slate-400 whitespace-nowrap">등록 카테고리:</span>
+                        <select
+                          value={itemTargetCategories[dbProduct.id || dbProduct.cjSku] || dbProduct.category || 'art'}
+                          onChange={(e) => setItemTargetCategories({
+                            ...itemTargetCategories,
+                            [dbProduct.id || dbProduct.cjSku]: e.target.value
+                          })}
+                          disabled={isAlreadyRegistered}
+                          className="w-full bg-navy-900 border border-navy-700 rounded-lg text-xs font-bold text-gold-400 py-1.5 px-2 focus:outline-none focus:border-gold-500/50"
+                        >
+                          <option value="art">🎨 아트 (Art)</option>
+                          <option value="interior">🛋️ 인테리어 (Interior)</option>
+                          <option value="lighting">💡 조명 (Lighting)</option>
+                          <option value="construction">🏗️ 건축 (Construction)</option>
+                          <option value="etc">📦 기타 (Others)</option>
+                        </select>
+                      </div>
+
+                      {/* Import Action Buttons */}
+                      <div className="flex items-center space-x-2">
+                        {(() => {
+                          const isRegistering = registeringProductIds.includes(dbProduct.cjSku) || registeringProductIds.includes(dbProduct.id);
+                          const chosenCat = itemTargetCategories[dbProduct.id || dbProduct.cjSku] || dbProduct.category || 'art';
+                          return (
+                            <button
+                              onClick={() => handleQuickRegisterProduct(dbProduct, 35, chosenCat)}
+                              disabled={isAlreadyRegistered || isRegistering}
+                              className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-1 shadow-md min-h-[42px] ${
+                                isAlreadyRegistered
+                                  ? 'bg-navy-950 text-slate-500 border border-navy-800 cursor-not-allowed'
+                                  : isRegistering
+                                  ? 'bg-emerald-600/50 text-white cursor-wait border border-emerald-500/30'
+                                  : 'bg-emerald-500 hover:bg-emerald-400 text-navy-950 shadow-emerald-500/20'
+                              }`}
+                            >
+                              <Sparkles className={`w-3.5 h-3.5 ${isRegistering ? 'animate-spin' : ''}`} />
+                              <span>{isRegistering ? '등록 중...' : isAlreadyRegistered ? '상점 등록 완료' : '⚡ 1-Click 실시간 등록'}</span>
+                            </button>
+                          );
+                        })()}
+
                         {isAlreadyRegistered ? (
-                          <>
-                            <Check className="w-4 h-4" />
-                            <span>BEST Mall 등록 완료</span>
-                          </>
+                          <button
+                            onClick={() => handleDeleteProduct(dbProduct.id || dbProduct.cjSku, getProductName(dbProduct))}
+                            className="px-3 py-2.5 bg-rose-600/90 hover:bg-rose-500 text-white text-xs font-bold rounded-xl border border-rose-500/40 transition-all flex items-center justify-center space-x-1 min-h-[42px] shadow-md hover:scale-105 whitespace-nowrap"
+                            title="상점 카탈로그에서 상품 삭제"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            <span>카탈로그 삭제</span>
+                          </button>
                         ) : (
-                          <>
-                            <PlusCircle className="w-4 h-4" />
-                            <span>BEST Mall에 직접 등록</span>
-                          </>
+                          <button
+                            onClick={() => {
+                              const chosenCat = itemTargetCategories[dbProduct.id || dbProduct.cjSku] || dbProduct.category || 'art';
+                              setRegisteringProduct(dbProduct);
+                              setCustomMarginPercent(35);
+                              setCustomCategory(chosenCat);
+                            }}
+                            className="px-3 py-2.5 bg-navy-800 hover:bg-navy-700 text-gold-400 text-xs font-bold rounded-xl border border-navy-700 transition-colors flex items-center justify-center space-x-1 min-h-[42px]"
+                            title="마진율 직접 설정 후 등록"
+                          >
+                            <Sliders className="w-3.5 h-3.5" />
+                            <span>마진설정</span>
+                          </button>
                         )}
-                      </button>
+                      </div>
                     </div>
                   );
                 })}
               </div>
             )}
+
+            {/* CJ DB Search Pagination Controls */}
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-6 mt-6 border-t border-navy-800">
+              <div className="text-xs text-slate-400 font-bold">
+                현재 페이지: <span className="text-gold-400 font-extrabold">{dbPageNum}</span> (불러온 상품: {dbSearchResults.length}개)
+              </div>
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => setDbPageNum(p => Math.max(1, p - 1))}
+                  disabled={dbPageNum <= 1 || isSearchingDb}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all ${
+                    dbPageNum <= 1 || isSearchingDb
+                      ? 'bg-navy-950 text-slate-600 border-navy-900 cursor-not-allowed'
+                      : 'bg-navy-800 hover:bg-navy-700 text-slate-200 border-navy-700'
+                  }`}
+                >
+                  ◀ 이전 페이지
+                </button>
+                <div className="flex items-center space-x-1">
+                  {[1, 2, 3, 4, 5].map(page => (
+                    <button
+                      key={page}
+                      onClick={() => setDbPageNum(page)}
+                      className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${
+                        dbPageNum === page
+                          ? 'bg-gold-500 text-navy-950 font-extrabold shadow-md scale-105'
+                          : 'bg-navy-900 text-slate-400 hover:bg-navy-800 hover:text-white border border-navy-800'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                </div>
+                <button
+                  onClick={() => setDbPageNum(p => p + 1)}
+                  disabled={isSearchingDb || dbSearchResults.length === 0}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all ${
+                    isSearchingDb || dbSearchResults.length === 0
+                      ? 'bg-navy-950 text-slate-600 border-navy-900 cursor-not-allowed'
+                      : 'bg-gold-500/20 hover:bg-gold-500/30 text-gold-300 border-gold-500/40'
+                  }`}
+                >
+                  다음 페이지 (100개 더보기) ▶
+                </button>
+              </div>
+            </div>
 
           </div>
         )}
@@ -871,16 +1284,20 @@ export default function DropshippingPage({ t, user }) {
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-300 block">대상 상품 선택</label>
                 <select
-                  value={selectedProductForCalc.id}
+                  value={selectedProductForCalc?.id || ''}
                   onChange={(e) => {
-                    const found = DEMO_CJ_PRODUCTS.find(p => p.id === e.target.value);
+                    const found = products.find(p => p.id === e.target.value);
                     if (found) setSelectedProductForCalc(found);
                   }}
                   className="w-full p-3 bg-navy-950 border border-navy-800 rounded-xl text-xs text-white focus:outline-none focus:border-gold-500/50"
                 >
-                  {DEMO_CJ_PRODUCTS.map(p => (
-                    <option key={p.id} value={p.id}>{p.name.ko} (${p.supplierPriceUSD})</option>
-                  ))}
+                  {products.length === 0 ? (
+                    <option value="">등록된 상품이 없습니다</option>
+                  ) : (
+                    products.map(p => (
+                      <option key={p.id} value={p.id}>{p.name?.ko || p.name?.en || p.cjSku} (${p.supplierPriceUSD})</option>
+                    ))
+                  )}
                 </select>
               </div>
 
@@ -925,47 +1342,69 @@ export default function DropshippingPage({ t, user }) {
               </div>
             </div>
 
-            <div className="lg:col-span-2 space-y-6">
-              <div className="bg-navy-900 border border-navy-800 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-6">
-                <img 
-                  src={selectedProductForCalc.image || FALLBACK_IMAGE} 
-                  alt={selectedProductForCalc.name?.ko || '상품 이미지'} 
-                  onError={(e) => { e.target.src = FALLBACK_IMAGE; }}
-                  className="w-32 h-32 object-cover rounded-xl border border-navy-800 flex-shrink-0"
-                />
-                <div className="space-y-2 text-center sm:text-left">
-                  <span className="px-2.5 py-0.5 rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/30 text-[10px] font-bold">
-                    SKU: {selectedProductForCalc.cjSku}
-                  </span>
-                  <h4 className="text-base font-bold text-white">{selectedProductForCalc.name.ko}</h4>
-                  <p className="text-xs text-slate-400">{selectedProductForCalc.name.vi}</p>
-                  <p className="text-xs text-slate-300">무게: {selectedProductForCalc.weightKg} kg | 재고: {selectedProductForCalc.stock}개</p>
-                </div>
-              </div>
+            {(() => {
+              const targetProduct = selectedProductForCalc || products[0];
+              if (!targetProduct) {
+                return (
+                  <div className="lg:col-span-2 bg-navy-900 border border-navy-800 rounded-2xl p-12 text-center space-y-3 flex flex-col items-center justify-center">
+                    <Calculator className="w-12 h-12 text-slate-600 mx-auto" />
+                    <h4 className="text-sm font-bold text-white">시뮬레이션할 상품이 없습니다</h4>
+                    <p className="text-xs text-slate-400">CJ DB에서 상품을 상점에 등록하면 이곳에서 실시간 마진 계산을 시뮬레이션할 수 있습니다.</p>
+                  </div>
+                );
+              }
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="bg-navy-900 border border-navy-800 rounded-2xl p-5 space-y-1">
-                  <p className="text-xs text-slate-400 font-semibold">1. 공급원가 + 배송비</p>
-                  <p className="text-xl font-extrabold text-white">${marginCalculation.totalCostUSD}</p>
-                </div>
+              const marginCalculation = CJDropshippingService.calculateMargin({
+                supplierPriceUSD: targetProduct.supplierPriceUSD || 10,
+                weightKg: targetProduct.weightKg || 0.5,
+                shippingMethodCode: calcShippingMethod,
+                marginPercent: calcMarginPercent
+              });
 
-                <div className="bg-navy-900 border border-emerald-500/30 rounded-2xl p-5 space-y-1">
-                  <p className="text-xs text-emerald-400 font-semibold">2. 권장 소비자가격</p>
-                  <p className="text-xl font-extrabold text-emerald-400">${marginCalculation.sellingPriceUSD}</p>
-                  <p className="text-[11px] text-emerald-300/80 font-bold">
-                    ≈ {marginCalculation.sellingPriceVND.toLocaleString()} ₫
-                  </p>
-                </div>
+              return (
+                <div className="lg:col-span-2 space-y-6">
+                  <div className="bg-navy-900 border border-navy-800 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-6">
+                    <img 
+                      src={targetProduct.image || FALLBACK_IMAGE} 
+                      alt={targetProduct.name?.ko || targetProduct.name?.en || '상품 이미지'} 
+                      onError={(e) => { e.target.src = FALLBACK_IMAGE; }}
+                      className="w-32 h-32 object-cover rounded-xl border border-navy-800 flex-shrink-0"
+                    />
+                    <div className="space-y-2 text-center sm:text-left">
+                      <span className="px-2.5 py-0.5 rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/30 text-[10px] font-bold">
+                        SKU: {targetProduct.cjSku || targetProduct.id}
+                      </span>
+                      <h4 className="text-base font-bold text-white">{targetProduct.name?.ko || targetProduct.name?.en || '상품명'}</h4>
+                      {targetProduct.name?.vi && <p className="text-xs text-slate-400">{targetProduct.name.vi}</p>}
+                      <p className="text-xs text-slate-300">무게: {targetProduct.weightKg || 0.5} kg | 재고: {targetProduct.stock || 1000}개</p>
+                    </div>
+                  </div>
 
-                <div className="bg-navy-900 border border-gold-500/40 rounded-2xl p-5 space-y-1">
-                  <p className="text-xs text-gold-400 font-semibold">3. 단당 순이익금</p>
-                  <p className="text-xl font-extrabold text-gold-400">+${marginCalculation.profitUSD}</p>
-                  <p className="text-[11px] text-gold-300/90 font-bold">
-                    ≈ {marginCalculation.profitVND.toLocaleString()} ₫ ({calcMarginPercent}% 이익)
-                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="bg-navy-900 border border-navy-800 rounded-2xl p-5 space-y-1">
+                      <p className="text-xs text-slate-400 font-semibold">1. 공급원가 + 배송비</p>
+                      <p className="text-xl font-extrabold text-white">${marginCalculation.totalCostUSD}</p>
+                    </div>
+
+                    <div className="bg-navy-900 border border-emerald-500/30 rounded-2xl p-5 space-y-1">
+                      <p className="text-xs text-emerald-400 font-semibold">2. 권장 소비자가격</p>
+                      <p className="text-xl font-extrabold text-emerald-400">${marginCalculation.sellingPriceUSD}</p>
+                      <p className="text-[11px] text-emerald-300/80 font-bold">
+                        ≈ {marginCalculation.sellingPriceVND.toLocaleString()} ₫
+                      </p>
+                    </div>
+
+                    <div className="bg-navy-900 border border-gold-500/40 rounded-2xl p-5 space-y-1">
+                      <p className="text-xs text-gold-400 font-semibold">3. 단당 순이익금</p>
+                      <p className="text-xl font-extrabold text-gold-400">+${marginCalculation.profitUSD}</p>
+                      <p className="text-[11px] text-gold-300/90 font-bold">
+                        ≈ {marginCalculation.profitVND.toLocaleString()} ₫ ({calcMarginPercent}% 이익)
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              );
+            })()}
           </div>
         )}
 
@@ -1113,83 +1552,108 @@ export default function DropshippingPage({ t, user }) {
               <span>BEST Mall 카탈로그 직접 등록 설정</span>
             </h3>
 
-            <div className="p-4 bg-navy-950 rounded-2xl border border-navy-800 space-y-2 text-xs">
-              <div className="flex items-center space-x-3">
-                <img 
-                  src={registeringProduct.image || FALLBACK_IMAGE} 
-                  alt="" 
-                  onError={(e) => { e.target.src = FALLBACK_IMAGE; }}
-                  className="w-14 h-14 object-cover rounded-xl" 
-                />
-                <div>
-                  <p className="font-bold text-white">{registeringProduct.name?.ko || registeringProduct.name}</p>
-                  <p className="text-slate-400">{registeringProduct.name?.vi || ''}</p>
-                  <p className="text-cyan-400 mt-0.5">CJ 도매원가: ${registeringProduct.supplierPriceUSD}</p>
-                </div>
-              </div>
-            </div>
+            {(() => {
+              const liveCalc = CJDropshippingService.calculateMargin({
+                supplierPriceUSD: registeringProduct.supplierPriceUSD,
+                weightKg: registeringProduct.weightKg || 0.5,
+                shippingMethodCode: 'CJPacket_Standard',
+                marginPercent: customMarginPercent
+              });
 
-            <form onSubmit={handleConfirmRegisterProduct} className="space-y-4 text-xs">
-              <div>
-                <label className="font-bold text-slate-300 block mb-1">상점 노출 카테고리 지정</label>
-                <select
-                  value={customCategory}
-                  onChange={(e) => setCustomCategory(e.target.value)}
-                  className="w-full p-2.5 bg-navy-950 border border-navy-800 rounded-xl text-white"
-                >
-                  <option value="interior">맞춤 인테리어</option>
-                  <option value="parking">AI 주차/차량</option>
-                  <option value="energy">3D 태양광</option>
-                  <option value="firefighting">소방/안전</option>
-                  <option value="waterproofing">건축 방수</option>
-                  <option value="elevator">승강기 보안</option>
-                </select>
-              </div>
+              return (
+                <>
+                  <div className="p-4 bg-navy-950 rounded-2xl border border-navy-800 space-y-2 text-xs">
+                    <div className="flex items-center space-x-3">
+                      <img 
+                        src={registeringProduct.image || FALLBACK_IMAGE} 
+                        alt="" 
+                        onError={(e) => { e.target.src = FALLBACK_IMAGE; }}
+                        className="w-14 h-14 object-cover rounded-xl border border-navy-800" 
+                      />
+                      <div>
+                        <p className="font-bold text-white text-sm">{getProductName(registeringProduct)}</p>
+                        <p className="text-slate-400">{getSecondaryName(registeringProduct)}</p>
+                        <p className="text-cyan-400 font-bold mt-0.5">
+                          CJ 도매 원가: {CJDropshippingService.formatVND(registeringProduct.supplierPriceUSD)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-              <div>
-                <div className="flex justify-between items-center mb-1">
-                  <label className="font-bold text-slate-300">목표 마진율 (%) 지정</label>
-                  <span className="font-extrabold text-gold-400 text-sm">{customMarginPercent}%</span>
-                </div>
-                <input
-                  type="range"
-                  min="10"
-                  max="100"
-                  step="5"
-                  value={customMarginPercent}
-                  onChange={(e) => setCustomMarginPercent(Number(e.target.value))}
-                  className="w-full accent-gold-500 bg-navy-950 cursor-pointer"
-                />
-              </div>
+                  <form onSubmit={handleConfirmRegisterProduct} className="space-y-4 text-xs">
+                    <div>
+                      <label className="font-bold text-slate-300 block mb-1">상점 노출 카테고리 지정</label>
+                      <select
+                        value={customCategory}
+                        onChange={(e) => setCustomCategory(e.target.value)}
+                        className="w-full p-2.5 bg-navy-950 border border-navy-800 rounded-xl text-white focus:outline-none focus:border-cyan-500/50"
+                      >
+                        <option value="interior">인테리어</option>
+                        <option value="art">아트</option>
+                        <option value="lighting">조명</option>
+                        <option value="construction">건축</option>
+                        <option value="solar">태양광</option>
+                        <option value="etc">기타</option>
+                      </select>
+                    </div>
 
-              <div className="p-3 bg-navy-950 rounded-xl border border-gold-500/30 text-xs space-y-1">
-                <p className="text-slate-400">최종 계산된 소비자 판매가:</p>
-                <p className="text-lg font-black text-gold-400">
-                  {Math.round(CJDropshippingService.calculateMargin({
-                    supplierPriceUSD: registeringProduct.supplierPriceUSD,
-                    weightKg: registeringProduct.weightKg,
-                    shippingMethodCode: 'CJPacket_Standard',
-                    marginPercent: customMarginPercent
-                  }).sellingPriceUSD * 25400).toLocaleString()} ₫
-                </p>
-              </div>
+                    <div>
+                      <div className="flex justify-between items-center mb-1">
+                        <label className="font-bold text-slate-300">목표 마진율 (%) 실시간 조절</label>
+                        <span className="font-extrabold text-gold-400 text-sm">{customMarginPercent}%</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="10"
+                        max="100"
+                        step="5"
+                        value={customMarginPercent}
+                        onChange={(e) => setCustomMarginPercent(Number(e.target.value))}
+                        className="w-full accent-gold-500 bg-navy-950 cursor-pointer"
+                      />
+                    </div>
 
-              <div className="flex space-x-2 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setRegisteringProduct(null)}
-                  className="flex-1 py-3 bg-navy-800 text-slate-300 font-bold rounded-xl min-h-[44px]"
-                >
-                  취소
-                </button>
-                <button
-                  type="submit"
-                  className="flex-1 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-navy-950 font-extrabold rounded-xl min-h-[44px]"
-                >
-                  BEST Mall에 등록 완료
-                </button>
-              </div>
-            </form>
+                    {/* LIVE REAL-TIME CALCULATION DASHBOARD */}
+                    <div className="p-4 bg-navy-950 rounded-2xl border border-gold-500/30 text-xs space-y-2 shadow-inner">
+                      <p className="font-bold text-gold-400 flex items-center justify-between border-b border-navy-800 pb-1.5">
+                        <span>⚡ 실시간 마진/원가 계산 대시보드</span>
+                        <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">Live Sync</span>
+                      </p>
+                      
+                      <div className="grid grid-cols-2 gap-2 text-slate-300 pt-1">
+                        <div>• CJ 공급원가: <span className="text-white font-bold">{CJDropshippingService.formatVND(registeringProduct.supplierPriceUSD)}</span></div>
+                        <div>• CJ 국제배송비: <span className="text-white font-bold">{CJDropshippingService.formatVND(liveCalc.shippingFeeUSD)}</span></div>
+                        <div>• 총 매입 원가: <span className="text-rose-300 font-bold">{CJDropshippingService.formatVND(liveCalc.totalCostUSD)}</span></div>
+                        <div>• 순 마진 수익: <span className="text-emerald-400 font-extrabold">+{CJDropshippingService.formatVND(liveCalc.profitUSD)}</span></div>
+                      </div>
+
+                      <div className="pt-2 border-t border-navy-800 flex justify-between items-baseline">
+                        <span className="text-slate-400 font-bold">최종 소비자 판매가 (VND):</span>
+                        <span className="text-xl font-black text-gold-400">
+                          {CJDropshippingService.formatVND(liveCalc.sellingPriceUSD)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex space-x-2 pt-2">
+                      <button
+                        type="button"
+                        onClick={() => setRegisteringProduct(null)}
+                        className="flex-1 py-3 bg-navy-800 text-slate-300 font-bold rounded-xl min-h-[44px]"
+                      >
+                        취소
+                      </button>
+                      <button
+                        type="submit"
+                        className="flex-1 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-navy-950 font-extrabold rounded-xl min-h-[44px]"
+                      >
+                        BEST Mall에 즉시 등록
+                      </button>
+                    </div>
+                  </form>
+                </>
+              );
+            })()}
           </div>
         </div>
       )}
@@ -1275,28 +1739,25 @@ export default function DropshippingPage({ t, user }) {
                       </div>
 
                       <h2 className="text-xl font-extrabold text-white leading-snug">
-                        {selectedProductDetail.name?.ko || selectedProductDetail.name}
+                        {getProductName(selectedProductDetail)}
                       </h2>
                       <p className="text-xs text-slate-400 mt-1">
-                        {selectedProductDetail.name?.vi || ''}
+                        {getSecondaryName(selectedProductDetail)}
                       </p>
                     </div>
 
                     {/* Price Block */}
                     <div className="p-4 rounded-2xl bg-navy-950 border border-navy-800 space-y-1">
-                      <p className="text-xs text-slate-400 font-semibold">소비자 공식 판매가</p>
+                      <p className="text-xs text-slate-400 font-semibold">소비자 공식 판매가 (VND)</p>
                       <div className="flex items-baseline space-x-3">
                         <span className="text-2xl font-black text-gold-400">
-                          {Math.round(selectedProductDetail.suggestedRetailUSD * 25400).toLocaleString()} ₫
-                        </span>
-                        <span className="text-sm font-bold text-slate-400">
-                          (${selectedProductDetail.suggestedRetailUSD.toFixed(2)})
+                          {CJDropshippingService.formatVND(selectedProductDetail.suggestedRetailUSD)}
                         </span>
                       </div>
                       
                       {isAdminMode && (
                         <div className="mt-3 pt-3 border-t border-navy-800 text-xs text-rose-300 space-y-1">
-                          <p>• 공급 원가: ${selectedProductDetail.supplierPriceUSD.toFixed(2)}</p>
+                          <p>• 공급 원가: {CJDropshippingService.formatVND(selectedProductDetail.supplierPriceUSD)}</p>
                           <p>• SKU: {selectedProductDetail.cjSku} | 재고: {selectedProductDetail.stock}개</p>
                         </div>
                       )}
@@ -1492,7 +1953,7 @@ export default function DropshippingPage({ t, user }) {
                   autoFocus
                   value={adminPinInput}
                   onChange={(e) => setAdminPinInput(e.target.value)}
-                  placeholder="비밀번호 입력 (기본: admin1234)"
+                  placeholder="비밀번호를 입력하세요"
                   className="w-full p-3 bg-navy-950 border border-navy-800 rounded-xl text-xs text-white text-center tracking-widest focus:outline-none focus:border-gold-500/50"
                   required
                 />
@@ -1658,6 +2119,164 @@ export default function DropshippingPage({ t, user }) {
                 >
                   <Send className="w-4 h-4" />
                   <span>{orderSubmitting ? '주문 처리 중...' : '주문 신청 완료'}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Admin Product Edit Modal */}
+      {isEditModalOpen && editingProduct && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-navy-900 border border-blue-500/40 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative max-h-[90vh] overflow-y-auto text-left">
+            <button
+              onClick={() => {
+                setIsEditModalOpen(false);
+                setEditingProduct(null);
+              }}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center space-x-2 border-b border-navy-800 pb-3">
+              <Edit3 className="w-5 h-5 text-blue-400" />
+              <h3 className="text-lg font-bold text-white">관리자 상품 정보 수정</h3>
+            </div>
+
+            <form onSubmit={handleSaveProductEdit} className="space-y-4 text-xs">
+              <div>
+                <label className="font-bold text-slate-300 block mb-1">상품명 (한국어 / Korean)</label>
+                <input
+                  type="text"
+                  required
+                  value={editingProduct.name?.ko || ''}
+                  onChange={(e) => setEditingProduct({
+                    ...editingProduct,
+                    name: { ...editingProduct.name, ko: e.target.value }
+                  })}
+                  className="w-full p-2.5 bg-navy-950 border border-navy-800 rounded-xl text-white font-medium"
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-300 block mb-1">상품명 (영문 / English)</label>
+                <input
+                  type="text"
+                  required
+                  value={editingProduct.name?.en || ''}
+                  onChange={(e) => setEditingProduct({
+                    ...editingProduct,
+                    name: { ...editingProduct.name, en: e.target.value }
+                  })}
+                  className="w-full p-2.5 bg-navy-950 border border-navy-800 rounded-xl text-white font-medium"
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-300 block mb-1">상품명 (베트남어 / Vietnamese)</label>
+                <input
+                  type="text"
+                  required
+                  value={editingProduct.name?.vi || ''}
+                  onChange={(e) => setEditingProduct({
+                    ...editingProduct,
+                    name: { ...editingProduct.name, vi: e.target.value }
+                  })}
+                  className="w-full p-2.5 bg-navy-950 border border-navy-800 rounded-xl text-white font-medium"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="font-bold text-slate-300 block mb-1">카테고리</label>
+                  <select
+                    value={editingProduct.category || 'art'}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
+                    className="w-full p-2.5 bg-navy-950 border border-navy-800 rounded-xl text-white font-medium"
+                  >
+                    <option value="art">아트 (Art)</option>
+                    <option value="interior">인테리어 (Interior)</option>
+                    <option value="lighting">조명 (Lighting)</option>
+                    <option value="construction">건축 (Construction)</option>
+                    <option value="etc">기타 (Others)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="font-bold text-slate-300 block mb-1">재고 수량 (Stock)</label>
+                  <input
+                    type="number"
+                    min="0"
+                    required
+                    value={editingProduct.stock || 250}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, stock: parseInt(e.target.value) || 0 })}
+                    className="w-full p-2.5 bg-navy-950 border border-navy-800 rounded-xl text-white font-medium"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="font-bold text-slate-300 block mb-1">공급 원가 (USD)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    required
+                    value={editingProduct.supplierPriceUSD || 0}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, supplierPriceUSD: parseFloat(e.target.value) || 0 })}
+                    className="w-full p-2.5 bg-navy-950 border border-navy-800 rounded-xl text-white font-medium"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-bold text-slate-300 block mb-1">소비자 판매가 (USD)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    required
+                    value={editingProduct.suggestedRetailUSD || 0}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, suggestedRetailUSD: parseFloat(e.target.value) || 0 })}
+                    className="w-full p-2.5 bg-navy-950 border border-navy-800 rounded-xl text-white font-medium"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-300 block mb-1">상품 대표 이미지 URL</label>
+                <input
+                  type="url"
+                  required
+                  value={editingProduct.image || ''}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, image: e.target.value })}
+                  className="w-full p-2.5 bg-navy-950 border border-navy-800 rounded-xl text-white font-medium"
+                />
+                {editingProduct.image && (
+                  <div className="mt-2 flex items-center space-x-2">
+                    <img src={editingProduct.image} alt="Preview" className="w-12 h-12 object-cover rounded-lg border border-navy-700" />
+                    <span className="text-[11px] text-slate-400">미리보기 이미지</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex space-x-2 pt-2 border-t border-navy-800">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsEditModalOpen(false);
+                    setEditingProduct(null);
+                  }}
+                  className="flex-1 py-3 bg-navy-800 text-slate-300 font-bold rounded-xl min-h-[44px]"
+                >
+                  취소
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl min-h-[44px] flex items-center justify-center space-x-1"
+                >
+                  <Check className="w-4 h-4" />
+                  <span>수정 사항 저장</span>
                 </button>
               </div>
             </form>
