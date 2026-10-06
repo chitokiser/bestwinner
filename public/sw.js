@@ -1,4 +1,4 @@
-const CACHE_NAME = 'best-winner-pwa-v3';
+const CACHE_NAME = 'best-winner-pwa-v4';
 const urlsToCache = [
   '/',
   '/manifest.json',
@@ -21,11 +21,7 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
+        cacheNames.map((cacheName) => caches.delete(cacheName))
       );
     })
   );

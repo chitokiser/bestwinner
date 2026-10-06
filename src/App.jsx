@@ -102,6 +102,7 @@ export default function App() {
             <Route path="/services/dropshipping" element={<DropshippingPage t={t} />} />
             <Route path="/services/shop" element={<DropshippingPage t={t} />} />
             <Route path="/shop" element={<DropshippingPage t={t} />} />
+            <Route path="/dropshipping" element={<DropshippingPage t={t} />} />
             <Route 
               path="/megazine" 
               element={
