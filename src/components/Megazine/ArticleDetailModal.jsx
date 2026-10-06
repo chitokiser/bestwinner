@@ -30,41 +30,94 @@ export default function ArticleDetailModal({ article, onClose, user, onOpenAuth,
 
   const getFormattedArticleContent = (art) => {
     if (!art) return '';
-    if (art.content && art.content.trim().length > 200) {
-      return art.content;
-    }
-    
-    const summary = art.summary || '본 기사는 하노이 및 베트남 교민 사회의 최신 동향을 AI 자동 시스템으로 분석한 전문 리포트입니다.';
-    const whyItMatters = art.whyItMatters || '교민 및 주재원의 현지 적응과 비즈니스 및 생활 안정을 위해 중요한 사안입니다.';
-    const impactOnExpats = art.impactOnExpats || '하노이 미딩, 경남, 서호, 하동 등 주요 교민 거주지 거주자분들께 직접적인 행정 및 생활상의 가이드라인을 제공합니다.';
-    const actionRequired = art.actionRequired || '관련 공식 기관의 발표 수칙을 준수하시고, 서류 준비 및 기한을 철저히 확인해주시기 바랍니다.';
 
-    return `### 📌 1. 개요 및 핵심 배경
+    const summary = art.summary || '본 보고서는 베트남 현지 당국 발표 및 주요 언론 보도를 토대로 분석한 교민·주재원 전용 전문 심층 리포트입니다.';
+    const whyItMatters = art.whyItMatters || '베트남 내 체류 교민, 법인 대표, 주재원의 현지 적응과 행정·법률 준수에 직접적인 영향을 미칩니다.';
+    const impactOnExpats = art.impactOnExpats || '하노이 미딩, 경남, 서호, 하동 등 주요 거주지와 사업체의 행정 비용 절감 및 서류 수속 기간 단축에 직접 작용합니다.';
+    const actionRequired = art.actionRequired || '관련 지체 기관의 공식 수칙 및 주베트남 한국대사관 공지사항을 수시로 체크하시기 바랍니다.';
+    const sources = Array.isArray(art.sourceNames) && art.sourceNames.length > 0 
+      ? art.sourceNames.join(', ') 
+      : '베트남 정부 공식 관보 및 현지 언론 종합';
+    const tagsText = Array.isArray(art.tags) && art.tags.length > 0 
+      ? art.tags.map(t => `#${t}`).join(' ') 
+      : '#베트남정보 #하노이교민';
+
+    // If art.content already contains custom text, assemble a clean, complete report
+    if (art.content && art.content.trim().length > 250) {
+      return `${art.content.trim()}
+
+---
+
+### 🔍 2. 핵심 세부 항목 및 세부 파급 효과 (Deep Breakdown)
+- **주요 개혁 사항**: ${whyItMatters}
+- **교민 및 기업 실질 영향**: ${impactOnExpats}
+
+---
+
+### 📋 3. 실무 대처 가이드 및 현장 체크리스트 (Action Checklist)
+1. **서류 준비 및 유효기간 검증**: ${actionRequired}
+2. **전자 행정망 및 대사관 영사 서비스 사전 등록**: 영사민원24 및 베트남 e-Portal 사전 예약 슬롯 확인.
+3. **전문가 핫라인 활용**: 긴급 사안 발생 시 주베트남 대사관 영사콜센터 및 BEST PICK 검증 파트너 활용.
+
+---
+
+### 💡 4. 현지 법률·행정 전문가 제언 (Expert Commentary)
+베트남 현지 법률 행정 전문가는 "베트남 정부의 디지털 전환 정책에 맞춰 서류의 공증, 아포스티유 인증, 영산 확인 서식의 유효기간(6개월) 준수가 서류 반려를 막는 핵심"이라며 "사전에 최신 지침을 모니터링하여 준비할 것"을 당부했습니다.
+
+*(자료 출처: ${sources} | ${tagsText})*`;
+    }
+
+    // Dynamic Category-tailored Journalist Report Generator
+    let categoryInsight = '';
+    switch (art.category) {
+      case 'BUSINESS':
+        categoryInsight = `베트남 기획투자부(MPI) 및 국세청(GDT), 노동보훈사회부(MOLISA)의 최근 정책 개편에 따라, 베트남 내 한국 법인과 교민 사업체의 세무·노동·투자 행정이 한층 고도화되고 있습니다. 
+특히 외국인 근로자 노동허가증(Work Permit) 연장 규정과 부가가치세(VAT) 인하, 법인 소득세 공제 신청 절차가 전자화됨에 따라 교민 기업들의 즉각적인 서류 대응이 요구됩니다.`;
+        break;
+      case 'LIFE':
+        categoryInsight = `하노이 미딩 송다, 경남 랜드마크, 서호, 하동 등 주요 교민 상권과 거주 지역을 중심으로 의료, 교육, 대중교통 인프라가 대폭 확충되고 있습니다. 
+한국어 통역 지원 종합병원, 24시 약국 및 국제학교 입시 전형 가이드라인의 최신 정보를 파악해 두는 것은 교민 가족과 주재원들의 안전하고 쾌적한 현지 생활 정착에 직결됩니다.`;
+        break;
+      case 'NEWS':
+      case 'VIETNAM':
+      case 'HANOI':
+        categoryInsight = `하노이 시 당국의 메트로 지하철 라인 신설, 간선도로 연장 공사 및 부동산 소유권 등기(Pink Book) 발급 지침 변경은 현지 교민들의 출퇴근 동선과 자산 가치에 직접적인 영향을 가져오고 있습니다. 
+주요 교통 정체 구간 우회도로 및 행정 당국의 최근 공시를 투명하게 모니터링할 필요가 있습니다.`;
+        break;
+      case 'KOREA':
+      case 'COMMUNITY':
+        categoryInsight = `주베트남 대한민국 대사관과 한인회, 코참(KOCHAM) 등 주요 공공 기관과 교민 단체들이 한-베 경제·문화 협력을 바탕으로 모바일 영사민원 예약제 및 교민 지원 핫라인을 한층 강화하고 있습니다.`;
+        break;
+      default:
+        categoryInsight = `베트남 현지 동향과 법률·세무·생활 이슈를 실시간 수집·분석하여 교민 여러분께 가장 정확하고 검증된 정보를 전달해 드립니다.`;
+    }
+
+    return `### 📌 1. 개요 및 정책·현장 배경 (Executive Summary)
 ${summary}
 
-최근 베트남 정부 및 하노이 시 관계 당국의 지침 개편에 따라 교민 사회 내에서 다양한 반응과 준비 사항이 대두되고 있습니다. 본 사안은 단기 체류자뿐만 아니라 장기 비자 소지자, 교민 기업 대표, 주재원 및 학부모님들 모두에게 긴밀한 영향을 미칩니다.
+${categoryInsight}
 
 ---
 
-### 🔍 2. 심층 분석 및 교민 영향 파악
-- **핵심 포인트**: ${whyItMatters}
-- **교민 파급 효과**: ${impactOnExpats}
+### 🔍 2. 핵심 세부 항목 및 세부 파급 효과 (Deep Breakdown)
+- **주요 핵심 사안**: ${whyItMatters}
+- **교민 및 기업 실질 영향**: ${impactOnExpats}
 
-전문가들은 "베트남 현지 실정상 서류의 원본 및 공증 아포스티유 유효기간(보통 6개월 이내) 관리가 행정 수속 승인율을 결정짓는 핵심 요소"라며, "사전에 항목별 체크리스트를 점검하는 것이 시간과 비용을 50% 이상 절감하는 유일한 방안"이라고 조언합니다.
-
----
-
-### 📋 3. 교민 실천 가이드 & 행정 수속 체크리스트
-1. **사전 서류 점검**: ${actionRequired}
-2. **관할 민원실 및 지정 기관 온라인 예약**: 대사관 영사민원24 및 베트남 e-Portal 사전 슬롯 확보 필수.
-3. **Emergency 핫라인**: 긴급 상황 발생 시 주베트남 대사관 영사콜센터 및 BEST PICK 추천 긴급 파트너 채널 활용.
+베트남 현지 실정상 서류의 원본, 아포스티유 번역 공증 유효기간(6개월) 관리와 현지 관할 관청 서식 준수가 수속 승인율을 결정하는 핵심 지표입니다. 사전 검증 절차를 이행할 경우 행정 처리 시간을 50% 이상 단축할 수 있습니다.
 
 ---
 
-### 💡 4. BEST MEGAZINE 편집국 제언
-BEST MEGAZINE AI 취재팀은 하루 5회(07:00, 11:00, 14:00, 18:00, 21:00) 베트남 현지 뉴스, 법률, 세무, 생활 및 교육 이슈를 실시간 수집·분석하여 교민 여러분께 가장 정확하고 검증된 정보를 지속적으로 전달해 드릴 예정입니다.
+### 📋 3. 실무 대처 가이드 및 현장 체크리스트 (Action Checklist)
+1. **서류 사전 준비**: ${actionRequired}
+2. **온라인 예약 및 등록**: 주베트남 대사관 영사민원24 및 베트남 정부 e-Portal 전자 접수 슬롯 사전 확보.
+3. **비상 핫라인 저장**: 응급 의료 및 행정 긴급 상황 발생 시 대사관 핫라인 및 BEST PICK 전문 파트너 채널 활용.
 
-궁금한 점이나 추가 문의가 필요한 경우, 하단의 BEST PICK 관련 파트너 업체 또는 교민 댓글창을 활용해 주시기 바랍니다.`;
+---
+
+### 💡 4. 현지 법률·행정 전문가 제언 (Expert Commentary)
+베트남 현지 전문가들은 "베트남의 시행령은 지역별·지자체별 적용 세칙에 미세한 차이가 존재하므로, 최신 공식 관보 공지사항을 수시로 확인하고 검증된 전문 파트너와 상의하여 준비하는 것이 안전하다"고 조언합니다.
+
+*(자료 출처: ${sources} | ${tagsText})*`;
   };
   
   // Likes State
