@@ -24,7 +24,6 @@ api_key*
 node_modules/
 
 # Production build output
-dist/
 dist-ssr/
 *.local
 
