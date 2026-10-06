@@ -61,24 +61,19 @@
   <body class="bg-navy-950 text-slate-100 font-sans antialiased selection:bg-gold-500 selection:text-navy-950 overflow-x-hidden">
     <div id="root"></div>
 
-    <!-- PWA Service Worker Registration & Auto-Update -->
+    <!-- PWA Service Worker Cleanup & Cache Bypass -->
     <script>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.getRegistrations().then(function(registrations) {
           for (let registration of registrations) {
-            registration.update();
+            registration.unregister();
           }
         });
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/sw.js?v=4')
-            .then(function(reg) {
-              reg.update();
-              console.log('PWA ServiceWorker registered & updated:', reg.scope);
-            })
-            .catch(function(err) {
-              console.log('PWA ServiceWorker registration failed:', err);
-            });
-        });
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            for (let name of names) caches.delete(name);
+          });
+        }
       }
     </script>
   </body>
