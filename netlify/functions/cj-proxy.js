@@ -68,53 +68,94 @@ export const handler = async (event, context) => {
         }
       }
 
+      // Helper to map Korean/short keywords to high-yield English terms for CJ Open API
+      const mapSearchKeyword = (rawKw) => {
+        if (!rawKw || !rawKw.trim()) return '';
+        const q = rawKw.toLowerCase().trim();
+        const dict = {
+          'art': 'decor',
+          '아트': 'decor',
+          '유화': 'painting',
+          '그림': 'painting',
+          '액자': 'frame',
+          '조형물': 'statue',
+          '동상': 'statue',
+          '조각상': 'sculpture',
+          '조명': 'light',
+          '램프': 'lamp',
+          '스탠드': 'lamp',
+          '인테리어': 'decor',
+          '소품': 'decor',
+          '화병': 'vase',
+          '태양광': 'solar',
+          '소방': 'fire',
+          '방수': 'waterproof',
+          '스마트': 'smart'
+        };
+        return dict[q] || q;
+      };
+
       // Method A: Official Open API with Access Token and Automatic Retry on Rate-Limit (1600200)
       if (token) {
         try {
-          let queryParams = new URLSearchParams({
-            pageNum: String(pageNum),
-            pageSize: String(pageSize)
-          });
+          const effectiveKw = mapSearchKeyword(keyword);
+          const startPage = ((pageNum - 1) * 2) + 1; // Fetch 2 pages per client page (e.g. CJ pages 1&2 for client page 1)
+          let fetchedList = [];
 
-          if (keyword && keyword.trim()) {
-            queryParams.append('productName', keyword.trim());
-          }
-          if (categoryId && categoryId !== 'all') {
-            queryParams.append('categoryId', categoryId);
-          }
-          if (minPriceUSD !== undefined && minPriceUSD !== '' && minPriceUSD !== null) {
-            queryParams.append('startSellPrice', String(minPriceUSD));
-          }
-          if (maxPriceUSD !== undefined && maxPriceUSD !== '' && maxPriceUSD !== null) {
-            queryParams.append('endSellPrice', String(maxPriceUSD));
-          }
-
-          const url = `${CJ_API_BASE}/product/list?${queryParams.toString()}`;
-          
-          // Retry loop for 1600200 rate-limit
-          for (let attempt = 0; attempt < 3; attempt++) {
-            const res = await fetch(url, {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                'CJ-Access-Token': token
-              }
+          for (let p = startPage; p <= startPage + 1; p++) {
+            let queryParams = new URLSearchParams({
+              pageNum: String(p),
+              pageSize: String(pageSize || 50)
             });
 
-            if (res.ok) {
-              const data = await res.json();
-              if (data.code === 200 && data.data) {
-                liveList = data.data.list || data.data.content || data.data.records || [];
-                if (liveList.length > 0) {
-                  isSuccess = true;
+            if (effectiveKw) {
+              queryParams.append('productName', effectiveKw);
+            }
+            if (categoryId && categoryId !== 'all') {
+              queryParams.append('categoryId', categoryId);
+            }
+            if (minPriceUSD !== undefined && minPriceUSD !== '' && minPriceUSD !== null) {
+              queryParams.append('startSellPrice', String(minPriceUSD));
+            }
+            if (maxPriceUSD !== undefined && maxPriceUSD !== '' && maxPriceUSD !== null) {
+              queryParams.append('endSellPrice', String(maxPriceUSD));
+            }
+
+            const url = `${CJ_API_BASE}/product/list?${queryParams.toString()}`;
+            
+            // Retry loop for 1600200 rate-limit
+            for (let attempt = 0; attempt < 3; attempt++) {
+              const res = await fetch(url, {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'CJ-Access-Token': token
+                }
+              });
+
+              if (res.ok) {
+                const data = await res.json();
+                if (data.code === 200 && data.data) {
+                  const pageList = data.data.list || data.data.content || data.data.records || [];
+                  if (pageList.length > 0) {
+                    fetchedList.push(...pageList);
+                    break;
+                  }
+                } else if (data.code === 1600200) {
+                  errorMsg = data.message || `API Code ${data.code}`;
+                  await new Promise(r => setTimeout(r, 400));
+                } else {
                   break;
                 }
-              } else {
-                errorMsg = data.message || `API Code ${data.code}`;
-                // If code is rate-limit (1600200), wait and retry
-                await new Promise(r => setTimeout(r, 450));
               }
             }
+            // Delay between sequential page fetches to prevent rate limits
+            await new Promise(r => setTimeout(r, 350));
+          }
+
+          if (fetchedList.length > 0) {
+            liveList = fetchedList;
+            isSuccess = true;
           }
         } catch (err) {
           console.warn('CJ Official API proxy fetch failed:', err.message);
