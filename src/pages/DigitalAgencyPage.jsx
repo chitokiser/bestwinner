@@ -24,12 +24,50 @@ import {
   Megaphone,
   Video,
   Award,
-  ChevronRight
+  ChevronRight,
+  Maximize2,
+  Image as ImageIcon
 } from 'lucide-react';
 
 export default function DigitalAgencyPage({ t }) {
   const isVi = t?.lang === 'vi';
   const isKo = t?.lang === 'ko' || !t?.lang;
+
+  // Hero Gallery Image State
+  const [activeImgIndex, setActiveImgIndex] = useState(0);
+
+  const heroImages = [
+    {
+      src: '/images/dgitalagency/1.png',
+      title: isKo ? 'Phase 1: 기획 & 기본 웹 구축' : 'Phase 1: Quy hoạch & Web cơ bản',
+      badge: isKo ? '기본 인프라 구축 (8,000,000 VND)' : 'Báo giá 8.000.000 VND'
+    },
+    {
+      src: '/images/dgitalagency/2.png',
+      title: isKo ? 'Phase 2: CRM & 회원제 고도화' : 'Phase 2: CRM & Thẻ hội viên',
+      badge: isKo ? '멤버십 & 포인트 적립 (35,000,000 VND)' : 'Báo giá 35.000.000 VND'
+    },
+    {
+      src: '/images/dgitalagency/3.png',
+      title: isKo ? 'Phase 3: 자동화 마케팅 & API 연동' : 'Phase 3: Marketing Tự động hóa',
+      badge: isKo ? '날씨/조건별 쿠폰 발송 (35,000,000 VND)' : 'Báo giá 35.000.000 VND'
+    },
+    {
+      src: '/images/dgitalagency/4.png',
+      title: isKo ? 'Phase 4: AI & 고도화 (선택)' : 'Phase 4: Trí tuệ nhân tạo AI',
+      badge: isKo ? 'AI 고객 분석 대시보드 (30,000,000 VND)' : 'Báo giá 30.000.000 VND'
+    },
+    {
+      src: '/images/dgitalagency/5.png',
+      title: isKo ? '월 유지관리 & Facebook 광고 대행' : 'Bảo trì Hàng tháng & FB Ads',
+      badge: isKo ? '월 100만 회 노출 & CF 영상 월 4회' : 'QC Facebook 1tr lượt/tháng'
+    },
+    {
+      src: '/images/dgitalagency/6.png',
+      title: isKo ? '10대 비즈니스 기대효과 종합 매트릭스' : '10 Hiệu quả Kỳ vọng Kinh doanh',
+      badge: isKo ? '고객확보 · 재방문 · 매출증대' : 'Tăng doanh thu & Khách hàng'
+    }
+  ];
 
   // Selected Phases for interactive quote estimation
   const [selectedPhases, setSelectedPhases] = useState({
@@ -38,7 +76,6 @@ export default function DigitalAgencyPage({ t }) {
     phase3: true,
     phase4: true
   });
-  const [includeMonthlyMaintenance, setIncludeMonthlyMaintenance] = useState(true);
 
   const phasePrices = {
     phase1: 8000000,
@@ -148,9 +185,11 @@ export default function DigitalAgencyPage({ t }) {
   return (
     <div className="pt-6 min-h-screen bg-navy-950 text-slate-100">
       
-      {/* 1. Page Header & Breadcrumb */}
+      {/* 1. Page Header & Hero Section with Image Showcase */}
       <div className="bg-gradient-to-b from-navy-900 via-navy-950 to-navy-950 border-b border-navy-800 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          
+          {/* Breadcrumb */}
           <div className="flex items-center space-x-2 text-xs text-slate-400">
             <Link to="/" className="hover:text-gold-400">Home</Link>
             <span>/</span>
@@ -159,38 +198,94 @@ export default function DigitalAgencyPage({ t }) {
             <span className="text-gold-400 font-bold">BEST winner Digital Agency Vn</span>
           </div>
 
-          <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-6">
-            <div className="space-y-3">
+          {/* Hero Grid: Text Content + Interactive Hero Image Showcase */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            {/* Left Column: Hero Text */}
+            <div className="lg:col-span-6 space-y-4">
               <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-cyan-400 uppercase tracking-widest bg-cyan-500/10 px-3.5 py-1.5 rounded-full border border-cyan-500/30">
                 <Globe className="w-3.5 h-3.5 text-cyan-400" />
                 <span>BUSINESS DIVISION ⑦ · DIGITAL MARKETING & CRM AGENCY</span>
               </span>
-              <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-                BEST winner <span className="gold-gradient-text">Digital Agency</span> Vn
+
+              <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+                BEST winner <br className="hidden sm:inline" />
+                <span className="gold-gradient-text">Digital Agency</span> Vn
               </h1>
-              <p className="text-sm sm:text-base text-slate-300 max-w-3xl leading-relaxed">
+
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
                 {isKo
                   ? '반응형 웹 플랫폼 구축부터 CRM 회원제, 조건별 자동화 마케팅, AI 타겟 추천 시스템 및 페이스북 월 100만 회 노출 유료 광고 대행까지 — 베트남 현지 맞춤형 Full-Stack 디지털 에이전시 솔루션.'
                   : 'Từ xây dựng nền tảng Web đáp ứng, CRM hội viên, Marketing tự động hóa theo điều kiện, gợi ý mục tiêu bằng AI đến quản lý quảng cáo Facebook 1 triệu lượt hiển thị/tháng.'}
               </p>
+
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <a
+                  href="#pricing-matrix"
+                  className="px-5 py-3 rounded-xl bg-gradient-to-r from-gold-500 to-amber-500 text-navy-950 text-xs font-extrabold flex items-center space-x-2 shadow-lg hover:scale-105 transition-all"
+                >
+                  <Calculator className="w-4 h-4" />
+                  <span>{isKo ? '개발 견적 Matrix 보기' : 'Xem Bảng báo giá'}</span>
+                </a>
+                <Link 
+                  to="/business/interior" 
+                  className="px-4 py-3 rounded-xl bg-navy-900 hover:bg-navy-800 text-slate-300 text-xs font-bold border border-navy-700 flex items-center space-x-1.5"
+                >
+                  <span>{isKo ? '인테리어 사업분야' : 'Lĩnh vực Nội thất'}</span>
+                  <ChevronRight className="w-4 h-4 text-gold-400" />
+                </Link>
+              </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3">
-              <a
-                href="#pricing-matrix"
-                className="px-5 py-3 rounded-xl bg-gradient-to-r from-gold-500 to-amber-500 text-navy-950 text-xs font-extrabold flex items-center space-x-2 shadow-lg hover:scale-105 transition-all"
-              >
-                <Calculator className="w-4 h-4" />
-                <span>{isKo ? '개발 견적 Matrix 보기' : 'Xem Bảng báo giá'}</span>
-              </a>
-              <Link 
-                to="/business/interior" 
-                className="px-4 py-3 rounded-xl bg-navy-900 hover:bg-navy-800 text-slate-300 text-xs font-bold border border-navy-700 flex items-center space-x-1.5"
-              >
-                <span>{isKo ? '인테리어 사업분야' : 'Lĩnh vực Nội thất'}</span>
-                <ChevronRight className="w-4 h-4 text-gold-400" />
-              </Link>
+            {/* Right Column: Hero Image Showcase Viewer */}
+            <div className="lg:col-span-6 space-y-3">
+              
+              {/* Main Featured Image Container */}
+              <div className="relative rounded-3xl overflow-hidden border-2 border-gold-500/40 bg-navy-900 shadow-2xl group">
+                <div className="aspect-[16/10] w-full relative overflow-hidden">
+                  <img 
+                    src={heroImages[activeImgIndex].src} 
+                    alt={heroImages[activeImgIndex].title}
+                    className="w-full h-full object-contain bg-navy-950 transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Gradient Overlay for Text Readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent opacity-80" />
+                </div>
+
+                {/* Main Image Overlay Badge & Title */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+                  <div className="space-y-1">
+                    <span className="inline-block text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-gold-500 text-navy-950 shadow-md">
+                      {heroImages[activeImgIndex].badge}
+                    </span>
+                    <h3 className="text-sm sm:text-base font-extrabold text-white drop-shadow-md">
+                      {heroImages[activeImgIndex].title}
+                    </h3>
+                  </div>
+                  <span className="text-xs font-bold text-slate-400 bg-navy-950/80 px-2.5 py-1 rounded-lg border border-navy-700">
+                    {activeImgIndex + 1} / {heroImages.length}
+                  </span>
+                </div>
+              </div>
+
+              {/* Interactive Thumbnail Carousel Bar */}
+              <div className="grid grid-cols-6 gap-2">
+                {heroImages.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveImgIndex(idx)}
+                    className={`relative rounded-xl overflow-hidden border-2 transition-all aspect-[16/10] bg-navy-900 ${
+                      activeImgIndex === idx 
+                        ? 'border-gold-400 scale-105 shadow-md shadow-gold-500/20' 
+                        : 'border-navy-800 opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <img src={img.src} alt={img.title} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
             </div>
+
           </div>
         </div>
       </div>
