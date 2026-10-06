@@ -114,6 +114,8 @@ export default function App() {
             <Route path="/megazine/admin" element={<MegazineAdminPage t={t} />} />
             <Route path="/calculator" element={<CalculatorPage t={t} />} />
             <Route path="/contact" element={<ContactPage t={t} />} />
+            {/* Fallback Catch-All Route */}
+            <Route path="*" element={<HomePage t={t} />} />
           </Routes>
         </main>
 
