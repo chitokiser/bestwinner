@@ -16,6 +16,7 @@ import SmartParkingPage from './pages/SmartParkingPage';
 import FirefightingPage from './pages/FirefightingPage';
 import WaterproofingPage from './pages/WaterproofingPage';
 import SolarEnergyPage from './pages/SolarEnergyPage';
+import DigitalAgencyPage from './pages/DigitalAgencyPage';
 import AIManagementPage from './pages/AIManagementPage';
 import MegazinePage from './pages/MegazinePage';
 import MegazineAdminPage from './pages/MegazineAdminPage';
@@ -96,6 +97,8 @@ export default function App() {
             <Route path="/business/firefighting" element={<FirefightingPage t={t} />} />
             <Route path="/business/waterproofing" element={<WaterproofingPage t={t} />} />
             <Route path="/business/energy" element={<SolarEnergyPage t={t} />} />
+            <Route path="/business/agency" element={<DigitalAgencyPage t={t} />} />
+            <Route path="/business/digital-agency" element={<DigitalAgencyPage t={t} />} />
             <Route path="/services" element={<AIManagementPage t={t} />} />
             <Route path="/services/ai-management" element={<AIManagementPage t={t} />} />
             <Route 

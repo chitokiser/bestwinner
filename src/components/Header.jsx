@@ -33,6 +33,7 @@ export default function Header({ currentLang, setLang, t }) {
     { id: 'firefighting', path: '/business/firefighting', name: isVi ? 'BEST winner Firefighting materials (Vật tư PCCC)' : isKo ? 'BEST winner Firefighting materials (소방자재)' : 'BEST winner Firefighting materials (Fire Safety)', tag: 'Fire Safety' },
     { id: 'waterproofing', path: '/business/waterproofing', name: isVi ? 'BEST winner Waterproofing Vn (Chống thấm)' : isKo ? 'BEST winner Waterproofing Vn (방수재)' : 'BEST winner Waterproofing Vn (Waterproof)', tag: 'Waterproof' },
     { id: 'energy', path: '/business/energy', name: isVi ? 'BEST winner Solar Energy (Năng lượng mặt trời)' : isKo ? 'BEST winner Solar Energy (태양광 에너지)' : 'BEST winner Solar Energy (Solar PVT)', tag: 'Solar PVT' },
+    { id: 'agency', path: '/business/agency', name: isVi ? 'BEST winner Digital Agency Vn (Đại lý kỹ thuật số)' : isKo ? 'BEST winner Digital Agency Vn (베스트디지털에이젼시)' : 'BEST winner Digital Agency Vn (Digital Agency)', tag: 'Digital Agency' },
   ];
 
   const servicesNav = [

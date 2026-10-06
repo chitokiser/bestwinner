@@ -7,6 +7,7 @@ import {
   Flame, 
   Droplets, 
   Sun,
+  Globe,
   Cpu,
   ExternalLink,
   CheckCircle2, 
@@ -130,6 +131,28 @@ export default function BusinessCardsSection({ t }) {
       badgeColor: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
       btnColor: 'bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400 text-navy-950 font-bold',
       bgImg: t.business.units.energy?.img || '/images/sola/hreo/1.png'
+    },
+    {
+      id: 'agency',
+      path: '/business/agency',
+      num: '08',
+      tag: t?.lang === 'vi' || !t?.lang ? 'Đại lý kỹ thuật số & Marketing CRM' : '디지털 에이전시 & CRM 마케팅',
+      name: t?.lang === 'vi' || !t?.lang ? 'BEST winner Digital Agency Vn (베스트디지털에이젼시)' : 'BEST winner Digital Agency Vn (베스트디지털에이젼시)',
+      desc: t?.lang === 'vi' || !t?.lang ? 'Giải pháp Marketing kỹ thuật số Full-Stack: Xây dựng Nền tảng Web, CRM Hội viên, Marketing Tự động hóa & Quảng cáo Facebook 1tr lượt hiển thị/tháng.' : '반응형 웹 구축부터 CRM 회원제, 조건별 자동화 마케팅, AI 타겟 추천 & 페이스북 월 100만 회 노출 유료 광고 대행까지 풀스택 디지털 솔루션.',
+      highlight: t?.lang === 'vi' || !t?.lang ? 'Lộ trình 4 Giai đoạn từ 8.000.000 VND & Hỗ trợ sản xuất 4 Video CF hàng tháng.' : '8,000,000 VND부터 시작하는 4단계 구축 로드맵 & 월 4회 CF 광고 영상 제작 지원.',
+      features: t?.lang === 'vi' || !t?.lang ? [
+        "Xây dựng Web chuẩn UX/UI & Tích hợp CRM hội viên tự động",
+        "Tích hợp API Thời tiết & Tự động phát hành Voucher theo điều kiện",
+        "Quản lý QC Facebook 1tr lượt hiển thị & Bảng điều khiển AI CRM"
+      ] : [
+        "UX/UI 최적화 웹 구축 & 모바일 회원제/CRM 자동화 연동",
+        "날씨/기상 API 연동 & 조건별 맞춤 쿠폰 자동 발송 시스템",
+        "페이스북 월 100만회 노출 광고 관리 & AI 고객 세그먼트 분석"
+      ],
+      icon: Globe,
+      badgeColor: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+      btnColor: 'bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white font-bold',
+      bgImg: '/images/parking/hero/1.png'
     }
   ];
 
