@@ -40,27 +40,27 @@ export default function DigitalAgencyPage({ t }) {
     {
       src: '/images/dgitalagency/1.png',
       title: isKo ? 'Phase 1: 기획 & 기본 웹 구축' : 'Phase 1: Quy hoạch & Web cơ bản',
-      badge: isKo ? '기본 인프라 구축 (8,000,000 VND)' : 'Báo giá 8.000.000 VND'
+      badge: isKo ? '기본 인프라 구축 (약 8,000,000 VND ~)' : 'Báo giá dự kiến ~ 8.000.000 VND'
     },
     {
       src: '/images/dgitalagency/2.png',
       title: isKo ? 'Phase 2: CRM & 회원제 고도화' : 'Phase 2: CRM & Thẻ hội viên',
-      badge: isKo ? '멤버십 & 포인트 적립 (35,000,000 VND)' : 'Báo giá 35.000.000 VND'
+      badge: isKo ? '멤버십 & 포인트 적립 (약 35,000,000 VND ~)' : 'Báo giá dự kiến ~ 35.000.000 VND'
     },
     {
       src: '/images/dgitalagency/3.png',
       title: isKo ? 'Phase 3: 자동화 마케팅 & API 연동' : 'Phase 3: Marketing Tự động hóa',
-      badge: isKo ? '날씨/조건별 쿠폰 발송 (35,000,000 VND)' : 'Báo giá 35.000.000 VND'
+      badge: isKo ? '날씨/조건별 쿠폰 발송 (약 35,000,000 VND ~)' : 'Báo giá dự kiến ~ 35.000.000 VND'
     },
     {
       src: '/images/dgitalagency/4.png',
       title: isKo ? 'Phase 4: AI & 고도화 (선택)' : 'Phase 4: Trí tuệ nhân tạo AI',
-      badge: isKo ? 'AI 고객 분석 대시보드 (30,000,000 VND)' : 'Báo giá 30.000.000 VND'
+      badge: isKo ? 'AI 고객 분석 대시보드 (약 30,000,000 VND ~)' : 'Báo giá dự kiến ~ 30.000.000 VND'
     },
     {
       src: '/images/dgitalagency/5.png',
       title: isKo ? '월 유지관리 & Facebook 광고 대행' : 'Bảo trì Hàng tháng & FB Ads',
-      badge: isKo ? '월 100만 회 노출 & CF 영상 월 4회' : 'QC Facebook 1tr lượt/tháng'
+      badge: isKo ? '월 100만 회 노출 & CF 영상 (약 1,500,000 VND ~/월)' : 'QC FB 1tr lượt (~ 1.500.000 VND/tháng)'
     },
     {
       src: '/images/dgitalagency/6.png',
@@ -294,8 +294,8 @@ export default function DigitalAgencyPage({ t }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-navy-900/80 border border-gold-500/20 rounded-2xl p-5 text-center space-y-1 backdrop-blur-md">
-            <span className="text-2xl sm:text-3xl font-black gold-gradient-text block">108,000,000</span>
-            <span className="text-xs text-slate-400 font-medium block uppercase tracking-wider">{isKo ? '풀패키지 총 견적 (VND)' : 'Tổng Báo giá Gói (VND)'}</span>
+            <span className="text-2xl sm:text-3xl font-black gold-gradient-text block">108,000,000 ~</span>
+            <span className="text-xs text-slate-400 font-medium block uppercase tracking-wider">{isKo ? '풀패키지 총 예상 견적 (VND)' : 'Tổng Báo giá Dự kiến (VND)'}</span>
           </div>
           <div className="bg-navy-900/80 border border-cyan-500/20 rounded-2xl p-5 text-center space-y-1 backdrop-blur-md">
             <span className="text-2xl sm:text-3xl font-black text-cyan-400 block">4 {isKo ? '주 완성' : 'Tuần'}</span>
@@ -306,8 +306,8 @@ export default function DigitalAgencyPage({ t }) {
             <span className="text-xs text-slate-400 font-medium block uppercase tracking-wider">{isKo ? '페이스북 월 노출 수 (회)' : 'Hiển thị FB / Tháng'}</span>
           </div>
           <div className="bg-navy-900/80 border border-purple-500/20 rounded-2xl p-5 text-center space-y-1 backdrop-blur-md">
-            <span className="text-2xl sm:text-3xl font-black text-purple-300 block">1,500,000</span>
-            <span className="text-xs text-slate-400 font-medium block uppercase tracking-wider">{isKo ? '월 유지보수 & CF 제작 (VND/월)' : 'Bảo trì & CF / Tháng'}</span>
+            <span className="text-2xl sm:text-3xl font-black text-purple-300 block">1,500,000 ~</span>
+            <span className="text-xs text-slate-400 font-medium block uppercase tracking-wider">{isKo ? '월 유지보수 & CF 제작 (VND/월)' : 'Bảo trì & CF Dự kiến / Tháng'}</span>
           </div>
         </div>
       </div>
@@ -357,9 +357,9 @@ export default function DigitalAgencyPage({ t }) {
                   </div>
 
                   <div className="text-right">
-                    <span className="text-xs text-slate-400 block">{isKo ? '견적 (VAT 별도)' : 'Báo giá (Chưa VAT)'}</span>
+                    <span className="text-xs text-slate-400 block">{isKo ? '예상 견적 (약 ~, VAT 별도)' : 'Báo giá dự kiến (~, Chưa VAT)'}</span>
                     <span className="text-xl font-black gold-gradient-text">
-                      {ph.priceVND.toLocaleString()} <span className="text-xs text-slate-300 font-normal">VND</span>
+                      약 {ph.priceVND.toLocaleString()} ~ <span className="text-xs text-slate-300 font-normal">VND</span>
                     </span>
                   </div>
                 </div>
@@ -419,9 +419,9 @@ export default function DigitalAgencyPage({ t }) {
             </div>
 
             <div className="text-left lg:text-right bg-navy-950 px-6 py-4 rounded-2xl border border-gold-500/30">
-              <span className="text-xs text-slate-400 block uppercase tracking-widest font-bold">{isKo ? '선택 개발 단계 총액 (VAT 별도)' : 'Tổng Chi phí Phát triển (Chưa VAT)'}</span>
+              <span className="text-xs text-slate-400 block uppercase tracking-widest font-bold">{isKo ? '선택 개발 단계 총 예상액 (약 ~, VAT 별도)' : 'Tổng Chi phí Dự kiến (Chưa VAT)'}</span>
               <span className="text-3xl sm:text-4xl font-black gold-gradient-text block mt-1">
-                {calculateTotalVND().toLocaleString()} <span className="text-sm text-slate-200 font-bold">VND</span>
+                약 {calculateTotalVND().toLocaleString()} ~ <span className="text-sm text-slate-200 font-bold">VND</span>
               </span>
             </div>
           </div>
@@ -437,7 +437,7 @@ export default function DigitalAgencyPage({ t }) {
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-lg font-black text-cyan-400 block">1,500,000 <span className="text-xs text-slate-400 font-normal">VND / 월</span></span>
+                <span className="text-lg font-black text-cyan-400 block">약 1,500,000 ~ <span className="text-xs text-slate-400 font-normal">VND / 월</span></span>
               </div>
             </div>
 
