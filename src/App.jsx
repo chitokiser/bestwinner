@@ -17,7 +17,6 @@ import FirefightingPage from './pages/FirefightingPage';
 import WaterproofingPage from './pages/WaterproofingPage';
 import SolarEnergyPage from './pages/SolarEnergyPage';
 import AIManagementPage from './pages/AIManagementPage';
-import DropshippingPage from './pages/DropshippingPage';
 import MegazinePage from './pages/MegazinePage';
 import MegazineAdminPage from './pages/MegazineAdminPage';
 import CalculatorPage from './pages/CalculatorPage';
@@ -99,10 +98,6 @@ export default function App() {
             <Route path="/business/energy" element={<SolarEnergyPage t={t} />} />
             <Route path="/services" element={<AIManagementPage t={t} />} />
             <Route path="/services/ai-management" element={<AIManagementPage t={t} />} />
-            <Route path="/services/dropshipping" element={<DropshippingPage t={t} />} />
-            <Route path="/services/shop" element={<DropshippingPage t={t} />} />
-            <Route path="/shop" element={<DropshippingPage t={t} />} />
-            <Route path="/dropshipping" element={<DropshippingPage t={t} />} />
             <Route 
               path="/megazine" 
               element={
