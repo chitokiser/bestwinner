@@ -21,7 +21,6 @@ import {
   Trash2
 } from 'lucide-react';
 import BestPickCard from './BestPickCard';
-import AudioBriefingPlayer from './AudioBriefingPlayer';
 import { INITIAL_BEST_PICKS } from '../../data/megazineInitialData';
 import { getDefaultThumbnail, removeArticle } from '../../services/megazineService';
 
@@ -320,12 +319,6 @@ BEST MEGAZINE AI 취재팀은 하루 5회(07:00, 11:00, 14:00, 18:00, 21:00) 베
               </p>
             )}
           </div>
-
-          {/* AI 1-Min Audio Briefing Player */}
-          <AudioBriefingPlayer 
-            title={article.title} 
-            textToRead={article.summary || article.whyItMatters || article.content} 
-          />
 
           {/* Featured Image */}
           <div className="rounded-2xl overflow-hidden border border-navy-800 aspect-[16/9] shadow-xl bg-navy-950">
