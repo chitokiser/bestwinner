@@ -94,15 +94,50 @@ export default function Footer({ t }) {
 
         </div>
 
+        {/* Corporate Legal Identity Info Block */}
+        <div className="mt-8 bg-navy-900/80 rounded-2xl p-6 border border-gold-500/20 text-xs text-slate-300 space-y-3">
+          <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-navy-800 pb-3 gap-2">
+            <div>
+              <span className="text-[10px] font-bold text-gold-400 uppercase tracking-widest block">CORPORATE IDENTITY · 법인 기본 정보</span>
+              <h4 className="text-sm sm:text-base font-extrabold text-white">BEST WINNER VN LIMITED COMPANY <span className="text-xs text-slate-400 font-medium">(CÔNG TY TNHH BEST WINNER VN)</span></h4>
+            </div>
+            <div className="flex flex-wrap items-center gap-3 text-slate-400 text-[11px]">
+              <span>Mã số thuế (Tax Code): <strong className="text-gold-400 font-mono">0110245813</strong></span>
+              <span>•</span>
+              <span>Ngày thành lập: <strong className="text-white">09/02/2023</strong></span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-1 text-[11px]">
+            <div className="bg-navy-950/60 p-2.5 rounded-xl border border-navy-800">
+              <span className="text-slate-400 block font-semibold text-[10px] uppercase">대표이사 (President Director)</span>
+              <span className="font-bold text-white">김성원 (Kim Sung Won)</span>
+            </div>
+            <div className="bg-navy-950/60 p-2.5 rounded-xl border border-navy-800">
+              <span className="text-slate-400 block font-semibold text-[10px] uppercase">자본금 (Capital)</span>
+              <span className="font-bold text-gold-400">1,270,000,000 VND</span>
+            </div>
+            <div className="bg-navy-950/60 p-2.5 rounded-xl border border-navy-800">
+              <span className="text-slate-400 block font-semibold text-[10px] uppercase">사업자 등록번호 (Tax Code)</span>
+              <span className="font-bold text-gold-400 font-mono">0110245813</span>
+            </div>
+          </div>
+
+          <div className="pt-2 border-t border-navy-800/80 flex items-start space-x-2 text-[11px] text-slate-300">
+            <MapPin className="w-4 h-4 text-gold-400 flex-shrink-0 mt-0.5" />
+            <span><strong className="text-slate-200">본사 주소 (Head Office):</strong> NO 6B-LK46B service land area, Van Phuc ward, Ha Dong district, Hanoi city, Vietnam</span>
+          </div>
+        </div>
+
         {/* Bottom Copyright */}
         <div className="pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] text-slate-500 space-y-4 sm:space-y-0">
-          <p>© 2026 BEST winner Group Vietnam. All rights reserved.</p>
+          <p>© 2026 BEST WINNER VN LIMITED COMPANY. All rights reserved.</p>
           <div className="flex space-x-4">
+            <span>MST: 0110245813</span>
+            <span>•</span>
             <span>QCVN / TCVN Compliant</span>
             <span>•</span>
             <span>Privacy Policy</span>
-            <span>•</span>
-            <span>Terms of Service</span>
           </div>
         </div>
 
