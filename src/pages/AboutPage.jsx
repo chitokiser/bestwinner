@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import AboutGroup from '../components/AboutGroup';
 import CeoGreetingSection from '../components/CeoGreetingSection';
+import OrgChartSection from '../components/OrgChartSection';
 import ContactUs from '../components/ContactUs';
 
 export default function AboutPage({ t }) {
@@ -27,6 +28,7 @@ export default function AboutPage({ t }) {
 
       <AboutGroup t={t} />
       <CeoGreetingSection t={t} />
+      <OrgChartSection t={t} />
       <ContactUs t={t} />
     </div>
   );
