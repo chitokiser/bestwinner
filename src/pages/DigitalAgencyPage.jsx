@@ -26,7 +26,14 @@ import {
   Award,
   ChevronRight,
   Maximize2,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Cpu,
+  Workflow,
+  Compass,
+  Briefcase,
+  Building2,
+  ShoppingBag,
+  Utensils
 } from 'lucide-react';
 
 export default function DigitalAgencyPage({ t }) {
@@ -54,8 +61,8 @@ export default function DigitalAgencyPage({ t }) {
     },
     {
       src: '/images/dgitalagency/4.png',
-      title: isKo ? 'Phase 4: AI & 고도화 (선택)' : 'Phase 4: Trí tuệ nhân tạo AI',
-      badge: isKo ? 'AI 고객 분석 대시보드 (약 30,000,000 VND ~)' : 'Báo giá dự kiến ~ 30.000.000 VND'
+      title: isKo ? 'Phase 4: AI & AX (AI Transformation) 고도화' : 'Phase 4: Chuyển đổi AI & AX',
+      badge: isKo ? 'AX 에이전틱 AI & 고객분석 (약 30,000,000 VND ~)' : 'AX & Báo giá dự kiến ~ 30.000.000 VND'
     },
     {
       src: '/images/dgitalagency/5.png',
@@ -65,7 +72,7 @@ export default function DigitalAgencyPage({ t }) {
     {
       src: '/images/dgitalagency/6.png',
       title: isKo ? '10대 비즈니스 기대효과 종합 매트릭스' : '10 Hiệu quả Kỳ vọng Kinh doanh',
-      badge: isKo ? '고객확보 · 재방문 · 매출증대' : 'Tăng doanh thu & Khách hàng'
+      badge: isKo ? '고객확보 · 재방문 · 매출증대 · AX 혁신' : 'Tăng doanh thu & Khách hàng'
     }
   ];
 
@@ -92,6 +99,78 @@ export default function DigitalAgencyPage({ t }) {
     if (selectedPhases.phase4) total += phasePrices.phase4;
     return total;
   };
+
+  // AX (AI Transformation) Pillars (SK AX Benchmarked Framework)
+  const axPillars = [
+    {
+      icon: Cpu,
+      tag: "AX Core 01",
+      title: isKo ? "Agentic Environment (에이전틱 AI 환경)" : "Môi trường Agentic AI",
+      desc: isKo 
+        ? "단순 프롬프트 반응을 넘어, 비즈니스 목표를 자율 수행하는 지능형 AI 에이전틱(Agentic) 환경을 구축합니다." 
+        : "Xây dựng môi trường Agentic AI thông minh tự động thực thi mục tiêu kinh doanh vượt xa AI phản hồi thông thường.",
+      color: "from-cyan-500/20 to-blue-500/10 border-cyan-500/30 text-cyan-400"
+    },
+    {
+      icon: Workflow,
+      tag: "AX Core 02",
+      title: isKo ? "Hyper-Personalized CRM (초개인화 데이터 지능)" : "CRM Siêu cá nhân hóa",
+      desc: isKo 
+        ? "고객의 방문 이력, 선호도, 구매 패턴 데이터를 AI 머신러닝으로 실시간 분석하여 1:1 맞춤 프로모션을 자동 매칭합니다." 
+        : "Phân tích thời gian thực dữ liệu hành vi khách hàng bằng AI Machine Learning để khớp khuyến mãi 1:1 tự động.",
+      color: "from-gold-500/20 to-amber-500/10 border-gold-500/30 text-gold-400"
+    },
+    {
+      icon: Bot,
+      tag: "AX Core 03",
+      title: isKo ? "Enterprise Integration (엔터프라이즈 AX 통합)" : "Tích hợp Enterprise AX",
+      desc: isKo 
+        ? "웹, 모바일 PWA, CRM, 결제 시스템 및 외부 기상/소셜 API를 유기적으로 연결하여 무중단 자동화 파이프라인을 완성합니다." 
+        : "Liên kết liền mạch Web, Mobile PWA, CRM, Thanh toán & API bên ngoài tạo nên đường ống tự động hóa liên tục.",
+      color: "from-purple-500/20 to-indigo-500/10 border-purple-500/30 text-purple-300"
+    },
+    {
+      icon: BarChart3,
+      tag: "AX Core 04",
+      title: isKo ? "AI PMO & Operations (AI 기반 통합 관제)" : "Quản trị & Vận hành AI PMO",
+      desc: isKo 
+        ? "시각화된 통합 대시보드와 월 100만 회 노출 타겟 광고, 홍보 영상 제작 지원으로 지속적인 비즈니스 성장을 케어합니다." 
+        : "Dashboard quản trị trực quan, quảng cáo mục tiêu 1 triệu lượt/tháng & hỗ trợ sản xuất video thúc đẩy tăng trưởng.",
+      color: "from-emerald-500/20 to-teal-500/10 border-emerald-500/30 text-emeraldGreen-400"
+    }
+  ];
+
+  // Industry-Tailored AX Offerings (SK AX Industries Benchmarked)
+  const axOfferings = [
+    {
+      icon: Utensils,
+      title: isKo ? "F&B / 외식업 AX 솔루션" : "Giải pháp AX Ngành F&B / Nhà hàng",
+      subtitle: isKo ? "기상 연동 우전/폭염 쿠폰 & 잭팟 이벤트" : "Voucher thời tiết & Sự kiện Jackpot",
+      desc: isKo ? "날씨 API와 고객 방문 DB를 연동하여 비오는 날 막걸리/파전 쿠폰 자동 발송, 오픈 알림 및 소셜 회원가입 시스템 구축." : "Gửi voucher tự động ngày mưa/nắng nóng qua API thời tiết, tích hợp đăng ký MXH & thông báo mở cửa.",
+      tags: ["기상 API 연동", "생일/웰컴백 쿠폰", "Google 리뷰 연동"]
+    },
+    {
+      icon: ShoppingBag,
+      title: isKo ? "유통 & 리테일 AX 솔루션" : "Giải pháp AX Bán lẻ & Thương mại",
+      subtitle: isKo ? "AI 구매 패턴 분석 & 등급제 바코드" : "Phân tích AI & Thẻ mã vạch thành viên",
+      desc: isKo ? "고객별 결제 적립 바코드, AI 기반 선호 상품 추천, 이탈 위험 고객 세그먼트 자동 분류 엔진 제공." : "Mã vạch tích điểm, gợi ý sản phẩm theo AI & công cụ tự động phân loại khách hàng nguy cơ rời bỏ.",
+      tags: ["AI 세그먼트 분류", "모바일 바코드", "친구 추천 포인트"]
+    },
+    {
+      icon: Briefcase,
+      title: isKo ? "오피스 & B2B 서비스 AX" : "Giải pháp AX Văn phòng & B2B",
+      subtitle: isKo ? "SaaS AI CRM & 자동화 마케팅 파이프라인" : "SaaS AI CRM & Pipeline tự động",
+      desc: isKo ? "B2B 파트너 자원 관리, 실시간 견적 산출 시스템, AI 대시보드를 통한 데이터 시각화 및 리드 관리." : "Quản lý đối tác B2B, hệ thống tính báo giá tự động & trực quan hóa dữ liệu qua AI Dashboard.",
+      tags: ["SaaS AI CRM", "자동 견적 엔진", "실시간 대시보드"]
+    },
+    {
+      icon: Building2,
+      title: isKo ? "스마트 빌딩 & 인프라 AX" : "Giải pháp AX Tòa nhà Thông minh",
+      subtitle: isKo ? "BEST WINNER 인프라 연동 관제" : "Tích hợp Quản lý Hạ tầng BEST WINNER",
+      desc: isKo ? "승강기, AI 주차, 소방 자재, K1 방수 등 그룹 인프라 요소와 통합 연동되는 디지털 관제 및 마케팅 엔진." : "Động cơ quản lý & marketing kỹ thuật số tích hợp thang máy, bãi đỗ xe AI, PCCC & chống thấm.",
+      tags: ["AI 주차 연동", "스마트빌딩 관제", "One-Stop Synergy"]
+    }
+  ];
 
   const phases = [
     {
@@ -153,14 +232,14 @@ export default function DigitalAgencyPage({ t }) {
     {
       id: 'phase4',
       num: 'Phase 4',
-      title: isKo ? 'AI & 고도화 (선택)' : 'AI & Nâng cao (Tùy chọn)',
+      title: isKo ? 'AI & AX (AI Transformation) 고도화' : 'Chuyển đổi AI & AX (Tùy chọn)',
       period: isKo ? '1주' : '1 Tuần',
       priceVND: 30000000,
-      scope: isKo ? 'AI 고객 분석 및 타겟 추천 시스템' : 'Hệ thống Phân tích & Gợi ý Mục tiêu bằng AI',
+      scope: isKo ? 'AX 에이전틱 AI 엔진 & 고객 세그먼트 자동 분류' : 'Động cơ Agentic AI & Phân loại tự động phân khúc',
       features: [
-        isKo ? '주문 / 방문 이력 AI 머신러닝 분석' : 'Phân tích lịch sử gọi món / ghé thăm bằng AI Machine Learning',
-        isKo ? '고객별 맞춤 메뉴 추천 & 프로모션 AI 매칭' : 'Gợi ý món ăn & Khuyến mãi cá nhân hóa theo AI',
-        isKo ? '고객 세그먼트 자동 분류 엔진 (고액 결제 / 단골 / 이탈위험)' : 'Phân loại tự động phân khúc khách hàng (VIP / Thường xuyên / Nguy cơ)',
+        isKo ? '주문 / 방문 이력 AI 머신러닝 분석 & AX 모델 적용' : 'Phân tích lịch sử gọi món / ghé thăm bằng AI Machine Learning & Mô hình AX',
+        isKo ? 'Agentic AI 기반 맞춤 메뉴 추천 & 초개인화 매칭' : 'Gợi ý món ăn siêu cá nhân hóa dựa trên Agentic AI',
+        isKo ? '고객 세그먼트 자동 분류 엔진 (VIP / 단골 / 이탈위험)' : 'Phân loại tự động phân khúc khách hàng (VIP / Thường xuyên / Nguy cơ)',
         isKo ? '관리자 통합 CRM 대시보드 & 시각화 통계 대시보드' : 'Bảng điều khiển CRM quản trị viên & Thống kê trực quan'
       ],
       icon: Bot,
@@ -177,7 +256,7 @@ export default function DigitalAgencyPage({ t }) {
     { title: isKo ? '자동 마케팅' : 'Marketing Tự động', desc: isKo ? '고객 타겟 조건에 따른 쿠폰 및 프로모션 자동 발송' : 'Tự động phát hành Voucher & Khuyến mãi theo điều kiện mục tiêu', icon: Zap, color: 'text-purple-400' },
     { title: isKo ? '바이럴 마케팅' : 'Marketing Lan tỏa', desc: isKo ? 'CF 영상 제작 지원 / 친구 추천 및 리뷰 보상 시스템' : 'Hỗ trợ sản xuất Video CF / Giới thiệu bạn bè & Thưởng Đánh giá', icon: Share2, color: 'text-rose-400' },
     { title: isKo ? '브랜드 강화' : 'Củng cố Thương hiệu', desc: isKo ? '충성 단골 고객 커뮤니티 및 로열티 전용 바코드 구축' : 'Xây dựng cộng đồng khách hàng thân thiết & Mã vạch đặc quyền', icon: Award, color: 'text-gold-400' },
-    { title: isKo ? 'AI 활용' : 'Ứng dụng AI', desc: isKo ? '고객별 메뉴 및 프로모션 추천을 통한 초개인화 마케팅' : 'Marketing siêu cá nhân hóa qua gợi ý món & khuyến mãi AI', icon: Bot, color: 'text-cyan-300' },
+    { title: isKo ? 'AX (AI Transformation) 혁신' : 'Ứng dụng AX & AI', desc: isKo ? '에이전틱 AI 환경 구축으로 초개인화 마케팅 및 업무 효율 300% 극대화' : 'Xây dựng môi trường Agentic AI giúp siêu cá nhân hóa & tối ưu vận hành 300%', icon: Cpu, color: 'text-cyan-300' },
     { title: isKo ? '운영 효율화' : 'Tối ưu Vận hành', desc: isKo ? '관리자 CRM 대시보드를 통한 고객 및 마케팅 통합 관리' : 'Quản lý tích hợp Khách hàng & Marketing qua Dashboard CRM', icon: BarChart3, color: 'text-indigo-400' },
     { title: isKo ? '확장성' : 'Khả năng Mở rộng', desc: isKo ? '향후 배달 / 예약 / 주문 / 결제 / 다점포 / 제휴매장 모듈 유연 확장' : 'Mở rộng linh hoạt: Giao hàng / Đặt chỗ / Gọi món / Thanh toán / Chuỗi', icon: Layers, color: 'text-emerald-400' }
   ];
@@ -204,22 +283,29 @@ export default function DigitalAgencyPage({ t }) {
             {/* Left Column: Hero Text */}
             <div className="lg:col-span-6 space-y-4">
               <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-cyan-400 uppercase tracking-widest bg-cyan-500/10 px-3.5 py-1.5 rounded-full border border-cyan-500/30">
-                <Globe className="w-3.5 h-3.5 text-cyan-400" />
-                <span>BUSINESS DIVISION ⑦ · DIGITAL MARKETING & CRM AGENCY</span>
+                <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+                <span>AX (AI TRANSFORMATION) & FULL-STACK DIGITAL AGENCY</span>
               </span>
 
               <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
-                BEST winner <br className="hidden sm:inline" />
-                <span className="gold-gradient-text">Digital Agency</span> Vn
+                Imagine <span className="gold-gradient-text">AX</span> <br className="hidden sm:inline" />
+                BEST winner <span className="text-cyan-400">Digital Agency</span>
               </h1>
 
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed break-keep">
                 {isKo
-                  ? '반응형 웹 플랫폼 구축부터 CRM 회원제, 조건별 자동화 마케팅, AI 타겟 추천 시스템 및 페이스북 월 100만 회 노출 유료 광고 대행까지 — 베트남 현지 맞춤형 Full-Stack 디지털 에이전시 솔루션.'
-                  : 'Từ xây dựng nền tảng Web đáp ứng, CRM hội viên, Marketing tự động hóa theo điều kiện, gợi ý mục tiêu bằng AI đến quản lý quảng cáo Facebook 1 triệu lượt hiển thị/tháng.'}
+                  ? '반응형 웹 플랫폼 구축부터 CRM 회원제, 조건별 자동화 마케팅, Agentic AI 기반 AX (AI Transformation) 타겟 추천 시스템, 그리고 페이스북 월 100만 회 노출 유료 광고 대행까지 — 기업의 디지털 및 AI 전환을 주도하는 Global-Standard Full-Stack AX 파트너.'
+                  : 'Từ xây dựng nền tảng Web đáp ứng, CRM hội viên, Marketing tự động hóa, hệ thống gợi ý bằng Agentic AI (Chuyển đổi AX) đến quản lý quảng cáo Facebook 1 triệu lượt hiển thị/tháng.'}
               </p>
 
               <div className="flex flex-wrap items-center gap-3 pt-2">
+                <a
+                  href="#ax-framework"
+                  className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-extrabold flex items-center space-x-2 shadow-lg hover:scale-105 transition-all"
+                >
+                  <Cpu className="w-4 h-4" />
+                  <span>{isKo ? 'AX (AI Transformation) 체계 보기' : 'Khung Khái niệm AX'}</span>
+                </a>
                 <a
                   href="#pricing-matrix"
                   className="px-5 py-3 rounded-xl bg-gradient-to-r from-gold-500 to-amber-500 text-navy-950 text-xs font-extrabold flex items-center space-x-2 shadow-lg hover:scale-105 transition-all"
@@ -227,13 +313,6 @@ export default function DigitalAgencyPage({ t }) {
                   <Calculator className="w-4 h-4" />
                   <span>{isKo ? '개발 견적 Matrix 보기' : 'Xem Bảng báo giá'}</span>
                 </a>
-                <Link 
-                  to="/business/interior" 
-                  className="px-4 py-3 rounded-xl bg-navy-900 hover:bg-navy-800 text-slate-300 text-xs font-bold border border-navy-700 flex items-center space-x-1.5"
-                >
-                  <span>{isKo ? '인테리어 사업분야' : 'Lĩnh vực Nội thất'}</span>
-                  <ChevronRight className="w-4 h-4 text-gold-400" />
-                </Link>
               </div>
             </div>
 
@@ -298,8 +377,8 @@ export default function DigitalAgencyPage({ t }) {
             <span className="text-xs text-slate-400 font-medium block uppercase tracking-wider">{isKo ? '풀패키지 총 예상 견적 (VND)' : 'Tổng Báo giá Dự kiến (VND)'}</span>
           </div>
           <div className="bg-navy-900/80 border border-cyan-500/20 rounded-2xl p-5 text-center space-y-1 backdrop-blur-md">
-            <span className="text-2xl sm:text-3xl font-black text-cyan-400 block">4 {isKo ? '주 완성' : 'Tuần'}</span>
-            <span className="text-xs text-slate-400 font-medium block uppercase tracking-wider">{isKo ? '전 단계 개발 소요 기간' : 'Thời gian phát triển'}</span>
+            <span className="text-2xl sm:text-3xl font-black text-cyan-400 block">AX Engine</span>
+            <span className="text-xs text-slate-400 font-medium block uppercase tracking-wider">{isKo ? 'AI Transformation 혁신 파이프라인' : 'Động cơ Chuyển đổi AI & AX'}</span>
           </div>
           <div className="bg-navy-900/80 border border-emerald-500/20 rounded-2xl p-5 text-center space-y-1 backdrop-blur-md">
             <span className="text-2xl sm:text-3xl font-black text-emeraldGreen-400 block">1,000,000+</span>
@@ -312,7 +391,106 @@ export default function DigitalAgencyPage({ t }) {
         </div>
       </div>
 
-      {/* 3. 4-Phase Development & Price Matrix Section */}
+      {/* NEW SECTION: 3. AX (AI Transformation) Innovation Framework (SK AX Benchmarked) */}
+      <section id="ax-framework" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-10 border-t border-navy-800">
+        <div className="text-center space-y-3 max-w-3xl mx-auto">
+          <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-cyan-400 uppercase tracking-widest bg-navy-900 px-3.5 py-1.5 rounded-full border border-cyan-500/30">
+            <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+            <span>AX (AI TRANSFORMATION) INNOVATION FRAMEWORK</span>
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-white break-keep">
+            {isKo ? '기업 운영 체계 전반을 혁신하는 BEST Winner AX' : 'Khung Chuyển đổi AI & AX (AI Transformation)'}
+          </h2>
+          <p className="text-sm text-slate-300 leading-relaxed break-keep">
+            {isKo 
+              ? '단순한 AI 기술 도입에 그치지 않고, 에이전틱(Agentic) AI 환경과 비즈니스 워크플로우를 유기적으로 결합하여 최고의 생산성과 데이터 지능을 실현합니다.' 
+              : 'Vượt xa việc áp dụng AI thông thường, kết hợp môi trường Agentic AI và quy trình làm việc tạo nên năng suất vượt trội.'}
+          </p>
+        </div>
+
+        {/* 4 AX Core Pillars Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {axPillars.map((pillar, idx) => {
+            const Icon = pillar.icon;
+            return (
+              <div 
+                key={idx}
+                className="bg-navy-900/80 rounded-2xl p-6 border border-navy-700/80 hover:border-gold-500/40 transition-all duration-300 hover:-translate-y-1.5 group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-[10px] font-black tracking-wider uppercase bg-navy-950 px-2.5 py-1 rounded-full border border-navy-700 text-slate-400">
+                      {pillar.tag}
+                    </span>
+                    <div className={`p-2 rounded-xl bg-navy-950 border ${pillar.color}`}>
+                      <Icon className="w-5 h-5" />
+                    </div>
+                  </div>
+
+                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-gold-300 transition-colors break-keep">
+                    {pillar.title}
+                  </h3>
+                  <p className="text-xs text-slate-300 leading-relaxed break-keep">
+                    {pillar.desc}
+                  </p>
+                </div>
+
+                <div className="pt-4 mt-4 border-t border-navy-800 flex items-center text-[11px] text-cyan-400 font-semibold">
+                  <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-cyan-400" />
+                  <span>Agentic AI Enabled</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Industry-Tailored AX Offerings (SK AX Industries Grid) */}
+        <div className="bg-gradient-to-br from-navy-900 via-navy-900 to-navy-950 rounded-3xl p-6 sm:p-10 border border-gold-500/30 shadow-2xl space-y-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-navy-800 pb-6">
+            <div>
+              <span className="text-xs font-bold text-gold-400 uppercase tracking-widest block mb-1">INDUSTRY-TAILORED AX OFFERINGS</span>
+              <h3 className="text-2xl font-extrabold text-white">
+                {isKo ? '산업 분야별 맞춤형 AX (AI Transformation) 서비스' : 'Dịch vụ AX Chuyên biệt theo Ngành'}
+              </h3>
+            </div>
+            <span className="text-xs text-slate-400 bg-navy-950 px-3 py-1.5 rounded-full border border-navy-700">
+              {isKo ? 'SK AX 스타일 맞춤 패키징' : 'Gói tùy chỉnh phong cách SK AX'}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {axOfferings.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div key={idx} className="bg-navy-950/80 rounded-2xl p-6 border border-navy-800 hover:border-gold-500/40 transition-all space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-3 rounded-xl bg-navy-900 border border-gold-500/30 text-gold-400">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-base font-bold text-white">{item.title}</h4>
+                      <span className="text-xs text-cyan-400 font-medium">{item.subtitle}</span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    {item.desc}
+                  </p>
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {item.tags.map((tg, tIdx) => (
+                      <span key={tIdx} className="text-[10px] bg-navy-900 text-slate-300 px-2.5 py-1 rounded-md border border-navy-700">
+                        #{tg}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+      </section>
+
+      {/* 4. 4-Phase Development & Price Matrix Section */}
       <section id="pricing-matrix" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
         <div className="text-center space-y-3">
           <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-gold-400 uppercase tracking-widest bg-navy-900 px-3.5 py-1.5 rounded-full border border-gold-500/30">
@@ -324,8 +502,8 @@ export default function DigitalAgencyPage({ t }) {
           </h2>
           <p className="text-sm text-slate-400 max-w-2xl mx-auto">
             {isKo 
-              ? '기획부터 CRM 회원제, 자동화 마케팅, AI 타겟 추천까지 맞춤형 단계별 투명 견적표를 확인하세요.' 
-              : 'Chi tiết lộ trình phát triển và chi phí từng giai đoạn từ lập kế hoạch đến trí tuệ nhân tạo AI.'}
+              ? '기획부터 CRM 회원제, 자동화 마케팅, AX (AI Transformation) 에이전틱 타겟 추천까지 맞춤형 단계별 투명 견적표를 확인하세요.' 
+              : 'Chi tiết lộ trình phát triển và chi phí từng giai đoạn từ lập kế hoạch đến trí tuệ nhân tạo AI & AX.'}
           </p>
         </div>
 
@@ -361,13 +539,8 @@ export default function DigitalAgencyPage({ t }) {
                     <span className="text-xl font-black gold-gradient-text">
                       약 {ph.priceVND.toLocaleString()} ~ <span className="text-xs text-slate-300 font-normal">VND</span>
                     </span>
+                    <span className="text-xs font-bold text-gold-400 block mt-0.5">{ph.scope}</span>
                   </div>
-                </div>
-
-                {/* Scope */}
-                <div className="bg-navy-950/80 rounded-xl p-3 border border-navy-800/80 mb-4">
-                  <span className="text-[11px] font-bold text-slate-400 block uppercase tracking-wider">{isKo ? '주요 업무 범위' : 'Phạm vi công việc chính'}</span>
-                  <span className="text-xs font-bold text-gold-400 block mt-0.5">{ph.scope}</span>
                 </div>
 
                 {/* Features List */}
@@ -402,7 +575,7 @@ export default function DigitalAgencyPage({ t }) {
           })}
         </div>
 
-        {/* 4. Interactive Quotation Summary & Monthly Maintenance Card */}
+        {/* Interactive Quotation Summary & Monthly Maintenance Card */}
         <div className="bg-gradient-to-r from-navy-900 via-navy-850 to-navy-900 border border-gold-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
           <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-6 border-b border-navy-800 pb-6">
             <div className="space-y-2">
@@ -483,8 +656,8 @@ export default function DigitalAgencyPage({ t }) {
           </h2>
           <p className="text-sm text-slate-400 max-w-2xl mx-auto">
             {isKo 
-              ? '단순한 웹 구축을 넘어 신규 고객 확보부터 매출 증대, 단골 커뮤니티 구축까지 입증된 성과 모델.' 
-              : 'Vượt xa việc xây dựng Web thông thường, nâng tầm thu hút khách hàng và gia tăng doanh thu vượt trội.'}
+              ? '단순한 웹 구축을 넘어 신규 고객 확보부터 매출 증대, AX (AI Transformation) 혁신까지 입증된 성과 모델.' 
+              : 'Vượt xa việc xây dựng Web thông thường, nâng tầm thu hút khách hàng, doanh thu & chuyển đổi AX.'}
           </p>
         </div>
 
