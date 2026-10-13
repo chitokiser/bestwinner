@@ -24,8 +24,24 @@ export default function InteriorSection({ t, onOpenConsult }) {
   const [activeStyle, setActiveStyle] = useState('luxury');
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
   const [selectedPdfProject, setSelectedPdfProject] = useState(null);
+  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
 
   const isVi = t?.lang === 'vi' || !t?.lang;
+
+  useEffect(() => {
+    if (!selectedPdfProject) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setSelectedPdfProject(null);
+      } else if (e.key === 'ArrowLeft' && selectedPdfProject.gallery?.length > 1) {
+        setActiveGalleryIndex((prev) => (prev - 1 + selectedPdfProject.gallery.length) % selectedPdfProject.gallery.length);
+      } else if (e.key === 'ArrowRight' && selectedPdfProject.gallery?.length > 1) {
+        setActiveGalleryIndex((prev) => (prev + 1) % selectedPdfProject.gallery.length);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedPdfProject]);
 
   const interiorHeroImages = [
     { 
@@ -67,8 +83,25 @@ export default function InteriorSection({ t, onOpenConsult }) {
     return () => clearInterval(timer);
   }, [interiorHeroImages.length]);
 
-  // Real Major Performance Projects extracted & matched from BEST WINNER VN PROFILE.pdf
+  // Real Major Performance Projects extracted & matched from BEST WINNER VN PROFILE.pdf & Site Projects
   const portfolioProjects = [
+    {
+      id: 19,
+      category: 'commercial_fnb',
+      catLabel: isVi ? 'Thương mại & F&B' : 'Commercial & F&B',
+      title: 'DODO SHOP (Hanoi)',
+      subtitle: isVi ? 'Thiết kế & Thi công nội thất trọn gói Cửa hàng thời trang & Phụ kiện cao cấp DODO SHOP Hà Nội' : '하노이 프리미엄 패션 부티크 & 잡화 편집샵 DODO SHOP 턴키 인테리어 시공',
+      year: '2026.02',
+      location: 'Hanoi',
+      img: '/images/interior/dodo/1.jpg',
+      tag: 'Fashion Boutique',
+      gallery: [
+        '/images/interior/dodo/1.jpg',
+        '/images/interior/dodo/2.jpg',
+        '/images/interior/dodo/3.jpg',
+        '/images/interior/dodo/4.jpg'
+      ]
+    },
     {
       id: 1,
       category: 'hotel_public',
@@ -374,8 +407,8 @@ export default function InteriorSection({ t, onOpenConsult }) {
 
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-normal break-keep">
               {isVi 
-                ? 'Thiết kế nội thất không gian may đo trọn gói chuẩn Hàn Quốc — Chứng nhận năng lực qua loạt dự án Khách sạn Shilla (Hà Nội), LG Electronics (Hải Phòng), Woori Bank, Shinhan Bank & Keangnam Landmark 72.' 
-                : '신라호텔(하노이), LG전자(하이퐁), 우리은행, 신한은행, 랜드마크 72 I-BRIDGE 준공 실적으로 증명된 한국형 기술력 & 턴키 맞춤 공간 인테리어.'}
+                ? 'Thiết kế nội thất không gian may đo trọn gói chuẩn Hàn Quốc — Chứng nhận năng lực qua loạt dự án Khách sạn Shilla (Hà Nội), DODO SHOP, LG Electronics (Hải Phòng), Woori Bank, Shinhan Bank & Keangnam Landmark 72.' 
+                : '신라호텔(하노이), DODO SHOP, LG전자(하이퐁), 우리은행, 신한은행, 랜드마크 72 I-BRIDGE 준공 실적으로 증명된 한국형 기술력 & 턴키 맞춤 공간 인테리어.'}
             </p>
 
             <div className="pt-2 flex flex-wrap gap-3">
@@ -434,8 +467,8 @@ export default function InteriorSection({ t, onOpenConsult }) {
             </h2>
             <p className="text-sm sm:text-base text-slate-300 max-w-3xl leading-relaxed">
               {isVi 
-                ? 'Nội thất may đo & Thi công trọn gói uy tín hàng đầu Việt Nam được kiểm chứng qua các dự án Khách sạn Shilla (Hà Nội), LG Electronics (Hải Phòng), Woori Bank, Shinhan Bank & Keangnam Landmark 72.' 
-                : '신라호텔(하노이), LG전자(하이퐁), 우리은행, 신한은행, 랜드마크 72 I-BRIDGE 오피스 시공 실적으로 검증된 베트남 최정상 맞춤 인테리어 & 턴키 시공 리더.'}
+                ? 'Nội thất may đo & Thi công trọn gói uy tín hàng đầu Việt Nam được kiểm chứng qua các dự án Khách sạn Shilla (Hà Nội), DODO SHOP, LG Electronics (Hải Phòng), Woori Bank, Shinhan Bank & Keangnam Landmark 72.' 
+                : '신라호텔(하노이), DODO SHOP, LG전자(하이퐁), 우리은행, 신한은행, 랜드마크 72 I-BRIDGE 오피스 시공 실적으로 검증된 베트남 최정상 맞춤 인테리어 & 턴키 시공 리더.'}
             </p>
           </div>
           <div className="mt-4 md:mt-0 flex flex-wrap gap-3">
@@ -626,7 +659,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
                 {isVi ? 'Dự án Hoàn thành Tiêu biểu BEST WINNER INTERIOR VN' : 'BEST winner interior 주요 준공 실적 (Main Performance)'}
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 mt-1">
-                {isVi ? 'Các dự án đã hoàn thành: Shilla Hotel, Dreamtech, LG Electronics, Woori Bank, Shinhan Bank, Keangnam Landmark 72' : '신라호텔, 드림텍, LG전자, 우리은행, 신한은행, 경남 랜드마크 72 준공 프로젝트'}
+                {isVi ? 'Các dự án đã hoàn thành: Shilla Hotel, DODO SHOP, Dreamtech, LG Electronics, Woori Bank, Shinhan Bank, Keangnam Landmark 72' : '신라호텔, DODO SHOP, 드림텍, LG전자, 우리은행, 신한은행, 경남 랜드마크 72 준공 프로젝트'}
               </p>
             </div>
 
@@ -655,13 +688,16 @@ export default function InteriorSection({ t, onOpenConsult }) {
             </div>
           </div>
 
-          {/* Projects Cards Grid (Interactive PDF Image Match) */}
+          {/* Projects Cards Grid (Interactive PDF Image Match & Actual Site Photos) */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProjects.map((project) => (
               <div 
                 key={project.id}
                 className="glass-card rounded-2xl overflow-hidden border border-navy-800 hover:border-gold-500/50 transition-all duration-300 hover:-translate-y-1.5 group flex flex-col justify-between shadow-xl cursor-pointer"
-                onClick={() => setSelectedPdfProject(project)}
+                onClick={() => {
+                  setActiveGalleryIndex(0);
+                  setSelectedPdfProject(project);
+                }}
               >
                 <div>
                   <div className="relative h-56 overflow-hidden bg-navy-950">
@@ -679,13 +715,17 @@ export default function InteriorSection({ t, onOpenConsult }) {
                     </div>
 
                     <div className="absolute top-3 right-3 text-[10px] font-mono font-bold bg-gold-500 text-navy-950 px-2 py-0.5 rounded shadow">
-                      PDF Page {project.pdfPage}
+                      {project.pdfPage ? `PDF Page ${project.pdfPage}` : (isVi ? `${project.gallery?.length || 4} Ảnh thực tế` : `${project.gallery?.length || 4} Photos`)}
                     </div>
 
                     <div className="absolute inset-0 bg-gold-500/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <div className="bg-navy-950/90 text-gold-300 text-xs font-bold px-3 py-1.5 rounded-full border border-gold-500/50 flex items-center space-x-1.5 shadow-lg backdrop-blur-md">
                         <ZoomIn className="w-3.5 h-3.5" />
-                        <span>{isVi ? 'Phóng to Bản gốc Hồ sơ PDF' : 'PDF 원본 실적 돋보기'}</span>
+                        <span>
+                          {project.pdfPage 
+                            ? (isVi ? 'Phóng to Bản gốc Hồ sơ PDF' : 'PDF 원본 실적 돋보기') 
+                            : (isVi ? 'Xem Thư viện Ảnh Thực tế' : '현장 완공 사진 갤러리')}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -710,12 +750,17 @@ export default function InteriorSection({ t, onOpenConsult }) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
+                      setActiveGalleryIndex(0);
                       setSelectedPdfProject(project);
                     }}
                     className="flex-1 bg-navy-900 hover:bg-navy-800 text-gold-300 font-bold text-xs py-2.5 rounded-xl border border-navy-700 hover:border-gold-500/40 transition-colors flex justify-center items-center space-x-1"
                   >
                     <Eye className="w-3.5 h-3.5" />
-                    <span>{isVi ? 'Xem bản gốc PDF' : '실적 원본 확대'}</span>
+                    <span>
+                      {project.pdfPage 
+                        ? (isVi ? 'Xem bản gốc PDF' : '실적 원본 확대') 
+                        : (isVi ? `Xem ảnh (${project.gallery?.length || 4})` : `현장 사진 (${project.gallery?.length || 4})`)}
+                    </span>
                   </button>
                   <button
                     onClick={(e) => {
@@ -805,23 +850,29 @@ export default function InteriorSection({ t, onOpenConsult }) {
 
       </div>
 
-      {/* High-Resolution PDF Portfolio Lightbox Modal */}
+      {/* High-Resolution Portfolio Lightbox Modal (PDF & Actual Site Photos) */}
       {selectedPdfProject && (
         <div 
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6"
           onClick={() => setSelectedPdfProject(null)}
         >
           <div 
-            className="relative max-w-4xl w-full bg-navy-900 rounded-3xl border border-gold-500/50 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+            className="relative max-w-4xl w-full bg-navy-900 rounded-3xl border border-gold-500/50 shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
             <div className="p-4 sm:p-6 bg-navy-950 border-b border-navy-800 flex items-center justify-between">
               <div>
                 <div className="flex items-center space-x-2">
-                  <span className="text-xs font-bold text-gold-400 bg-gold-500/10 px-2.5 py-0.5 rounded-full border border-gold-500/30">
-                    PDF Page {selectedPdfProject.pdfPage}
-                  </span>
+                  {selectedPdfProject.pdfPage ? (
+                    <span className="text-xs font-bold text-gold-400 bg-gold-500/10 px-2.5 py-0.5 rounded-full border border-gold-500/30">
+                      PDF Page {selectedPdfProject.pdfPage}
+                    </span>
+                  ) : (
+                    <span className="text-xs font-bold text-emeraldGreen-400 bg-emeraldGreen-500/10 px-2.5 py-0.5 rounded-full border border-emeraldGreen-500/30">
+                      {isVi ? 'Ảnh Hiện trường Thi công' : '현장 완공 실적'}
+                    </span>
+                  )}
                   <span className="text-xs text-slate-400 font-mono">📍 {selectedPdfProject.location}</span>
                 </div>
                 <h3 className="text-lg sm:text-xl font-extrabold text-white mt-1">
@@ -842,29 +893,93 @@ export default function InteriorSection({ t, onOpenConsult }) {
             </div>
 
             {/* Modal Image View */}
-            <div className="p-4 overflow-y-auto flex-1 flex justify-center items-center bg-black/40">
-              <img 
-                src={selectedPdfProject.img} 
-                alt={selectedPdfProject.title}
-                className="max-w-full max-h-[65vh] object-contain rounded-xl shadow-2xl border border-navy-800"
-              />
+            <div className="p-4 overflow-y-auto flex-1 flex flex-col justify-center items-center bg-black/40 relative">
+              <div className="relative flex justify-center items-center w-full">
+                <img 
+                  src={selectedPdfProject.gallery ? selectedPdfProject.gallery[activeGalleryIndex] : selectedPdfProject.img} 
+                  alt={selectedPdfProject.title}
+                  className="max-w-full max-h-[58vh] object-contain rounded-xl shadow-2xl border border-navy-800"
+                />
+
+                {/* Left/Right controls if gallery exists */}
+                {selectedPdfProject.gallery && selectedPdfProject.gallery.length > 1 && (
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveGalleryIndex((prev) => (prev - 1 + selectedPdfProject.gallery.length) % selectedPdfProject.gallery.length);
+                      }}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 p-2 sm:p-2.5 rounded-full bg-navy-950/80 hover:bg-gold-500 hover:text-navy-950 text-white border border-gold-500/40 shadow-xl transition-all"
+                      title={isVi ? "Ảnh trước" : "이전 사진"}
+                    >
+                      <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveGalleryIndex((prev) => (prev + 1) % selectedPdfProject.gallery.length);
+                      }}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-2 sm:p-2.5 rounded-full bg-navy-950/80 hover:bg-gold-500 hover:text-navy-950 text-white border border-gold-500/40 shadow-xl transition-all"
+                      title={isVi ? "Ảnh tiếp theo" : "다음 사진"}
+                    >
+                      <ChevronRight className="w-5 h-5 stroke-[2.5]" />
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {/* Gallery Thumbnails */}
+              {selectedPdfProject.gallery && selectedPdfProject.gallery.length > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-3 pt-2 max-w-full overflow-x-auto">
+                  {selectedPdfProject.gallery.map((gImg, idx) => (
+                    <button
+                      key={idx}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveGalleryIndex(idx);
+                      }}
+                      className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${
+                        activeGalleryIndex === idx
+                          ? 'border-gold-400 scale-105 shadow-gold-glow'
+                          : 'border-navy-700 opacity-60 hover:opacity-100 hover:border-gold-500/40'
+                      }`}
+                    >
+                      <img src={gImg} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
+                      <span className="absolute bottom-0 right-0 bg-navy-950/90 text-gold-400 text-[9px] px-1 font-mono">
+                        {idx + 1}
+                      </span>
+                    </button>
+                  ))}
+                  <span className="text-xs font-mono text-gold-400 font-bold ml-2 hidden sm:inline">
+                    {activeGalleryIndex + 1} / {selectedPdfProject.gallery.length}
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Modal Footer */}
             <div className="p-4 sm:p-6 bg-navy-950 border-t border-navy-800 flex flex-col sm:flex-row items-center justify-between gap-3">
               <p className="text-xs text-slate-400">
-                {isVi ? '📄 Trang chụp từ File Hồ sơ Năng lực gốc BEST WINNER VN PROFILE.pdf' : '📄 BEST WINNER VN PROFILE.pdf 원본 브로슈어 수록 캡처 페이지'}
+                {selectedPdfProject.pdfPage 
+                  ? (isVi ? '📄 Trang chụp từ File Hồ sơ Năng lực gốc BEST WINNER VN PROFILE.pdf' : '📄 BEST WINNER VN PROFILE.pdf 원본 브로슈어 수록 캡처 페이지')
+                  : (isVi ? `📷 Ảnh thực tế thi công hoàn thiện DODO SHOP (Tổng ${selectedPdfProject.gallery?.length || 4} ảnh)` : `📷 DODO SHOP 현장 인테리어 완공 실적 사진 (총 ${selectedPdfProject.gallery?.length || 4}장)`)}
               </p>
               <div className="flex space-x-3 w-full sm:w-auto">
-                <a
-                  href="/docu/Interior/BEST WINNER VN PROFILE.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 sm:flex-none bg-navy-800 hover:bg-navy-700 text-gold-300 font-bold text-xs px-4 py-2.5 rounded-xl border border-navy-700 transition-colors flex items-center justify-center space-x-1.5"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>{isVi ? 'Mở Toàn bộ PDF' : 'PDF 전체 열기'}</span>
-                </a>
+                {selectedPdfProject.pdfPage ? (
+                  <a
+                    href="/docu/Interior/BEST WINNER VN PROFILE.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 sm:flex-none bg-navy-800 hover:bg-navy-700 text-gold-300 font-bold text-xs px-4 py-2.5 rounded-xl border border-navy-700 transition-colors flex items-center justify-center space-x-1.5"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>{isVi ? 'Mở Toàn bộ PDF' : 'PDF 전체 열기'}</span>
+                  </a>
+                ) : (
+                  <span className="text-xs text-gold-400 font-semibold px-3 py-2 flex items-center">
+                    ✨ High-End Fashion Boutique
+                  </span>
+                )}
                 <button
                   onClick={() => {
                     const bu = 'interior';
