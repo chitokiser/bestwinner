@@ -22,7 +22,8 @@ export default function Footer({ t }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const isVi = t?.lang === 'vi' || !t?.lang;
+  const isVi = t?.lang === 'vi';
+  const isKo = t?.lang === 'ko' || (!t?.lang && false);
 
   return (
     <footer className="bg-navy-950 text-slate-400 border-t border-navy-800 text-xs py-14">
@@ -40,7 +41,7 @@ export default function Footer({ t }) {
                 className="h-10 w-auto object-contain"
               />
               <span className="font-extrabold text-lg tracking-wider text-white">
-                About BEST winner Group
+                {t?.footer?.aboutTitle || (isKo ? "BEST winner Group 소개" : "About BEST winner Group")}
               </span>
             </div>
             <p className="text-slate-300 leading-relaxed text-xs">
@@ -50,7 +51,7 @@ export default function Footer({ t }) {
             <div className="space-y-2 pt-1">
               <div className="flex items-center space-x-2 text-gold-400 font-bold text-[11px]">
                 <ShieldCheck className="w-4 h-4 flex-shrink-0" />
-                <span>Korean Technology × Vietnamese Local Production</span>
+                <span>{isKo ? "한국 정밀 기술력 × 베트남 현지 맞춤 직영 생산" : "Korean Technology × Vietnamese Local Production"}</span>
               </div>
               <div className="flex items-center space-x-2 text-emeraldGreen-400 font-bold text-[11px]">
                 <Users className="w-4 h-4 flex-shrink-0" />
@@ -62,7 +63,7 @@ export default function Footer({ t }) {
               onClick={() => handleLinkClick('/about')}
               className="mt-2 inline-flex items-center text-xs font-bold text-gold-400 hover:text-gold-300 transition-colors"
             >
-              <span>{isVi ? "Xem Hồ sơ Năng lực Tập đoàn & CEO 인사말 →" : "그룹 소개 & CEO 인사말 자세히 보기 →"}</span>
+              <span>{isKo ? "그룹 소개 & CEO 인사말 자세히 보기 →" : isVi ? "Xem Hồ sơ Năng lực Tập đoàn & Thông điệp CEO →" : "About Group & CEO Message →"}</span>
             </button>
           </div>
 
@@ -82,7 +83,7 @@ export default function Footer({ t }) {
                 className="w-full bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-navy-950 font-black py-3 rounded-xl shadow-gold-glow text-xs flex items-center justify-center space-x-2 transition-all"
               >
                 <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-                <span>{isVi ? "Yêu cầu Báo giá B2B & CAD/BIM Kit" : "제휴 및 B2B 견적/도면 문의하기"}</span>
+                <span>{isKo ? "제휴 및 B2B 견적/도면 문의하기" : isVi ? "Yêu cầu Báo giá B2B & CAD/BIM Kit" : "B2B Inquiry & CAD/BIM Kit"}</span>
               </button>
 
               <a
@@ -93,7 +94,7 @@ export default function Footer({ t }) {
               >
                 <div className="flex items-center space-x-2">
                   <Cpu className="w-4 h-4 text-gold-400 group-hover:scale-110 transition-transform" />
-                  <span>SaaS AI 자동 견적 시스템 (besterp.netlify.app)</span>
+                  <span>{isKo ? "SaaS AI 자동 견적 시스템 (besterp.netlify.app)" : "Hệ thống Báo giá Tự động SaaS AI (besterp.netlify.app)"}</span>
                 </div>
                 <ExternalLink className="w-3.5 h-3.5 text-gold-400" />
               </a>
@@ -124,7 +125,7 @@ export default function Footer({ t }) {
               onClick={() => handleLinkClick('/contact')}
               className="mt-2 inline-flex items-center text-xs font-bold text-slate-200 hover:text-gold-400 transition-colors"
             >
-              <span>{isVi ? "Trụ sở chính & Showroom 안내 →" : "Experience Center Showroom 안내 →"}</span>
+              <span>{isKo ? "하노이 Experience Center 쇼룸 안내 →" : isVi ? "Trụ sở chính & Showroom Trải nghiệm Hà Nội →" : "Hanoi Experience Center Showroom →"}</span>
             </button>
           </div>
 

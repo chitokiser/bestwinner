@@ -18,7 +18,8 @@ import {
 } from 'lucide-react';
 
 export default function SmartParkingPage({ t }) {
-  const isVi = t?.lang === 'vi' || !t?.lang;
+  const isVi = t?.lang === 'vi';
+  const isKo = t?.lang === 'ko' || (!t?.lang && false);
 
   // Hero Banner Images from /public/images/parking/hero/ (1.png ~ 6.png)
   const heroSlides = [
@@ -112,11 +113,11 @@ export default function SmartParkingPage({ t }) {
           
           {/* Breadcrumb Navigation */}
           <div className="flex items-center space-x-2 text-xs text-slate-300 bg-navy-900/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-navy-700 w-fit max-w-full overflow-x-auto whitespace-nowrap scrollbar-none">
-            <Link to="/" className="hover:text-gold-400 shrink-0">Home</Link>
+            <Link to="/" className="hover:text-gold-400 shrink-0">{isVi ? 'Trang chủ' : isKo ? '홈' : 'Home'}</Link>
             <span className="shrink-0">/</span>
-            <span className="shrink-0">Business Areas</span>
+            <Link to="/business" className="hover:text-gold-400 shrink-0">{isVi ? 'Lĩnh vực Kinh doanh' : isKo ? '사업분야' : 'Business Areas'}</Link>
             <span className="shrink-0">/</span>
-            <span className="text-emeraldGreen-400 font-bold shrink-0">BEST winner AI Smart Parking System Vn</span>
+            <span className="text-emeraldGreen-400 font-bold shrink-0">{isKo ? 'BEST winner AI Smart Parking (AI 스마트파킹)' : isVi ? 'BEST winner AI Smart Parking (Bãi đỗ xe AI)' : 'BEST winner AI Smart Parking System Vn'}</span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -127,7 +128,7 @@ export default function SmartParkingPage({ t }) {
               <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-emeraldGreen-400 uppercase tracking-widest bg-emeraldGreen-500/10 px-3 py-1 rounded-full border border-emeraldGreen-500/30 whitespace-nowrap">
                   <Car className="w-3.5 h-3.5" />
-                  <span>BUSINESS UNIT ③</span>
+                  <span>{isVi ? 'LĨNH VỰC KINH DOANH ③' : isKo ? '핵심 사업 부문 ③' : 'BUSINESS UNIT ③'}</span>
                 </span>
                 <span className="inline-flex items-center space-x-1 text-xs font-bold text-gold-400 bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/30 whitespace-nowrap">
                   <Sparkles className="w-3 h-3 mr-1" />

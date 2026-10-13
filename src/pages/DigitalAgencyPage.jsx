@@ -270,11 +270,11 @@ export default function DigitalAgencyPage({ t }) {
           
           {/* Breadcrumb */}
           <div className="flex items-center space-x-2 text-xs text-slate-400">
-            <Link to="/" className="hover:text-gold-400">Home</Link>
+            <Link to="/" className="hover:text-gold-400">{isVi ? 'Trang chủ' : isKo ? '홈' : 'Home'}</Link>
             <span>/</span>
-            <Link to="/business" className="hover:text-gold-400">Business Areas</Link>
+            <Link to="/business" className="hover:text-gold-400">{isVi ? 'Lĩnh vực Kinh doanh' : isKo ? '사업분야' : 'Business Areas'}</Link>
             <span>/</span>
-            <span className="text-gold-400 font-bold">BEST winner Digital Agency Vn</span>
+            <span className="text-gold-400 font-bold">{isKo ? 'BEST winner Digital Agency Vn (디지털에이젼시)' : isVi ? 'BEST winner Digital Agency Vn (Đại lý kỹ thuật số)' : 'BEST winner Digital Agency Vn'}</span>
           </div>
 
           {/* Hero Grid: Text Content + Interactive Hero Image Showcase */}
@@ -284,7 +284,7 @@ export default function DigitalAgencyPage({ t }) {
             <div className="lg:col-span-6 space-y-4">
               <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-cyan-400 uppercase tracking-widest bg-cyan-500/10 px-3.5 py-1.5 rounded-full border border-cyan-500/30">
                 <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-                <span>AX (AI TRANSFORMATION) & FULL-STACK DIGITAL AGENCY</span>
+                <span>{isKo ? '핵심 사업 부문 ⑦ · AX & 풀스택 디지털 에이전시' : isVi ? 'LĨNH VỰC KINH DOANH ⑦ · AX & DIGITAL AGENCY' : 'BUSINESS UNIT ⑦ · AX & FULL-STACK DIGITAL AGENCY'}</span>
               </span>
 
               <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">

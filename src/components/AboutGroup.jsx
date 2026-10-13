@@ -12,20 +12,21 @@ import {
 } from 'lucide-react';
 
 export default function AboutGroup({ t }) {
-  const isVi = t?.lang === 'vi' || !t?.lang;
+  const isVi = t?.lang === 'vi';
+  const isKo = t?.lang === 'ko' || (!t?.lang && false);
 
   const about = t?.about || {
-    subtitle: isVi ? "TỔNG QUAN TẬP ĐOÀN" : "TỔNG QUAN TẬP ĐOÀN / 그룹 개요",
+    subtitle: isVi ? "TỔNG QUAN TẬP ĐOÀN" : isKo ? "그룹 개요" : "About Group",
     title: "BEST winner Group Vietnam",
-    philosophy: isVi ? "Hội tụ Công nghệ Kỹ thuật Hàn Quốc & Hệ thống Sản xuất Trực tiếp tại Việt Nam" : "Korean Technology × Vietnamese Production",
+    philosophy: isVi ? "Hội tụ Công nghệ Kỹ thuật Hàn Quốc & Hệ thống Sản xuất Trực tiếp tại Việt Nam" : isKo ? "한국 정밀 기술력 × 베트남 현지 맞춤 직영 생산" : "Korean Technology × Vietnamese Production",
     cards: [
-      { title: "Korean Technology", desc: isVi ? "Áp dụng kỹ thuật chính xác Hàn Quốc và quy trình kiểm định chất lượng nghiêm ngặt." : "한국의 정밀 기술력과 엄격한 품질 관리 프로세스 적용." },
-      { title: "Local Production", desc: isVi ? "Nhà máy 3.000m² tại Hà Nội đáp ứng may đo trực tiếp theo công trình." : "하노이 3,000m² 직영 공장 연계 현지 맞춤 제작 및 공급." },
-      { title: "Expert Engineering", desc: isVi ? "2 Kỹ sư Trưởng Hàn Quốc & 15 Kỹ sư chuyên trách trực tiếp thi công." : "한국인 수석 기술진 2인과 현지 전문 엔지니어 15인 직접 시공." },
-      { title: "Multi-Business Synergy", desc: isVi ? "Tối ưu hóa chi phí và quản lý đồng bộ tất cả mảng hạ tầng trong một hợp đồng." : "전 사업 분야 단일 계약 파이프라인 및 일원화된 A/S 보증." }
+      { title: isVi ? "Công nghệ Hàn Quốc" : isKo ? "한국 정밀 기술력" : "Korean Technology", desc: isVi ? "Áp dụng kỹ thuật chính xác Hàn Quốc và quy trình kiểm định chất lượng nghiêm ngặt." : isKo ? "한국의 정밀 기술력과 엄격한 품질 관리 프로세스 적용." : "Applying Korean precision engineering and strict quality standards." },
+      { title: isVi ? "Sản xuất Địa phương" : isKo ? "현지 맞춤 직영 생산" : "Local Production", desc: isVi ? "Nhà máy 3.000m² tại Hà Nội đáp ứng may đo trực tiếp theo công trình." : isKo ? "하노이 3,000m² 직영 공장 연계 현지 맞춤 제작 및 공급." : "3,000sqm Hanoi factory customized for local projects." },
+      { title: isVi ? "Đội ngũ Kỹ sư Chuyên gia" : isKo ? "전문 엔지니어 직영 시공" : "Expert Engineering", desc: isVi ? "2 Kỹ sư Trưởng Hàn Quốc & 15 Kỹ sư chuyên trách trực tiếp thi công." : isKo ? "한국인 수석 기술진 2인과 현지 전문 엔지니어 15인 직접 시공." : "2 Korean Chief Engineers and 15 specialized technical engineers." },
+      { title: isVi ? "Hiệu quả Tích hợp Đa mảng" : isKo ? "전 사업 분야 시너지" : "Multi-Business Synergy", desc: isVi ? "Tối ưu hóa chi phí và quản lý đồng bộ tất cả mảng hạ tầng trong một hợp đồng." : isKo ? "전 사업 분야 단일 계약 파이프라인 및 일원화된 A/S 보증." : "All business areas unified under a single contract pipeline." }
     ],
-    synergyTitle: "One-Stop Integrated Synergy",
-    synergyDesc: isVi ? "Giải pháp đồng bộ từ tư vấn, thiết kế, thi công lắp đặt đến bảo hành A/S 24/7 toàn diện." : "단일 계약 및 통합 관리로 최상의 시공 품질과 24/7 A/S를 제공합니다."
+    synergyTitle: isVi ? "Giải pháp One-Stop Synergy Tối ưu Hóa Giá trị Công trình" : isKo ? "원스톱 통합 시너지 (One-Stop Synergy)" : "One-Stop Integrated Synergy",
+    synergyDesc: isVi ? "Đơn giản hóa toàn bộ quy trình vận hành. Từ khâu tư vấn thiết kế, thi công lắp đặt đến bảo hành A/S 24/7 đồng bộ cho toàn bộ mảng hạ tầng." : isKo ? "단일 계약 및 통합 관리로 최상의 시공 품질과 24/7 A/S를 일원화하여 제공합니다." : "Single contract and integrated management providing optimal quality and 24/7 A/S."
   };
 
   const cardsList = about.cards || [];
@@ -70,7 +71,7 @@ export default function AboutGroup({ t }) {
                 </div>
                 <div className="pt-4 mt-4 border-t border-navy-800 flex items-center text-[11px] text-gold-400 font-semibold">
                   <CheckCircle className="w-3.5 h-3.5 mr-1" />
-                  <span>Guaranteed Standards</span>
+                  <span>{isKo ? '품질 및 규격 보증' : isVi ? 'Tiêu chuẩn bảo đảm' : 'Guaranteed Standards'}</span>
                 </div>
               </div>
             );
@@ -84,7 +85,7 @@ export default function AboutGroup({ t }) {
             <div className="lg:col-span-8 space-y-4">
               <div className="inline-flex items-center space-x-2 bg-gold-500/20 text-gold-400 px-3 py-1 rounded-full text-xs font-bold border border-gold-500/30">
                 <Layers className="w-3.5 h-3.5" />
-                <span>One-Stop Integrated Synergy</span>
+                <span>{isKo ? '원스톱 통합 시너지' : isVi ? 'Giải pháp Tích hợp One-Stop' : 'One-Stop Integrated Synergy'}</span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white break-keep">
                 {about.synergyTitle}
@@ -96,12 +97,14 @@ export default function AboutGroup({ t }) {
 
             <div className="lg:col-span-4 flex justify-center lg:justify-end">
               <div className="p-6 rounded-2xl bg-navy-950/90 border border-gold-500/30 space-y-3 w-full max-w-xs text-center">
-                <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Group Turnkey Pipeline</p>
+                <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
+                  {isKo ? '그룹 턴키 파이프라인' : isVi ? 'Quy trình Tổng thể Tập đoàn' : 'Group Turnkey Pipeline'}
+                </p>
                 <div className="text-lg font-extrabold gold-gradient-text break-keep">
-                  {isVi ? 'Hợp đồng Đơn - Bảo hành Đồng bộ' : 'Single Contract • Unified Warranty'}
+                  {isKo ? '단일 계약 • 일원화된 보증' : isVi ? 'Hợp đồng Đơn - Bảo hành Đồng bộ' : 'Single Contract • Unified Warranty'}
                 </div>
                 <p className="text-[11px] text-slate-300 break-keep">
-                  {isVi ? 'Giải pháp hợp đồng đơn lẻ & kênh bảo hành A/S 24/7 đồng bộ cho tất cả các mảng.' : '전 사업 분야 단일 계약 및 일원화된 24/7 A/S 파이프라인'}
+                  {isKo ? '전 사업 분야 단일 계약 및 일원화된 24/7 A/S 파이프라인' : isVi ? 'Giải pháp hợp đồng đơn lẻ & kênh bảo hành A/S 24/7 đồng bộ cho tất cả các mảng.' : 'Single turnkey contract & synchronized 24/7 A/S warranty across all divisions.'}
                 </p>
               </div>
             </div>

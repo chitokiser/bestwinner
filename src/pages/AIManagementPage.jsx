@@ -14,7 +14,7 @@ export default function AIManagementPage({ t }) {
       <div className="bg-navy-900 border-b border-navy-800 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
           <div className="flex items-center space-x-2 text-xs text-slate-400">
-            <Link to="/" className="hover:text-gold-400">Home</Link>
+            <Link to="/" className="hover:text-gold-400">{isVi ? 'Trang chủ' : isKo ? '홈' : 'Home'}</Link>
             <span>/</span>
             <span className="text-cyan-400 font-semibold">{isVi ? 'Dịch vụ' : isKo ? '서비스' : 'Services'}</span>
             <span>/</span>
@@ -32,7 +32,7 @@ export default function AIManagementPage({ t }) {
               </h1>
               <p className="text-sm text-slate-300 mt-2 max-w-3xl leading-relaxed">
                 {isVi
-                  ? 'SaaS 개념으로 즉시 이용 가능한 AI Quản lý Doanh nghiệp 1.0: Phân tích tài chính, tự động dự toán B2B, tối ưu công trình & giám sát 24/7.'
+                  ? 'Nền tảng SaaS Cloud Quản lý Doanh nghiệp AI 1.0: Phân tích tài chính realtime, tự động xuất dự toán B2B, tối ưu hóa thi công & giám sát 24/7.'
                   : isKo
                   ? 'SaaS 개념으로 즉시 이용 가능한 BEST AI 경영관리 1.0 서비스 — 경영 대시보드, 스마트 자동 견적, 공정 최적화 & 24/7 예지보전 관제.'
                   : 'Enterprise AI management SaaS system 1.0 for construction, elevators, interiors, and smart infrastructure operations.'}
@@ -55,7 +55,7 @@ export default function AIManagementPage({ t }) {
                 className="bg-navy-800 hover:bg-navy-700 text-slate-300 text-xs font-semibold px-4 py-2.5 rounded-xl border border-navy-700 flex items-center"
               >
                 <ArrowLeft className="w-4 h-4 mr-1.5 text-slate-400" />
-                <span>{isVi ? 'Xem 6대 사업 분야' : isKo ? '6대 사업분야 보기' : 'View Business Units'}</span>
+                <span>{isVi ? 'Xem 7 Lĩnh vực Kinh doanh' : isKo ? '7대 사업분야 보기' : 'View 7 Business Units'}</span>
               </Link>
             </div>
           </div>

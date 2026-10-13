@@ -233,7 +233,7 @@ export default function Header({ currentLang, setLang, t }) {
           <div className="flex items-center justify-between pb-3 border-b border-navy-800">
             <span className="text-xs font-bold text-slate-400 flex items-center">
               <Globe className="w-3.5 h-3.5 text-gold-400 mr-1.5" />
-              Language / 언어
+              {isKo ? "언어 선택" : isVi ? "Chọn ngôn ngữ" : "Language"}
             </span>
             <div className="flex space-x-1">
               {languages.map((lang) => (

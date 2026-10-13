@@ -38,6 +38,9 @@ export default function Hero({ t, onOpenCalculator }) {
     setCurrentSlide((prev) => (prev + 1) % heroImages.length);
   };
 
+  const isVi = t?.lang === 'vi';
+  const isKo = t?.lang === 'ko';
+
   return (
     <section id="hero" className="relative min-h-[85vh] flex flex-col justify-between pt-10 pb-12 overflow-hidden bg-navy-950 border-b border-navy-800">
       
@@ -112,15 +115,15 @@ export default function Hero({ t, onOpenCalculator }) {
           <div className="pt-3 flex flex-wrap items-center gap-3 sm:gap-6 text-xs text-slate-400 border-t border-navy-800/80 break-keep">
             <div className="flex items-center space-x-1.5">
               <CheckCircle2 className="w-4 h-4 text-emeraldGreen-400 flex-shrink-0" />
-              <span>One-Stop B2B/B2C</span>
+              <span>{isKo ? '원스톱 B2B/B2C' : 'One-Stop B2B/B2C'}</span>
             </div>
             <div className="flex items-center space-x-1.5">
               <ShieldCheck className="w-4 h-4 text-gold-400 flex-shrink-0" />
-              <span>Korean Safety Standards</span>
+              <span>{isKo ? '한국 정밀 안전 표준' : isVi ? 'Tiêu chuẩn An toàn Hàn Quốc' : 'Korean Safety Standards'}</span>
             </div>
             <div className="flex items-center space-x-1.5">
               <Clock className="w-4 h-4 text-blue-400 flex-shrink-0" />
-              <span>24/7 Direct A/S Response</span>
+              <span>{isKo ? '24시간 직영 A/S 대응' : isVi ? 'Hỗ trợ A/S trực tiếp 24/7' : '24/7 Direct A/S Response'}</span>
             </div>
           </div>
 

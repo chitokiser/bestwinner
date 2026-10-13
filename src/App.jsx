@@ -29,7 +29,12 @@ import { UserService } from './services/userService';
 import { translations } from './locales/translations';
 
 export default function App() {
-  const [currentLang, setLang] = useState('vi'); // 'vi' (default), 'ko', 'en'
+  const [currentLang, setLangState] = useState(() => localStorage.getItem('bestwinner_lang') || 'vi'); // 'vi' (default), 'ko', 'en'
+  const setLang = (lang) => {
+    localStorage.setItem('bestwinner_lang', lang);
+    setLangState(lang);
+  };
+
   const [isGoogleAuthOpen, setIsGoogleAuthOpen] = useState(false);
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem('best_user_session');
@@ -56,7 +61,8 @@ export default function App() {
     return () => unsubscribe();
   }, []);
 
-  const t = translations[currentLang] || translations.vi;
+  const rawT = translations[currentLang] || translations.vi;
+  const t = { ...rawT, lang: currentLang };
 
   return (
     <Router>

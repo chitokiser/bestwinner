@@ -5,6 +5,8 @@ import ContactUs from '../components/ContactUs';
 import { Calculator } from 'lucide-react';
 
 export default function CalculatorPage({ t }) {
+  const isVi = t?.lang === 'vi';
+  const isKo = t?.lang === 'ko' || (!t?.lang && false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -12,18 +14,20 @@ export default function CalculatorPage({ t }) {
       <div className="bg-navy-900 border-b border-navy-800 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
           <div className="flex items-center space-x-2 text-xs text-slate-400">
-            <Link to="/" className="hover:text-gold-400">Home</Link>
+            <Link to="/" className="hover:text-gold-400">{isVi ? 'Trang chủ' : isKo ? '홈' : 'Home'}</Link>
             <span>/</span>
-            <span className="text-gold-400 font-bold">Elevator Calculator</span>
+            <span className="text-gold-400 font-bold">{isVi ? 'Dự toán Thang máy' : isKo ? '승강기 온라인 견적기' : 'Elevator Calculator'}</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold text-white flex items-center">
             <Calculator className="w-8 h-8 mr-3 text-gold-400" />
-            {t?.lang === 'vi' || !t?.lang ? 'Bảng Dự Toán Chi Phí Thang Máy Online' : '승강기 온라인 자동 견적 계산기'}
+            {isVi ? 'Bảng Dự Toán Chi Phí Thang Máy Online' : isKo ? '승강기 온라인 자동 견적 계산기' : 'Online Elevator Cost Estimator'}
           </h1>
           <p className="text-sm text-slate-300 max-w-2xl">
-            {t?.lang === 'vi' || !t?.lang
+            {isVi
               ? 'Chọn số tầng, tải trọng và kiểu dáng để xem ngay dự toán chi phí thời gian thực và đặt lịch khảo sát miễn phí.'
-              : '층수, 하중, 디자인 선택 시 즉시 실시간 견적을 확인하고 무료 현장 실측을 예약할 수 있습니다.'}
+              : isKo
+              ? '층수, 하중, 디자인 선택 시 즉시 실시간 견적을 확인하고 무료 현장 실측을 예약할 수 있습니다.'
+              : 'Configure floor stops, load capacity, and cabin design for instant real-time price estimation.'}
           </p>
         </div>
       </div>
