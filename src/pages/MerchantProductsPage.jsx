@@ -226,6 +226,12 @@ export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
               🛒 {isVi ? 'Sản phẩm bán (BEST Mall)' : isKo ? '판매제품 (BEST Mall)' : 'Products (BEST Mall)'}
             </Link>
             <Link
+              to="/services/events"
+              className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-300 hover:text-amber-400 hover:bg-navy-800 whitespace-nowrap"
+            >
+              🎟️ {isVi ? 'Sự kiện & Voucher' : isKo ? '이벤트 (쿠폰·바우쳐)' : 'Events & Vouchers'}
+            </Link>
+            <Link
               to="/megazine"
               className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-300 hover:text-gold-400 hover:bg-navy-800 whitespace-nowrap"
             >

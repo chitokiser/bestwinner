@@ -50,6 +50,12 @@ export default function Header({ currentLang, setLang, t }) {
       tag: 'On-Sale / BM' 
     },
     { 
+      id: 'events', 
+      path: '/services/events', 
+      name: isVi ? 'Sự kiện & Voucher (BestClub)' : isKo ? '이벤트 (쿠폰·바우쳐 라운지)' : 'Events & Vouchers', 
+      tag: 'Coupons / BM' 
+    },
+    { 
       id: 'megazine', 
       path: '/megazine', 
       name: isVi ? 'BEST MEGAZINE (Tạp chí AI)' : isKo ? 'BEST MEGAZINE (AI 매거진)' : 'BEST MEGAZINE (AI Expat Magazine)', 

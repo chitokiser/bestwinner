@@ -8,5 +8,6 @@ export const MERCHANT_CONFIG = {
   ceoEmail: "hexttokenopbnb@gmail.com", // 가맹점 대표(CEO) 공식 계정
   adminProductsUrl: "https://bestclubvn.netlify.app/admin_merchant_products", // BestERP 가맹점 상품 관리자
   adminOrdersUrl: "https://bestclubvn.netlify.app/admin_merchant_orders", // BestERP 가맹점 주문 관리자
+  eventsUrl: "https://bestclubvn.netlify.app/events", // BestClub 이벤트 및 바우쳐 라운지
   themeColor: "#7c3aed"
 };

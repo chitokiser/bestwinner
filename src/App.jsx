@@ -19,6 +19,7 @@ import SolarEnergyPage from './pages/SolarEnergyPage';
 import DigitalAgencyPage from './pages/DigitalAgencyPage';
 import AIManagementPage from './pages/AIManagementPage';
 import MerchantProductsPage from './pages/MerchantProductsPage';
+import EventsPage from './pages/EventsPage';
 import MegazinePage from './pages/MegazinePage';
 import MegazineAdminPage from './pages/MegazineAdminPage';
 import CalculatorPage from './pages/CalculatorPage';
@@ -122,6 +123,26 @@ export default function App() {
               path="/services/merchant-products" 
               element={
                 <MerchantProductsPage 
+                  t={t} 
+                  user={user} 
+                  onOpenGoogleAuth={() => setIsGoogleAuthOpen(true)} 
+                />
+              } 
+            />
+            <Route 
+              path="/services/events" 
+              element={
+                <EventsPage 
+                  t={t} 
+                  user={user} 
+                  onOpenGoogleAuth={() => setIsGoogleAuthOpen(true)} 
+                />
+              } 
+            />
+            <Route 
+              path="/events" 
+              element={
+                <EventsPage 
                   t={t} 
                   user={user} 
                   onOpenGoogleAuth={() => setIsGoogleAuthOpen(true)} 
