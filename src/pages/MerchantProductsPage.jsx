@@ -18,10 +18,12 @@ import {
   ShoppingCart,
   Zap,
   Info,
-  X
+  X,
+  AlertTriangle,
+  Ticket
 } from 'lucide-react';
 import { db } from '../lib/firebase';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, doc, query, where, onSnapshot } from 'firebase/firestore';
 import { MERCHANT_CONFIG } from '../config/merchant';
 
 export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
@@ -30,6 +32,7 @@ export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [merchantData, setMerchantData] = useState(null);
   const [activeCategory, setActiveCategory] = useState('ALL');
   const [showEmbedAdmin, setShowEmbedAdmin] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -37,14 +40,16 @@ export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [purchaseSuccessMessage, setPurchaseSuccessMessage] = useState(null);
 
+  // BT 부족 시 구매 의사 확인 모달 상태
+  // { isOpen: boolean, targetType: 'single' | 'cart', product?: any, requiredBt: number, merchantBt: number }
+  const [btShortageConfirmModal, setBtShortageConfirmModal] = useState(null);
+
   // Check if current user is the CEO
   const isCeo = user?.email?.toLowerCase() === MERCHANT_CONFIG.ceoEmail.toLowerCase();
 
-  // Load products in real time from BestClub Firestore
+  // 1. Load products in real time from BestClub Firestore
   useEffect(() => {
     setLoading(true);
-    // BestClub merchant_products collection query
-    // Query by merchant_id string or fallback
     const q = query(
       collection(db, 'merchant_products'),
       where('merchant_id', 'in', [MERCHANT_CONFIG.merchantId, Number(MERCHANT_CONFIG.merchantId)]),
@@ -58,7 +63,6 @@ export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
         snapshot.forEach((docSnap) => {
           list.push({ id: docSnap.id, ...docSnap.data() });
         });
-        // Sort by display_order or created_at descending
         list.sort((a, b) => (a.display_order || 99) - (b.display_order || 99));
         setProducts(list);
         setLoading(false);
@@ -71,6 +75,25 @@ export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
 
     return () => unsubscribe();
   }, []);
+
+  // 2. Real-time subscription to merchant profile to track CEO's live BT reserve
+  useEffect(() => {
+    const unsubMerchant = onSnapshot(
+      doc(db, 'merchants', String(MERCHANT_CONFIG.merchantId)),
+      (docSnap) => {
+        if (docSnap.exists()) {
+          setMerchantData(docSnap.data());
+        }
+      },
+      (err) => {
+        console.warn('[BestClub Firestore] merchant profile load warning:', err);
+      }
+    );
+    return () => unsubMerchant();
+  }, []);
+
+  // CEO / 가맹점의 현재 보유 BT 잔여량 (미설정 시 0)
+  const merchantBtBalance = Number(merchantData?.btBalance || 0);
 
   const categories = [
     { id: 'ALL', label: isVi ? 'Tất cả' : isKo ? '전체' : 'All', icon: Sparkles },
@@ -111,6 +134,66 @@ export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
 
   const cartTotalAmount = cart.reduce((sum, item) => sum + (Number(item.price) || 0) * item.qty, 0);
   const cartBtReward = Math.floor(cartTotalAmount / 100000);
+
+  // 결제 실행 함수 (단품 또는 장바구니)
+  const executePurchase = (type, product = null, withoutBt = false) => {
+    if (type === 'single' && product) {
+      const msg = withoutBt
+        ? `'${product.product_name}' 주문 완료 (BT 미지급 조건 동의 / BM 결제 접수)`
+        : `'${product.product_name}' 주문이 정상 완료되었습니다! (+${Math.floor(Number(product.price || 0) / 100000)} BT 지급)`;
+      setPurchaseSuccessMessage(msg);
+      setSelectedProduct(null);
+    } else if (type === 'cart') {
+      const msg = withoutBt
+        ? `${cart.length}개 상품 주문 완료 (BT 미지급 조건 동의 / BM 결제 접수)`
+        : `${cart.length}개 상품의 결제가 완료되었습니다! (+${cartBtReward} BT 지급)`;
+      setPurchaseSuccessMessage(msg);
+      setCart([]);
+      setIsCartOpen(false);
+    }
+    setBtShortageConfirmModal(null);
+    setTimeout(() => setPurchaseSuccessMessage(null), 4500);
+  };
+
+  // 단품 결제 버튼 클릭 시 BT 잔여량 검증
+  const handleConfirmSinglePurchase = (product) => {
+    const requiredBt = Math.floor(Number(product.price || 0) / 100000);
+    // 가맹점(CEO) 계정에 지급할 BT가 부족한 경우 확인 모달 팝업
+    if (requiredBt > 0 && merchantBtBalance < requiredBt) {
+      setBtShortageConfirmModal({
+        isOpen: true,
+        targetType: 'single',
+        product: product,
+        requiredBt: requiredBt,
+        merchantBt: merchantBtBalance
+      });
+      return;
+    }
+    // BT 충분한 경우 즉시 결제
+    executePurchase('single', product, false);
+  };
+
+  // 장바구니 결제 버튼 클릭 시 BT 잔여량 검증
+  const handleConfirmCartPurchase = () => {
+    if (!user) {
+      setIsCartOpen(false);
+      if (onOpenGoogleAuth) onOpenGoogleAuth();
+      return;
+    }
+    // 가맹점(CEO) 계정에 지급할 BT가 부족한 경우 확인 모달 팝업
+    if (cartBtReward > 0 && merchantBtBalance < cartBtReward) {
+      setBtShortageConfirmModal({
+        isOpen: true,
+        targetType: 'cart',
+        product: null,
+        requiredBt: cartBtReward,
+        merchantBt: merchantBtBalance
+      });
+      return;
+    }
+    // BT 충분한 경우 즉시 결제
+    executePurchase('cart', null, false);
+  };
 
   return (
     <div className="pt-6 min-h-screen pb-20">
@@ -162,13 +245,26 @@ export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
                   <ShieldCheck className="w-3.5 h-3.5 mr-1" />
                   <span>BestClub jumper-b15aa Realtime DB</span>
                 </span>
+
+                {/* Live Merchant BT Reserve Pill */}
+                <span className={`inline-flex items-center space-x-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${
+                  merchantBtBalance > 0
+                    ? 'text-emerald-300 bg-emerald-500/10 border-emerald-500/30'
+                    : 'text-amber-300 bg-amber-500/10 border-amber-500/30'
+                }`}>
+                  <Ticket className="w-3 h-3 mr-1" />
+                  <span>
+                    {isVi ? 'Quỹ BT Cửa hàng:' : isKo ? '가맹점 BT 보유량:' : 'Merchant BT:'} {merchantBtBalance} {isVi ? 'vé' : isKo ? '장' : 'BT'}
+                  </span>
+                </span>
               </div>
+
               <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
                 BEST WINNER {isVi ? 'SẢN PHẨM & DỊCH VỤ CHÍNH HÃNG' : isKo ? '공식 가맹점 판매제품' : 'OFFICIAL MERCHANT STORE'}
               </h1>
               <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
                 {isVi
-                  ? 'Toàn bộ sản phẩm được đồng bộ trực tiếp từ BestClub Cloud. Thanh toán bằng BM nhận ngay 5% Cashback và 1 BT (Bonus Ticket) cho mỗi 100,000 VND.'
+                  ? 'Toàn bộ sản phẩm được đồng bộ trực tiếp từ BestClub Cloud. Thanh toán bằng BM nhận ngay 5% Cashback và 1 BT (Bonus Ticket) cho mỗi 100,000 VND (áp dụng khi quỹ BT của 가맹점 còn hiệu lực).'
                   : isKo
                   ? 'BestClub 중앙 데이터베이스와 100% 실시간 연동된 베스트위너 공식 판매상품입니다. BM 결제 시 5% 캐시백과 10만 동당 1 BT가 지급됩니다.'
                   : 'Real-time integrated products powered by BestClub central cloud. Earn 5% Cashback & 1 Bonus Ticket per 100,000 VND.'}
@@ -211,6 +307,19 @@ export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
                 <span className="text-xs text-slate-300 font-mono bg-navy-950 px-2.5 py-1 rounded-lg border border-navy-700">
                   {MERCHANT_CONFIG.ceoEmail}
                 </span>
+
+                {/* BT Balance status badge inside CEO card */}
+                <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-lg border flex items-center ${
+                  merchantBtBalance > 0
+                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                    : 'bg-amber-500/15 text-amber-300 border-amber-500/40'
+                }`}>
+                  <Ticket className="w-3 h-3 mr-1" />
+                  <span>
+                    BT 잔여: <strong>{merchantBtBalance}장</strong> {merchantBtBalance <= 0 && '(소진됨 - 구매자 확인 필요)'}
+                  </span>
+                </span>
+
                 {isCeo && (
                   <span className="text-[11px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center">
                     <CheckCircle className="w-3 h-3 mr-1" />
@@ -342,6 +451,7 @@ export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
               const isSoldOut = p.inventory <= 0 || p.sale_status === 'sold_out';
               const imageUrl = getProductImage(p);
               const btReward = Math.floor(price / 100000);
+              const isShortageForThisProduct = btReward > 0 && merchantBtBalance < btReward;
 
               return (
                 <div 
@@ -382,15 +492,26 @@ export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
                       {p.description || (isKo ? '베스트위너 공식 인증 상품입니다.' : 'Official certified product.')}
                     </p>
 
-                    {/* Reward Badge */}
-                    <div className="bg-navy-950/80 border border-navy-800 rounded-xl p-2.5 flex items-center justify-between text-[11px]">
+                    {/* Reward Badge / Shortage Notice */}
+                    <div className={`rounded-xl p-2.5 flex items-center justify-between text-[11px] border ${
+                      isShortageForThisProduct
+                        ? 'bg-amber-500/10 border-amber-500/30'
+                        : 'bg-navy-950/80 border-navy-800'
+                    }`}>
                       <span className="text-slate-400 flex items-center">
-                        <Sparkles className="w-3.5 h-3.5 text-gold-400 mr-1" />
+                        <Ticket className={`w-3.5 h-3.5 mr-1 ${isShortageForThisProduct ? 'text-amber-400' : 'text-gold-400'}`} />
                         {isVi ? 'Thưởng BT (Bonus)' : isKo ? '보너스 티켓(BT)' : 'BT Reward'}
                       </span>
-                      <span className="text-gold-400 font-bold">
-                        +{btReward} {isVi ? 'vé' : isKo ? '장 지급' : 'Tickets'}
-                      </span>
+                      {isShortageForThisProduct ? (
+                        <span className="text-amber-400 font-bold flex items-center text-[10px]">
+                          <AlertTriangle className="w-3 h-3 mr-0.5" />
+                          {isVi ? 'Tạm hết vé BT' : isKo ? '지급 BT 부족 (소진)' : 'BT Insufficient'}
+                        </span>
+                      ) : (
+                        <span className="text-gold-400 font-bold">
+                          +{btReward} {isVi ? 'vé' : isKo ? '장 지급' : 'Tickets'}
+                        </span>
+                      )}
                     </div>
 
                     {/* Price and Cart Buttons */}
@@ -542,32 +663,52 @@ export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
                     <span>{isVi ? 'Tổng tiền' : isKo ? '총 결제 예정액' : 'Total'}</span>
                     <span className="text-white font-bold">{cartTotalAmount.toLocaleString()} BM</span>
                   </div>
-                  <div className="flex justify-between text-gold-400">
-                    <span>{isVi ? 'Thưởng vé (BT)' : isKo ? '적립 예정 보너스티켓' : 'BT Reward'}</span>
-                    <span className="font-bold">+{cartBtReward} 장</span>
+                  
+                  {/* BT Reward Line with Shortage Indication */}
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 flex items-center">
+                      <Ticket className="w-3.5 h-3.5 mr-1 text-gold-400" />
+                      {isVi ? 'Thưởng vé (BT)' : isKo ? '적립 예정 보너스티켓' : 'BT Reward'}
+                    </span>
+                    {cartBtReward > 0 && merchantBtBalance < cartBtReward ? (
+                      <span className="text-amber-400 font-bold text-[11px] flex items-center">
+                        <AlertTriangle className="w-3 h-3 mr-1" />
+                        {isVi ? `Quỹ BT không đủ (+${cartBtReward} vé)` : isKo ? `가맹점 BT 부족 (0장 지급 예정)` : `BT Shortage`}
+                      </span>
+                    ) : (
+                      <span className="text-gold-400 font-bold">+{cartBtReward} 장</span>
+                    )}
                   </div>
+
                   <div className="flex justify-between text-cyan-400">
                     <span>{isVi ? 'Cashback 5%' : isKo ? '5% 캐시백 혜택' : 'Cashback 5%'}</span>
                     <span className="font-bold">{(cartTotalAmount * 0.05).toLocaleString()} BM</span>
                   </div>
                 </div>
 
+                {/* Warning box if merchant BT is insufficient */}
+                {cartBtReward > 0 && merchantBtBalance < cartBtReward && (
+                  <div className="bg-amber-500/15 border border-amber-500/40 rounded-xl p-3 text-[11px] text-amber-200 flex items-start space-x-2">
+                    <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <div className="leading-snug">
+                      <strong>가맹점 BT 소진 안내:</strong> 현재 가맹점 보유 BT({merchantBtBalance}장)가 부족하여, 이번 결제 시 <strong>보너스 티켓이 지급되지 않습니다.</strong>
+                    </div>
+                  </div>
+                )}
+
                 <button
-                  onClick={() => {
-                    if (!user) {
-                      setIsCartOpen(false);
-                      if (onOpenGoogleAuth) onOpenGoogleAuth();
-                    } else {
-                      setPurchaseSuccessMessage(`${cart.length}개 상품의 BM 결제 요청이 접수되었습니다! (BestClub 주문 연동)`);
-                      setCart([]);
-                      setTimeout(() => setPurchaseSuccessMessage(null), 4000);
-                    }
-                  }}
+                  onClick={handleConfirmCartPurchase}
                   className="w-full bg-gradient-to-r from-gold-500 to-amber-500 hover:from-gold-400 hover:to-amber-400 text-navy-950 font-black py-3 rounded-xl shadow-lg transition-all text-sm flex items-center justify-center min-h-[44px]"
                 >
                   <Zap className="w-4 h-4 mr-1.5" />
                   <span>
-                    {user ? (isKo ? '💎 BM으로 총액 결제하기' : 'Checkout with BM') : (isKo ? 'BestClub 로그인 후 결제' : 'Login to Checkout')}
+                    {user ? (
+                      cartBtReward > 0 && merchantBtBalance < cartBtReward
+                        ? (isKo ? '💎 BT 없이 총액 결제하기' : 'Checkout without BT')
+                        : (isKo ? '💎 BM으로 총액 결제하기' : 'Checkout with BM')
+                    ) : (
+                      isKo ? 'BestClub 로그인 후 결제' : 'Login to Checkout'
+                    )}
                   </span>
                 </button>
               </div>
@@ -606,16 +747,54 @@ export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
               </div>
             </div>
 
-            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-3 text-xs text-cyan-300 space-y-1">
+            <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-xl p-3 text-xs text-cyan-300 space-y-1.5">
               <div className="flex justify-between">
                 <span>구매자 계정:</span>
                 <span className="font-bold text-white">{user?.email || 'Guest'}</span>
               </div>
-              <div className="flex justify-between">
-                <span>지급 보너스티켓:</span>
-                <span className="font-bold text-gold-400">+{Math.floor(Number(selectedProduct.price || 0) / 100000)} 장 (10만동당 1장)</span>
-              </div>
+              
+              {/* Product BT Reward calculation */}
+              {(() => {
+                const requiredBt = Math.floor(Number(selectedProduct.price || 0) / 100000);
+                const isShortage = requiredBt > 0 && merchantBtBalance < requiredBt;
+
+                return (
+                  <div className="flex justify-between items-center">
+                    <span>지급 보너스티켓:</span>
+                    {isShortage ? (
+                      <span className="text-amber-400 font-bold flex items-center">
+                        <AlertTriangle className="w-3.5 h-3.5 mr-1" />
+                        0 장 (가맹점 잔여 {merchantBtBalance}장 부족)
+                      </span>
+                    ) : (
+                      <span className="font-bold text-gold-400">+{requiredBt} 장 (10만동당 1장)</span>
+                    )}
+                  </div>
+                );
+              })()}
             </div>
+
+            {/* Direct Warning banner if shortage */}
+            {(() => {
+              const requiredBt = Math.floor(Number(selectedProduct.price || 0) / 100000);
+              const isShortage = requiredBt > 0 && merchantBtBalance < requiredBt;
+              if (!isShortage) return null;
+
+              return (
+                <div className="bg-amber-500/15 border border-amber-500/40 rounded-xl p-3.5 text-xs text-amber-200 space-y-1">
+                  <div className="font-bold flex items-center text-amber-300">
+                    <AlertTriangle className="w-4 h-4 mr-1.5 flex-shrink-0" />
+                    <span>지급할 보너스티켓(BT) 없음 안내</span>
+                  </div>
+                  <p className="leading-relaxed text-[11px]">
+                    현재 가맹점(CEO) 계정의 보너스티켓 잔여량이 부족하여, 본 결제 완료 시 <strong>보너스 티켓이 지급되지 않습니다.</strong>
+                  </p>
+                  <p className="font-bold text-[11px] text-amber-300 pt-1">
+                    지급할 BT가 없어도 계속 구매를 진행하시겠습니까?
+                  </p>
+                </div>
+              );
+            })()}
 
             <div className="flex gap-3">
               <button
@@ -624,17 +803,71 @@ export default function MerchantProductsPage({ t, user, onOpenGoogleAuth }) {
               >
                 {isKo ? '취소' : 'Cancel'}
               </button>
+              
               <button
-                onClick={() => {
-                  setPurchaseSuccessMessage(`'${selectedProduct.product_name}' 주문이 정상 등록되었습니다! (BestClub BM 지갑 연동)`);
-                  setSelectedProduct(null);
-                  setTimeout(() => setPurchaseSuccessMessage(null), 4000);
-                }}
-                className="flex-1 bg-gradient-to-r from-gold-500 to-amber-500 hover:from-gold-400 text-navy-950 font-black py-2.5 rounded-xl text-xs shadow-md"
+                onClick={() => handleConfirmSinglePurchase(selectedProduct)}
+                className={`flex-1 font-black py-2.5 rounded-xl text-xs shadow-md transition-all ${
+                  Math.floor(Number(selectedProduct.price || 0) / 100000) > 0 && merchantBtBalance < Math.floor(Number(selectedProduct.price || 0) / 100000)
+                    ? 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 text-navy-950'
+                    : 'bg-gradient-to-r from-gold-500 to-amber-500 hover:from-gold-400 text-navy-950'
+                }`}
               >
-                {isKo ? '💎 결제 확정' : 'Confirm Purchase'}
+                {Math.floor(Number(selectedProduct.price || 0) / 100000) > 0 && merchantBtBalance < Math.floor(Number(selectedProduct.price || 0) / 100000)
+                  ? (isKo ? '⚠️ BT 없이 결제 진행' : 'Buy without BT')
+                  : (isKo ? '💎 결제 확정' : 'Confirm Purchase')}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* 6. 가맹점 BT 부족 시 최종 구매 확인 다이얼로그 (BT Shortage Confirmation Modal) */}
+      {btShortageConfirmModal && btShortageConfirmModal.isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/90 backdrop-blur-md">
+          <div className="w-full max-w-md bg-navy-900 border-2 border-amber-500/60 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 animate-scaleIn">
+            
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center mx-auto">
+              <AlertTriangle className="w-7 h-7" />
+            </div>
+
+            <div className="text-center space-y-2">
+              <h3 className="text-lg sm:text-xl font-black text-white">
+                {isVi ? 'Xác nhận Mua hàng khi không có Vé Thưởng (BT)' : isKo ? '지급할 BT가 없어도 구매하시겠습니까?' : 'Proceed without Bonus Tickets?'}
+              </h3>
+              
+              <div className="bg-navy-950 border border-navy-800 rounded-2xl p-4 text-xs text-left space-y-2">
+                <div className="flex justify-between text-slate-300">
+                  <span>가맹점(CEO) 현재 BT 보유량:</span>
+                  <span className="font-bold text-amber-400">{btShortageConfirmModal.merchantBt} 장</span>
+                </div>
+                <div className="flex justify-between text-slate-300">
+                  <span>원래 적립 예정 BT:</span>
+                  <span className="font-bold text-slate-400 line-through">+{btShortageConfirmModal.requiredBt} 장</span>
+                </div>
+                <div className="border-t border-navy-800 pt-2 text-[11px] text-amber-200 leading-relaxed">
+                  ⚠️ 현재 가맹점 대표 계정에 보유된 보너스 티켓(BT)이 모두 소진되어, <strong>이번 주문 시에는 보너스 티켓이 추가 지급되지 않습니다.</strong> (5% BM 캐시백은 정상 제공됩니다.)
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-2.5 pt-2">
+              <button
+                type="button"
+                onClick={() => setBtShortageConfirmModal(null)}
+                className="w-full sm:flex-1 bg-navy-800 hover:bg-navy-700 text-slate-200 font-bold py-3 rounded-xl text-xs transition-colors border border-navy-700"
+              >
+                {isVi ? 'Hủy bỏ' : isKo ? '취소 (구매 안 함)' : 'Cancel'}
+              </button>
+              
+              <button
+                type="button"
+                onClick={() => executePurchase(btShortageConfirmModal.targetType, btShortageConfirmModal.product, true)}
+                className="w-full sm:flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 text-navy-950 font-black py-3 rounded-xl text-xs shadow-lg transition-transform active:scale-95 flex items-center justify-center"
+              >
+                <span>{isVi ? 'Đồng ý tiếp tục mua' : isKo ? 'BT 없이 구매 계속 진행' : 'Proceed without BT'}</span>
+              </button>
+            </div>
+
           </div>
         </div>
       )}
