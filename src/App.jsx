@@ -18,6 +18,7 @@ import WaterproofingPage from './pages/WaterproofingPage';
 import SolarEnergyPage from './pages/SolarEnergyPage';
 import DigitalAgencyPage from './pages/DigitalAgencyPage';
 import AIManagementPage from './pages/AIManagementPage';
+import MerchantProductsPage from './pages/MerchantProductsPage';
 import MegazinePage from './pages/MegazinePage';
 import MegazineAdminPage from './pages/MegazineAdminPage';
 import CalculatorPage from './pages/CalculatorPage';
@@ -107,6 +108,26 @@ export default function App() {
             <Route path="/business/digital-agency" element={<DigitalAgencyPage t={t} />} />
             <Route path="/services" element={<AIManagementPage t={t} />} />
             <Route path="/services/ai-management" element={<AIManagementPage t={t} />} />
+            <Route 
+              path="/services/products" 
+              element={
+                <MerchantProductsPage 
+                  t={t} 
+                  user={user} 
+                  onOpenGoogleAuth={() => setIsGoogleAuthOpen(true)} 
+                />
+              } 
+            />
+            <Route 
+              path="/services/merchant-products" 
+              element={
+                <MerchantProductsPage 
+                  t={t} 
+                  user={user} 
+                  onOpenGoogleAuth={() => setIsGoogleAuthOpen(true)} 
+                />
+              } 
+            />
             <Route 
               path="/megazine" 
               element={

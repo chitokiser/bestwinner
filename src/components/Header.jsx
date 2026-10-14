@@ -44,6 +44,12 @@ export default function Header({ currentLang, setLang, t }) {
       tag: 'AI Enterprise' 
     },
     { 
+      id: 'products', 
+      path: '/services/products', 
+      name: isVi ? 'Sản phẩm kinh doanh (BEST Mall)' : isKo ? '판매제품 (BEST Mall / 상품)' : 'Products (BEST Mall)', 
+      tag: 'On-Sale / BM' 
+    },
+    { 
       id: 'megazine', 
       path: '/megazine', 
       name: isVi ? 'BEST MEGAZINE (Tạp chí AI)' : isKo ? 'BEST MEGAZINE (AI 매거진)' : 'BEST MEGAZINE (AI Expat Magazine)', 

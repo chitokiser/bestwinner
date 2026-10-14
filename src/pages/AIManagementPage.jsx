@@ -20,6 +20,28 @@ export default function AIManagementPage({ t }) {
             <span>/</span>
             <span className="text-gold-400 font-bold">{isVi ? 'Quản lý AI' : isKo ? 'AI경영관리' : 'AI Management'}</span>
           </div>
+
+          {/* Services Submenu Tabs */}
+          <div className="flex items-center space-x-2 overflow-x-auto pb-1 pt-1 no-scrollbar border-b border-navy-800">
+            <Link
+              to="/services/ai-management"
+              className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 shadow-sm whitespace-nowrap"
+            >
+              🤖 {isVi ? 'Quản lý AI (AI Management)' : isKo ? 'AI경영관리 (AI Management)' : 'AI Management'}
+            </Link>
+            <Link
+              to="/services/products"
+              className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-300 hover:text-gold-400 hover:bg-navy-800 whitespace-nowrap"
+            >
+              🛒 {isVi ? 'Sản phẩm bán (BEST Mall)' : isKo ? '판매제품 (BEST Mall)' : 'Products (BEST Mall)'}
+            </Link>
+            <Link
+              to="/megazine"
+              className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-300 hover:text-gold-400 hover:bg-navy-800 whitespace-nowrap"
+            >
+              📰 {isVi ? 'BEST MEGAZINE (Tạp chí AI)' : isKo ? 'BEST MEGAZINE (AI 매거진)' : 'BEST MEGAZINE'}
+            </Link>
+          </div>
           
           <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
             <div>
