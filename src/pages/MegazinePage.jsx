@@ -4,6 +4,7 @@ import MegazineHeaderBanner from '../components/Megazine/MegazineHeaderBanner';
 import ArticleCard from '../components/Megazine/ArticleCard';
 import ArticleDetailModal from '../components/Megazine/ArticleDetailModal';
 import BestPickCard from '../components/Megazine/BestPickCard';
+import EventCardNewsSection from '../components/Megazine/EventCardNewsSection';
 import { getArticles, checkAndAutoPublishArticles, triggerAiArticleJob, removeArticle } from '../services/megazineService';
 import { fetchHanoiWeather, fetchExchangeRates } from '../services/weatherExchangeService';
 import { fetchHanoiAQI } from '../services/airQualityService';
@@ -174,6 +175,9 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
             </Link>
           </div>
         </div>
+
+        {/* Featured BestClub Event Card News Slider */}
+        <EventCardNewsSection t={t} />
 
         {/* Search Bar & Category Filter Tabs */}
         <div className="space-y-4">

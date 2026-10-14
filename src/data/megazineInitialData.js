@@ -72,6 +72,47 @@ export const INITIAL_BEST_PICKS = [
 
 export const INITIAL_ARTICLES = [
   {
+    id: 'art-event-bestclub',
+    title: '[특집 카드뉴스] BestClub 이벤트 쿠폰 & 바우쳐 라운지 공식 오픈! 가맹점 할인 혜택 대방출',
+    subtitle: '베스트위너 제휴 특별 할인 쿠폰, 1초 무료 발급 및 BM 결제 시 10만 동당 1 BT 무제한 적립',
+    summary: 'BestClub 공식 가맹점 특별 할인 쿠폰 및 교환 바우쳐 라운지가 열렸습니다. 누구나 무료로 쿠폰을 발급받거나 BM으로 바우쳐를 구매하여 온·오프라인 매장에서 즉시 사용하세요.',
+    category: 'TODAY',
+    edition: 'BEST MEGAZINE',
+    thumbnail: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80',
+    publishedAt: new Date().toISOString(),
+    status: 'published',
+    aiGenerated: false,
+    importanceScore: 100,
+    communityScore: 100,
+    reliabilityScore: 100,
+    viewCount: 3820,
+    shareCount: 654,
+    tags: ['BestClub이벤트', '할인쿠폰', '바우쳐', '베스트위너', 'BM캐시백', '보너스티켓'],
+    sourceUrls: ['https://bestclubvn.netlify.app/events'],
+    sourceNames: ['BestClub 공식 이벤트 라운지'],
+    whyItMatters: '베스트위너 및 하노이 인기 가맹점에서 현장 결제 시 최대 5%~20% 할인과 10만 동당 1장의 보너스 티켓(BT)이 지급되어 룰렛 추첨에 참여할 수 있습니다.',
+    impactOnExpats: '회원 누구나 1초 만에 무료 할인 쿠폰을 발급받아 마이페이지 QR 코드로 매장에서 즉시 사용할 수 있습니다.',
+    actionRequired: 'https://bestclubvn.netlify.app/events 에 접속하여 원하는 쿠폰과 바우쳐를 발급받으세요.',
+    relatedBusinesses: ['bp-01', 'bp-02', 'bp-03'],
+    content: `[카드뉴스 특집] BestClub 공식 가맹점 특별 할인 쿠폰 & 바우쳐 라운지가 공식 오픈했습니다!
+
+공식 웹사이트 바로가기: https://bestclubvn.netlify.app/events
+
+### 🎟️ 1. 가맹점 특별 할인 쿠폰 & 실물 교환 바우쳐
+- 베스트위너 인테리어, 엘리베이터 정기 점검, 방수 시공부터 대한김치, 백제갈비 등 하노이 최고 인기 가맹점의 특별 할인 쿠폰을 제공합니다.
+- 식사 교환권, 시공 할인권 등 실속 있는 교환 바우쳐를 만나보세요.
+
+### 🎁 2. 회원 누구나 클릭 1번에 무료 발급!
+- 복잡한 인증 없이 클릭 한 번으로 발급 완료!
+- 발급된 쿠폰은 마이페이지에 안전하게 보관되며, 매장 방문 시 스마트폰 QR 코드로 1초 만에 인증 및 승인됩니다.
+
+### 💎 3. BM 결제 시 5% 즉시 캐시백 & 100,000 VND당 1 BT 지급
+- BestClub BM(1 BM = 1 VND)으로 바우쳐를 구매하거나 현장 결제 시 결제액의 5%가 캐시백됩니다.
+- 10만 동 결제 시마다 1장의 보너스 티켓(BT)이 자동 적립되어 대형 룰렛 추첨에 응모하실 수 있습니다.
+
+👉 지금 바로 [BestClub 이벤트 라운지](https://bestclubvn.netlify.app/events)에 접속하여 풍성한 혜택을 확인해 보세요!`
+  },
+  {
     id: 'art-01',
     title: '베트남 노동법 개정령 발효: 교민 사업자 및 주재원 비자 발급 절차 2026 개편안 분석',
     subtitle: '노동허가증(Work Permit) 수속 기간 단축 및 온라인 일괄 접수 시스템 도입',

@@ -428,6 +428,30 @@ ${categoryInsight}
             )}
           </div>
 
+          {/* Event Quick Link Banner if article relates to BestClub events */}
+          {(article.sourceUrls?.some(u => u.includes('events')) || article.id === 'art-event-bestclub') && (
+            <div className="bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-amber-500/10 border border-amber-500/40 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+              <div className="space-y-1 text-center sm:text-left">
+                <div className="text-xs font-bold text-amber-300 flex items-center justify-center sm:justify-start">
+                  <Sparkles className="w-3.5 h-3.5 mr-1 text-amber-400" />
+                  <span>BestClub 공식 이벤트 라운지 실시간 연결</span>
+                </div>
+                <p className="text-xs text-slate-300">
+                  공식 웹사이트에서 가맹점 특별 할인 쿠폰을 1초 만에 무료 발급받고 바우쳐를 확인하세요!
+                </p>
+              </div>
+              <a
+                href="https://bestclubvn.netlify.app/events"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 text-navy-950 font-black text-xs px-5 py-2.5 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center whitespace-nowrap"
+              >
+                <span>이벤트 라운지 바로가기</span>
+                <ExternalLink className="w-4 h-4 ml-1.5" />
+              </a>
+            </div>
+          )}
+
           {/* Main Content Body (Rich Article Content) */}
           <div className="prose prose-invert max-w-none text-sm sm:text-base text-slate-200 leading-relaxed whitespace-pre-line border-t border-navy-800 pt-6 space-y-4">
             {getFormattedArticleContent(article)}
