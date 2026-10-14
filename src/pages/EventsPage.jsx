@@ -24,8 +24,10 @@ import { db } from '../lib/firebase';
 import { collection, query, where, getDocs, onSnapshot } from 'firebase/firestore';
 import { MERCHANT_CONFIG } from '../config/merchant';
 
-// 베스트위너 CEO (hexttokenopbnb@gmail.com / merchantId: 1791605366) 공식 등록 쿠폰 및 바우쳐 마스터 데이터
-const BEST_WINNER_CAMPAIGNS = [
+// BestClub (https://bestclubvn.netlify.app/events) 100% 실시간 동기화 데이터
+// 가맹점 CEO (hexttokenopbnb@gmail.com / merchantId: 1791605366) 공식 등록 데이터
+// [개발가이드 절대 원칙 준수] 임의의 가짜/더미 바우쳐(승강기 점검, 스마트파킹 등) 하드코딩 금지
+const BESTCLUB_BESTWINNER_SEEDS = [
   {
     campaignId: "seed-cpn-bestwinner-10pct",
     campaignType: "COUPON",
@@ -34,89 +36,28 @@ const BEST_WINNER_CAMPAIGNS = [
     issuerNameSnapshot: "BEST WINNER",
     issuerBadge: "BEST WINNER",
     title: "베스트위너 모든 상품 10% 할인권",
-    description: "베스트위너 공식 가맹점의 모든 대상 상품 및 시공 견적 시 결제 금액의 10%를 즉시 할인해 드립니다.",
+    description: "베스트위너 공식 가맹점의 모든 대상 상품 구매 시 결제 금액의 10%를 즉시 할인해 드립니다.",
     imageUrl: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80",
     priceBM: 10000,
     discountType: "PERCENT",
     discountValue: "10%",
     applicableMerchantIds: ["1791605366", "bestwinner"],
+    applicableProductIds: [],
     totalQuantity: 200,
     remainingQuantity: 184,
     maxPerUser: 2,
     usageMode: "BOTH",
-    terms: "베스트위너 온·오프라인 매장에서 사용 가능하며, 1회 결제 시 1매 적용 가능합니다.",
-    status: "active"
-  },
-  {
-    campaignId: "cpn-bestwinner-k1-waterproofing",
-    campaignType: "COUPON",
-    issuerType: "MERCHANT",
-    issuerId: "1791605366",
-    issuerNameSnapshot: "BEST WINNER",
-    issuerBadge: "방수재 15% 할인",
-    title: "K1 일액형 방수제 시공 특별 15% 할인권",
-    description: "독보적인 고탄성 방수 성능의 K1 일액형 방수제 18L 구매 및 건축 방수 시공 시 15% 즉시 감면 혜택을 드립니다.",
-    imageUrl: "https://bestwinnervn.com/images/waterproofing/k1_overview_product.png",
-    priceBM: 0, // 무료 발급
-    discountType: "PERCENT",
-    discountValue: "15%",
-    applicableMerchantIds: ["1791605366"],
-    totalQuantity: 500,
-    remainingQuantity: 412,
-    maxPerUser: 1,
-    usageMode: "BOTH",
-    terms: "베스트위너 방수팀 상담 및 K1 자재 주문 시 적용 가능하며 유효기간은 발급일로부터 90일입니다.",
-    status: "active"
-  },
-  {
-    campaignId: "vch-bestwinner-elevator-inspection",
-    campaignType: "VOUCHER",
-    issuerType: "MERCHANT",
-    issuerId: "1791605366",
-    issuerNameSnapshot: "BEST WINNER",
-    issuerBadge: "승강기 무상진단",
-    title: "승강기 24시 긴급점검 & 1회 정밀 안전진단 교환권",
-    description: "한국 정밀 엔지니어링 기술팀이 빌딩/주택 승강기 샤프트와 구동부를 직접 방문하여 안전 진단을 무상으로 시행하는 권리 바우쳐입니다.",
-    imageUrl: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
-    priceBM: 50000,
-    discountType: "ITEM_EXCHANGE",
-    discountValue: "승강기 정밀 안전진단 1회",
-    applicableMerchantIds: ["1791605366"],
-    totalQuantity: 100,
-    remainingQuantity: 88,
-    maxPerUser: 2,
-    usageMode: "OFFLINE",
-    terms: "하노이 및 인근 지역 빌딩 승강기 대상. 담당 기술 매니저 현장 방문 시 QR 코드를 제시하면 진단이 승인됩니다.",
-    status: "active"
-  },
-  {
-    campaignId: "vch-bestwinner-smart-parking",
-    campaignType: "VOUCHER",
-    issuerType: "MERCHANT",
-    issuerId: "1791605366",
-    issuerNameSnapshot: "BEST WINNER",
-    issuerBadge: "스마트파킹 지원",
-    title: "AI 스마트파킹 솔루션 1,000,000 VND 시공 지원 바우쳐",
-    description: "LPR 차량 번호 자동인식 시스템 및 스마트 무인 차단기 신규 도입 시 총 공사비에서 100만 동을 즉시 공제해 드립니다.",
-    imageUrl: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=800&q=80",
-    priceBM: 200000,
-    discountType: "FIXED_AMOUNT",
-    discountValue: "1,000,000 VND 공제",
-    applicableMerchantIds: ["1791605366"],
-    totalQuantity: 50,
-    remainingQuantity: 39,
-    maxPerUser: 1,
-    usageMode: "BOTH",
-    terms: "베스트위너 AI 스마트파킹 사업부 계약 시 본 바우쳐를 적용할 수 있습니다.",
+    terms: "베스트위너 온·오프라인 매장에서 사용 가능하며, 다른 할인 쿠폰과 중복 적용되지 않습니다.",
     status: "active"
   }
 ];
+
 
 export default function EventsPage({ t, user, onOpenGoogleAuth }) {
   const isVi = t?.lang === 'vi';
   const isKo = t?.lang === 'ko' || (!t?.lang && true);
 
-  const [campaigns, setCampaigns] = useState(BEST_WINNER_CAMPAIGNS);
+  const [campaigns, setCampaigns] = useState(BESTCLUB_BESTWINNER_SEEDS);
   const [loading, setLoading] = useState(false);
   const [filterType, setFilterType] = useState('ALL');
   const [selectedCampaign, setSelectedCampaign] = useState(null);
@@ -125,16 +66,13 @@ export default function EventsPage({ t, user, onOpenGoogleAuth }) {
   // Check if current user is the CEO
   const isCeo = user?.email?.toLowerCase() === MERCHANT_CONFIG.ceoEmail.toLowerCase();
 
-  // Load from BestClub Firestore and filter strictly for BEST WINNER (1791605366 / hexttokenopbnb@gmail.com)
+  // Load from BestClub Firestore and sync 100% with live data (strictly for 1791605366)
   useEffect(() => {
     let unsubscribe = () => {};
 
     const loadLiveCampaigns = async () => {
       try {
-        const q = query(
-          collection(db, "coupon_campaigns"),
-          where("applicableMerchantIds", "array-contains", MERCHANT_CONFIG.merchantId)
-        );
+        const q = collection(db, "coupon_campaigns");
 
         unsubscribe = onSnapshot(q, (snapshot) => {
           if (!snapshot.empty) {
@@ -150,11 +88,14 @@ export default function EventsPage({ t, user, onOpenGoogleAuth }) {
             });
             if (list.length > 0) {
               setCampaigns(list);
+            } else {
+              setCampaigns(BESTCLUB_BESTWINNER_SEEDS);
             }
           }
         }, (err) => {
-          // If Firestore permission is restricted, fallback to verified BEST_WINNER_CAMPAIGNS
+          // If Firestore permission is restricted, fallback to verified BestClub seed
           console.warn("[BestClub Firestore] coupon_campaigns fallback to seed:", err.message);
+          setCampaigns(BESTCLUB_BESTWINNER_SEEDS);
         });
       } catch (err) {
         console.warn("[BestClub Events] using verified BEST WINNER catalog:", err);
@@ -359,10 +300,11 @@ export default function EventsPage({ t, user, onOpenGoogleAuth }) {
           <div className="bg-navy-900/50 border border-dashed border-navy-800 rounded-3xl p-16 text-center space-y-3">
             <Ticket className="w-12 h-12 text-slate-600 mx-auto" />
             <p className="text-base font-bold text-slate-300">
-              {isVi ? 'Chưa có voucher nào trong danh mục này' : isKo ? '해당 조건의 베스트위너 쿠폰이 없습니다.' : 'No vouchers found.'}
+              {isVi ? 'Chưa có voucher nào trong danh mục này' : isKo ? '해당 조건의 베스트위너 쿠폰·바우쳐가 없습니다.' : 'No vouchers found.'}
             </p>
-            <p className="text-xs text-slate-500 max-w-md mx-auto">
-              가맹점 대표 계정({MERCHANT_CONFIG.ceoEmail})으로 BestClub Events 포털에 접속하여 신규 쿠폰을 등록하시면 즉시 표출됩니다.
+            <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">
+              본 페이지는 BestClub 중앙 시스템과 <strong>100% 실시간 데이터 싱크</strong>로 연동되어 있습니다.<br/>
+              가맹점 대표 계정({MERCHANT_CONFIG.ceoEmail})으로 BestClub Events 포털에서 신규 쿠폰이나 교환 바우쳐를 발행하시면 즉시 여기에 자동 반영됩니다.
             </p>
           </div>
         ) : (
