@@ -23,6 +23,7 @@ import {
 import BestPickCard from './BestPickCard';
 import { INITIAL_BEST_PICKS } from '../../data/megazineInitialData';
 import { getDefaultThumbnail, removeArticle } from '../../services/megazineService';
+import { navigateTo } from '../../seo/navigate';
 
 export default function ArticleDetailModal({ article, onClose, user, onOpenAuth, onDeleteArticle }) {
   const [copied, setCopied] = useState(false);
@@ -185,7 +186,7 @@ ${categoryInsight}
   const handleCopyLink = () => {
     handleRequireAuth('SNS 퍼가기 & 링크 복사', () => {
       if (typeof window !== 'undefined') {
-        const url = `${window.location.origin}/#/megazine?article=${article.id}`;
+        const url = `${window.location.origin}/megazine?article=${article.id}`;
         navigator.clipboard.writeText(url);
         setCopied(true);
         setTimeout(() => setCopied(false), 2500);
@@ -196,7 +197,7 @@ ${categoryInsight}
   // SNS Share Handler
   const handleSnsShare = (platform) => {
     handleRequireAuth('SNS 퍼가기', () => {
-      const shareUrl = encodeURIComponent(`${window.location.origin}/#/megazine?article=${article.id}`);
+      const shareUrl = encodeURIComponent(`${window.location.origin}/megazine?article=${article.id}`);
       const shareTitle = encodeURIComponent(`[BEST MEGAZINE] ${article.title}`);
 
       if (platform === 'facebook') {
@@ -259,7 +260,7 @@ ${categoryInsight}
             <button
               onClick={() => {
                 onClose();
-                window.location.hash = '#/megazine/admin';
+                navigateTo('/megazine/admin');
               }}
               className="p-2 rounded-xl bg-navy-900 hover:bg-gold-500 hover:text-navy-950 text-gold-400 border border-gold-500/40 flex items-center space-x-1.5 text-xs font-bold transition-all"
               title="관리자 기사 수정"

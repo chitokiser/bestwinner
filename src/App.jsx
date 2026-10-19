@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Seo from './seo/Seo';
+import { navigateTo } from './seo/navigate';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -68,6 +70,7 @@ export default function App() {
 
   return (
     <Router>
+      <Seo />
       <div className="min-h-screen bg-navy-950 text-slate-100 flex flex-col font-sans">
         
         {/* Simplified Header */}
@@ -88,7 +91,7 @@ export default function App() {
                 <HomePage 
                   t={t} 
                   onOpenCalculator={() => {
-                    window.location.hash = '#/calculator';
+                    navigateTo('/calculator');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                 />
@@ -176,7 +179,7 @@ export default function App() {
         <FloatingWidgets 
           t={t}
           onOpenCalculator={() => {
-            window.location.hash = '#/calculator';
+            navigateTo('/calculator');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         />

@@ -91,7 +91,7 @@ export default function EventCardNewsSection({ t }) {
         : 'Valid for Elevators, Interior design, K1 waterproofing, and top Korean restaurants.',
       image: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=1200&q=80',
       actionText: isVi ? 'Xem sản phẩm 가맹점' : isKo ? '베스트위너 상품 보기' : 'View Products',
-      url: '#/services/products'
+      url: '/services/products'
     }
   ];
 

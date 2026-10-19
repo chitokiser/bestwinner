@@ -21,7 +21,9 @@
   status = 301
   force = true
 
+# 페이지별 HTML(dist/<경로>/index.html)은 빌드 시 생성되어 그대로 제공됨.
+# 등록되지 않은 주소는 404 상태로 응답 (검색엔진 soft 404 방지).
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404

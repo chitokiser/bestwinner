@@ -187,6 +187,31 @@ export default function Footer({ t }) {
           </div>
         </div>
 
+        {/* Site Links: 검색엔진이 따라갈 수 있는 실제 <a href> 링크 (상단 메뉴는 버튼형) */}
+        <nav aria-label="Sitemap" className="pt-8 flex flex-wrap gap-x-4 gap-y-2 text-[11px] text-slate-400">
+          {[
+            ['/about', isKo ? '회사 소개' : 'Giới thiệu'],
+            ['/business', isKo ? '사업 분야' : 'Lĩnh vực kinh doanh'],
+            ['/business/elevator', isKo ? '엘리베이터' : 'Thang máy'],
+            ['/business/interior', isKo ? '인테리어' : 'Nội thất'],
+            ['/business/parking', isKo ? '스마트 주차' : 'Bãi đỗ xe thông minh'],
+            ['/business/firefighting', isKo ? '소방 자재' : 'Vật liệu PCCC'],
+            ['/business/waterproofing', isKo ? '방수' : 'Chống thấm'],
+            ['/business/energy', isKo ? '태양광 에너지' : 'Năng lượng mặt trời'],
+            ['/business/digital-agency', 'Digital Agency'],
+            ['/services/ai-management', isKo ? 'AI 경영관리' : 'Quản trị AI'],
+            ['/services/products', 'BEST Mall'],
+            ['/events', isKo ? '이벤트' : 'Sự kiện'],
+            ['/megazine', 'BEST MEGAZINE'],
+            ['/calculator', isKo ? '엘리베이터 견적' : 'Dự toán thang máy'],
+            ['/contact', isKo ? '문의' : 'Liên hệ'],
+          ].map(([to, label]) => (
+            <Link key={to} to={to} onClick={() => window.scrollTo({ top: 0 })} className="hover:text-gold-400 transition-colors">
+              {label}
+            </Link>
+          ))}
+        </nav>
+
         {/* Bottom Copyright */}
         <div className="pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] text-slate-500 space-y-4 sm:space-y-0">
           <p>© 2026 BEST WINNER VN LIMITED COMPANY. All rights reserved.</p>
