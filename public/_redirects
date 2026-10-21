@@ -1,1 +1,5 @@
+# BEST MEGAZINE → BestClub 웹진으로 대체 (2026-10-21)
+/megazine/admin  https://bestclubvn.netlify.app/admin_webzine.html  301!
+/megazine/*      https://bestclubvn.netlify.app/kca_webzine  301!
+/megazine        https://bestclubvn.netlify.app/kca_webzine  301!
 /*    /404.html   404

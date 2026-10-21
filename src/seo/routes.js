@@ -126,15 +126,6 @@ export const SEO_ROUTES = [
   },
   { path: '/services/events', canonical: '/events' },
   {
-    path: '/megazine',
-    title: 'BEST MEGAZINE - Tạp chí Nhà ở & Hạ tầng | BEST winner Vn Group (매거진)',
-    description:
-      'Tạp chí BEST MEGAZINE: tin tức, kiến thức về thang máy, nội thất, chống thấm, PCCC và hạ tầng thông minh tại Việt Nam. 베트남 건축·주거 인프라 매거진.',
-    priority: 0.7,
-    changefreq: 'weekly',
-  },
-  { path: '/megazine/admin', index: false, title: 'MEGAZINE Admin | BEST winner Vn Group' },
-  {
     path: '/calculator',
     title: 'Dự toán chi phí Thang máy online | BEST winner Elevator Vn (엘리베이터 견적)',
     description:

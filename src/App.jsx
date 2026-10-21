@@ -22,8 +22,11 @@ import DigitalAgencyPage from './pages/DigitalAgencyPage';
 import AIManagementPage from './pages/AIManagementPage';
 import MerchantProductsPage from './pages/MerchantProductsPage';
 import EventsPage from './pages/EventsPage';
-import MegazinePage from './pages/MegazinePage';
-import MegazineAdminPage from './pages/MegazineAdminPage';
+// 외부 주소로 바로 이동 (사이트 안 링크로 들어온 경우)
+function ExternalRedirect({ to }) {
+  if (typeof window !== 'undefined') window.location.replace(to);
+  return null;
+}
 import CalculatorPage from './pages/CalculatorPage';
 import ContactPage from './pages/ContactPage';
 
@@ -152,17 +155,9 @@ export default function App() {
                 />
               } 
             />
-            <Route 
-              path="/megazine" 
-              element={
-                <MegazinePage 
-                  t={t} 
-                  user={user} 
-                  onOpenAuth={() => setIsGoogleAuthOpen(true)} 
-                />
-              } 
-            />
-            <Route path="/megazine/admin" element={<MegazineAdminPage t={t} />} />
+            {/* BEST MEGAZINE → BestClub 웹진으로 대체 (2026-10-21). 서버 쪽 301 은 public/_redirects */}
+            <Route path="/megazine" element={<ExternalRedirect to="https://bestclubvn.netlify.app/kca_webzine" />} />
+            <Route path="/megazine/admin" element={<ExternalRedirect to="https://bestclubvn.netlify.app/admin_webzine.html" />} />
             <Route path="/calculator" element={<CalculatorPage t={t} />} />
             <Route path="/contact" element={<ContactPage t={t} />} />
             {/* Fallback Catch-All Route */}
