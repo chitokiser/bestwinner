@@ -126,6 +126,14 @@ export const SEO_ROUTES = [
   },
   { path: '/services/events', canonical: '/events' },
   {
+    path: '/megazine',
+    title: 'BEST MEGAZINE - Tạp chí đời sống Hà Nội | BEST winner Vn Group (매거진)',
+    description:
+      'BEST MEGAZINE: ẩm thực Hàn, làm đẹp, đời sống và ưu đãi cửa hàng tại Hà Nội. 하노이 교민 생활·맛집·가맹점 소식 매거진.',
+    priority: 0.7,
+    changefreq: 'weekly',
+  },
+  {
     path: '/calculator',
     title: 'Dự toán chi phí Thang máy online | BEST winner Elevator Vn (엘리베이터 견적)',
     description:

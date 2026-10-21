@@ -32,6 +32,14 @@ export default function ArticleDetailModal({ article, onClose, user, onOpenAuth,
   const getFormattedArticleContent = (art) => {
     if (!art) return '';
 
+    // 베스트클럽 웹진 기사: 원문 그대로 (### 소제목·**굵게** 표시만 정리)
+    if (art.source === 'kca') {
+      return String(art.content || '')
+        .replace(/^#{1,6}\s*/gm, '■ ')
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/\*(.*?)\*/g, '$1');
+    }
+
     const summary = art.summary || '본 보고서는 베트남 현지 당국 발표 및 주요 언론 보도를 토대로 분석한 교민·주재원 전용 전문 심층 리포트입니다.';
     const whyItMatters = art.whyItMatters || '베트남 내 체류 교민, 법인 대표, 주재원의 현지 적응과 행정·법률 준수에 직접적인 영향을 미칩니다.';
     const impactOnExpats = art.impactOnExpats || '하노이 미딩, 경남, 서호, 하동 등 주요 거주지와 사업체의 행정 비용 절감 및 서류 수속 기간 단축에 직접 작용합니다.';
@@ -257,6 +265,7 @@ ${categoryInsight}
 
           <div className="flex items-center space-x-2">
             {/* Admin Edit Shortcut Button */}
+            {article.source !== 'kca' && (<>
             <button
               onClick={() => {
                 onClose();
@@ -286,6 +295,7 @@ ${categoryInsight}
               <Trash2 className="w-4 h-4" />
               <span className="hidden sm:inline">기사 삭제</span>
             </button>
+            </>)}
 
             {/* Like Button Header */}
             <button

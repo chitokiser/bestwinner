@@ -5,11 +5,11 @@ import ArticleCard from '../components/Megazine/ArticleCard';
 import ArticleDetailModal from '../components/Megazine/ArticleDetailModal';
 import BestPickCard from '../components/Megazine/BestPickCard';
 import EventCardNewsSection from '../components/Megazine/EventCardNewsSection';
-import { getArticles, checkAndAutoPublishArticles, triggerAiArticleJob, removeArticle } from '../services/megazineService';
+import { getKcaWebzineArticles } from '../services/kcaWebzineService';
 import { fetchHanoiWeather, fetchExchangeRates } from '../services/weatherExchangeService';
 import { fetchHanoiAQI } from '../services/airQualityService';
 import { VIETNAM_BANK_RATES, calculateInterest } from '../services/vietnamBankRatesService';
-import { DEFAULT_CATEGORIES, INITIAL_BEST_PICKS } from '../data/megazineInitialData';
+import { INITIAL_BEST_PICKS } from '../data/megazineInitialData';
 import { 
   Search, 
   Sparkles, 
@@ -31,11 +31,9 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
   const [exchangeRates, setExchangeRates] = useState(null);
   const [aqi, setAqi] = useState(null);
   const [activeCategory, setActiveCategory] = useState('ALL');
-  const [activeEdition, setActiveEdition] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isAutoPublishing, setIsAutoPublishing] = useState(false);
 
   // Deposit Calculator State
   const [calcAmount, setCalcAmount] = useState('100000000'); // 1억 VND default
@@ -44,16 +42,9 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
 
   const loadData = async () => {
     setLoading(true);
-    // 1. Run automated schedule check and publish due articles
-    try {
-      await checkAndAutoPublishArticles();
-    } catch (e) {
-      console.warn('[MegazinePage] Auto publish error:', e);
-    }
-
-    // 2. Load latest articles and environment metrics
+    // 베스트클럽 웹진 기사 + 날씨·환율·공기질
     const [arts, w, ex, air] = await Promise.all([
-      getArticles(),
+      getKcaWebzineArticles().catch((e) => { console.warn('[MegazinePage] webzine load error:', e); return []; }),
       fetchHanoiWeather(),
       fetchExchangeRates(),
       fetchHanoiAQI()
@@ -65,57 +56,22 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
     setLoading(false);
   };
 
-  const handleManualAiGenerate = async () => {
-    setIsAutoPublishing(true);
-    try {
-      await triggerAiArticleJob({
-        jobType: activeEdition !== 'ALL' ? `BEST ${activeEdition}` : 'BEST MEGAZINE',
-        category: activeCategory !== 'ALL' ? activeCategory : 'TODAY',
-        topic: '하노이 및 베트남 교민을 위한 실시간 AI 데일리 포커스 뉴스',
-        providerName: 'gemini'
-      });
-      await loadData();
-    } catch (err) {
-      console.error('[Manual AI Generate Error]', err);
-    }
-    setIsAutoPublishing(false);
-  };
-
-  const handleDeleteArticle = async (articleOrId) => {
-    const targetId = typeof articleOrId === 'object' ? articleOrId.id : articleOrId;
-    const targetTitle = typeof articleOrId === 'object' ? articleOrId.title : targetId;
-    await removeArticle(targetId || targetTitle);
-    if (selectedArticle && (selectedArticle.id === targetId || selectedArticle.title === targetTitle)) {
-      setSelectedArticle(null);
-    }
-    await loadData();
-  };
-
   useEffect(() => {
     loadData();
-
-    // Auto-check schedule every 60 seconds
-    const timer = setInterval(() => {
-      checkAndAutoPublishArticles().then(res => {
-        if (res?.publishedCount > 0) {
-          getArticles().then(arts => setArticles(arts));
-        }
-      });
-    }, 60000);
-
-    return () => clearInterval(timer);
   }, []);
+
+  // 카테고리 탭은 기사에 있는 카테고리로 구성
+  const articleCategories = [...new Set(articles.map(a => a.category).filter(Boolean))];
 
   // Filtering articles
   const filteredArticles = articles.filter(art => {
     const matchesCat = activeCategory === 'ALL' || art.category === activeCategory;
-    const matchesEdition = activeEdition === 'ALL' || (art.edition && art.edition.includes(activeEdition));
     const matchesSearch = !searchQuery || 
       art.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
       (art.summary || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
       (art.tags || []).some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
 
-    return matchesCat && matchesEdition && matchesSearch;
+    return matchesCat && matchesSearch;
   });
 
   return (
@@ -129,51 +85,19 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
         {/* Navigation & Admin Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-navy-900/90 p-4 rounded-3xl border border-navy-800 shadow-lg">
           
-          {/* Edition Filter Chips */}
-          <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
-            {['ALL', 'MORNING', 'BUSINESS', 'LIFE', 'NOW', 'MEGAZINE'].map(ed => (
-              <button
-                key={ed}
-                onClick={() => setActiveEdition(ed)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                  activeEdition === ed
-                    ? 'bg-gold-500 text-navy-950 shadow-md'
-                    : 'bg-navy-950 text-slate-300 hover:text-white border border-navy-800'
-                }`}
-              >
-                {ed === 'ALL' ? '전체 발행' : `BEST ${ed}`}
-              </button>
-            ))}
+          <div className="flex items-center space-x-2">
+            <Newspaper className="w-5 h-5 text-gold-400" />
+            <span className="text-sm font-black text-white">BEST MEGAZINE</span>
+            <span className="text-xs text-slate-400">하노이 교민 생활·맛집·가맹점 소식</span>
           </div>
 
-          {/* Admin Link & Refresh */}
-          <div className="flex items-center space-x-2 w-full sm:w-auto justify-end">
-            <button
-              onClick={handleManualAiGenerate}
-              disabled={isAutoPublishing}
-              className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-gold-500 to-amber-500 hover:from-gold-400 hover:to-amber-400 text-navy-950 font-black text-xs shadow-md transition-transform hover:scale-105 flex items-center space-x-1.5"
-              title="신규 기사 즉시 생성 및 게시"
-            >
-              <Sparkles className={`w-4 h-4 ${isAutoPublishing ? 'animate-spin' : ''}`} />
-              <span>{isAutoPublishing ? '기사 게시 중...' : '✨ 신규 기사 실시간 게시'}</span>
-            </button>
-
-            <button
-              onClick={loadData}
-              className="p-2 rounded-xl bg-navy-950 hover:bg-navy-800 text-slate-300 border border-navy-800"
-              title="새로고침"
-            >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-gold-400' : ''}`} />
-            </button>
-
-            <Link
-              to="/megazine/admin"
-              className="px-3.5 py-2 rounded-xl bg-navy-950 hover:bg-navy-800 text-cyan-400 text-xs font-bold border border-cyan-500/30 flex items-center space-x-1.5 transition-colors"
-            >
-              <Settings className="w-4 h-4 text-cyan-400" />
-              <span>BEST MEGAZINE ADMIN</span>
-            </Link>
-          </div>
+          <button
+            onClick={loadData}
+            className="p-2 rounded-xl bg-navy-950 hover:bg-navy-800 text-slate-300 border border-navy-800"
+            title="새로고침"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-gold-400' : ''}`} />
+          </button>
         </div>
 
         {/* Featured BestClub Event Card News Slider */}
@@ -207,17 +131,17 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
               🔥 전체 (ALL)
             </button>
 
-            {DEFAULT_CATEGORIES.map(cat => (
+            {articleCategories.map(cat => (
               <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-1.5 ${
-                  activeCategory === cat.id
+                  activeCategory === cat
                     ? 'bg-gold-500 text-navy-950 shadow-lg'
                     : 'bg-navy-900 text-slate-300 hover:bg-navy-800 border border-navy-800'
                 }`}
               >
-                <span>{cat.label}</span>
+                <span>{cat}</span>
               </button>
             ))}
 
@@ -364,7 +288,7 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
         {loading ? (
           <div className="py-20 text-center space-y-3">
             <RefreshCw className="w-8 h-8 animate-spin text-gold-400 mx-auto" />
-            <p className="text-xs text-slate-400">AI 기사 데이터를 로딩 중입니다...</p>
+            <p className="text-xs text-slate-400">기사를 불러오는 중입니다...</p>
           </div>
         ) : filteredArticles.length === 0 ? (
           <div className="bg-navy-900 border border-navy-800 rounded-3xl p-12 text-center space-y-3">
@@ -380,7 +304,6 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
                 article={article}
                 onOpen={(art) => setSelectedArticle(art)}
                 onShare={(art) => setSelectedArticle(art)}
-                onDelete={handleDeleteArticle}
                 user={user}
                 onOpenAuth={onOpenAuth}
               />
@@ -397,7 +320,6 @@ export default function MegazinePage({ t, user, onOpenAuth }) {
           onClose={() => setSelectedArticle(null)}
           user={user}
           onOpenAuth={onOpenAuth}
-          onDeleteArticle={handleDeleteArticle}
         />
       )}
 
