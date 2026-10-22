@@ -33,12 +33,17 @@ import {
   Video
 } from 'lucide-react';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function WaterproofingSection({ t, onOpenConsult }) {
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'docu_pages' | 'certs' | 'specs' | 'references' | 'networks'
   const [selectedDocPage, setSelectedDocPage] = useState(null); // Lightbox for PDF page
   const [activeCertModal, setActiveCertModal] = useState(null); // Lightbox for cert
 
   const isVi = t?.lang === 'vi' || !t?.lang;
+  __koLang = t?.lang === 'ko';
 
   // Official K1 Waterproofing Data extracted from PDF "방수액한글버전(수정)_1.pdf"
   const k1Data = {
@@ -64,13 +69,13 @@ export default function WaterproofingSection({ t, onOpenConsult }) {
       {
         title: isVi ? "Nhập khẩu trực tiếp từ Hàn Quốc" : "한국 원료 direct 수입",
         desc: isVi ? "Thiết lập chuỗi cung ứng nguyên liệu nhập khẩu trực tiếp từ Hàn Quốc, đảm bảo chất lượng hàng đầu." : "한국 프리미엄 수입 원료 공급망을 구축하여 원료 수급의 안정성과 최고 품질을 동시에 실현.",
-        highlight: "Korean Raw Material",
+        highlight: (__koLang ? "한국산 원료" : "Korean Raw Material"),
         icon: Award
       },
       {
         title: isVi ? "Sản xuất trực tiếp tại Việt Nam" : "베트남 유일 현지 생산",
         desc: isVi ? "Sản xuất trực tiếp tại nhà máy Việt Nam tối ưu hóa cho khí hậu nóng ẩm Đông Nam Á." : "고온다습 동남아 기후에 맞춰 베트남 현지 공장에서 직접 생산하여 최적 품질과 가격 경쟁력 수립.",
-        highlight: "Local Factory Production",
+        highlight: (__koLang ? "현지 공장 생산" : "Local Factory Production"),
         icon: Factory
       }
     ],
@@ -354,7 +359,7 @@ export default function WaterproofingSection({ t, onOpenConsult }) {
             <div>
               <span className="inline-flex items-center space-x-2 bg-red-500/20 text-red-400 px-3.5 py-1.5 rounded-full text-xs font-extrabold border border-red-500/40 mb-2">
                 <Play className="w-3.5 h-3.5 fill-red-400" />
-                <span>OFFICIAL PROMOTIONAL VIDEO</span>
+                <span>{__koLang ? "공식 홍보 영상" : "OFFICIAL PROMOTIONAL VIDEO"}</span>
               </span>
               <h3 className="text-2xl sm:text-3xl font-black text-white">
                 {isVi ? 'Video quảng bá chính thức Chất chống thấm siêu cường K1' : 'K1 특수 초강력 방수제 공식 홍보 동영상'}
@@ -419,7 +424,7 @@ export default function WaterproofingSection({ t, onOpenConsult }) {
           <div className="space-y-10">
             <div className="text-center max-w-2xl mx-auto space-y-2 mb-8">
               <span className="text-xs font-bold text-cyan-400 uppercase tracking-widest bg-navy-900 px-3 py-1 rounded-full border border-cyan-500/30">
-                CORE COMPETITIVENESS
+                {__koLang ? "핵심 경쟁력" : "CORE COMPETITIVENESS"}
               </span>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
                 {isVi ? '6 Công nghệ cốt lõi & Ưu thế vượt trội của Chất chống thấm K1' : 'K1 방수제 6대 핵심 기술 & 타사 대비 우위성'}

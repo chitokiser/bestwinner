@@ -36,8 +36,13 @@ import {
   Utensils
 } from 'lucide-react';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function DigitalAgencyPage({ t }) {
   const isVi = t?.lang === 'vi';
+  __koLang = t?.lang === 'ko';
   const isKo = t?.lang === 'ko' || !t?.lang;
 
   // Hero Gallery Image State
@@ -168,7 +173,7 @@ export default function DigitalAgencyPage({ t }) {
       title: isKo ? "스마트 빌딩 & 인프라 AX" : "Giải pháp AX Tòa nhà Thông minh",
       subtitle: isKo ? "BEST WINNER 인프라 연동 관제" : "Tích hợp Quản lý Hạ tầng BEST WINNER",
       desc: isKo ? "승강기, AI 주차, 소방 자재, K1 방수 등 그룹 인프라 요소와 통합 연동되는 디지털 관제 및 마케팅 엔진." : "Động cơ quản lý & marketing kỹ thuật số tích hợp thang máy, bãi đỗ xe AI, PCCC & chống thấm.",
-      tags: ["AI 주차 연동", "스마트빌딩 관제", "One-Stop Synergy"]
+      tags: ["AI 주차 연동", "스마트빌딩 관제", (__koLang ? "원스톱 시너지" : "One-Stop Synergy")]
     }
   ];
 
@@ -396,7 +401,7 @@ export default function DigitalAgencyPage({ t }) {
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-cyan-400 uppercase tracking-widest bg-navy-900 px-3.5 py-1.5 rounded-full border border-cyan-500/30">
             <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-            <span>AX (AI TRANSFORMATION) INNOVATION FRAMEWORK</span>
+            <span>{__koLang ? "AX(AI 전환) 혁신 프레임워크" : "AX (AI TRANSFORMATION) INNOVATION FRAMEWORK"}</span>
           </span>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white break-keep">
             {isKo ? '기업 운영 체계 전반을 혁신하는 BEST Winner AX' : 'Khung Chuyển đổi AI & AX (AI Transformation)'}
@@ -437,7 +442,7 @@ export default function DigitalAgencyPage({ t }) {
 
                 <div className="pt-4 mt-4 border-t border-navy-800 flex items-center text-[11px] text-cyan-400 font-semibold">
                   <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-cyan-400" />
-                  <span>Agentic AI Enabled</span>
+                  <span>{__koLang ? "에이전트형 AI 적용" : "Agentic AI Enabled"}</span>
                 </div>
               </div>
             );
@@ -448,7 +453,7 @@ export default function DigitalAgencyPage({ t }) {
         <div className="bg-gradient-to-br from-navy-900 via-navy-900 to-navy-950 rounded-3xl p-6 sm:p-10 border border-gold-500/30 shadow-2xl space-y-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-navy-800 pb-6">
             <div>
-              <span className="text-xs font-bold text-gold-400 uppercase tracking-widest block mb-1">INDUSTRY-TAILORED AX OFFERINGS</span>
+              <span className="text-xs font-bold text-gold-400 uppercase tracking-widest block mb-1">{__koLang ? "업종 맞춤형 AX 서비스" : "INDUSTRY-TAILORED AX OFFERINGS"}</span>
               <h3 className="text-2xl font-extrabold text-white">
                 {isKo ? '산업 분야별 맞춤형 AX (AI Transformation) 서비스' : 'Dịch vụ AX Chuyên biệt theo Ngành'}
               </h3>
@@ -495,7 +500,7 @@ export default function DigitalAgencyPage({ t }) {
         <div className="text-center space-y-3">
           <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-gold-400 uppercase tracking-widest bg-navy-900 px-3.5 py-1.5 rounded-full border border-gold-500/30">
             <Layers className="w-3.5 h-3.5 text-gold-400" />
-            <span>DEVELOPMENT PHASES & PRICING MATRIX</span>
+            <span>{__koLang ? "개발 단계 및 가격표" : "DEVELOPMENT PHASES & PRICING MATRIX"}</span>
           </span>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
             {isKo ? '단계별 주요 업무범위 및 개발 세부 구성' : 'Quy trình Phát triển theo Giai đoạn & Chi tiết Báo giá'}
@@ -581,7 +586,7 @@ export default function DigitalAgencyPage({ t }) {
             <div className="space-y-2">
               <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-emeraldGreen-400 uppercase tracking-widest bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/30">
                 <Calculator className="w-3.5 h-3.5" />
-                <span>INTERACTIVE QUOTE ESTIMATOR</span>
+                <span>{__koLang ? "대화형 견적 계산기" : "INTERACTIVE QUOTE ESTIMATOR"}</span>
               </span>
               <h3 className="text-2xl font-black text-white">
                 {isKo ? '선택 패키지 합계 및 월 유지관리 비용' : 'Tổng Báo giá Gói đã chọn & Chi phí Bảo trì'}

@@ -33,6 +33,10 @@ import {
   Settings
 } from 'lucide-react';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) {
   const [activeTab, setActiveTab] = useState('home350');
   const [activeSubTab, setActiveSubTab] = useState(defaultSubTab || 'overview'); // 'overview' | 'library' | 'parts' | 'alliance'
@@ -47,13 +51,14 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
   const [pdfCurrentPage, setPdfCurrentPage] = useState(1);
 
   const isVi = t?.lang === 'vi' || !t?.lang;
+  __koLang = t?.lang === 'ko';
 
   const elevatorHeroImages = [
     { 
       src: '/images/elevator/1.png', 
-      title: 'BEST WINNER Premium Home Elevator', 
+      title: (__koLang ? "BEST WINNER 프리미엄 가정용 엘리베이터" : 'BEST WINNER Premium Home Elevator'), 
       desc: isVi ? 'Công nghệ Thang máy Geochang (Hàn Quốc) × Nhà máy 3.000m² tại Hà Nội' : '한국 거창승강기밸리 기술 × 베트남 하노이 3,000m² 직영 공장',
-      tag: 'FLAGSHIP VILLA & RESIDENTIAL'
+      tag: (__koLang ? "플래그십 빌라·주거" : 'FLAGSHIP VILLA & RESIDENTIAL')
     },
     { 
       src: '/images/elevator/2.png', 
@@ -90,14 +95,14 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
 
   // Elevator Parts Lifecycle Data extracted from official document
   const partsLifecycle = [
-    { part: isVi ? "Biến tần chính (Main Inverter)" : "메인 인버터 (Main Inverter)", cat: isVi ? "Phòng máy / Tủ điện" : "기계실 / 제어반", cycle: isVi ? "7 năm" : "7 년", role: isVi ? "Biến đổi điện năng VVVF & Điều khiển tốc độ chính xác" : "VVVF 고효율 전력 변환 및 정밀 속도 제어", priceVnd: "3.800.000~" },
-    { part: isVi ? "Bo mạch điều khiển chính (Main Control PCB)" : "메인 제어 PCB (Main Control PCB)", cat: isVi ? "Phòng máy / Tủ điện" : "기계실 / 제어반", cycle: isVi ? "7 năm" : "7 년", role: isVi ? "Quản lý toàn bộ logic vận hành & Mạch an toàn thang máy" : "승강기 전체 운행 로직 및 안전 회로 통제", priceVnd: "1.600.000~" },
-    { part: isVi ? "Thiết bị cứu hộ tự động (ARD)" : "자동 구출 운전 장치 (ARD)", cat: isVi ? "Phòng máy / Tủ điện" : "기계실 / 제어반", cycle: isVi ? "7 năm" : "7 년", role: isVi ? "Tự động đưa thang về tầng gần nhất & mở cửa khi mất điện" : "정전 시 최우선 층 자동 이송 및 문열림 비상구출", priceVnd: "1.700.000~" },
+    { part: isVi ? "Biến tần chính (Main Inverter)" : "메인 인버터 (Main Inverter)", cat: isVi ? "Phòng máy / Tủ điện" : "기계실 / 제어반", cycle: isVi ? (__koLang ? "7년" : "7 năm") : "7 년", role: isVi ? "Biến đổi điện năng VVVF & Điều khiển tốc độ chính xác" : "VVVF 고효율 전력 변환 및 정밀 속도 제어", priceVnd: "3.800.000~" },
+    { part: isVi ? "Bo mạch điều khiển chính (Main Control PCB)" : "메인 제어 PCB (Main Control PCB)", cat: isVi ? "Phòng máy / Tủ điện" : "기계실 / 제어반", cycle: isVi ? (__koLang ? "7년" : "7 năm") : "7 년", role: isVi ? "Quản lý toàn bộ logic vận hành & Mạch an toàn thang máy" : "승강기 전체 운행 로직 및 안전 회로 통제", priceVnd: "1.600.000~" },
+    { part: isVi ? "Thiết bị cứu hộ tự động (ARD)" : "자동 구출 운전 장치 (ARD)", cat: isVi ? "Phòng máy / Tủ điện" : "기계실 / 제어반", cycle: isVi ? (__koLang ? "7년" : "7 năm") : "7 년", role: isVi ? "Tự động đưa thang về tầng gần nhất & mở cửa khi mất điện" : "정전 시 최우선 층 자동 이송 및 문열림 비상구출", priceVnd: "1.700.000~" },
     { part: isVi ? "Nguồn điện dự phòng (UPS) / Intercom" : "비상 전원 장치 (UPS) / 통화장치", cat: isVi ? "Phòng máy / Tủ điện" : "기계실 / 제어반", cycle: isVi ? "5 năm" : "5 년", role: isVi ? "Kết nối trung tâm giám sát 24/7 & Chiếu sáng khẩn cấp" : "비상 정전 시 24시간 관제 센터 통화 및 비상 조명", priceVnd: "950.000~" },
     { part: isVi ? "Động cơ kéo (Traction Machine)" : "구동기 (Traction Machine)", cat: isVi ? "Bộ truyền động / Động cơ" : "구동부 / 권상기", cycle: isVi ? "15 năm" : "15 년", role: isVi ? "Động cơ nam châm vĩnh cửu PM Gearless không hộp số" : "기어리스 영구자석 동기모터 (PM Motor) 핵심 권상", priceVnd: "11.500.000~" },
-    { part: isVi ? "Phanh điện từ (Brake System)" : "전자기계 브레이크 (Brake System)", cat: isVi ? "Bộ truyền động / Động cơ" : "구동부 / 권상기", cycle: isVi ? "7 năm" : "7 년", role: isVi ? "Cấu trúc phanh kép hãm khẩn cấp & Giữ bằng tầng" : "이중 브레이크 구조로 비상 제동 및 수평 유지", priceVnd: "1.850.000~" },
+    { part: isVi ? "Phanh điện từ (Brake System)" : "전자기계 브레이크 (Brake System)", cat: isVi ? "Bộ truyền động / Động cơ" : "구동부 / 권상기", cycle: isVi ? (__koLang ? "7년" : "7 năm") : "7 년", role: isVi ? "Cấu trúc phanh kép hãm khẩn cấp & Giữ bằng tầng" : "이중 브레이크 구조로 비상 제동 및 수평 유지", priceVnd: "1.850.000~" },
     { part: isVi ? "Thiết bị chống vượt tốc (Rope Brake)" : "상승 과속 방지 장치 (Rope Brake)", cat: isVi ? "Hệ thống an toàn" : "안전 시스템", cycle: isVi ? "10 năm" : "10 년", role: isVi ? "Kẹp cáp phanh trực tiếp khi phát hiện vượt tốc chiều lên" : "상승 방향 과속 감지 시 로프 직접 클램핑 제동", priceVnd: "2.600.000~" },
-    { part: isVi ? "Thiết bị chống cabin di chuyển khi cửa mở (UCMP)" : "개문 출발 방지 장치 (UCMP)", cat: isVi ? "Hệ thống an toàn" : "안전 시스템", cycle: isVi ? "7 năm" : "7 년", role: isVi ? "Tự động khóa ngay khi phát hiện nguy cơ cabin di chuyển mở cửa" : "문이 열린 채 출발하는 위험 감지 즉시 자동 락", priceVnd: "1.500.000~" },
+    { part: isVi ? "Thiết bị chống cabin di chuyển khi cửa mở (UCMP)" : "개문 출발 방지 장치 (UCMP)", cat: isVi ? "Hệ thống an toàn" : "안전 시스템", cycle: isVi ? (__koLang ? "7년" : "7 năm") : "7 년", role: isVi ? "Tự động khóa ngay khi phát hiện nguy cơ cabin di chuyển mở cửa" : "문이 열린 채 출발하는 위험 감지 즉시 자동 락", priceVnd: "1.500.000~" },
     { part: isVi ? "Bộ hãm an toàn (Safety Gear)" : "추락 방지 세이프티 기어 (Safety Gear)", cat: isVi ? "Hệ thống an toàn" : "안전 시스템", cycle: isVi ? "15 năm" : "15 년", role: isVi ? "Kẹp cơ khí vào ray dẫn hướng khi đứt cáp chính" : "주로프 파손 시 가이드레일 물리적 웨지 브레이크", priceVnd: "1.800.000~" },
     { part: isVi ? "Cảm biến cửa hồng ngoại (Multi-beam Sensor)" : "멀티빔 도어 센서 (Multi-beam Sensor)", cat: isVi ? "Cabin & Cửa" : "카 및 도어", cycle: isVi ? "5 năm" : "5 년", role: isVi ? "128 kênh tia hồng ngoại chống kẹt tay tuyệt đối" : "128채널 적외선 빔으로 승객 손끼임 완벽 방지", priceVnd: "550.000~" },
     { part: isVi ? "Ray dẫn hướng (Guide Rail)" : "주행 가이드 레일 (Guide Rail)", cat: isVi ? "Hố thang / PIT" : "승강로 / 피트", cycle: isVi ? "20 năm" : "20 년", role: isVi ? "Ray cắt chính xác điều hướng di chuyển thẳng đứng" : "정밀 절삭 가이드레일로 수직 이동 유도", priceVnd: "175.000~ /m" },
@@ -249,10 +254,10 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
       slidePage: 7,
       tag: "CATALOG PAGE 7",
       details: [
-        { label: "Chất liệu", val: "Titanium Champagne Gold Mirror & Etching" },
-        { label: "Đèn trần", val: "Direct LED + Indirect Mood LED" },
+        { label: (__koLang ? "소재" : "Chất liệu"), val: (__koLang ? "티타늄 샴페인 골드 미러 & 에칭" : "Titanium Champagne Gold Mirror & Etching") },
+        { label: (__koLang ? "천장 조명" : "Đèn trần"), val: "Direct LED + Indirect Mood LED" },
         { label: "Sàn cabin", val: "High-grade PVC Marble / Real Granite" },
-        { label: "Bảng COP", val: "Full-height Touch Digital COP Panel" }
+        { label: (__koLang ? "COP 패널" : "Bảng COP"), val: (__koLang ? "전면 터치 디지털 COP 패널" : "Full-height Touch Digital COP Panel") }
       ]
     },
     {
@@ -265,10 +270,10 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
       slidePage: 8,
       tag: "CATALOG PAGE 8",
       details: [
-        { label: "Chất liệu", val: "Anti-Fingerprint (AFP) Stainless Hairline" },
-        { label: "Đèn trần", val: "Ultra-slim Laser Cut Direct LED Panel" },
+        { label: (__koLang ? "소재" : "Chất liệu"), val: (__koLang ? "지문 방지(AFP) 스테인리스 헤어라인" : "Anti-Fingerprint (AFP) Stainless Hairline") },
+        { label: (__koLang ? "천장 조명" : "Đèn trần"), val: (__koLang ? "초슬림 레이저 컷 직하형 LED 패널" : "Ultra-slim Laser Cut Direct LED Panel") },
         { label: "Sàn cabin", val: "Durable PVC Tile / Non-slip Checker Plate" },
-        { label: "Bảng COP", val: "Stainless Mechanical Push Button COP" }
+        { label: (__koLang ? "COP 패널" : "Bảng COP"), val: (__koLang ? "스테인리스 기계식 푸시버튼 COP" : "Stainless Mechanical Push Button COP") }
       ]
     },
     {
@@ -281,10 +286,10 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
       slidePage: 9,
       tag: "CATALOG PAGE 9",
       details: [
-        { label: "Chất liệu", val: "Black Titanium Mirror + Rose Gold Laser" },
-        { label: "Đèn trần", val: "Warm Ambient Mood LED Ceiling Panel" },
-        { label: "Sàn cabin", val: "Custom Patterned Natural Granite Floor" },
-        { label: "Bảng COP", val: "Black Mirror Touch COP & Voice Guide" }
+        { label: (__koLang ? "소재" : "Chất liệu"), val: "Black Titanium Mirror + Rose Gold Laser" },
+        { label: (__koLang ? "천장 조명" : "Đèn trần"), val: (__koLang ? "웜톤 무드 LED 천장 패널" : "Warm Ambient Mood LED Ceiling Panel") },
+        { label: "Sàn cabin", val: (__koLang ? "맞춤 패턴 천연 화강석 바닥" : "Custom Patterned Natural Granite Floor") },
+        { label: (__koLang ? "COP 패널" : "Bảng COP"), val: (__koLang ? "블랙 미러 터치 COP & 음성 안내" : "Black Mirror Touch COP & Voice Guide") }
       ]
     },
     {
@@ -297,10 +302,10 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
       slidePage: 6,
       tag: "CATALOG PAGE 6",
       details: [
-        { label: "Cấu trúc kính", val: "3-Side Laminated Tempered Safety Glass" },
-        { label: "Hiệu ứng đèn", val: "Circular RGB/LED Ambient Soft Halo Light" },
+        { label: (__koLang ? "유리 구조" : "Cấu trúc kính"), val: "3-Side Laminated Tempered Safety Glass" },
+        { label: (__koLang ? "조명 효과" : "Hiệu ứng đèn"), val: "Circular RGB/LED Ambient Soft Halo Light" },
         { label: "Sàn cabin", val: "Circular Granite / Marble Mosaic Floor" },
-        { label: "Vị trí áp dụng", val: "5-Star Hotels, Luxury Vlllas & Penthouse" }
+        { label: (__koLang ? "적용 위치" : "Vị trí áp dụng"), val: "5-Star Hotels, Luxury Vlllas & Penthouse" }
       ]
     },
     {
@@ -313,10 +318,10 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
       slidePage: 2,
       tag: "HANOI FACTORY",
       details: [
-        { label: "Quy mô nhà máy", val: "Hanoi Ha Dong 3,000m² Direct Plant" },
-        { label: "Năng lực sản xuất", val: "250+ Cabins Annual Assembly & Cutting" },
-        { label: "Nhân lực kỹ thuật", val: "17 Engineers (2 Korean Chiefs + 15 Local)" },
-        { label: "Kiểm soát chất lượng", val: "Pre-shipment 48-point Test Run" }
+        { label: (__koLang ? "공장 규모" : "Quy mô nhà máy"), val: "Hanoi Ha Dong 3,000m² Direct Plant" },
+        { label: (__koLang ? "생산 능력" : "Năng lực sản xuất"), val: "250+ Cabins Annual Assembly & Cutting" },
+        { label: (__koLang ? "기술 인력" : "Nhân lực kỹ thuật"), val: "17 Engineers (2 Korean Chiefs + 15 Local)" },
+        { label: (__koLang ? "품질 관리" : "Kiểm soát chất lượng"), val: "Pre-shipment 48-point Test Run" }
       ]
     },
     {
@@ -327,12 +332,12 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
       desc: isVi ? "Trang 3 Catalog / Mạng lưới kỹ thuật Geochang Valley (Joeun, Modun, Majortech) & Đạt chuẩn QCVN 32 Việt Nam" : "공식 카다로그 p.3 / 한국 거창승강기밸리(조은, 모든, 메이저텍 등) 기술 네트워크 및 베트남 국가 규정 충족",
       src: "/images/elevator/gallery/catalog_page_3.webp",
       slidePage: 3,
-      tag: "CERTIFICATION & ALLIANCE",
+      tag: (__koLang ? "인증 및 협력" : "CERTIFICATION & ALLIANCE"),
       details: [
-        { label: "Hợp tác kỹ thuật", val: "JOEUN ELEVATOR & Geochang Cluster" },
-        { label: "Chuẩn an toàn", val: "QCVN 32:2018/BLDTBXH Safety Certified" },
-        { label: "Linh kiện cốt lõi", val: "Korean PM Traction Machine & Safety Gear" },
-        { label: "Bảo hành", val: "1-Year Direct Factory Warranty" }
+        { label: (__koLang ? "기술 협력" : "Hợp tác kỹ thuật"), val: (__koLang ? "조은엘리베이터 & 거창 승강기 클러스터" : "JOEUN ELEVATOR & Geochang Cluster") },
+        { label: (__koLang ? "안전 기준" : "Chuẩn an toàn"), val: "QCVN 32:2018/BLDTBXH Safety Certified" },
+        { label: (__koLang ? "핵심 부품" : "Linh kiện cốt lõi"), val: (__koLang ? "한국산 PM 권상기 & 세이프티 기어" : "Korean PM Traction Machine & Safety Gear") },
+        { label: (__koLang ? "보증" : "Bảo hành"), val: "1-Year Direct Factory Warranty" }
       ]
     },
     {
@@ -344,10 +349,10 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
       slidePage: 4,
       tag: "CATALOG PAGE 4",
       details: [
-        { label: "Tải trọng", val: "350 kg (4-5 Persons)" },
-        { label: "Số tầng phục vụ", val: "3 to 7 Stops (Max 30m Rise)" },
-        { label: "Nguồn điện", val: "Single Phase 220V Home Power" },
-        { label: "Độ sâu Hố PIT", val: "Min 300mm Ultra-Low Pit Retrofit" }
+        { label: (__koLang ? "적재 하중" : "Tải trọng"), val: "350 kg (4-5 Persons)" },
+        { label: (__koLang ? "운행 층수" : "Số tầng phục vụ"), val: "3 to 7 Stops (Max 30m Rise)" },
+        { label: (__koLang ? "전원" : "Nguồn điện"), val: "Single Phase 220V Home Power" },
+        { label: (__koLang ? "PIT 깊이" : "Độ sâu Hố PIT"), val: "Min 300mm Ultra-Low Pit Retrofit" }
       ]
     },
     {
@@ -359,10 +364,10 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
       slidePage: 10,
       tag: "CATALOG PAGE 10",
       details: [
-        { label: "Trần cabin", val: "Direct / Indirect Laser Cut LED Ceiling" },
-        { label: "Tay vịn", val: "Champagne Gold / Stainless Round Rail" },
+        { label: (__koLang ? "카 천장" : "Trần cabin"), val: "Direct / Indirect Laser Cut LED Ceiling" },
+        { label: (__koLang ? "손잡이" : "Tay vịn"), val: "Champagne Gold / Stainless Round Rail" },
         { label: "Sàn cabin", val: "Marble Pattern PVC / Natural Granite" },
-        { label: "Nút bấm", val: "Vandal-resistant LED Push Buttons" }
+        { label: (__koLang ? "버튼" : "Nút bấm"), val: (__koLang ? "파손 방지 LED 푸시버튼" : "Vandal-resistant LED Push Buttons") }
       ]
     },
     {
@@ -375,10 +380,10 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
       slidePage: 11,
       tag: "CATALOG PAGE 11",
       details: [
-        { label: "Tải trọng hàng", val: "1,000 kg ~ 5,000 kg Heavy Load" },
-        { label: "Kiểu cửa", val: "Heavy Duty Bi-parting & Side Open" },
-        { label: "Độ bền sàn", val: "Reinforced Steel Checker Plate" },
-        { label: "Hệ điều khiển", val: "High-torque VVVF Inverter Control" }
+        { label: (__koLang ? "화물 적재 하중" : "Tải trọng hàng"), val: "1,000 kg ~ 5,000 kg Heavy Load" },
+        { label: (__koLang ? "도어 방식" : "Kiểu cửa"), val: (__koLang ? "중하중 양개·편개 도어" : "Heavy Duty Bi-parting & Side Open") },
+        { label: (__koLang ? "바닥 내구성" : "Độ bền sàn"), val: (__koLang ? "강화 철판 체커 플레이트" : "Reinforced Steel Checker Plate") },
+        { label: (__koLang ? "제어 시스템" : "Hệ điều khiển"), val: (__koLang ? "고토크 VVVF 인버터 제어" : "High-torque VVVF Inverter Control") }
       ]
     },
     {
@@ -389,12 +394,12 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
       desc: isVi ? "Trang 12 Catalog / Cabin mạ vàng Champagne Gold & Khung cửa inox hoàn thiện tại biệt thự Tây Hồ" : "공식 카다로그 p.12 / 샴페인 골드 미러 카빈 및 층별 인테리어 도어 프레임 마감 준공 현장",
       src: "/images/elevator/gallery/catalog_page_12.webp",
       slidePage: 12,
-      tag: "TAY HO VILLA SITE",
+      tag: (__koLang ? "떠이호 빌라 현장" : "TAY HO VILLA SITE"),
       details: [
-        { label: "Địa điểm", val: "Tay Ho District, Hanoi, Vietnam" },
-        { label: "Loại công trình", val: "5-Story Luxury Villa Residence" },
-        { label: "Dòng sản phẩm", val: "BEST HOME 350 Gold Mirror Custom" },
-        { label: "Trạng thái", val: "Completed & Operating (Active Maintenance)" }
+        { label: (__koLang ? "위치" : "Địa điểm"), val: (__koLang ? "베트남 하노이 떠이호구" : "Tay Ho District, Hanoi, Vietnam") },
+        { label: (__koLang ? "건물 유형" : "Loại công trình"), val: "5-Story Luxury Villa Residence" },
+        { label: (__koLang ? "제품 라인" : "Dòng sản phẩm"), val: "BEST HOME 350 Gold Mirror Custom" },
+        { label: (__koLang ? "상태" : "Trạng thái"), val: (__koLang ? "준공·운행 중 (유지보수 진행)" : "Completed & Operating (Active Maintenance)") }
       ]
     },
     {
@@ -405,12 +410,12 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
       desc: isVi ? "Trang 13 Catalog / Lắp đặt thang máy không đào sâu móng với Hố PIT 300mm tận dụng không gian giếng trời" : "공식 카다로그 p.13 / 바닥 굴착 없이 최소 300mm PIT 조건으로 계단참 공간을 활용한 홈승강기 설치",
       src: "/images/elevator/gallery/catalog_page_13.webp",
       slidePage: 13,
-      tag: "MY DINH RETROFIT",
+      tag: (__koLang ? "미딩 리모델링 현장" : "MY DINH RETROFIT"),
       details: [
-        { label: "Địa điểm", val: "My Dinh District, Hanoi, Vietnam" },
-        { label: "Loại công trình", val: "6-Story Townhouse Retrofit" },
-        { label: "Kết cấu Hố PIT", val: "300mm Shallow Pit Special Civil Work" },
-        { label: "Nguồn điện", val: "Single Phase 220V Home Power" }
+        { label: (__koLang ? "위치" : "Địa điểm"), val: (__koLang ? "베트남 하노이 미딩" : "My Dinh District, Hanoi, Vietnam") },
+        { label: (__koLang ? "건물 유형" : "Loại công trình"), val: "6-Story Townhouse Retrofit" },
+        { label: (__koLang ? "PIT 구조" : "Kết cấu Hố PIT"), val: "300mm Shallow Pit Special Civil Work" },
+        { label: (__koLang ? "전원" : "Nguồn điện"), val: "Single Phase 220V Home Power" }
       ]
     },
     {
@@ -423,10 +428,10 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
       slidePage: 14,
       tag: "SMART SERVICE A/S",
       details: [
-        { label: "Hệ thống ARD", val: "Automatic Rescue Device (ARD) Active" },
-        { label: "Truy xuất 이력", val: "QR-code Component Maintenance Tracking" },
-        { label: "Ứng cứu khẩn cấp", val: "Under 30-min Emergency Response in Hanoi" },
-        { label: "Chế độ bảo hành", val: "12-Month Free Guarantee + Monthly Check" }
+        { label: (__koLang ? "ARD 시스템" : "Hệ thống ARD"), val: (__koLang ? "자동 구출 장치(ARD) 작동" : "Automatic Rescue Device (ARD) Active") },
+        { label: "Truy xuất 이력", val: (__koLang ? "QR 코드 부품 유지보수 이력 관리" : "QR-code Component Maintenance Tracking") },
+        { label: (__koLang ? "비상 대응" : "Ứng cứu khẩn cấp"), val: "Under 30-min Emergency Response in Hanoi" },
+        { label: (__koLang ? "보증 정책" : "Chế độ bảo hành"), val: "12-Month Free Guarantee + Monthly Check" }
       ]
     }
   ];
@@ -437,7 +442,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
     slogan: "Korean Technology × Vietnamese Production × Local Service",
     vision: isVi ? "“Chúng tôi không chỉ bán thang máy, chúng tôi hoàn thiện giá trị đích thực cho ngôi nhà của bạn”" : "“엘리베이터를 파는 회사가 아니라, 주택의 가치를 완성하는 기업”",
     stats: [
-      { label: isVi ? "Kinh nghiệm hoạt động tại VN" : "베트남 현지 사업 경력", value: "7 năm", desc: isVi ? "Đã thi công 180+ thang tại Hà Nội & các tỉnh" : "하노이 및 주요 도시 180대+ 준공" },
+      { label: isVi ? "Kinh nghiệm hoạt động tại VN" : "베트남 현지 사업 경력", value: (__koLang ? "7년" : "7 năm"), desc: isVi ? "Đã thi công 180+ thang tại Hà Nội & các tỉnh" : "하노이 및 주요 도시 180대+ 준공" },
       { label: isVi ? "Thành tích Lắp đặt & Bàn giao" : "실제 납품·설치 실적", value: "180대+", desc: isVi ? "Nhà phố, Biệt thự, Tòa nhà thương mại" : "타운하우스·빌라·상업시설 레퍼런스" },
       { label: isVi ? "Nhà máy Sản xuất Trực tiếp" : "직영 공장 생산 연계", value: "3.000m²", desc: isVi ? "Nhà máy sản xuất Cabin tại Hà Đông, Hà Nội" : "하노이 하동 자체 Cabin 제작" },
       { label: isVi ? "Đội ngũ Kỹ sư Chuyên trách" : "직영 엔지니어링 팀", value: "17명", desc: isVi ? "2 Chuyên gia Hàn Quốc + 15 Kỹ sư VN" : "한국인 수석 기술진 2인 + 현지 15인" }
@@ -661,7 +666,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
             <div>
               <span className="inline-flex items-center space-x-2 bg-red-500/20 text-red-400 px-3.5 py-1.5 rounded-full text-xs font-extrabold border border-red-500/40 mb-2">
                 <Play className="w-3.5 h-3.5 fill-red-400" />
-                <span>OFFICIAL PROMOTIONAL VIDEO</span>
+                <span>{__koLang ? "공식 홍보 영상" : "OFFICIAL PROMOTIONAL VIDEO"}</span>
               </span>
               <h3 className="text-2xl sm:text-3xl font-black text-white">
                 {isVi ? 'Video Quảng bá Chính thức BEST WINNER ELEVATOR VN' : 'BEST WINNER ELEVATOR VN 공식 홍보 동영상'}
@@ -768,7 +773,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  BEST HOME 350 (Gia đình)
+                  {__koLang ? "BEST HOME 350 (가정용)" : "BEST HOME 350 (Gia đình)"}
                 </button>
                 <button
                   onClick={() => setActiveTab('commercial')}
@@ -778,7 +783,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  Commercial (Thương mại)
+                  {__koLang ? "상업용" : "Commercial (Thương mại)"}
                 </button>
                 <button
                   onClick={() => setActiveTab('industrial')}
@@ -788,7 +793,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  Industrial (Tải hàng)
+                  {__koLang ? "산업용 (화물)" : "Industrial (Tải hàng)"}
                 </button>
               </div>
             </div>
@@ -886,7 +891,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                 <div className="space-y-2 max-w-3xl">
                   <div className="inline-flex items-center space-x-2 bg-gold-500/20 text-gold-400 px-3 py-1 rounded-full text-xs font-bold border border-gold-500/30">
                     <Sparkles className="w-3.5 h-3.5 text-gold-400" />
-                    <span>BEST WINNER OFFICIAL CATALOG PRESENTATION & REAL GALLERY</span>
+                    <span>{__koLang ? "BEST WINNER 공식 카탈로그 & 실제 시공 갤러리" : (__koLang ? "BEST WINNER 공식 카탈로그 & 실제 시공 갤러리" : "BEST WINNER OFFICIAL CATALOG PRESENTATION & REAL GALLERY")}</span>
                   </div>
                   <h4 className="text-2xl sm:text-3xl font-black text-white flex items-center space-x-2">
                     <span>📸 {isVi ? 'Thư viện Ảnh Thực tế Thi công & Cabin BEST WINNER' : 'BEST WINNER 실제 시공 & 카빈 갤러리'}</span>
@@ -1211,7 +1216,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                           <span className="font-bold text-gold-400">{product.speed}</span>
                         </div>
                         <div className="bg-navy-950 p-2.5 rounded-xl border border-navy-800">
-                          <span className="text-slate-400 block text-[10px]">{isVi ? 'Tải trọng' : '적재 용량'}</span>
+                          <span className="text-slate-400 block text-[10px]">{isVi ? (__koLang ? "적재 하중" : 'Tải trọng') : '적재 용량'}</span>
                           <span className="font-bold text-gold-400">{product.capacity}</span>
                         </div>
                         <div className="bg-navy-950 p-2.5 rounded-xl border border-navy-800">
@@ -1585,7 +1590,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                         <span className="font-bold text-gold-400 text-sm">{activeCatalogModal.speed}</span>
                       </div>
                       <div className="p-3 rounded-xl bg-navy-950 border border-navy-800">
-                        <span className="text-[10px] text-slate-400 block">{isVi ? 'Tải trọng' : '적재 용량'}</span>
+                        <span className="text-[10px] text-slate-400 block">{isVi ? (__koLang ? "적재 하중" : 'Tải trọng') : '적재 용량'}</span>
                         <span className="font-bold text-gold-400 text-sm">{activeCatalogModal.capacity}</span>
                       </div>
                       <div className="p-3 rounded-xl bg-navy-950 border border-navy-800 col-span-2">
@@ -1663,7 +1668,7 @@ export default function ElevatorSection({ t, onOpenCalculator, defaultSubTab }) 
                     <table className="w-full text-left border-collapse">
                       <thead className="bg-navy-950 text-gold-400 font-bold border-b border-navy-800">
                         <tr>
-                          <th className="p-3">{isVi ? 'Tải trọng' : '용량 (Capacity)'}</th>
+                          <th className="p-3">{isVi ? (__koLang ? "적재 하중" : 'Tải trọng') : '용량 (Capacity)'}</th>
                           <th className="p-3">{isVi ? 'Tốc độ' : '속도 (Speed)'}</th>
                           <th className="p-3">{isVi ? 'Hố PIT tối thiểu' : '최소 PIT 깊이'}</th>
                           <th className="p-3">{isVi ? 'Overhead (OH)' : '오버헤드 (OH)'}</th>

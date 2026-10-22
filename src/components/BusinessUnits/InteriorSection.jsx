@@ -19,6 +19,10 @@ import {
   Play
 } from 'lucide-react';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function InteriorSection({ t, onOpenConsult }) {
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeStyle, setActiveStyle] = useState('luxury');
@@ -27,6 +31,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
 
   const isVi = t?.lang === 'vi' || !t?.lang;
+  __koLang = t?.lang === 'ko';
 
   useEffect(() => {
     if (!selectedPdfProject) return;
@@ -46,9 +51,9 @@ export default function InteriorSection({ t, onOpenConsult }) {
   const interiorHeroImages = [
     { 
       src: '/images/interior/1.png', 
-      title: isVi ? 'Thiết kế Nội thất Cao cấp Penthouse & Biệt thự' : 'Luxury Penthouse & Villa Interior', 
+      title: isVi ? 'Thiết kế Nội thất Cao cấp Penthouse & Biệt thự' : (__koLang ? "럭셔리 펜트하우스·빌라 인테리어" : 'Luxury Penthouse & Villa Interior'), 
       desc: isVi ? 'Không gian nội thất may đo đẳng cấp cho Penthouse & Biệt thự riêng tư' : '프라이빗 펜트하우스 & 빌라 고급 맞춤 인테리어',
-      tag: 'LUXURY RESIDENTIAL'
+      tag: (__koLang ? "럭셔리 주거" : 'LUXURY RESIDENTIAL')
     },
     { 
       src: '/images/interior/2.png', 
@@ -89,12 +94,12 @@ export default function InteriorSection({ t, onOpenConsult }) {
       id: 19,
       category: 'commercial_fnb',
       catLabel: isVi ? 'Thương mại & F&B' : 'Commercial & F&B',
-      title: 'DODO SHOP (Hanoi)',
+      title: (__koLang ? "DODO SHOP (하노이)" : 'DODO SHOP (Hanoi)'),
       subtitle: isVi ? 'Thiết kế & Thi công nội thất trọn gói Cửa hàng thời trang & Phụ kiện cao cấp DODO SHOP Hà Nội' : '하노이 프리미엄 패션 부티크 & 잡화 편집샵 DODO SHOP 턴키 인테리어 시공',
       year: '2026.02',
       location: 'Hanoi',
       img: '/images/interior/dodo/1.jpg',
-      tag: 'Fashion Boutique',
+      tag: (__koLang ? "패션 부티크" : 'Fashion Boutique'),
       gallery: [
         '/images/interior/dodo/1.jpg',
         '/images/interior/dodo/2.jpg',
@@ -106,7 +111,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
       id: 1,
       category: 'hotel_public',
       catLabel: isVi ? 'Khách sạn & Công cộng' : 'Hotel & Public Space',
-      title: 'Shilla Hotel (Hanoi)',
+      title: (__koLang ? "신라호텔 (하노이)" : 'Shilla Hotel (Hanoi)'),
       subtitle: isVi ? 'Thi công phim dán nội thất & Không gian khách sạn 5 sao Shilla Hà Nội' : '하노이 신라호텔 인테리어 필름 & 5성급 호텔 공간 시공',
       year: '2026.03',
       location: 'Hanoi',
@@ -123,7 +128,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
       year: '2025.12',
       location: 'Landmark 72, Hanoi',
       img: '/images/interior/portfolio/page_14.png',
-      tag: 'Executive Office',
+      tag: (__koLang ? "임원 사무실" : 'Executive Office'),
       pdfPage: 14
     },
     {
@@ -135,7 +140,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
       year: '2025.07',
       location: 'Hung Yen',
       img: '/images/interior/portfolio/page_15.png',
-      tag: 'Shopping Mall Store',
+      tag: (__koLang ? "쇼핑몰 매장" : 'Shopping Mall Store'),
       pdfPage: 15
     },
     {
@@ -154,24 +159,24 @@ export default function InteriorSection({ t, onOpenConsult }) {
       id: 5,
       category: 'office_factory',
       catLabel: isVi ? 'Văn phòng & Nhà máy' : 'Office & Factory',
-      title: 'LG Electronics Factory (Hai Phong)',
+      title: (__koLang ? "LG전자 공장 (하이퐁)" : 'LG Electronics Factory (Hai Phong)'),
       subtitle: isVi ? 'Nội thất phòng họp lớn P3 & Tách vách kính âm thanh Nhà máy LG Electronics Hải Phòng' : 'LG전자 하이퐁 공장 P3 대회의실 인테리어 & 음향/유리 벽체 시공',
       year: '2022.03',
-      location: 'KCN Trang Due, Hai Phong',
+      location: (__koLang ? "하이퐁 짱주에 산업단지" : 'KCN Trang Due, Hai Phong'),
       img: '/images/interior/portfolio/page_49.png',
-      tag: 'Global Tech Factory',
+      tag: (__koLang ? "글로벌 기술 공장" : 'Global Tech Factory'),
       pdfPage: 49
     },
     {
       id: 6,
       category: 'office_factory',
       catLabel: isVi ? 'Văn phòng & Nhà máy' : 'Office & Factory',
-      title: 'Dreamtech Factory (Bac Ninh)',
+      title: (__koLang ? "드림텍 공장 (박닌)" : 'Dreamtech Factory (Bac Ninh)'),
       subtitle: isVi ? 'Cải tạo toàn bộ Sảnh, Lễ tân, Phòng nghỉ & Cafe Nhà máy Dreamtech Bắc Ninh' : '드림텍 박닌 공장 1F 로비, 리셉션, 휴게실 & 카페 전면 리모델링',
       year: '2026.03',
-      location: 'KCN Yen Phong, Bac Ninh',
+      location: (__koLang ? "박닌 옌퐁 산업단지" : 'KCN Yen Phong, Bac Ninh'),
       img: '/images/interior/portfolio/page_12.png',
-      tag: 'Lobby & Reception',
+      tag: (__koLang ? "로비 & 리셉션" : 'Lobby & Reception'),
       pdfPage: 12
     },
     {
@@ -183,86 +188,86 @@ export default function InteriorSection({ t, onOpenConsult }) {
       year: '2024.09',
       location: 'Landmark 72, Hanoi',
       img: '/images/interior/portfolio/page_28.png',
-      tag: 'Luxury Apartment',
+      tag: (__koLang ? "럭셔리 아파트" : 'Luxury Apartment'),
       pdfPage: 28
     },
     {
       id: 8,
       category: 'beauty_golf',
       catLabel: isVi ? 'Làm đẹp & Thể thao' : 'Beauty & Golf',
-      title: 'OJALGONG Golf Zon (Westpoint Hanoi)',
+      title: (__koLang ? "오잘공 골프존 (하노이 웨스트포인트)" : 'OJALGONG Golf Zon (Westpoint Hanoi)'),
       subtitle: isVi ? 'Thi công trọn gói không gian dịch vụ Golf 3D màn hình Westpoint Hà Nội' : '하노이 웨스트포인트 3D 스크린 골프 서비스 공간 턴키 시공',
       year: '2023.08',
-      location: 'Westpoint, Hanoi',
+      location: (__koLang ? "하노이 웨스트포인트" : 'Westpoint, Hanoi'),
       img: '/images/interior/portfolio/page_37.png',
-      tag: 'Sports & Leisure',
+      tag: (__koLang ? "스포츠·레저" : 'Sports & Leisure'),
       pdfPage: 37
     },
     {
       id: 9,
       category: 'hotel_public',
       catLabel: isVi ? 'Khách sạn & Công cộng' : 'Hotel & Public Space',
-      title: 'Woori Bank Branches (Vinh Phuc & Ha Nam)',
+      title: (__koLang ? "우리은행 지점 (빈푹·하남)" : 'Woori Bank Branches (Vinh Phuc & Ha Nam)'),
       subtitle: isVi ? 'Nội thất không gian tài chính & Quầy VIP Ngân hàng Woori Bank Hà Nội, Vĩnh Phúc, Hà Nam' : '우리은행 하노이, 영푹, 하남 지점 금융 공간 & VIP 창구 인테리어',
       year: '2019-2020',
-      location: 'Vinh Phuc & Ha Nam',
+      location: (__koLang ? "빈푹·하남" : 'Vinh Phuc & Ha Nam'),
       img: '/images/interior/portfolio/page_60.png',
-      tag: 'Banking & Financial',
+      tag: (__koLang ? "은행·금융" : 'Banking & Financial'),
       pdfPage: 60
     },
     {
       id: 10,
       category: 'hotel_public',
       catLabel: isVi ? 'Khách sạn & Công cộng' : 'Hotel & Public Space',
-      title: 'Shinhan Bank & Korean Embassy (Hanoi)',
+      title: (__koLang ? "신한은행 & 주베트남 한국대사관 (하노이)" : 'Shinhan Bank & Korean Embassy (Hanoi)'),
       subtitle: isVi ? 'Thi công Đại sứ quán Hàn Quốc tại Việt Nam & Chi nhánh Shinhan Bank Landmark 72' : '주베트남 대한민국 대사관 & 신한은행 랜드마크 지점 시공',
       year: '2018-2019',
       location: 'Hanoi',
       img: '/images/interior/portfolio/page_63.png',
-      tag: 'Public & Embassy',
+      tag: (__koLang ? "공공·대사관" : 'Public & Embassy'),
       pdfPage: 63
     },
     {
       id: 11,
       category: 'office_factory',
       catLabel: isVi ? 'Văn phòng & Nhà máy' : 'Office & Factory',
-      title: 'KOICA Company Office (Hanoi)',
+      title: (__koLang ? "KOICA 사무소 (하노이)" : 'KOICA Company Office (Hanoi)'),
       subtitle: isVi ? 'Vách ngăn kính & Nội thất Văn phòng KOICA (Cơ quan Hợp tác Quốc tế Hàn Quốc) Hà Nội' : '한국국제협력단(KOICA) 하노이 오피스 유리 파티션 & 인테리어',
       year: '2024.06',
       location: 'Hanoi',
       img: '/images/interior/portfolio/page_30.png',
-      tag: 'Public & NGO Office',
+      tag: (__koLang ? "공공·NGO 사무실" : 'Public & NGO Office'),
       pdfPage: 30
     },
     {
       id: 12,
       category: 'commercial_fnb',
       catLabel: isVi ? 'Thương mại & F&B' : 'Commercial & F&B',
-      title: 'HOJI TEA HOUSE (Tràng Tiền Plaza)',
+      title: (__koLang ? "HOJI TEA HOUSE (짱띠엔 플라자)" : 'HOJI TEA HOUSE (Tràng Tiền Plaza)'),
       subtitle: isVi ? 'Thi công không gian thương mại Quán trà cao cấp Hoji Tea House Tràng Tiền Plaza' : '하노이 짱띠엔 프라자 프리미엄 티하우스 상업 공간 시공',
       year: '2024.10',
-      location: 'Trang Tien Plaza, Hanoi',
+      location: (__koLang ? "하노이 짱띠엔 플라자" : 'Trang Tien Plaza, Hanoi'),
       img: '/images/interior/portfolio/page_27.png',
-      tag: 'Commercial & Cafe',
+      tag: (__koLang ? "상업·카페" : 'Commercial & Cafe'),
       pdfPage: 27
     },
     {
       id: 13,
       category: 'beauty_golf',
       catLabel: isVi ? 'Làm đẹp & Thể thao' : 'Beauty & Golf',
-      title: 'Pilates Studio (Mydinh Hanoi)',
+      title: (__koLang ? "필라테스 스튜디오 (하노이 미딩)" : 'Pilates Studio (Mydinh Hanoi)'),
       subtitle: isVi ? 'Nội thất trọn gói Studio Pilates chuẩn Hàn Quốc tại Mỹ Đình Hà Nội' : '하노이 미딩 한국형 기구 필라테스 스튜디오 턴키 인테리어',
       year: '2025.04',
       location: 'My Dinh, Hanoi',
       img: '/images/interior/portfolio/page_19.png',
-      tag: 'Beauty & Wellness',
+      tag: (__koLang ? "뷰티·웰니스" : 'Beauty & Wellness'),
       pdfPage: 19
     },
     {
       id: 14,
       category: 'beauty_golf',
       catLabel: isVi ? 'Làm đẹp & Thể thao' : 'Beauty & Golf',
-      title: 'MEDIVISOR Korean Beauty Salon & Spa',
+      title: (__koLang ? "MEDIVISOR 한국 뷰티 살롱 & 스파" : 'MEDIVISOR Korean Beauty Salon & Spa'),
       subtitle: isVi ? 'Thi công Salon làm đẹp & The Classe Spa cao cấp Medivisor Hà Nội' : '하노이 메디바이저 프리미엄 뷰티 살롱 & 더클라세 스파 시공',
       year: '2023.02',
       location: 'Hanoi',
@@ -274,31 +279,31 @@ export default function InteriorSection({ t, onOpenConsult }) {
       id: 15,
       category: 'office_factory',
       catLabel: isVi ? 'Văn phòng & Nhà máy' : 'Office & Factory',
-      title: 'Hyundai Kefico Factory (Hai Duong)',
+      title: (__koLang ? "현대케피코 공장 (하이즈엉)" : 'Hyundai Kefico Factory (Hai Duong)'),
       subtitle: isVi ? 'Thi công hoàn thiện nội thất & Phòng họp lớn Nhà máy Hyundai Kefico Việt Nam (Hải Dương)' : '현대케피코 베트남 공장 대회의실 & 인테리어 마감 시공',
       year: '2019.02',
       location: 'Hai Duong',
       img: '/images/interior/portfolio/page_62.png',
-      tag: 'Global Tech Factory',
+      tag: (__koLang ? "글로벌 기술 공장" : 'Global Tech Factory'),
       pdfPage: 62
     },
     {
       id: 16,
       category: 'commercial_fnb',
       catLabel: isVi ? 'Thương mại & F&B' : 'Commercial & F&B',
-      title: 'Artisee Cafe (Hanoi)',
+      title: (__koLang ? "아티제 카페 (하노이)" : 'Artisee Cafe (Hanoi)'),
       subtitle: isVi ? 'Nội thất tiệm bánh & Quán Cafe cao cấp Artisee Hà Nội' : '하노이 아티제(Artisee) 프리미엄 베이커리 카페 인테리어',
       year: '2021.07',
       location: 'Hanoi',
       img: '/images/interior/portfolio/page_52.png',
-      tag: 'Commercial & Cafe',
+      tag: (__koLang ? "상업·카페" : 'Commercial & Cafe'),
       pdfPage: 52
     },
     {
       id: 17,
       category: 'commercial_fnb',
       catLabel: isVi ? 'Thương mại & F&B' : 'Commercial & F&B',
-      title: 'Baekje Galbi Restaurant (Hanoi)',
+      title: (__koLang ? "백제갈비 (하노이)" : 'Baekje Galbi Restaurant (Hanoi)'),
       subtitle: isVi ? 'Nội thất phòng ăn riêng sang trọng phong cách Hàn Quốc - Nhà hàng Baekje Galbi' : '하노이 백제갈비 대표 한국형 고급 프라이빗 룸 인테리어',
       year: '2020.06',
       location: 'Hanoi',
@@ -310,12 +315,12 @@ export default function InteriorSection({ t, onOpenConsult }) {
       id: 18,
       category: 'hotel_public',
       catLabel: isVi ? 'Khách sạn & Công cộng' : 'Hotel & Public Space',
-      title: 'Korean Visa Application Center (Hanoi)',
+      title: (__koLang ? "한국 비자신청센터 (하노이)" : 'Korean Visa Application Center (Hanoi)'),
       subtitle: isVi ? 'Không gian văn phòng & Quầy tiếp đón Trung tâm Dịch vụ Visa Hàn Quốc tại Hà Nội' : '하노이 대한민국 비자신청센터 민원 창구 & 사무 공간',
       year: '2019.04',
       location: 'Hanoi',
       img: '/images/interior/portfolio/page_61.png',
-      tag: 'Public & Agency',
+      tag: (__koLang ? "공공기관" : 'Public & Agency'),
       pdfPage: 61
     }
   ];
@@ -327,7 +332,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
   const styleOptions = [
     {
       id: 'luxury',
-      name: isVi ? 'Biệt thự Sang trọng & Đá Cẩm thạch' : 'Luxury Penthouse & Marble Finish',
+      name: isVi ? 'Biệt thự Sang trọng & Đá Cẩm thạch' : (__koLang ? "럭셔리 펜트하우스 & 대리석 마감" : 'Luxury Penthouse & Marble Finish'),
       desc: isVi ? 'Đá cẩm thạch cao cấp, điểm nhấn Vàng Champagne, thiết kế đồng bộ với Cabin Thang máy' : '고급 대리석, Champagne Gold 포인트, 승강기 파사드 일체형 커스텀 디자인',
       color: 'bg-gradient-to-r from-amber-600 to-gold-500',
       bgImg: '/images/interior/1.png'
@@ -500,7 +505,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
             <div>
               <span className="inline-flex items-center space-x-2 bg-red-500/20 text-red-400 px-3.5 py-1.5 rounded-full text-xs font-extrabold border border-red-500/40 mb-2">
                 <Play className="w-3.5 h-3.5 fill-red-400" />
-                <span>OFFICIAL SHORTS VIDEO</span>
+                <span>{__koLang ? "공식 쇼츠 영상" : "OFFICIAL SHORTS VIDEO"}</span>
               </span>
               <h3 className="text-2xl sm:text-3xl font-black text-white">
                 {isVi ? 'Video Ngắn Thi công Nội thất BEST WINNER INTERIOR VN' : 'BEST WINNER INTERIOR VN 인테리어 시공 숏폼 영상'}
@@ -653,7 +658,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
             <div>
               <span className="text-xs font-bold text-gold-400 uppercase tracking-widest bg-navy-900 px-3 py-1 rounded-full border border-gold-500/30 mb-2 inline-block">
-                PROJECT PORTFOLIO
+                {__koLang ? "프로젝트 포트폴리오" : "PROJECT PORTFOLIO"}
               </span>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
                 {isVi ? 'Dự án Hoàn thành Tiêu biểu BEST WINNER INTERIOR VN' : 'BEST winner interior 주요 준공 실적 (Main Performance)'}
@@ -803,7 +808,7 @@ export default function InteriorSection({ t, onOpenConsult }) {
         <div className="mt-20 glass-card-chrome rounded-3xl p-8 sm:p-10 border border-chrome-300/40">
           <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
             <span className="text-xs font-bold text-chrome-300 uppercase tracking-widest bg-navy-900 px-3 py-1 rounded-full border border-chrome-400/30">
-              ORGANIZATION & QUALITY CONTROL
+              {__koLang ? "조직 및 품질 관리" : "ORGANIZATION & QUALITY CONTROL"}
             </span>
             <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
               {isVi ? 'Sơ đồ Tổ chức & Quy trình Kiểm soát Chất lượng Trực tiếp' : 'BEST WINNER VN 조직도 & 직영 품질 관리 파이프라인'}

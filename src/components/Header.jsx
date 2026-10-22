@@ -7,6 +7,10 @@ import {
   X
 } from 'lucide-react';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function Header({ currentLang, setLang, t }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
@@ -24,6 +28,7 @@ export default function Header({ currentLang, setLang, t }) {
 
   // 6 Business Units
   const isVi = currentLang === 'vi';
+  __koLang = currentLang === 'ko';
   const isKo = currentLang === 'ko';
 
   const businessUnitsNav = [
@@ -92,7 +97,7 @@ export default function Header({ currentLang, setLang, t }) {
                 BEST winner <span className="gold-gradient-text">Group</span>
               </span>
               <span className="text-[10px] text-chrome-400 font-medium tracking-widest block mt-0.5">
-                Vietnam Official
+                {__koLang ? "베트남 공식 법인" : "Vietnam Official"}
               </span>
             </div>
           </Link>

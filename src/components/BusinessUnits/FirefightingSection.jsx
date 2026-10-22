@@ -22,11 +22,16 @@ import {
   X
 } from 'lucide-react';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function FirefightingSection({ t, onOpenConsult }) {
   const [activeTab, setActiveTab] = useState('lighting');
   const [isDocModalOpen, setIsDocModalOpen] = useState(false);
 
   const isVi = t?.lang === 'vi' || !t?.lang;
+  __koLang = t?.lang === 'ko';
 
   // 6 Enhanced Product & Tech Categories inspired by SY-21 (신영소방) & Sobang24
   const categoriesData = [
@@ -97,7 +102,7 @@ export default function FirefightingSection({ t, onOpenConsult }) {
     },
     {
       id: 'consulting',
-      badge: 'QCVN / TCVN Chuẩn mực',
+      badge: (__koLang ? "QCVN / TCVN 기준" : 'QCVN / TCVN Chuẩn mực'),
       name: isVi ? 'Tư vấn Thẩm duyệt & Nghiệm thu PCCC Việt Nam (QCVN/TCVN)' : '베트남 소방 인허가 & 서류 솔루션 (Vietnam Permit & CAD/BIM)',
       desc: isVi ? 'Tư vấn thẩm duyệt bản vẽ PCCC (Thẩm duyệt PCCC), nghiệm thu công trình (Nghiệm thu PCCC), bản vẽ CAD/BIM và hồ sơ chứng nhận KFI.' : '소방 설계 도면 승인(Thẩm duyệt PCCC)부터 현장 완공 검사(Nghiệm thu PCCC), CAD/DWG/BIM 도면 및 KFI 성적서 패키지 제공.',
       highlight: isVi ? 'Kỹ sư chuyên trách PCCC hỗ trợ 1:1 đáp ứng quy chuẩn mới nhất QCVN 06:2022' : '베트남 소방당국 최신 규정(QCVN 06:2022) 대응 전문 소방 엔지니어 1:1 서류 대행',
@@ -244,7 +249,7 @@ export default function FirefightingSection({ t, onOpenConsult }) {
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-red-400 uppercase tracking-widest bg-red-500/10 px-3.5 py-1.5 rounded-full border border-red-500/30">
               <BookOpen className="w-3.5 h-3.5" />
-              <span>PRODUCT & TECHNOLOGY LINEUP</span>
+              <span>{__koLang ? "제품·기술 라인업" : "PRODUCT & TECHNOLOGY LINEUP"}</span>
             </span>
             <h3 className="text-2xl sm:text-4xl font-extrabold text-white break-keep">
               {isVi ? '6 Dòng Sản phẩm & Công nghệ PCCC Shinyoung & Aneun Sobang' : '(주)신영 & 아는소방 6대 소방 제품 라인업'}
@@ -346,7 +351,7 @@ export default function FirefightingSection({ t, onOpenConsult }) {
         <div className="bg-navy-900 border border-navy-800 rounded-3xl p-8 sm:p-12 space-y-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-navy-800 pb-6">
             <div>
-              <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-1">BROADCAST & GLOBAL EXHIBITION</span>
+              <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-1">{__koLang ? "방송 및 국제 전시회" : "BROADCAST & GLOBAL EXHIBITION"}</span>
               <h3 className="text-2xl font-extrabold text-white flex items-center space-x-2">
                 <Tv className="w-6 h-6 text-red-400" />
                 <span>{isVi ? 'Tài trợ Truyền hình & Thành tích Hội chợ Quốc tế' : '방송 협찬 & 글로벌 박람회 참가 실적'}</span>
@@ -409,7 +414,7 @@ export default function FirefightingSection({ t, onOpenConsult }) {
                     VN
                   </div>
                   <div>
-                    <span className="font-bold text-white block">2026 Secutech Việt Nam</span>
+                    <span className="font-bold text-white block">{__koLang ? "2026 시큐텍 베트남" : "2026 Secutech Việt Nam"}</span>
                     <p className="text-slate-400 text-[11px] mt-0.5">
                       {isVi
                         ? 'Tham gia triển lãm PCCC & An ninh Hà Nội/TP.HCM, hoàn thành gian hàng đèn khẩn cấp & tủ chữa cháy chuẩn QCVN'

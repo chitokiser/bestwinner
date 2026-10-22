@@ -2,8 +2,13 @@ import React from 'react';
 import { CloudSun, CloudRain, Sun, DollarSign, TrendingUp, Sparkles, Clock, MapPin } from 'lucide-react';
 import MegazineHeroShowcase from './MegazineHeroShowcase';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function MegazineHeaderBanner({ weather, exchangeRates, aqi, t }) {
   const isVi = t?.lang === 'vi';
+  __koLang = t?.lang === 'ko';
   const isKo = t?.lang === 'ko' || (!t?.lang && true);
 
   const getWeatherIcon = (iconName) => {
@@ -33,7 +38,7 @@ export default function MegazineHeaderBanner({ weather, exchangeRates, aqi, t })
         <div className="space-y-1.5 text-center lg:text-left">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-bold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5 animate-pulse text-gold-400" />
-            <span>EXPAT NEWS SYSTEM</span>
+            <span>{__koLang ? "교민 뉴스 시스템" : "EXPAT NEWS SYSTEM"}</span>
           </div>
           <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight flex items-center justify-center lg:justify-start gap-2">
             <span>BEST <span className="gold-gradient-text">MEGAZINE</span></span>
@@ -97,7 +102,7 @@ export default function MegazineHeaderBanner({ weather, exchangeRates, aqi, t })
             <div>
               <div className="flex items-center space-x-1 text-[10px] font-bold text-slate-400 uppercase">
                 <TrendingUp className="w-3 h-3 text-emerald-400" />
-                <span>Live Exchange Rate</span>
+                <span>{__koLang ? "실시간 환율" : "Live Exchange Rate"}</span>
               </div>
               <p className="text-xs font-black text-emerald-400">
                 1,000 KRW = {Math.round((exchangeRates?.krwVnd || 18.52) * 1000).toLocaleString()} VND

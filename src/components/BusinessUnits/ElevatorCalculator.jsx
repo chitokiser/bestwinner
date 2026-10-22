@@ -30,6 +30,10 @@ import {
   Info
 } from 'lucide-react';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
   const [floors, setFloors] = useState(4); // 3 ~ 12 stops (Default: 4 stops / 4층)
   const [capacity, setCapacity] = useState('350'); // 350, 450, 630, 1000 (Default: 350kg)
@@ -102,6 +106,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
   const [showQuotePreview, setShowQuotePreview] = useState(false);
 
   const isVi = t?.lang === 'vi' || !t?.lang;
+  __koLang = t?.lang === 'ko';
 
   // 6 Tier Packages Definition
   const packages = [
@@ -148,7 +153,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
     {
       id: 'best_flagship',
       name: 'BEST FLAGSHIP',
-      badge: 'Flagship Cao Cấp',
+      badge: (__koLang ? "프리미엄 플래그십" : 'Flagship Cao Cấp'),
       priceVnd: 125000000,
       spec: isVi ? 'PREMIUM + Giám sát AI Smart + Nội thất Custom' : 'PREMIUM + AI 스마트 관제 + 커스텀 인테리어',
       desc: isVi ? 'Hoàn thiện sang trọng cao cấp nhất, gói cảm biến thông minh và giám sát từ xa 24/7' : '플래그십 럭셔리 마감, 스마트 센서 패키지 및 24/7 전용 원격 관제'
@@ -163,7 +168,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
         { id: 'cctv', name: isVi ? 'CCTV HD nội bộ thang máy' : '승강기 내부 HD CCTV', priceVnd: 12000000, defaultIncluded: true },
         { id: 'intercom', name: isVi ? 'Điện thoại khẩn cấp / Intercom 24h' : '비상통화 장치 / 24h 인터폰', priceVnd: 0, defaultIncluded: true },
         { id: 'ard', name: isVi ? 'Tự động về tầng khi mất điện (ARD)' : '정전 시 자동 층 이송 (ARD)', priceVnd: 0, defaultIncluded: true },
-        { id: 'emergency_light', name: 'Đèn chiếu sáng khẩn cấp LED', priceVnd: 0, defaultIncluded: true },
+        { id: 'emergency_light', name: (__koLang ? "LED 비상 조명" : 'Đèn chiếu sáng khẩn cấp LED'), priceVnd: 0, defaultIncluded: true },
         { id: 'overspeed_sensor', name: isVi ? 'Cảm biến chống vượt tốc & kẹt cửa' : '과속방지 & 문 끼임 방지 센서', priceVnd: 0, defaultIncluded: true },
         { id: 'fire_alarm', name: isVi ? 'Hệ thống tự động về tầng khi có hỏa hoạn' : '화재 연동 자동 복귀 시스템', priceVnd: 15000000 },
         { id: 'earthquake_alarm', name: isVi ? 'Điều khiển liên động cảm biến động đất' : '지진 감지 연동 제어', priceVnd: 15000000 },
@@ -317,7 +322,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
         <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
           <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-gold-400 uppercase tracking-widest bg-gold-500/10 px-3.5 py-1.5 rounded-full border border-gold-500/30">
             <Calculator className="w-3.5 h-3.5" />
-            <span>BEST WINNER ELEVATOR VN SMART CONFIGURATOR</span>
+            <span>{__koLang ? "BEST WINNER 엘리베이터 스마트 견적기" : (__koLang ? "BEST WINNER 엘리베이터 스마트 견적기" : "BEST WINNER ELEVATOR VN SMART CONFIGURATOR")}</span>
           </span>
           <h2 className="text-3xl sm:text-5xl font-black text-white">
             {isVi ? 'Bảng Dự Toán Tự Động Thang Máy & Tùy Chọn Gói' : '승강기 패키지 & 커스텀 옵션 자동 견적'}
@@ -580,7 +585,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
             <div className="lg:col-span-5 bg-navy-950/95 rounded-2xl p-6 border border-gold-500/40 flex flex-col justify-between shadow-2xl">
               <div className="space-y-5">
                 <div className="flex justify-between items-center pb-3 border-b border-navy-800">
-                  <span className="text-xs font-bold text-gold-400 uppercase tracking-wider">VND ESTIMATE SUMMARY</span>
+                  <span className="text-xs font-bold text-gold-400 uppercase tracking-wider">{__koLang ? "VND 견적 요약" : "VND ESTIMATE SUMMARY"}</span>
                   <span className="text-[10px] font-bold bg-navy-900 text-gold-400 px-2.5 py-1 rounded-full border border-gold-500/30">
                     BEST WINNER ELEVATOR VN
                   </span>
@@ -596,11 +601,11 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
                   </div>
                   
                   <div className="text-3xl sm:text-4xl font-black gold-gradient-text tracking-tight">
-                    {prices.trieuVnd} <span className="text-xl font-bold text-gold-400">Triệu VND</span>
+                    {prices.trieuVnd} <span className="text-xl font-bold text-gold-400">{__koLang ? "백만 VND" : "Triệu VND"}</span>
                   </div>
                   
                   <div className="text-xs text-chrome-200 font-mono">
-                    = {prices.formattedVnd} VNĐ ({prices.tyVnd} Tỷ VNĐ)
+                    = {prices.formattedVnd} VNĐ{__koLang ? "" : ` (${prices.tyVnd} Tỷ VNĐ)`}
                   </div>
 
                   <div className="pt-2 flex items-center space-x-3 text-xs text-slate-400 border-t border-navy-800">
@@ -819,7 +824,7 @@ export default function ElevatorCalculator({ t, isModalOpen, setIsModalOpen }) {
                 <div className="space-y-1">
                   <h3 className="text-xl font-extrabold text-white">VND 견적 기반 현장 실측 신청</h3>
                   <p className="text-xs text-gold-400 font-semibold">
-                    선택 사양: [{prices.pkgObj.name}] {floors}층 / {capacity}kg / {prices.trieuVnd} Triệu VNĐ ({prices.formattedVnd} VNĐ)
+                    선택 사양: [{prices.pkgObj.name}] {floors}층 / {capacity}kg / {prices.trieuVnd} {__koLang ? "백만 VND" : "Triệu VNĐ"} ({prices.formattedVnd} VNĐ)
                   </p>
                 </div>
 

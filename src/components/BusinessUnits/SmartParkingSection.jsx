@@ -31,8 +31,13 @@ import {
   Sparkles
 } from 'lucide-react';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function SmartParkingSection({ t, onOpenConsult }) {
   const isVi = t?.lang === 'vi' || !t?.lang;
+  __koLang = t?.lang === 'ko';
 
   // Simulator State
   const [isScanning, setIsScanning] = useState(false);
@@ -57,7 +62,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
     { page: 2, title: isVi ? 'Mục lục & Tóm tắt Dự án (Executive Summary)' : '목차 및 사업 요약 (Executive Summary)', desc: isVi ? 'Hiện trạng thị trường bãi đỗ xe Việt Nam, hiệu quả đầu tư & mục lục kế hoạch' : '베트남 주차 시장 현황, 투자 수익성 및 마스터플랜 목차', src: '/images/parking/biz_plan/page_2.png' },
     { page: 3, title: isVi ? 'Phân tích Kinh tế Vĩ mô & Môi trường Sống Việt Nam' : '베트남 거시경제 및 거주 환경 분석', desc: isVi ? 'Tăng trưởng GDP 7.52% phát triển nhanh & đô thị hóa Hà Nội / TP.HCM' : 'GDP 성장률 7.52% 고속 성장과 하노이/호치민 도시화', src: '/images/parking/biz_plan/page_3.png' },
     { page: 4, title: isVi ? 'Hiện trạng Dân số & Phương tiện Giao thông' : '베트남 인구 & 모빌리티 보유 현황', desc: isVi ? 'Dân số 102 triệu người, 6.8 triệu xe hơi, 65 triệu xe máy tăng nhanh' : '인구 1억 200만명, 승용차 680만대, 오토바이 6,500만대 급증', src: '/images/parking/biz_plan/page_4.png' },
-    { page: 5, title: 'Thực trạng Thiếu hụt Bãi đỗ xe Trung tâm Hà Nội / TP.HCM', desc: isVi ? 'Tỷ lệ cung cấp dưới 10% so với nhu cầu đỗ xe thực tế' : '주차 수요 대비 공급률 10% 미만의 심각한 주차 난', src: '/images/parking/biz_plan/page_5.png' },
+    { page: 5, title: (__koLang ? "하노이·호찌민 도심 주차장 부족 실태" : 'Thực trạng Thiếu hụt Bãi đỗ xe Trung tâm Hà Nội / TP.HCM'), desc: isVi ? 'Tỷ lệ cung cấp dưới 10% so với nhu cầu đỗ xe thực tế' : '주차 수요 대비 공급률 10% 미만의 심각한 주차 난', src: '/images/parking/biz_plan/page_5.png' },
     { page: 6, title: isVi ? 'Chính sách Mở rộng Bãi đỗ xe Việt Nam 2030' : '베트남 2030 주차장 확충 정책', desc: isVi ? 'Luật Quy hoạch Tổng thể Hà Nội 2030 & nghĩa vụ bảo đảm chỗ đỗ xe' : '하노이 마스터플랜 2030 법안 및 주차 수용 의무화', src: '/images/parking/biz_plan/page_6.png' },
     { page: 7, title: isVi ? 'Sự cần thiết Áp dụng Hạ tầng Bãi đỗ xe Thông minh' : '스마트 주차 인프라 도입의 필요성', desc: isVi ? 'Hệ thống AI LPR tự động ngăn thất thoát doanh thu & tối ưu hóa vận hành' : '무인 AI LPR 시스템 도입으로 수입 누수 방지 및 운영 최적화', src: '/images/parking/biz_plan/page_7.png' },
     { page: 8, title: isVi ? 'Mục tiêu Xây dựng 1.700 Bãi đỗ xe Mới tại Hà Nội' : '하노이 1,700개소 주차장 신설 인프라 타겟', desc: isVi ? 'Phát triển tháp đỗ xe & bãi đỗ xe trung tâm đến năm 2030' : '2030년까지 도심 핵심 구역 주차 타워 및 주차장 확보', src: '/images/parking/biz_plan/page_8.png' },
@@ -156,7 +161,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                 <span>BUSINESS UNIT ③</span>
               </span>
               <span className="text-xs text-gold-400 font-mono bg-navy-950 px-2.5 py-1 rounded border border-navy-700 whitespace-nowrap">
-                BEST Winner KOREA & VIETNAM
+                {__koLang ? "BEST Winner 한국 & 베트남" : "BEST Winner KOREA & VIETNAM"}
               </span>
             </div>
             
@@ -420,7 +425,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-xs font-bold text-gold-400 uppercase tracking-widest block">TARGET INVESTMENT LOCATIONS</span>
+                  <span className="text-xs font-bold text-gold-400 uppercase tracking-widest block">{__koLang ? "투자 대상 입지" : "TARGET INVESTMENT LOCATIONS"}</span>
                   <h4 className="text-lg sm:text-xl font-extrabold text-white break-keep">
                     {isVi ? 'Dự án Mục tiêu Đầu tư & Giám sát Bãi đỗ xe Trọng điểm' : '베트남 핵심 주차 개발 & 관제 타겟 프로젝트'}
                   </h4>
@@ -446,7 +451,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                     </span>
                   </div>
                   <h5 className="text-base font-bold text-white group-hover:text-gold-300 transition-colors break-keep">
-                    Khu đô thị Starlake City (Tây Hồ Tây)
+                    {__koLang ? "스타레이크 시티 신도시 (떠이호떠이)" : "Khu đô thị Starlake City (Tây Hồ Tây)"}
                   </h5>
                   <p className="text-xs text-slate-300 leading-relaxed break-keep">
                     {isVi
@@ -473,7 +478,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                     </span>
                   </div>
                   <h5 className="text-base font-bold text-white group-hover:text-emeraldGreen-300 transition-colors break-keep">
-                    Khu đô thị ParkCity Hà Nội
+                    {__koLang ? "하노이 파크시티 신도시" : "Khu đô thị ParkCity Hà Nội"}
                   </h5>
                   <p className="text-xs text-slate-300 leading-relaxed break-keep">
                     {isVi
@@ -500,7 +505,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                     </span>
                   </div>
                   <h5 className="text-base font-bold text-white group-hover:text-cyan-300 transition-colors break-keep">
-                    Lotte Mall West Lake Hà Nội
+                    {__koLang ? "롯데몰 웨스트레이크 하노이" : "Lotte Mall West Lake Hà Nội"}
                   </h5>
                   <p className="text-xs text-slate-300 leading-relaxed break-keep">
                     {isVi
@@ -520,14 +525,14 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-purple-400 bg-purple-500/10 px-2.5 py-0.5 rounded border border-purple-500/30">
-                      LANDMARK (65 Tầng)
+                      {__koLang ? "LANDMARK (65층)" : "LANDMARK (65 Tầng)"}
                     </span>
                     <span className="text-[10px] text-slate-400 group-hover:text-purple-400 transition-colors flex items-center">
                       <Eye className="w-3 h-3 mr-1" /> {isVi ? 'Xem P.17' : 'P.17 뷰어'}
                     </span>
                   </div>
                   <h5 className="text-base font-bold text-white group-hover:text-purple-300 transition-colors break-keep">
-                    Lotte Center Hà Nội
+                    {__koLang ? "롯데센터 하노이" : "Lotte Center Hà Nội"}
                   </h5>
                   <p className="text-xs text-slate-300 leading-relaxed break-keep">
                     {isVi
@@ -554,7 +559,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                     </span>
                   </div>
                   <h5 className="text-base font-bold text-white group-hover:text-gold-300 transition-colors break-keep">
-                    Tòa nhà BIDV Tower Hà Nội
+                    {__koLang ? "하노이 BIDV 타워" : "Tòa nhà BIDV Tower Hà Nội"}
                   </h5>
                   <p className="text-xs text-slate-300 leading-relaxed break-keep">
                     {isVi
@@ -570,7 +575,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
                 {/* Download Card */}
                 <div className="bg-gradient-to-br from-gold-500/20 via-navy-900 to-navy-950 rounded-2xl p-5 border border-gold-500/40 flex flex-col justify-between space-y-4">
                   <div className="space-y-2">
-                    <span className="text-xs font-bold text-gold-400 uppercase tracking-widest block">FULL REPORT DOWNLOAD</span>
+                    <span className="text-xs font-bold text-gold-400 uppercase tracking-widest block">{__koLang ? "전체 보고서 다운로드" : "FULL REPORT DOWNLOAD"}</span>
                     <h5 className="text-base font-bold text-white break-keep">
                       {isVi ? 'Kế hoạch Đầu tư Báo cáo 43 Trang' : '43페이지 전체 투자 사업계획서'}
                     </h5>
@@ -1018,7 +1023,7 @@ export default function SmartParkingSection({ t, onOpenConsult }) {
               <div className="flex justify-between items-center pb-4 border-b border-navy-800">
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 rounded-full bg-emeraldGreen-500 animate-pulse"></div>
-                  <span className="text-xs font-bold text-slate-200">AI LPR Camera & Smart Gate Simulator</span>
+                  <span className="text-xs font-bold text-slate-200">{__koLang ? "AI 번호판 인식 카메라 & 스마트 게이트 시뮬레이터" : (__koLang ? "AI 번호판 인식 카메라 & 스마트 게이트 시뮬레이터" : "AI LPR Camera & Smart Gate Simulator")}</span>
                 </div>
                 <span className="text-[10px] bg-navy-950 text-emeraldGreen-400 font-mono px-2.5 py-1 rounded border border-navy-700">
                   SYSTEM ONLINE

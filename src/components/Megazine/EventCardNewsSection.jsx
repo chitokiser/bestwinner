@@ -16,15 +16,20 @@ import {
 } from 'lucide-react';
 import { MERCHANT_CONFIG } from '../../config/merchant';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function EventCardNewsSection({ t }) {
   const isVi = t?.lang === 'vi';
+  __koLang = t?.lang === 'ko';
   const isKo = t?.lang === 'ko' || (!t?.lang && true);
 
   const cardNewsSlides = [
     {
       id: 1,
       badge: isVi ? 'SỰ KIỆN HOT' : isKo ? '🔥 공식 오픈' : 'HOT EVENT',
-      tag: 'BestClub Events',
+      tag: (__koLang ? "BestClub 이벤트" : 'BestClub Events'),
       title: isVi 
         ? 'Khai trương Sảnh Voucher & Phiếu Giảm Giá BestClub Chính Thức'
         : isKo 

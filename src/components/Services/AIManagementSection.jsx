@@ -19,8 +19,13 @@ import {
   Globe
 } from 'lucide-react';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function AIManagementSection({ t, onOpenConsult }) {
   const isVi = t?.lang === 'vi';
+  __koLang = t?.lang === 'ko';
   const isKo = t?.lang === 'ko' || (!t?.lang && true); // default ko
 
   // Simulator State
@@ -37,7 +42,7 @@ export default function AIManagementSection({ t, onOpenConsult }) {
       id: 'dashboard',
       num: '01',
       icon: BarChart3,
-      badge: 'Executive Analytics',
+      badge: (__koLang ? "경영진 분석" : 'Executive Analytics'),
       title: isVi 
         ? '1. AI 경영 & Tài chính Dashboard' 
         : isKo 
@@ -211,7 +216,7 @@ export default function AIManagementSection({ t, onOpenConsult }) {
               <Sparkles className="w-5 h-5 mr-2 text-cyan-400" />
               <span>{isVi ? '4 Phân hệ AI 경영관리 Cốt lõi' : isKo ? 'AI 경영관리 4대 핵심 모듈' : '4 Core AI Enterprise Modules'}</span>
             </h3>
-            <span className="text-xs text-slate-400">{isVi ? 'Công nghệ AI Hàn Quốc' : isKo ? 'Korean AI Tech Powered' : 'Powered by K-AI'}</span>
+            <span className="text-xs text-slate-400">{isVi ? 'Công nghệ AI Hàn Quốc' : isKo ? (__koLang ? "한국 AI 기술 기반" : 'Korean AI Tech Powered') : 'Powered by K-AI'}</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -266,7 +271,7 @@ export default function AIManagementSection({ t, onOpenConsult }) {
             <div>
               <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-cyan-400 uppercase tracking-widest bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30 mb-2">
                 <Calculator className="w-3.5 h-3.5" />
-                <span>AI ROI SIMULATOR</span>
+                <span>{__koLang ? "AI 투자수익(ROI) 시뮬레이터" : "AI ROI SIMULATOR"}</span>
               </span>
               <h3 className="text-2xl sm:text-3xl font-black text-white">
                 {isVi ? 'Mô phỏng Hiệu quả AI 경영관리' : isKo ? 'AI 경영 도입 효과 시뮬레이터' : 'AI Business Efficiency Simulator'}
@@ -328,7 +333,7 @@ export default function AIManagementSection({ t, onOpenConsult }) {
             {/* Results Output Right */}
             <div className="lg:col-span-6 bg-navy-950 p-6 rounded-2xl border border-cyan-500/40 space-y-6 shadow-2xl relative">
               <div className="absolute -top-3 left-6 bg-cyan-500 text-navy-950 text-[10px] font-black uppercase tracking-wider px-3 py-0.5 rounded-full">
-                ESTIMATED RESULTS
+                {__koLang ? "예상 결과" : "ESTIMATED RESULTS"}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center pt-2">

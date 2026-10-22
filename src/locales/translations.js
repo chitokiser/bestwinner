@@ -259,7 +259,7 @@ export const translations = {
       address: "하노이시 하동구 완푹 심코 송다 2 C17호 (법인번호: 0110245813)",
       hotline: "영업 문의: 0988-123-456",
       techSupport: "24시간 긴급 A/S: 0977-888-999",
-      email: "Email: contact@bestwinnervn.com"
+      email: "이메일: contact@bestwinnervn.com"
     },
     hero: {
       catchphrase: "기술과 감성의 융합, 당신의 마음을 완성하다",
@@ -270,7 +270,7 @@ export const translations = {
       description: "BEST winner Vn Group은 프리미엄 승강기, 맞춤 인테리어, AI 스마트 주차, QCVN 소방 자재, 건축 방수 솔루션까지 One-Stop B2B/B2C 통합 파이프라인을 제공합니다.",
       ctaCalculator: "승강기 온라인 자동 견적",
       ctaConsult: "무료 현장 실측 신청",
-      b2bDownload: "B2B Architect Kit (CAD/DWG/BIM)",
+      b2bDownload: "B2B 건축·시공 자료 키트 (CAD/DWG/BIM)",
       stats: {
         years: "현지 사업 경력",
         projects: "성공 준공 프로젝트",
@@ -283,8 +283,8 @@ export const translations = {
       title: "베트남 대표 주택·건설·스마트 인프라 솔루션 그룹",
       philosophy: "한국의 정밀 기술력과 베트남 현지 맞춤 제작 및 직영 관리 시스템의 완벽한 조화로 프리미엄 주거 가치를 완성합니다.",
       cards: [
-        { title: "Korean Technology", desc: "검증된 한국의 정밀 기술력과 엄격한 품질 관리 프로세스 적용." },
-        { title: "Local Specialized Facility", desc: "하노이 3,000m² 직영 공장 연계 현지 맞춤 제작 및 신속한 공급." },
+        { title: "한국 기술력", desc: "검증된 한국의 정밀 기술력과 엄격한 품질 관리 프로세스 적용." },
+        { title: "현지 전문 설비", desc: "하노이 3,000m² 직영 공장 연계 현지 맞춤 제작 및 신속한 공급." },
         { title: "직영 엔지니어링 팀", desc: "한국인 수석 기술진 2인과 현지 전문 엔지니어 15인의 직접 시공 관리." },
         { title: "통합 멀티 비즈니스 시너지", desc: "핵심 사업의 단일 계약 파이프라인 및 일원화된 24/7 A/S 원스톱 지원." }
       ],
@@ -292,7 +292,7 @@ export const translations = {
       synergyDesc: "공정 단순화 및 단일 계약을 통해 설계, 시공, 사후관리(A/S 24/7)까지 일원화된 품질 보증을 제공합니다."
     },
     ceoGreeting: {
-      badge: "CEO MESSAGE",
+      badge: "대표 인사말",
       title: "BEST winner Vn Group 대표이사 인사말",
       quote: "한국의 정밀한 기술력과 베트남 공간의 완벽한 조화,\n스마트 주거 및 건축 인프라 전반에 가장 빛나는 자부심을 선사하겠습니다.",
       greeting: "안녕하십니까, BEST winner Vn Group 대표이사 김성원입니다.",
@@ -311,7 +311,7 @@ export const translations = {
       closing: "감사합니다.\n\nBEST winner Vn Group 대표이사 김성원 드림"
     },
     cardsSection: {
-      badge: "CORE BUSINESS DIVISIONS",
+      badge: "핵심 사업 부문",
       title: "BEST winner Group 핵심 사업 분야",
       subtitle: "각 사업 분야 카드를 클릭하시면 전용 상세 페이지, 사양서 및 견적 시스템으로 이동합니다.",
       cardCta: "사업 분야 전용 페이지 이동 →"
@@ -428,7 +428,7 @@ export const translations = {
       }
     },
     calculator: {
-      badge: "ONLINE AUTOMATIC ESTIMATOR",
+      badge: "온라인 자동 견적",
       title: "BEST winner elevator 승강기 온라인 자동 견적",
       desc: "층수, 하중, 디자인 선택 시 실시간 예상 가격을 확인하실 수 있으며, 무료 현장 실측을 신청하실 수 있습니다.",
       step1: "1. 층수 (Stops)",
@@ -450,7 +450,7 @@ export const translations = {
       submitBtn: "무료 실측 예약 완료"
     },
     b2bKit: {
-      title: "B2B Architect & Contractor Kit",
+      title: "B2B 건축사·시공사 자료 키트",
       desc: "건축사무소, 시행사, 건설사를 위한 캐드 도면(DWG), BIM 모델, 기술 사양서 패키지.",
       items: [
         "승강기 건축 구조 도면 (CAD / DWG / Revit BIM)",
@@ -461,7 +461,7 @@ export const translations = {
       downloadBtn: "B2B Kit 다운로드 (.ZIP / PDF)"
     },
     contact: {
-      subtitle: "CONTACT US",
+      subtitle: "문의하기",
       title: "하노이 Experience Center 안내 & 문의",
       hanoiHQ: "하노이 본사 & Showroom",
       address: "하노이시 하동구 완푹 서비스 토지 구역 NO 6B-LK46B (NO 6B-LK46B service land area, Van Phuc, Ha Dong, Hanoi)",

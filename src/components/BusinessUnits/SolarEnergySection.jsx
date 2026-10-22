@@ -44,8 +44,22 @@ import { CarbonCalculationService, EMISSION_FACTORS, METHODOLOGIES } from '../..
 import { CarbonPriceService, VCM_BENCHMARKS } from '../../services/carbonPriceService';
 import { solarProjectsData, carbonDashboardSummary } from '../../data/solarProjectsData';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+// 데이터 파일(지역명·방법론 설명)의 한국어 표시
+const SOLAR_KO = {
+  'Bac Ninh': '박닌', 'Da Nang': '다낭', 'Hai Phong': '하이퐁', 'Hanoi': '하노이', 'Ho Chi Minh City': '호찌민시',
+  'Bac Ninh, Vietnam': '베트남 박닌', 'Da Nang, Vietnam': '베트남 다낭', 'Hai Phong, Vietnam': '베트남 하이퐁', 'Hanoi, Vietnam': '베트남 하노이', 'Ho Chi Minh City, Vietnam': '베트남 호찌민시',
+  'Verra ACM0002 Revision v1.0 applicable to solar PV': '태양광 발전에 적용되는 Verra ACM0002 v1.0 방법론',
+  'Consolidated baseline methodology for renewable electricity': '재생에너지 전력 통합 베이스라인 방법론',
+  'Projected methodology under developer review': '개발사 검토 중인 예상 방법론',
+};
+const koData = (v) => (__koLang && SOLAR_KO[v]) || v;
+
 export default function SolarEnergySection({ t, onOpenConsult }) {
   const isVi = t?.lang === 'vi' || !t?.lang;
+  __koLang = t?.lang === 'ko';
 
   // Modal States
   const [isSlideModalOpen, setIsSlideModalOpen] = useState(false);
@@ -354,10 +368,10 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-extrabold text-white flex items-center space-x-2">
               <BarChart3 className="w-5 h-5 text-amber-400" />
-              <span>BEST Winner Energy & Carbon Dashboard</span>
+              <span>{__koLang ? "BEST Winner 에너지·탄소 대시보드" : "BEST Winner Energy & Carbon Dashboard"}</span>
             </h3>
             <span className="text-[11px] text-slate-400 bg-navy-900 px-3 py-1 rounded-full border border-navy-800">
-              Live Aggregate Status ({carbonDashboardSummary.lastUpdated})
+              {__koLang ? "실시간 집계 현황" : "Live Aggregate Status"} ({carbonDashboardSummary.lastUpdated})
             </span>
           </div>
 
@@ -366,7 +380,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
             <div className="glass-card p-4 rounded-2xl border border-navy-800 space-y-1">
               <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Tổng số dự án' : 'Total Projects'}</span>
               <p className="text-2xl font-black text-white">{carbonDashboardSummary.totalProjects}</p>
-              <span className="text-[10px] text-slate-400">{isVi ? 'Khu vực Việt Nam' : 'Vietnam Regions'}</span>
+              <span className="text-[10px] text-slate-400">{isVi ? 'Khu vực Việt Nam' : (__koLang ? "베트남 지역" : 'Vietnam Regions')}</span>
             </div>
 
             <div className="glass-card p-4 rounded-2xl border border-navy-800 space-y-1">
@@ -376,9 +390,9 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
             </div>
 
             <div className="glass-card p-4 rounded-2xl border border-navy-800 space-y-1">
-              <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Sản lượng hàng năm' : 'Annual Generation'}</span>
+              <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Sản lượng hàng năm' : (__koLang ? "연간 발전량" : 'Annual Generation')}</span>
               <p className="text-2xl font-black text-cyan-400">28,500 MWh</p>
-              <span className="text-[10px] text-slate-400">{isVi ? 'Điện xanh' : 'Green Electricity'}</span>
+              <span className="text-[10px] text-slate-400">{isVi ? 'Điện xanh' : (__koLang ? "친환경 전력" : 'Green Electricity')}</span>
             </div>
 
             <div className="glass-card p-4 rounded-2xl border border-emerald-500/30 space-y-1 bg-emerald-950/20">
@@ -388,21 +402,21 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
             </div>
 
             <div className="glass-card p-4 rounded-2xl border border-navy-800 space-y-1">
-              <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Tín chỉ carbon đã xác minh' : 'Verified Carbon Credits'}</span>
+              <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Tín chỉ carbon đã xác minh' : (__koLang ? "검증된 탄소배출권" : 'Verified Carbon Credits')}</span>
               <p className="text-2xl font-black text-slate-400">0</p>
-              <span className="text-[10px] text-amber-400">{isVi ? 'Chờ xác minh' : 'Pending Verification'}</span>
+              <span className="text-[10px] text-amber-400">{isVi ? 'Chờ xác minh' : (__koLang ? "검증 대기" : 'Pending Verification')}</span>
             </div>
 
             <div className="glass-card p-4 rounded-2xl border border-navy-800 space-y-1">
-              <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Tín chỉ trong tiến trình' : 'Credits in Pipeline'}</span>
+              <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Tín chỉ trong tiến trình' : (__koLang ? "발행 예정 배출권" : 'Credits in Pipeline')}</span>
               <p className="text-2xl font-black text-purple-400">15,200</p>
               <span className="text-[10px] text-purple-300">{isVi ? 'Đang xem xét' : 'Under Review'}</span>
             </div>
 
             <div className="glass-card p-4 rounded-2xl border border-navy-800 space-y-1 bg-navy-900/90 col-span-2 sm:col-span-1">
               <span className="text-slate-400 font-semibold block text-[11px]">{isVi ? 'Tài sản Carbon' : 'Carbon Assets'}</span>
-              <p className="text-xs font-extrabold text-amber-400 uppercase tracking-wider pt-2">{isVi ? 'Đang phát triển' : 'Under Development'}</p>
-              <span className="text-[10px] text-slate-400">{isVi ? 'Token hóa tương lai' : 'Future Tokenization'}</span>
+              <p className="text-xs font-extrabold text-amber-400 uppercase tracking-wider pt-2">{isVi ? 'Đang phát triển' : (__koLang ? "개발 중" : 'Under Development')}</p>
+              <span className="text-[10px] text-slate-400">{isVi ? 'Token hóa tương lai' : (__koLang ? "향후 토큰화" : 'Future Tokenization')}</span>
             </div>
 
           </div>
@@ -462,7 +476,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-emeraldGreen-400 uppercase tracking-widest bg-emerald-500/10 px-3.5 py-1.5 rounded-full border border-emerald-500/30">
               <Activity className="w-3.5 h-3.5" />
-              <span>CARBON ASSET LIFECYCLE</span>
+              <span>{__koLang ? "탄소 자산 생애주기" : "CARBON ASSET LIFECYCLE"}</span>
             </span>
             <h3 className="text-2xl sm:text-4xl font-extrabold text-white break-keep">
               {isVi ? 'Từ dự án điện mặt trời đến tín chỉ carbon và các giai đoạn token hóa tương lai' : '태양광 프로젝트부터 탄소크레딧 및 미래 토큰화 단계'}
@@ -539,7 +553,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
               <div className="flex items-center space-x-2 mb-1">
                 <span className="text-xs font-bold text-emeraldGreen-400 uppercase tracking-widest">04. CARBON REDUCTION ENGINE</span>
                 <span className="text-[11px] bg-emerald-500/20 text-emeraldGreen-300 px-3 py-0.5 rounded-full border border-emerald-500/40 font-bold">
-                  PROJECTED CARBON ASSET CALCULATOR
+                  {__koLang ? "예상 탄소 자산 계산기" : "PROJECTED CARBON ASSET CALCULATOR"}
                 </span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-black text-white">
@@ -1021,7 +1035,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                       }`}
                     >
                       <span className="block text-xs text-white">{m.name}</span>
-                      <span className="text-[10px] text-slate-400">{m.desc}</span>
+                      <span className="text-[10px] text-slate-400">{koData(m.desc)}</span>
                     </button>
                   ))}
                 </div>
@@ -1031,7 +1045,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
               <div className="p-3.5 rounded-xl bg-navy-950 border border-navy-800 flex items-center justify-between">
                 <div>
                   <span className="font-bold text-slate-400 block text-[11px]">베트남 전력계통 배출계수:</span>
-                  <span className="text-[10px] text-slate-400">Vietnam National Grid Baseline Factor</span>
+                  <span className="text-[10px] text-slate-400">{__koLang ? "베트남 국가 전력망 기준 배출계수" : "Vietnam National Grid Baseline Factor"}</span>
                 </div>
                 <span className="text-white font-mono font-bold">{calcLocationFactor} tCO₂e / MWh</span>
               </div>
@@ -1046,7 +1060,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                   <span>{isVi ? `Số lượng Token Carbon dự kiến & Giá trị tài sản USD khi lắp đặt ${calcCapacityMW}MW` : `${calcCapacityMW}MW 설치 시 예상 탄소 토큰 수량 및 USD 자산 가치`}</span>
                 </span>
                 <span className="text-[10px] bg-amber-500/20 text-amber-400 px-2.5 py-0.5 rounded-full border border-amber-500/30 font-bold">
-                  PROJECTED ESTIMATE
+                  {__koLang ? "예상 추정치" : "PROJECTED ESTIMATE"}
                 </span>
               </div>
 
@@ -1129,11 +1143,11 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                   <span className="font-mono">{calcResult.grossReduction} tCO₂e</span>
                 </div>
                 <div className="flex justify-between text-slate-400 text-[11px]">
-                  <span>Project Emissions & Leakage:</span>
+                  <span>{__koLang ? "프로젝트 배출량 및 누출:" : "Project Emissions & Leakage:"}</span>
                   <span className="font-mono">0.0 tCO₂e</span>
                 </div>
                 <div className="flex justify-between font-bold text-emeraldGreen-300 border-t border-navy-800 pt-2 text-sm">
-                  <span>Projected Verified Carbon Credits in Pipeline:</span>
+                  <span>{__koLang ? "발행 예정 검증 탄소배출권(예상):" : "Projected Verified Carbon Credits in Pipeline:"}</span>
                   <span className="font-mono">{calcResult.estimatedCredits} VCU / {isVi ? 'Năm' : '년'}</span>
                 </div>
               </div>
@@ -1165,10 +1179,10 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
               <div className="flex items-center space-x-2 mb-1">
                 <span className="text-xs font-bold text-purple-400 uppercase tracking-widest">08. BLOCKCHAIN INTEGRATION</span>
                 <span className="text-[11px] bg-purple-500/20 text-purple-300 px-3 py-0.5 rounded-full border border-purple-500/40 font-bold">
-                  TOKENIZATION UNDER DEVELOPMENT
+                  {__koLang ? "토큰화 개발 중" : "TOKENIZATION UNDER DEVELOPMENT"}
                 </span>
               </div>
-              <h3 className="text-2xl sm:text-4xl font-black text-white">Future Carbon Tokenization</h3>
+              <h3 className="text-2xl sm:text-4xl font-black text-white">{__koLang ? "향후 탄소 토큰화" : "Future Carbon Tokenization"}</h3>
             </div>
             <span className="text-xs bg-navy-950 text-slate-300 px-4 py-2 rounded-xl border border-navy-800 font-semibold">
               Status: Coming Soon / Under Development
@@ -1177,27 +1191,27 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
             <div className="bg-navy-950 p-5 rounded-2xl border border-navy-800 space-y-2">
-              <span className="text-slate-400 font-semibold block">Underlying Asset</span>
-              <p className="text-sm font-bold text-white">Verified Carbon Credit (VCU)</p>
-              <span className="text-[10px] text-slate-400">Actual Reduction Based</span>
+              <span className="text-slate-400 font-semibold block">{__koLang ? "기초 자산" : "Underlying Asset"}</span>
+              <p className="text-sm font-bold text-white">{__koLang ? "검증 탄소배출권 (VCU)" : "Verified Carbon Credit (VCU)"}</p>
+              <span className="text-[10px] text-slate-400">{__koLang ? "실제 감축량 기준" : "Actual Reduction Based"}</span>
             </div>
 
             <div className="bg-navy-950 p-5 rounded-2xl border border-navy-800 space-y-2">
               <span className="text-slate-400 font-semibold block">Token Status</span>
-              <p className="text-sm font-bold text-amber-400">Under Development</p>
-              <span className="text-[10px] text-slate-400">Blockchain Protocol R&D</span>
+              <p className="text-sm font-bold text-amber-400">{__koLang ? "개발 중" : "Under Development"}</p>
+              <span className="text-[10px] text-slate-400">{__koLang ? "블록체인 프로토콜 연구개발" : "Blockchain Protocol R&D"}</span>
             </div>
 
             <div className="bg-navy-950 p-5 rounded-2xl border border-navy-800 space-y-2">
-              <span className="text-slate-400 font-semibold block">Blockchain Network</span>
-              <p className="text-sm font-bold text-slate-400">TBD (To Be Determined)</p>
+              <span className="text-slate-400 font-semibold block">{__koLang ? "블록체인 네트워크" : "Blockchain Network"}</span>
+              <p className="text-sm font-bold text-slate-400">{__koLang ? "미정" : "TBD (To Be Determined)"}</p>
               <span className="text-[10px] text-slate-400">Eco-Friendly L1/L2 Review</span>
             </div>
 
             <div className="bg-navy-950 p-5 rounded-2xl border border-navy-800 space-y-2">
-              <span className="text-slate-400 font-semibold block">Backing Ratio & Standard</span>
+              <span className="text-slate-400 font-semibold block">{__koLang ? "담보 비율 및 기준" : "Backing Ratio & Standard"}</span>
               <p className="text-sm font-bold text-slate-400">TBD (1 Credit : 1 Token TBD)</p>
-              <span className="text-[10px] text-slate-400">Regulatory Review</span>
+              <span className="text-[10px] text-slate-400">{__koLang ? "규제 검토" : "Regulatory Review"}</span>
             </div>
           </div>
 
@@ -1208,7 +1222,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
               <span>{isVi ? 'Hướng dẫn quy định pháp lý & Số hóa tài sản carbon (Legal Disclaimer)' : '법률 및 탄소자산 디지털화 규정 안내 (Legal Disclaimer)'}</span>
             </div>
             <p className="text-slate-300 leading-relaxed">
-              <strong>Tiếng Việt / Korean:</strong> {isVi ? 'Việc số hóa tài sản carbon đã xác minh trên nền tảng blockchain sẽ được triển khai trong tương lai sau khi thông qua các quy định pháp luật liên quan, hệ thống đăng ký carbon (Verra, Gold Standard, v.v.) và xem xét pháp lý.' : '검증된 탄소자산의 블록체인 기반 디지털화는 관련 법규, 탄소등록제도(Verra, Gold Standard 등) 및 법률 검토를 거쳐 향후 추진합니다.'}
+              <strong>{isVi ? "Tiếng Việt:" : "한국어:"}</strong> {isVi ? 'Việc số hóa tài sản carbon đã xác minh trên nền tảng blockchain sẽ được triển khai trong tương lai sau khi thông qua các quy định pháp luật liên quan, hệ thống đăng ký carbon (Verra, Gold Standard, v.v.) và xem xét pháp lý.' : '검증된 탄소자산의 블록체인 기반 디지털화는 관련 법규, 탄소등록제도(Verra, Gold Standard 등) 및 법률 검토를 거쳐 향후 추진합니다.'}
             </p>
             <p className="text-slate-400 text-[11px] leading-relaxed">
               <strong>English:</strong> Verified carbon assets may be digitally represented on blockchain infrastructure subject to applicable regulations, registry rules and legal review.
@@ -1234,7 +1248,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
             
             {/* Vietnam Region Map Quick Click List */}
             <div className="lg:col-span-5 space-y-3 text-xs">
-              <span className="font-bold text-slate-400 uppercase block mb-2">Regional Operations:</span>
+              <span className="font-bold text-slate-400 uppercase block mb-2">{__koLang ? "지역 운영:" : "Regional Operations:"}</span>
               {solarProjectsData.map((prj) => (
                 <button
                   key={prj.projectId}
@@ -1248,7 +1262,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                   <div className="space-y-1">
                     <div className="flex items-center space-x-2">
                       <MapPin className="w-3.5 h-3.5 text-amber-400" />
-                      <span className="font-bold text-white">{prj.province}</span>
+                      <span className="font-bold text-white">{koData(prj.province)}</span>
                       <span className="text-[10px] bg-navy-900 px-2 py-0.5 rounded text-amber-300 font-mono">
                         {prj.solarCapacityMW} MW
                       </span>
@@ -1268,7 +1282,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
                     <div>
                       <span className="text-[10px] text-amber-400 font-mono block">{selectedProject.projectCode}</span>
                       <h4 className="text-lg font-bold text-white">{selectedProject.projectName}</h4>
-                      <p className="text-slate-400 text-[11px]">{selectedProject.location}</p>
+                      <p className="text-slate-400 text-[11px]">{koData(selectedProject.location)}</p>
                     </div>
                     <span className="bg-emerald-500/20 text-emeraldGreen-400 px-3 py-1 rounded-full text-[11px] font-bold border border-emerald-500/30">
                       {selectedProject.creditStatus}
@@ -1325,7 +1339,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
         <div id="deck-preview" className="space-y-6 pt-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-navy-800 pb-6">
             <div>
-              <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-1">BEST WINNER SOLAR DECK</span>
+              <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-1">{__koLang ? "BEST WINNER 솔라 데크" : "BEST WINNER SOLAR DECK"}</span>
               <h3 className="text-2xl font-extrabold text-white flex items-center space-x-2">
                 <span>{isVi ? 'Xem trước toàn bộ 31 slide Kế hoạch kinh doanh' : '사업계획서 전체 31 슬라이드 미리보기'}</span>
                 <span className="text-xs font-medium text-slate-400 bg-navy-900 px-2.5 py-1 rounded-full border border-navy-800">
@@ -1372,7 +1386,7 @@ export default function SolarEnergySection({ t, onOpenConsult }) {
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
             <div className="space-y-3 text-center md:text-left">
               <span className="bg-navy-950 text-amber-400 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
-                ENERGY & CARBON PARTNERSHIP
+                {__koLang ? "에너지·탄소 파트너십" : "ENERGY & CARBON PARTNERSHIP"}
               </span>
               <h3 className="text-2xl sm:text-4xl font-black text-navy-950 break-keep">
                 {isVi ? 'Tư vấn hợp tác thi công điện mặt trời & phát triển tài sản carbon' : '태양광 시공 & 탄소 자산 개발 제휴 문의'}

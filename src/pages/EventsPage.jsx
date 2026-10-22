@@ -24,6 +24,10 @@ import { db } from '../lib/firebase';
 import { collection, query, where, getDocs, onSnapshot } from 'firebase/firestore';
 import { MERCHANT_CONFIG } from '../config/merchant';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 // BestClub (https://bestclubvn.netlify.app/events) 100% 실시간 동기화 데이터
 // 가맹점 CEO (hexttokenopbnb@gmail.com / merchantId: 1791605366) 공식 등록 데이터
 // [개발가이드 절대 원칙 준수] 임의의 가짜/더미 바우쳐(승강기 점검, 스마트파킹 등) 하드코딩 금지
@@ -55,6 +59,7 @@ const BESTCLUB_BESTWINNER_SEEDS = [
 
 export default function EventsPage({ t, user, onOpenGoogleAuth }) {
   const isVi = t?.lang === 'vi';
+  __koLang = t?.lang === 'ko';
   const isKo = t?.lang === 'ko' || (!t?.lang && true);
 
   const [campaigns, setCampaigns] = useState(BESTCLUB_BESTWINNER_SEEDS);
@@ -188,7 +193,7 @@ export default function EventsPage({ t, user, onOpenGoogleAuth }) {
               <div className="flex flex-wrap items-center gap-2 mb-2">
                 <span className="inline-flex items-center space-x-1 text-[11px] font-bold text-amber-300 uppercase tracking-widest bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/30">
                   <Ticket className="w-3.5 h-3.5 mr-1" />
-                  <span>BEST WINNER EXCLUSIVE VOUCHERS</span>
+                  <span>{__koLang ? "BEST WINNER 전용 바우처" : "BEST WINNER EXCLUSIVE VOUCHERS"}</span>
                 </span>
                 <span className="inline-flex items-center space-x-1 text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
                   <ShieldCheck className="w-3.5 h-3.5 mr-1" />
@@ -419,7 +424,7 @@ export default function EventsPage({ t, user, onOpenGoogleAuth }) {
         <div className="bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900 border border-navy-700/80 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
             <span className="text-xs font-black text-amber-300 uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">
-              BESTCLUB CENTRAL PLATFORM
+              {__koLang ? "BESTCLUB 중앙 플랫폼" : "BESTCLUB CENTRAL PLATFORM"}
             </span>
             <h3 className="text-xl sm:text-2xl font-black text-white">
               {isVi ? 'Đồng bộ hóa Mã QR & Ví MyPage Thời gian thực' : isKo ? 'BestClub 마이페이지 QR 실시간 연동' : 'BestClub MyPage QR Sync'}

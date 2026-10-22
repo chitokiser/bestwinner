@@ -12,8 +12,13 @@ import {
   ChevronDown
 } from 'lucide-react';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function OrgChartSection({ t }) {
   const isVi = t?.lang === 'vi' || !t?.lang;
+  __koLang = t?.lang === 'ko';
 
   const orgData = {
     ceo: {
@@ -49,7 +54,7 @@ export default function OrgChartSection({ t }) {
         id: "quality",
         icon: ShieldCheck,
         name: isVi ? "Phòng Quản lý Chất lượng (QM Dept.)" : "품질관리부 (Quality Management Dept.)",
-        subName: "Quality Management Dept.",
+        subName: (__koLang ? "품질관리부" : "Quality Management Dept."),
         color: "from-amber-500/20 to-yellow-500/10 border-gold-500/30",
         teams: [
           isVi ? "Phó Tổng Giám đốc Quản lý Chất lượng" : "품질총괄 부사장"
@@ -59,7 +64,7 @@ export default function OrgChartSection({ t }) {
         id: "construction",
         icon: HardHat,
         name: isVi ? "Phòng Thi công Xây dựng (Construction Dept.)" : "건설사업부 (Construction Dept.)",
-        subName: "Construction Dept.",
+        subName: (__koLang ? "시공부" : "Construction Dept."),
         color: "from-amber-500/20 to-yellow-500/10 border-gold-500/30",
         teams: [
           isVi ? "Đội Thi công 1 (Construction Team 1)" : "시공 1팀",
@@ -70,7 +75,7 @@ export default function OrgChartSection({ t }) {
         id: "tech",
         icon: Wrench,
         name: isVi ? "Phòng Hỗ trợ Kỹ thuật (Technical Support)" : "기술지원부 (Technical Support Dept.)",
-        subName: "Technical Support Dept.",
+        subName: (__koLang ? "기술지원부" : "Technical Support Dept."),
         color: "from-amber-500/20 to-yellow-500/10 border-gold-500/30",
         teams: [
           isVi ? "Đội Chống thấm K1 Chuyên trách" : "K1 방수 전담팀",
@@ -82,7 +87,7 @@ export default function OrgChartSection({ t }) {
         id: "sales",
         icon: TrendingUp,
         name: isVi ? "Phòng Kinh doanh & Marketing" : "영업/마케팅부 (Sales & Marketing Dept.)",
-        subName: "Sales & Marketing Dept.",
+        subName: (__koLang ? "영업·마케팅부" : "Sales & Marketing Dept."),
         color: "from-amber-500/20 to-yellow-500/10 border-gold-500/30",
         teams: [
           isVi ? "Đội Kinh doanh B2B / B2C" : "B2B / B2C 영업팀",
@@ -93,7 +98,7 @@ export default function OrgChartSection({ t }) {
         id: "agency",
         icon: Globe,
         name: isVi ? "Khối Digital Agency (Digital Agency HQ)" : "디지털에이전시 사업본부 (Digital Agency HQ)",
-        subName: "Digital Agency HQ",
+        subName: (__koLang ? "디지털 에이전시 본부" : "Digital Agency HQ"),
         highlight: true,
         color: "from-gold-500/30 to-amber-600/20 border-gold-400/50 shadow-gold-500/10",
         teams: [

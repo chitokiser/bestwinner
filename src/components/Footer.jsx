@@ -14,6 +14,10 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function Footer({ t }) {
   const navigate = useNavigate();
 
@@ -23,6 +27,7 @@ export default function Footer({ t }) {
   };
 
   const isVi = t?.lang === 'vi';
+  __koLang = t?.lang === 'ko';
   const isKo = t?.lang === 'ko' || (!t?.lang && false);
 
   return (
@@ -141,15 +146,15 @@ export default function Footer({ t }) {
                 </span>
                 <span className="text-[10px] text-emeraldGreen-400 font-bold flex items-center gap-1">
                   <CheckCircle2 className="w-3 h-3" />
-                  PDF Profile Verified
+                  {__koLang ? "PDF 회사소개서 인증" : "PDF Profile Verified"}
                 </span>
               </div>
               <h4 className="text-sm sm:text-base font-extrabold text-white">
-                BEST WINNER VN LIMITED COMPANY <span className="text-xs text-slate-400 font-medium">(CÔNG TY TNHH BEST WINNER VN)</span>
+                {__koLang ? "베스트위너 VN 유한회사" : "BEST WINNER VN LIMITED COMPANY"} <span className="text-xs text-slate-400 font-medium">{__koLang ? "(베스트위너 VN 유한회사)" : "(CÔNG TY TNHH BEST WINNER VN)"}</span>
               </h4>
             </div>
             <div className="flex flex-wrap items-center gap-3 text-slate-300 text-[11px]">
-              <span>Mã số thuế (Tax Code): <strong className="text-gold-400 font-mono text-xs">0110245813</strong></span>
+              <span>{__koLang ? "세금코드(사업자번호):" : "Mã số thuế (Tax Code):"} <strong className="text-gold-400 font-mono text-xs">0110245813</strong></span>
               <span>•</span>
               <span>설립일 (Est.): <strong className="text-white">2023년 2월 9일 (Feb 09th 2023)</strong></span>
             </div>
@@ -222,7 +227,7 @@ export default function Footer({ t }) {
             <span>•</span>
             <span>QCVN / TCVN Compliant</span>
             <span>•</span>
-            <span>SaaS AI ERP Integrated</span>
+            <span>{__koLang ? "SaaS AI ERP 연동" : "SaaS AI ERP Integrated"}</span>
           </div>
         </div>
 

@@ -37,7 +37,22 @@ import { UserService } from './services/userService';
 import { translations } from './locales/translations';
 
 export default function App() {
-  const [currentLang, setLangState] = useState(() => localStorage.getItem('bestwinner_lang') || 'vi'); // 'vi' (default), 'ko', 'en'
+  const [currentLang, setLangState] = useState(() => {
+    // 'vi' (default), 'ko', 'en' — 주소 ?lang=ko 로 언어를 지정해 공유할 수 있음
+    const LANGS = ['vi', 'ko', 'en'];
+    try {
+      const fromUrl = new URLSearchParams(window.location.search).get('lang');
+      if (LANGS.includes(fromUrl)) {
+        localStorage.setItem('bestwinner_lang', fromUrl);
+        return fromUrl;
+      }
+      const saved = localStorage.getItem('bestwinner_lang');
+      if (LANGS.includes(saved)) return saved;
+      const browser = (navigator.languages || [navigator.language || '']).map((l) => String(l).toLowerCase());
+      if (browser.some((l) => l.startsWith('ko'))) return 'ko';
+    } catch (e) { }
+    return 'vi';
+  });
   const setLang = (lang) => {
     localStorage.setItem('bestwinner_lang', lang);
     setLangState(lang);
@@ -74,7 +89,7 @@ export default function App() {
 
   return (
     <Router>
-      <Seo />
+      <Seo lang={currentLang} />
       <div className="min-h-screen bg-navy-950 text-slate-100 flex flex-col font-sans">
         
         {/* Simplified Header */}

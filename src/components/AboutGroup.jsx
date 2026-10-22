@@ -11,8 +11,13 @@ import {
   Globe2 
 } from 'lucide-react';
 
+
+// 한국어 화면 여부 (렌더 때 갱신) — 번역 안 된 문구를 한국어로 보여줄 때 사용
+let __koLang = false;
+
 export default function AboutGroup({ t }) {
   const isVi = t?.lang === 'vi';
+  __koLang = t?.lang === 'ko';
   const isKo = t?.lang === 'ko' || (!t?.lang && false);
 
   const about = t?.about || {
@@ -20,7 +25,7 @@ export default function AboutGroup({ t }) {
     title: "BEST winner Group Vietnam",
     philosophy: isVi ? "Hội tụ Công nghệ Kỹ thuật Hàn Quốc & Hệ thống Sản xuất Trực tiếp tại Việt Nam" : isKo ? "한국 정밀 기술력 × 베트남 현지 맞춤 직영 생산" : "Korean Technology × Vietnamese Production",
     cards: [
-      { title: isVi ? "Công nghệ Hàn Quốc" : isKo ? "한국 정밀 기술력" : "Korean Technology", desc: isVi ? "Áp dụng kỹ thuật chính xác Hàn Quốc và quy trình kiểm định chất lượng nghiêm ngặt." : isKo ? "한국의 정밀 기술력과 엄격한 품질 관리 프로세스 적용." : "Applying Korean precision engineering and strict quality standards." },
+      { title: isVi ? "Công nghệ Hàn Quốc" : isKo ? "한국 정밀 기술력" : (__koLang ? "한국 기술력" : "Korean Technology"), desc: isVi ? "Áp dụng kỹ thuật chính xác Hàn Quốc và quy trình kiểm định chất lượng nghiêm ngặt." : isKo ? "한국의 정밀 기술력과 엄격한 품질 관리 프로세스 적용." : "Applying Korean precision engineering and strict quality standards." },
       { title: isVi ? "Sản xuất Địa phương" : isKo ? "현지 맞춤 직영 생산" : "Local Production", desc: isVi ? "Nhà máy 3.000m² tại Hà Nội đáp ứng may đo trực tiếp theo công trình." : isKo ? "하노이 3,000m² 직영 공장 연계 현지 맞춤 제작 및 공급." : "3,000sqm Hanoi factory customized for local projects." },
       { title: isVi ? "Đội ngũ Kỹ sư Chuyên gia" : isKo ? "전문 엔지니어 직영 시공" : "Expert Engineering", desc: isVi ? "2 Kỹ sư Trưởng Hàn Quốc & 15 Kỹ sư chuyên trách trực tiếp thi công." : isKo ? "한국인 수석 기술진 2인과 현지 전문 엔지니어 15인 직접 시공." : "2 Korean Chief Engineers and 15 specialized technical engineers." },
       { title: isVi ? "Hiệu quả Tích hợp Đa mảng" : isKo ? "전 사업 분야 시너지" : "Multi-Business Synergy", desc: isVi ? "Tối ưu hóa chi phí và quản lý đồng bộ tất cả mảng hạ tầng trong một hợp đồng." : isKo ? "전 사업 분야 단일 계약 파이프라인 및 일원화된 A/S 보증." : "All business areas unified under a single contract pipeline." }
