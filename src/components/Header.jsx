@@ -68,9 +68,9 @@ export default function Header({ currentLang, setLang, t }) {
     },
     { 
       id: 'bestclub', 
-      path: 'https://bestclubvn.netlify.app/', 
+      path: '/services/bestclub', 
       name: isVi ? 'BestClub (Bản đồ kho báu & Ưu đãi)' : isKo ? '베스트클럽 (보물지도·혜택 플랫폼)' : 'BestClub (Treasure Map & Rewards)', 
-      tag: 'BestClub ↗' 
+      tag: 'Points / Jackpot' 
     },
   ];
 

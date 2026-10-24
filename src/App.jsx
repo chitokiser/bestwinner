@@ -23,6 +23,7 @@ import AIManagementPage from './pages/AIManagementPage';
 import MerchantProductsPage from './pages/MerchantProductsPage';
 import EventsPage from './pages/EventsPage';
 import MegazinePage from './pages/MegazinePage';
+import BestClubPage from './pages/BestClubPage';
 // 외부 주소로 바로 이동 (사이트 안 링크로 들어온 경우)
 function ExternalRedirect({ to }) {
   if (typeof window !== 'undefined') window.location.replace(to);
@@ -131,6 +132,7 @@ export default function App() {
             <Route path="/business/digital-agency" element={<DigitalAgencyPage t={t} />} />
             <Route path="/services" element={<AIManagementPage t={t} />} />
             <Route path="/services/ai-management" element={<AIManagementPage t={t} />} />
+            <Route path="/services/bestclub" element={<BestClubPage t={t} />} />
             <Route 
               path="/services/products" 
               element={

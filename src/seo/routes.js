@@ -126,6 +126,14 @@ export const SEO_ROUTES = [
   },
   { path: '/services/events', canonical: '/events' },
   {
+    path: '/services/bestclub',
+    title: 'BestClub - Nền tảng điểm thưởng liên minh | BEST winner Vn Group (베스트클럽)',
+    description:
+      'BestClub: thanh toán tại cửa hàng thành viên, nhận jackpot điểm và vé thưởng. 베스트클럽 가맹점 결제 포인트 잭팟·보너스티켓 안내.',
+    priority: 0.6,
+    changefreq: 'monthly',
+  },
+  {
     path: '/megazine',
     title: 'BEST MEGAZINE - Tạp chí đời sống Hà Nội | BEST winner Vn Group (매거진)',
     description:
