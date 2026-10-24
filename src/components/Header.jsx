@@ -66,12 +66,22 @@ export default function Header({ currentLang, setLang, t }) {
       name: isVi ? 'BEST MEGAZINE (Tạp chí AI)' : isKo ? 'BEST MEGAZINE (AI 매거진)' : 'BEST MEGAZINE (AI Expat Magazine)', 
       tag: '5x Daily AI' 
     },
+    { 
+      id: 'bestclub', 
+      path: 'https://bestclubvn.netlify.app/', 
+      name: isVi ? 'BestClub (Bản đồ kho báu & Ưu đãi)' : isKo ? '베스트클럽 (보물지도·혜택 플랫폼)' : 'BestClub (Treasure Map & Rewards)', 
+      tag: 'BestClub ↗' 
+    },
   ];
 
   const handleNavClick = (path) => {
     setIsMobileMenuOpen(false);
     setIsBUDropdownOpen(false);
     setIsServicesDropdownOpen(false);
+    if (path.startsWith('http')) {
+      window.open(path, '_blank', 'noopener,noreferrer');
+      return;
+    }
     navigate(path);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
