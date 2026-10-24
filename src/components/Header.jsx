@@ -72,6 +72,12 @@ export default function Header({ currentLang, setLang, t }) {
       name: isVi ? 'BestClub (Bản đồ kho báu & Ưu đãi)' : isKo ? '베스트클럽 (보물지도·혜택 플랫폼)' : 'BestClub (Treasure Map & Rewards)', 
       tag: 'Points / Jackpot' 
     },
+    { 
+      id: 'bestclub-game', 
+      path: '/services/bestclub-game', 
+      name: isVi ? 'Game BestClub (Săn quái · Tìm kho báu)' : isKo ? '베스트클럽 게임 (몬스터 사냥·보물찾기)' : 'BestClub Game (Monsters & Treasure)', 
+      tag: 'GP → BM' 
+    },
   ];
 
   const handleNavClick = (path) => {

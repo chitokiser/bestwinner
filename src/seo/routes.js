@@ -134,6 +134,14 @@ export const SEO_ROUTES = [
     changefreq: 'monthly',
   },
   {
+    path: '/services/bestclub-game',
+    title: 'Game BestClub - Săn quái, tìm kho báu, đổi BestMoney | BEST winner Vn Group (베스트클럽 게임)',
+    description:
+      'Game theo vị trí của BestClub: săn quái vật, tìm kho báu, đổi GP sang Point và BestMoney để thanh toán tại cửa hàng thành viên. 위치기반 몬스터 사냥·보물찾기, GP→포인트→BM 교환.',
+    priority: 0.6,
+    changefreq: 'monthly',
+  },
+  {
     path: '/megazine',
     title: 'BEST MEGAZINE - Tạp chí đời sống Hà Nội | BEST winner Vn Group (매거진)',
     description:
