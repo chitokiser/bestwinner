@@ -69,7 +69,7 @@ export default function Header({ currentLang, setLang, t }) {
     { 
       id: 'bestclub', 
       path: '/services/bestclub', 
-      name: isVi ? 'BestClub (Bản đồ kho báu & Ưu đãi)' : isKo ? '베스트클럽 (보물지도·혜택 플랫폼)' : 'BestClub (Treasure Map & Rewards)', 
+      name: isVi ? 'BestClub (Nền tảng cửa hàng thành viên)' : isKo ? '베스트클럽 (가맹점 플랫폼)' : 'BestClub (Merchant Platform)', 
       tag: 'Points / Jackpot' 
     },
     { 

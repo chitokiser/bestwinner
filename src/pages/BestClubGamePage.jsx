@@ -49,6 +49,21 @@ export default function BestClubGamePage({ t }) {
     { code: 'BM', name: 'BestMoney', note: L('Point ÷ 10 — thanh toán tại cửa hàng', 'Point ÷ 10 — 가맹점 결제에 사용', 'Point ÷ 10 — spend at member stores') },
   ];
 
+  const shots = [
+    {
+      src: '/images/bestclub/game-shot-battle.jpg',
+      caption: L('Đánh quái vật xuất hiện quanh vị trí của bạn', '내 위치 주변에 나타난 몬스터와 전투', 'Fighting monsters that appear around you'),
+    },
+    {
+      src: '/images/bestclub/game-shot-treasure.jpg',
+      caption: L('Quái vật và kho báu rải quanh các cửa hàng', '가맹점 주변 곳곳에 놓인 몬스터와 보물', 'Monsters and treasure spread around stores'),
+    },
+    {
+      src: '/images/bestclub/game-shot-city.jpg',
+      caption: L('Chơi trên bản đồ thật của cả thành phố Hà Nội', '하노이 시내 전체 실제 지도 위에서 플레이', 'Play across the real map of Hanoi'),
+    },
+  ];
+
   return (
     <div className="pt-6">
       {/* 경로 표시 */}
@@ -114,6 +129,21 @@ export default function BestClubGamePage({ t }) {
               className="absolute -bottom-6 -left-4 w-28 h-28 sm:w-36 sm:h-36"
               style={{ imageRendering: 'pixelated' }}
             />
+          </div>
+        </div>
+      </section>
+
+      {/* 실제 게임 화면 */}
+      <section className="bg-navy-950 border-b border-navy-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+          <h2 className="text-2xl sm:text-3xl font-black text-white">{L('Màn hình game thật', '실제 게임 화면', 'Real game screens')}</h2>
+          <div className="mt-8 grid lg:grid-cols-3 gap-5">
+            {shots.map((sh) => (
+              <figure key={sh.src} className="rounded-2xl overflow-hidden border border-navy-800 bg-navy-900">
+                <img src={sh.src} alt={sh.caption} className="w-full aspect-video object-cover" loading="lazy" />
+                <figcaption className="px-4 py-3 text-sm text-slate-300 break-keep">{sh.caption}</figcaption>
+              </figure>
+            ))}
           </div>
         </div>
       </section>
