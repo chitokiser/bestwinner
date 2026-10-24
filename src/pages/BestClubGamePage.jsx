@@ -4,6 +4,40 @@ import { ExternalLink, Swords, MapPin, Ticket, ArrowRight, ArrowDown, TrendingUp
 
 const GAME_URL = 'https://bestclubvn.netlify.app/merchants';
 
+// 히어로 배경 그림·드래곤 비행 (드래곤 시트: 80×80 프레임 6장 가로)
+const HERO_CSS = `
+.bcg-hero-map { object-position: 62% 50%; }
+.bcg-hero-shade {
+  background:
+    linear-gradient(90deg, rgba(4,9,20,.96) 0%, rgba(4,9,20,.86) 34%, rgba(4,9,20,.25) 64%, rgba(4,9,20,.05) 100%),
+    linear-gradient(0deg, rgba(4,9,20,.85) 0%, rgba(4,9,20,0) 30%);
+}
+.bcg-dragon { position: absolute; right: 12%; top: 18%; width: 200px; height: 200px; animation: bcgDrift 7s ease-in-out infinite; }
+.bcg-dragon-sprite {
+  width: 200px; height: 200px;
+  background: url(/images/bestclub/game-dragon-fly.png) 0 0 / 1200px 200px no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 18px 14px rgba(0,0,0,.55));
+  animation: bcgFlap .6s steps(6) infinite;
+}
+@keyframes bcgFlap { to { background-position: -1200px 0; } }
+@keyframes bcgDrift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-46px, 22px); }
+}
+@media (max-width: 1023px) {
+  .bcg-hero-map { object-position: 55% 30%; }
+  .bcg-hero-shade { background: linear-gradient(0deg, rgba(4,9,20,1) 0%, rgba(4,9,20,.92) 45%, rgba(4,9,20,.2) 75%, rgba(4,9,20,.1) 100%); }
+  .bcg-dragon { right: 8%; top: 40px; width: 150px; height: 150px; }
+  .bcg-dragon-sprite { width: 150px; height: 150px; background-size: 900px 150px; }
+  @keyframes bcgFlap { to { background-position: -900px 0; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bcg-dragon, .bcg-dragon-sprite { animation: none; }
+}
+`;
+
+
 // 베스트클럽 위치기반 게임(몬스터 사냥·보물찾기) 소개 + GP → Point → BM 교환 안내
 // 전환식은 베스트클럽 마이페이지 안내 기준: GP → Point = GP × 레벨 ÷ 10, Point → BM = Point ÷ 10
 export default function BestClubGamePage({ t }) {
@@ -77,58 +111,52 @@ export default function BestClubGamePage({ t }) {
         </div>
       </div>
 
-      {/* 첫 화면 */}
-      <section className="bg-navy-950 border-b border-navy-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-          <div>
-            <p className="text-sm font-semibold text-slate-400 mb-3">{L('Game theo vị trí của BestClub', '베스트클럽 위치기반 게임', 'BestClub location game')}</p>
-            <h1 className="text-4xl sm:text-5xl font-black text-white leading-tight break-keep">
-              {L(
-                'Đi dạo, săn quái, tìm kho báu và đổi thành tiền mua sắm',
-                <>몬스터 잡고 보물 찾고<br />가맹점 머니로 바꾸세요</>,
-                'Walk, hunt monsters, find treasure, and turn it into store money'
-              )}
-            </h1>
-            <p className="mt-5 text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl break-keep">
-              {L(
-                'Điểm game (GP) bạn kiếm được đổi sang Point, rồi sang BestMoney (BM) để thanh toán tại cửa hàng thành viên BestClub — kể cả BEST winner.',
-                '게임에서 모은 게임포인트(GP)는 포인트로, 포인트는 다시 베스트머니(BM)로 바꿀 수 있습니다. BM은 베스트위너를 포함한 베스트클럽 가맹점에서 결제에 씁니다.',
-                'Game points (GP) convert to Points, then to BestMoney (BM), which you spend at BestClub member stores, BEST winner included.'
-              )}
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href={GAME_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center bg-gold-500 hover:bg-gold-400 text-navy-950 font-black px-6 py-3.5 rounded-xl transition-colors"
-              >
-                {L('Chơi ngay', '게임 시작하기', 'Start playing')}
-                <ExternalLink className="w-4 h-4 ml-2" />
-              </a>
-              <Link
-                to="/services/bestclub"
-                className="inline-flex items-center border border-navy-700 hover:border-gold-500/60 text-slate-200 font-bold px-6 py-3.5 rounded-xl transition-colors"
-              >
-                {L('BestClub là gì?', '베스트클럽이란?', 'What is BestClub?')}
-              </Link>
-            </div>
+      {/* 첫 화면: 판타지 지도 배경 + 날아다니는 드래곤 */}
+      <section className="bcg-hero relative overflow-hidden border-b border-navy-800 bg-navy-950">
+        <style>{HERO_CSS}</style>
+        <img
+          src="/images/bestclub/game-hero-map.jpg"
+          alt=""
+          aria-hidden="true"
+          className="bcg-hero-map absolute inset-0 w-full h-full object-cover"
+          fetchpriority="high"
+        />
+        <div className="bcg-hero-shade absolute inset-0" aria-hidden="true" />
+        <div className="bcg-dragon" aria-hidden="true"><div className="bcg-dragon-sprite" /></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-64 pb-14 sm:pt-72 lg:py-32">
+          <div className="max-w-xl">
+          <p className="text-sm font-semibold text-slate-400 mb-3">{L('Game theo vị trí của BestClub', '베스트클럽 위치기반 게임', 'BestClub location game')}</p>
+          <h1 className="text-4xl sm:text-5xl font-black text-white leading-tight break-keep">
+            {L(
+              'Đi dạo, săn quái, tìm kho báu và đổi thành tiền mua sắm',
+              <>몬스터 잡고 보물 찾고<br />가맹점 머니로 바꾸세요</>,
+              'Walk, hunt monsters, find treasure, and turn it into store money'
+            )}
+          </h1>
+          <p className="mt-5 text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl break-keep">
+            {L(
+              'Điểm game (GP) bạn kiếm được đổi sang Point, rồi sang BestMoney (BM) để thanh toán tại cửa hàng thành viên BestClub — kể cả BEST winner.',
+              '게임에서 모은 게임포인트(GP)는 포인트로, 포인트는 다시 베스트머니(BM)로 바꿀 수 있습니다. BM은 베스트위너를 포함한 베스트클럽 가맹점에서 결제에 씁니다.',
+              'Game points (GP) convert to Points, then to BestMoney (BM), which you spend at BestClub member stores, BEST winner included.'
+            )}
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href={GAME_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center bg-gold-500 hover:bg-gold-400 text-navy-950 font-black px-6 py-3.5 rounded-xl transition-colors"
+            >
+              {L('Chơi ngay', '게임 시작하기', 'Start playing')}
+              <ExternalLink className="w-4 h-4 ml-2" />
+            </a>
+            <Link
+              to="/services/bestclub"
+              className="inline-flex items-center border border-navy-700 hover:border-gold-500/60 text-slate-200 font-bold px-6 py-3.5 rounded-xl transition-colors"
+            >
+              {L('BestClub là gì?', '베스트클럽이란?', 'What is BestClub?')}
+            </Link>
           </div>
-
-          <div className="relative mx-auto w-full max-w-md">
-            <img
-              src="/images/bestclub/game-dungeon.png"
-              alt={L('Bản đồ game BestClub', '베스트클럽 게임 지도', 'BestClub game map')}
-              className="w-full aspect-square object-cover rounded-2xl border border-navy-800"
-              style={{ imageRendering: 'pixelated' }}
-            />
-            <img
-              src="/images/bestclub/game-dragon.png"
-              alt=""
-              aria-hidden="true"
-              className="absolute -bottom-6 -left-4 w-28 h-28 sm:w-36 sm:h-36"
-              style={{ imageRendering: 'pixelated' }}
-            />
           </div>
         </div>
       </section>
