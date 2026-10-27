@@ -41,3 +41,6 @@ Thumbs.db
 scratch/
 .agents/
 
+
+# Local Netlify folder
+.netlify

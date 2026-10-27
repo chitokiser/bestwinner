@@ -2,7 +2,7 @@
   "name": "BEST winner Vn Group | 베트남 대표 주택·건설·스마트인프라 그룹",
   "short_name": "BEST winner",
   "description": "BEST winner Vn Group - 베트남 대표 주택·건설·스마트인프라 그룹 (엘리베이터, 인테리어, AI주차, 소방자재, 방수)",
-  "start_url": "/#/",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",

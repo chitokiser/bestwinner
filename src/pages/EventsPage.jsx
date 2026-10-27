@@ -1,3 +1,4 @@
+import EventsHero from '../components/Services/EventsHero';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -144,101 +145,10 @@ export default function EventsPage({ t, user, onOpenGoogleAuth }) {
   };
 
   return (
-    <div className="pt-6 min-h-screen pb-20">
+    <div className="pt-0 min-h-screen pb-20">
       
-      {/* 1. Page Header & Submenu Navigation */}
-      <div className="bg-navy-900 border-b border-navy-800 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-          
-          {/* Breadcrumbs */}
-          <div className="flex items-center space-x-2 text-xs text-slate-400">
-            <Link to="/" className="hover:text-gold-400">{isVi ? 'Trang chủ' : isKo ? '홈' : 'Home'}</Link>
-            <span>/</span>
-            <span className="text-cyan-400 font-semibold">{isVi ? 'Dịch vụ' : isKo ? '서비스' : 'Services'}</span>
-            <span>/</span>
-            <span className="text-amber-400 font-bold">{isVi ? 'Sự kiện & Voucher' : isKo ? '이벤트 (쿠폰·바우쳐)' : 'Events & Vouchers'}</span>
-          </div>
-
-          {/* Submenu Tabs (AI 경영관리 | 판매제품 | 이벤트 | BEST 매거진) */}
-          <div className="flex items-center space-x-2 overflow-x-auto pb-1 pt-1 no-scrollbar border-b border-navy-800">
-            <Link
-              to="/services/ai-management"
-              className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-300 hover:text-cyan-400 hover:bg-navy-800 whitespace-nowrap"
-            >
-              🤖 {isVi ? 'Quản lý AI (AI Management)' : isKo ? 'AI경영관리 (AI Management)' : 'AI Management'}
-            </Link>
-            <Link
-              to="/services/products"
-              className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-300 hover:text-gold-400 hover:bg-navy-800 whitespace-nowrap"
-            >
-              🛒 {isVi ? 'Sản phẩm bán (BEST Mall)' : isKo ? '판매제품 (BEST Mall)' : 'Products (BEST Mall)'}
-            </Link>
-            <Link
-              to="/services/events"
-              className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 border border-amber-500/40 shadow-sm whitespace-nowrap"
-            >
-              🎟️ {isVi ? 'Sự kiện & Voucher (BestClub)' : isKo ? '이벤트 (쿠폰·바우쳐)' : 'Events & Vouchers'}
-            </Link>
-            <Link
-              to="/megazine"
-              className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-300 hover:text-gold-400 hover:bg-navy-800 whitespace-nowrap"
-            >
-              📰 {isVi ? 'BEST MEGAZINE (Tạp chí AI)' : isKo ? 'BEST MEGAZINE (AI 매거진)' : 'BEST MEGAZINE'}
-            </Link>
-          </div>
-
-          {/* Title & Actions */}
-          <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 pt-2">
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mb-2">
-                <span className="inline-flex items-center space-x-1 text-[11px] font-bold text-amber-300 uppercase tracking-widest bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/30">
-                  <Ticket className="w-3.5 h-3.5 mr-1" />
-                  <span>{__koLang ? "BEST WINNER 전용 바우처" : "BEST WINNER EXCLUSIVE VOUCHERS"}</span>
-                </span>
-                <span className="inline-flex items-center space-x-1 text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
-                  <ShieldCheck className="w-3.5 h-3.5 mr-1" />
-                  <span>가맹점 CEO ({MERCHANT_CONFIG.ceoEmail}) 공식 등록</span>
-                </span>
-              </div>
-              
-              <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-                BEST WINNER {isVi ? 'VOUCHER & PHIẾU GIẢM GIÁ ĐỘC QUYỀN' : isKo ? '공식 가맹점 이벤트 쿠폰·바우쳐' : 'EXCLUSIVE EVENT & VOUCHERS'}
-              </h1>
-              
-              <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
-                {isVi
-                  ? `Chỉ hiển thị các phiếu giảm giá và voucher do Giám đốc BEST WINNER (${MERCHANT_CONFIG.ceoEmail}) trực tiếp phát hành. Không hiển thị cửa hàng khác.`
-                  : isKo
-                  ? `베스트위너 CEO 계정(${MERCHANT_CONFIG.ceoEmail} / 가맹점 ID: ${MERCHANT_CONFIG.merchantId})이 직접 등록한 전용 할인 쿠폰과 교환 바우쳐만 선별 노출합니다.`
-                  : `Strictly showing official vouchers issued by BEST WINNER CEO (${MERCHANT_CONFIG.ceoEmail}).`}
-              </p>
-            </div>
-
-            {/* Quick Actions Bar */}
-            <div className="flex flex-wrap items-center gap-2.5">
-              <a
-                href={MERCHANT_CONFIG.eventsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-lg transition-all flex items-center border border-purple-400/40"
-              >
-                <span>{isVi ? 'Quản trị phát hành BestClub' : isKo ? '👑 CEO 쿠폰 발행 (BestClub)' : 'BestClub Event Admin'}</span>
-                <ExternalLink className="w-4 h-4 ml-1.5" />
-              </a>
-
-              <a
-                href="https://bestclubvn.netlify.app/mypage#couponsSection"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-navy-800 hover:bg-navy-700 text-slate-200 border border-navy-700 font-bold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl transition-colors flex items-center"
-              >
-                <span>{isVi ? 'Ví Voucher của tôi' : isKo ? '📦 내 보유 쿠폰 확인' : 'My Coupons'}</span>
-                <ExternalLink className="w-3.5 h-3.5 ml-1.5 text-slate-400" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* 1. New Premium Hero Section via hero-banner skill */}
+      <EventsHero t={t} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-8">
         
