@@ -72,7 +72,7 @@ export default function DigitalAgencyPage({ t }) {
     {
       src: '/images/dgitalagency/1.png',
       title: isKo ? 'Phase 1: 기획 & 기본 웹 구축' : 'Phase 1: Quy hoạch & Web cơ bản',
-      badge: isKo ? '기본 인프라 구축 (약 8,000,000 VND ~)' : 'Báo giá dự kiến ~ 8.000.000 VND'
+      badge: isKo ? '기본 인프라 구축 (약 25,000,000 VND ~)' : 'Báo giá dự kiến ~ 25.000.000 VND'
     },
     {
       src: '/images/dgitalagency/2.png',
@@ -110,7 +110,7 @@ export default function DigitalAgencyPage({ t }) {
   });
 
   const phasePrices = {
-    phase1: 8000000,
+    phase1: 25000000,
     phase2: 35000000,
     phase3: 35000000,
     phase4: 30000000
@@ -249,8 +249,8 @@ export default function DigitalAgencyPage({ t }) {
       id: 'phase1',
       num: 'Phase 1',
       title: isKo ? '기획 & 기본 웹 구축' : 'Quy hoạch & Xây dựng Web Cơ bản',
-      period: isKo ? '1주' : '1 Tuần',
-      priceVND: 8000000,
+      period: isKo ? '1~2주' : '1~2 Tuần',
+      priceVND: 25000000,
       scope: isKo ? '반응형 웹 플랫폼 및 기본 인프라 구축' : 'Nền tảng Web đáp ứng & Hạ tầng cơ bản',
       features: [
         isKo ? 'UX/UI 전문 기획 및 커스텀 감성 디자인' : 'Thiết kế UX/UI chuyên nghiệp & giao diện tùy chỉnh',
