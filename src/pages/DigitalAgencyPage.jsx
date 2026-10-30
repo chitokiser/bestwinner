@@ -217,9 +217,9 @@ export default function DigitalAgencyPage({ t }) {
     {
       icon: Utensils,
       title: isKo ? "F&B / 하이엔드 다이닝 AX 솔루션" : "Giải pháp AX Ngành F&B / Nhà hàng Cao cấp",
-      subtitle: isKo ? "VVIP 고객 유치 & 데이터 플라이휠 (백제갈비 적용 모델)" : "Thu hút VVIP & Vòng đà Tăng trưởng Dữ liệu",
+      subtitle: isKo ? "VVIP 고객 유치 & 데이터 플라이휠 (하이엔드 실전 모델)" : "Thu hút VVIP & Vòng đà Tăng trưởng Dữ liệu",
       desc: isKo ? "테이블 QR 온보딩, Zalo OA CRM, 30일 이탈 방지 AI 트리거, 위스키 오크통 킵핑 및 비즈니스 접대 맞춤 예약 인터뷰 시스템 완비." : "QR bàn, Zalo OA CRM, kích hoạt AI chống rời bỏ 30 ngày, gửi thùng sồi Whisky & đặt phòng tiếp khách B2B.",
-      tags: ["백제갈비 실행사례", "Zalo OA CRM", "위스키 오크통 킵핑", "테이블 QR 온보딩"]
+      tags: ["하이엔드 F&B 실행사례", "Zalo OA CRM", "위스키 오크통 킵핑", "테이블 QR 온보딩"]
     },
     {
       icon: ShoppingBag,
@@ -397,7 +397,7 @@ export default function DigitalAgencyPage({ t }) {
                 </span>
                 <span className="inline-flex items-center space-x-1 text-xs font-black text-gold-400 bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/30">
                   <Crown className="w-3.5 h-3.5 text-gold-400" />
-                  <span>{isKo ? '백제갈비 AX 통합 실행 모델 완비' : 'Mô hình AX Cao cấp'}</span>
+                  <span>{isKo ? '하이엔드 VVIP AX 통합 실행 모델 완비' : 'Mô hình AX Cao cấp VVIP'}</span>
                 </span>
               </div>
 
@@ -415,11 +415,11 @@ export default function DigitalAgencyPage({ t }) {
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <a
-                  href="#proposal-baekje"
+                  href="#proposal-vvip"
                   className="px-5 py-3 rounded-xl bg-gradient-to-r from-gold-500 via-amber-500 to-gold-400 text-navy-950 text-xs font-black flex items-center space-x-2 shadow-xl shadow-gold-500/20 hover:scale-105 transition-all"
                 >
                   <Crown className="w-4 h-4 fill-navy-950" />
-                  <span>{isKo ? '백제갈비 AI 마케팅 실행계획 보기' : 'Kế hoạch Thực thi AX Bạch Đệ'}</span>
+                  <span>{isKo ? '프리미엄 VVIP AI 마케팅 실행계획 보기' : 'Kế hoạch Thực thi AX VVIP'}</span>
                 </a>
                 <a
                   href="#pricing-matrix"
@@ -487,10 +487,8 @@ export default function DigitalAgencyPage({ t }) {
         </div>
       </div>
 
-      {/* ========================================================================= */}
-      {/* 2. [NEW FEATURED SECTION] 백제갈비 AI 마케팅 통합 실행 계획서 쇼케이스 */}
-      {/* ========================================================================= */}
-      <section id="proposal-baekje" className="relative py-16 border-b border-navy-800 bg-gradient-to-b from-navy-950 via-navy-900 to-navy-950">
+      {/* 2. [NEW FEATURED SECTION] 프리미엄 VVIP AI 마케팅 통합 실행 계획서 쇼케이스 */}
+      <section id="proposal-vvip" className="relative py-16 border-b border-navy-800 bg-gradient-to-b from-navy-950 via-navy-900 to-navy-950">
         
         {/* Subtle Ambient Background Glows */}
         <div className="absolute top-10 left-1/4 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl pointer-events-none" />
@@ -506,7 +504,7 @@ export default function DigitalAgencyPage({ t }) {
             </div>
 
             <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              {isKo ? '백제갈비 AI 마케팅 통합 실행 계획서' : 'Kế Hoạch Thực Thi Tiếp Thị AI Toàn Diện'}
+              {isKo ? '프리미엄 VVIP AI 마케팅 통합 실행 계획서' : 'Kế Hoạch Thực Thi Tiếp Thị AI VVIP Toàn Diện'}
             </h2>
 
             <p className="text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
@@ -1013,7 +1011,7 @@ export default function DigitalAgencyPage({ t }) {
                   <h4 className="text-base font-bold text-white">{isKo ? 'VVIP 하우스 위스키 오크통 킵핑 (Barrel Keeping)' : 'Dịch Vụ Gửi Thùng Sồi Whisky VVIP'}</h4>
                   <p className="text-xs text-slate-300 leading-relaxed">
                     {isKo 
-                      ? 'VVIP 고객의 영문 이름과 날짜가 레이저 각인된 10L 전용 위스키 오크통을 매장 오크 베럴룸에 보관합니다. 매장 방문 시에만 전용 크리스탈 디캔터로 서빙(외부 반출 불가)하여 비즈니스 접대 시 백제갈비 독점 방문을 확고히 유도합니다.'
+                      ? 'VVIP 고객의 영문 이름과 날짜가 레이저 각인된 10L 전용 위스키 오크통을 매장 오크 베럴룸에 보관합니다. 매장 방문 시에만 전용 크리스탈 디캔터로 서빙(외부 반출 불가)하여 비즈니스 접대 시 매장 독점 방문을 확고히 유도합니다.'
                       : 'Thùng gỗ sồi 10L khắc tên & ngày của khách bằng laser. Chỉ phục vụ bằng Decanter pha lê khi đến quán, kéo khách luôn quay lại tiếp khách.'}
                   </p>
                 </div>
@@ -1183,8 +1181,8 @@ export default function DigitalAgencyPage({ t }) {
           </h2>
           <p className="text-sm text-slate-400 max-w-2xl mx-auto">
             {isKo 
-              ? '백제갈비에 공식 제안된 프리미엄 VVIP 풀패키지부터 표준 4단계 개발 모듈까지 투명한 견적을 확인하세요.' 
-              : 'Báo giá minh bạch từ Gói VVIP Toàn diện Bạch Đệ đến 4 giai đoạn tiêu chuẩn.'}
+              ? '공식 검증된 하이엔드 프리미엄 VVIP 풀패키지부터 표준 4단계 개발 모듈까지 투명한 견적을 확인하세요.' 
+              : 'Báo giá minh bạch từ Gói VVIP Toàn diện Cao cấp đến 4 giai đoạn tiêu chuẩn.'}
           </p>
 
           {/* Mode Switcher Buttons */}
@@ -1198,7 +1196,7 @@ export default function DigitalAgencyPage({ t }) {
               }`}
             >
               <Crown className="w-4 h-4" />
-              <span>{isKo ? '★ 백제갈비 프리미엄 VVIP 풀패키지 견적서' : '★ Gói VVIP Toàn diện Bạch Đệ'}</span>
+              <span>{isKo ? '★ 하이엔드 프리미엄 VVIP 풀패키지 견적서' : '★ Gói VVIP Toàn diện Cao cấp'}</span>
             </button>
             <button
               onClick={() => setQuoteMode('custom')}
@@ -1470,7 +1468,7 @@ export default function DigitalAgencyPage({ t }) {
               </h3>
               <p className="text-xs text-slate-300">
                 {quoteMode === 'baekje-vvip'
-                  ? (isKo ? '백제갈비 스펙 초기 구축비 4대 항목 및 월 3,500,000 VND 운영비가 연동됩니다.' : 'Gói VVIP Bạch Đệ bao gồm 4 hạng mục & 3.500.000 VND/tháng vận hành.')
+                  ? (isKo ? '하이엔드 VVIP 스펙 초기 구축비 4대 항목 및 월 3,500,000 VND 운영비가 연동됩니다.' : 'Gói VVIP Toàn diện bao gồm 4 hạng mục & 3.500.000 VND/tháng vận hành.')
                   : (isKo ? '위 표준 4단계 중 원하시는 단계를 자유롭게 조합하여 총 견적을 산출합니다.' : 'Tùy chọn kết hợp các Giai đoạn trên.')}
               </p>
             </div>
