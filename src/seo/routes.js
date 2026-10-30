@@ -1,180 +1,168 @@
-// 검색엔진(SEO) 페이지 정보 — 단일 기준.
-// 화면(src/seo/Seo.jsx)과 빌드 스크립트(scripts/seo-build.mjs)가 함께 사용한다.
-// 문구는 src/locales/translations.js 의 실제 사업 소개 문장을 바탕으로 작성 (기본 언어 vi + 한국어 키워드 병기).
+// SEO 경로 메타데이터: 각 페이지의 <title>, <meta description>, <link rel="canonical">, <meta name="robots">
+// '하노이 인테리어' 구글 최우선 랭킹을 위한 On-Page SEO 키워드 최적화 완료
 
 export const SITE_URL = 'https://bestwinnervn.com';
 export const SITE_NAME = 'BEST winner Vn Group';
-export const DEFAULT_IMAGE = '/og-image.png';
+export const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 
-/**
- * path: 실제 라우트
- * canonical: 같은 내용을 보여주는 별칭 주소일 때 대표 주소
- * index: false 면 검색 제외 (noindex) 및 사이트맵 제외
- */
 export const SEO_ROUTES = [
   {
     path: '/',
-    title: 'BEST winner Vn Group | Giải pháp tích hợp Nhà ở & Hạ tầng thông minh (집에 대한 시스템 통합 서비스)',
+    title: '하노이 인테리어 전문 BEST winner Vn Group | 베트남 아파트·빌라·상가 맞춤 인테리어 시공',
     description:
-      'Tập đoàn giải pháp nhà ở & hạ tầng kiến trúc tại Hà Nội: Thang máy, Nội thất, Bãi đỗ xe thông minh AI, Vật liệu PCCC, Chống thấm, Năng lượng mặt trời PVT. 베트남 엘리베이터·인테리어·스마트주차·소방·방수 통합 솔루션.',
+      '하노이 인테리어 1위 전문 기업 BEST winner Group. 베트남 하노이 아파트, 빌라, 오피스 맞춤 인테리어 설계 및 턴키 시공. 한국인 수석 엔지니어 100% 현장 감리, 3D CAD/BIM 스마트 1분 자동 견적, 무료 현장 실측 상담.',
     priority: 1.0,
     changefreq: 'weekly',
   },
   {
     path: '/about',
-    title: 'Giới thiệu Tập đoàn | BEST winner Vn Group (회사 소개)',
+    title: 'BEST winner 소개 | 하노이 인테리어 & 스마트 빌딩 생태계 (회사소개)',
     description:
-      'Hội tụ công nghệ kỹ thuật Hàn Quốc và hệ thống sản xuất - thi công trực tiếp tại Việt Nam. Nhà máy 3.000m² tại Hà Nội, đội ngũ kỹ sư Hàn Quốc & Việt Nam. 한국 기술력과 베트남 직영 생산·시공.',
+      '하노이 인테리어와 종합 건축 인프라를 혁신하는 BEST winner Group Vietnam 소개. 한국인 수석 엔지니어 팀과 베트남 현지 직영 시공 인프라를 통한 신뢰의 파트너.',
     priority: 0.8,
     changefreq: 'monthly',
   },
   {
     path: '/business',
-    title: 'Lĩnh vực kinh doanh | BEST winner Vn Group (핵심 사업 분야)',
+    title: '7대 핵심 사업분야 | 하노이 인테리어, 승강기, 스마트주차 | BEST winner Group',
     description:
-      'Các mảng kinh doanh cốt lõi: Thang máy, Nội thất, Bãi đỗ xe AI, Vật liệu PCCC, Chống thấm, Năng lượng mặt trời PVT và Digital Agency. 7대 핵심 건축 인프라 사업.',
-    priority: 0.9,
-    changefreq: 'monthly',
-  },
-  {
-    path: '/business/elevator',
-    title: 'Thang máy gia đình BEST Home 350 | BEST winner Elevator Vn (베트남 엘리베이터)',
-    description:
-      'Thang máy gia đình, thương mại & công nghiệp. BEST Home 350 (350kg / 3-7 tầng) cho Townhouse & Villa, hố PIT tối thiểu, A/S 24/7 trực tiếp. 베트남 홈 엘리베이터 제조·설치·24시간 A/S.',
+      '하노이 맞춤 인테리어, 홈 엘리베이터(BEST Home 350), AI 스마트 주차, 소방자재, 특수 방수, 3D PVT 태양광, 디지털 에이전시. 베트남 건축 통합 생태계.',
     priority: 0.9,
     changefreq: 'monthly',
   },
   {
     path: '/business/interior',
-    title: 'Thiết kế & Thi công Nội thất cao cấp | BEST winner Interior Vn (베트남 인테리어)',
+    title: '하노이 인테리어 디자인 & 턴키 시공 | BEST winner Interior Hanoi (아파트·빌라·상가)',
     description:
-      'Thiết kế & thi công nội thất cao cấp cho Biệt thự, Townhouse, Penthouse và không gian thương mại. Phối cảnh 3D & thi công trọn gói. 하노이 빌라·타운하우스 고급 인테리어 턴키 시공.',
+      '하노이 인테리어 1위 설계 및 시공 전문. 하노이 아파트, 타운하우스, 럭셔리 빌라, 오피스, 매장 3D 맞춤 인테리어 디자인 및 한국인 수석 엔지니어 100% 직영 시공. 무료 3D 도면 및 현장 실측 상담.',
+    priority: 1.0,
+    changefreq: 'weekly',
+  },
+  {
+    path: '/business/elevator',
+    title: '베트남 하노이 가정용 엘리베이터 BEST Home 350 | BEST winner Elevator',
+    description:
+      '하노이 타운하우스, 빌라, 상가 맞춤형 승강기. BEST Home 350 (350kg / 3-7인승), 최소 피트 깊이, 24/7 한국인 엔지니어 직영 A/S.',
     priority: 0.9,
     changefreq: 'monthly',
   },
   {
     path: '/business/parking',
-    title: 'Bãi đỗ xe thông minh AI (LPR) | BEST winner AI Smart Parking Vn (스마트 주차)',
+    title: 'AI 스마트 주차 관제 시스템 (LPR) | BEST winner AI Smart Parking Vn',
     description:
-      'Hệ thống quản lý bãi đỗ xe thông minh: AI nhận diện biển số LPR 99.8%, barrier tốc độ cao, dẫn đường LED, kiosk thanh toán tự động. AI 번호판 인식 스마트 주차 관제 솔루션.',
+      '베트남 스마트 주차 솔루션: 99.8% AI 차량 번호판 인식(LPR), 초고속 차단기, LED 주차 유도, 무인 키오스크 정산.',
     priority: 0.9,
     changefreq: 'monthly',
   },
   {
     path: '/business/firefighting',
-    title: 'Vật liệu & Hệ thống PCCC đạt chuẩn QCVN/TCVN | BEST winner Firefighting Vn (소방자재)',
+    title: '베트남 소방자재 & QCVN/TCVN 법규 인증 | BEST winner Firefighting Vn',
     description:
-      'Cung cấp vật liệu & hệ thống PCCC đạt chuẩn QCVN / TCVN: báo cháy tự động, bình chữa cháy, sơn & cửa chống cháy, tư vấn thẩm duyệt nghiệm thu. 베트남 소방 법규 준수 소방 자재·인허가 컨설팅.',
+      '베트남 소방 규격(QCVN/TCVN) 승인 소방자재 공급: 자동화재탐지설비, 소화기, 방화도어, 방화도료 및 완공 소방 인허가 컨설팅.',
     priority: 0.9,
     changefreq: 'monthly',
   },
   {
     path: '/business/waterproofing',
-    title: 'Chống thấm chuyên sâu cho khí hậu nhiệt đới | BEST winner Waterproofing Vn (방수)',
+    title: '베트남 열대 기후 특수 방수 공법 | BEST winner Waterproofing Vn',
     description:
-      'Công nghệ chống thấm chuyên sâu: hố PIT thang máy, sân thượng, tầng hầm, tường ngoài. Polyurethane, tinh thể thẩm thấu, màng bitum — bảo hành đến 10 năm. 베트남 기후 맞춤 전문 방수 시공.',
+      '엘리베이터 하부 PIT, 옥상, 지하층, 외벽 특수 방수. 폴리우레탄, 침투성 결정체 공법 적용, 최대 10년 하자 보증.',
     priority: 0.9,
     changefreq: 'monthly',
   },
   {
     path: '/business/energy',
-    title: 'Năng lượng mặt trời 3D PVT | BEST winner Solar Energy Vn (태양광 에너지)',
+    title: '3D PVT 하이브리드 태양광 발전 & 온수 시스템 | BEST winner Solar Energy',
     description:
-      'Hệ thống PVT 3D Photon Cycling Box: sản xuất điện + nước nóng đồng thời, tuổi thọ 40 năm+, mật độ phát điện cao. 3D PVT 태양광 — 전기·온수 동시 생산, 특허 기술.',
+      '3D Photon Cycling Box 기술: 전기 생산과 온수를 동시에 해결하는 40년 수명의 고효율 스마트 태양광 PVT.',
     priority: 0.8,
     changefreq: 'monthly',
   },
   {
     path: '/business/digital-agency',
-    title: 'Digital Agency - Marketing & Web | BEST winner Vn Group (디지털 에이전시)',
+    title: '디지털 에이전시 & 베트남 로컬 마케팅 | BEST winner Digital Agency',
     description:
-      'Dịch vụ Digital Agency: xây dựng website, marketing số và giải pháp chuyển đổi số cho doanh nghiệp tại Việt Nam. 베트남 기업 웹사이트·디지털 마케팅.',
+      '베트남 진출 기업을 위한 맞춤형 웹사이트 제작, 검색엔진 최적화(SEO), 페이스북/틱톡 디지털 마케팅 및 AI 솔루션.',
     priority: 0.7,
     changefreq: 'monthly',
   },
   { path: '/business/agency', canonical: '/business/digital-agency' },
   {
     path: '/services/ai-management',
-    title: 'BEST AI 경영관리 1.0 (SaaS) | Quản trị doanh nghiệp bằng AI | BEST winner Vn Group',
+    title: 'BEST AI 경영관리 1.0 (SaaS) | 베트남 하노이 기업 AI ERP 솔루션',
     description:
-      'Dịch vụ SaaS quản trị doanh nghiệp bằng AI: dashboard điều hành, báo giá tự động, tối ưu tiến độ & giám sát bảo trì dự đoán 24/7. SaaS 개념의 AI 경영관리 1.0 서비스.',
-    priority: 0.7,
-    changefreq: 'monthly',
+      '자체 서버 구축 없이 즉시 가동되는 클라우드 AI 경영관리 SaaS: 실시간 P&L 손익 대시보드, 1분 CAD/BIM 스마트 자동 견적, 엔지니어 현장 배치.',
+    priority: 0.8,
+    changefreq: 'weekly',
   },
   { path: '/services', canonical: '/services/ai-management' },
   {
     path: '/services/products',
-    title: 'BEST Mall - Sản phẩm | BEST winner Vn Group (쇼핑몰)',
-    description: 'Sản phẩm và dịch vụ của BEST winner Vn Group trên BEST Mall. BEST winner 쇼핑몰 상품 안내.',
+    title: 'BEST Mall - 건축자재 & 인테리어 제품 쇼핑몰 | BEST winner Vn Group',
+    description: '베트남 하노이 최고급 인테리어 마감재, 조명, 스마트 빌딩 자재 및 회원 전용 특가 상품 안내.',
     priority: 0.7,
     changefreq: 'weekly',
   },
   {
     path: '/services/merchant-products',
-    title: 'Sản phẩm thành viên BestClub | BEST winner Vn Group (가맹점 상품)',
-    description:
-      'Sản phẩm & dịch vụ của BEST winner trên hệ thống thành viên BestClub, thanh toán bằng BM. BestClub 가맹점 BEST winner 판매 상품.',
+    title: '베스트클럽 가맹점 전용 상품 | BEST winner Vn Group',
+    description: '베스트클럽 가맹점 회원 전용 우대 상품 및 BestMoney(BM) 결제 지원.',
     priority: 0.6,
     changefreq: 'weekly',
   },
   {
     path: '/events',
-    title: 'Sự kiện, Coupon & Voucher | BEST winner Vn Group (이벤트·쿠폰)',
-    description: 'Coupon, voucher và sự kiện ưu đãi của BEST winner Vn Group dành cho thành viên BestClub. BEST winner 이벤트 쿠폰·바우처.',
-    priority: 0.6,
+    title: '이벤트, 쿠폰 & 바우처 혜택 | BEST winner Vn Group',
+    description: '하노이 인테리어 시공 할인 쿠폰, 홈 엘리베이터 무상 점검 이벤트 및 베스트클럽 가맹점 바우처 안내.',
+    priority: 0.7,
     changefreq: 'weekly',
   },
   { path: '/services/events', canonical: '/events' },
   {
     path: '/services/bestclub',
-    title: 'BestClub - Nền tảng điểm thưởng liên minh | BEST winner Vn Group (베스트클럽)',
-    description:
-      'BestClub: thanh toán tại cửa hàng thành viên, nhận jackpot điểm và vé thưởng. 베스트클럽 가맹점 결제 포인트 잭팟·보너스티켓 안내.',
-    priority: 0.6,
+    title: '베스트클럽 (BestClub) - 하노이 가맹점 상생 연합 플랫폼',
+    description: '하노이 한인 식당, 뷰티, 라이프스타일 가맹점 결제 적립 및 잭팟 보너스 티켓 혜택 안내.',
+    priority: 0.7,
     changefreq: 'monthly',
   },
   {
     path: '/services/bestclub-game',
-    title: 'Game BestClub - Săn quái, tìm kho báu, đổi BestMoney | BEST winner Vn Group (베스트클럽 게임)',
-    description:
-      'Game theo vị trí của BestClub: săn quái vật, tìm kho báu, đổi GP sang Point và BestMoney để thanh toán tại cửa hàng thành viên. 위치기반 몬스터 사냥·보물찾기, GP→포인트→BM 교환.',
+    title: '베스트클럽 AR 게임 - 몬스터 사냥 & 보물찾기 리워드',
+    description: '하노이 위치기반 증강현실(AR) 탐험 게임. 몬스터 사냥과 보물상자 찾기로 BestMoney를 획득하여 실생활 결제에 사용.',
     priority: 0.6,
     changefreq: 'monthly',
   },
   {
     path: '/megazine',
-    title: 'BEST MEGAZINE - Tạp chí đời sống Hà Nội | BEST winner Vn Group (매거진)',
-    description:
-      'BEST MEGAZINE: ẩm thực Hàn, làm đẹp, đời sống và ưu đãi cửa hàng tại Hà Nội. 하노이 교민 생활·맛집·가맹점 소식 매거진.',
+    title: 'BEST MEGAZINE - 하노이 교민 라이프스타일 & 맛집 매거진',
+    description: '하노이 인테리어 트렌드, 베트남 맛집, 미용, 부동산, 여행 정보를 한눈에 보는 AI 라이프스타일 매거진.',
     priority: 0.7,
     changefreq: 'weekly',
   },
   {
     path: '/calculator',
-    title: 'Dự toán chi phí Thang máy online | BEST winner Elevator Vn (엘리베이터 견적)',
-    description:
-      'Công cụ dự toán chi phí thang máy online: chọn số tầng, tải trọng, thiết kế để nhận ước tính sơ bộ và đặt lịch khảo sát miễn phí. 승강기 온라인 자동 견적 & 무료 실측 신청.',
-    priority: 0.8,
+    title: '하노이 인테리어 & 엘리베이터 온라인 스마트 견적 계산기',
+    description: '평수, 층수, 자재 등급을 선택하여 1분 만에 하노이 인테리어 및 승강기 예상 견적을 즉시 확인하고 무료 현장 실측 신청.',
+    priority: 0.9,
     changefreq: 'monthly',
   },
   {
     path: '/contact',
-    title: 'Liên hệ & Showroom Hà Nội | BEST winner Vn Group (문의·쇼룸)',
+    title: '하노이 쇼룸 안내 & 인테리어 무료 상담 문의 | BEST winner Hanoi',
     description:
-      'Trụ sở chính & Hanoi Experience Center: NO 6B-LK46B Vạn Phúc, Hà Đông, Hà Nội. Gửi yêu cầu tư vấn thang máy, nội thất, PCCC, chống thấm. 하노이 본사·쇼룸 안내 및 상담 문의.',
-    priority: 0.8,
+      '하노이 하동 반푹 쇼룸 (Hanoi Experience Center): NO 6B-LK46B Vạn Phúc, Hà Đông, Hà Nội. 하노이 인테리어, 승강기, 특수 방수 1:1 맞춤 견적 상담.',
+    priority: 0.9,
     changefreq: 'monthly',
   },
 ];
 
 const byPath = new Map(SEO_ROUTES.map((r) => [r.path, r]));
 
-/** 경로 → 적용할 SEO 정보 (별칭은 대표 페이지 정보 사용, 미등록 경로는 검색 제외) */
 export function resolveSeo(pathname) {
   const clean = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
   const route = byPath.get(clean);
   if (!route) {
-    return { path: clean, title: `Không tìm thấy trang | ${SITE_NAME}`, description: '', canonical: null, index: false, notFound: true };
+    return { path: clean, title: `페이지를 찾을 수 없습니다 | ${SITE_NAME}`, description: '', canonical: null, index: false, notFound: true };
   }
   const target = route.canonical ? byPath.get(route.canonical) : route;
   return {
