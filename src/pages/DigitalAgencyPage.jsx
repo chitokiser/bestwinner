@@ -91,8 +91,8 @@ export default function DigitalAgencyPage({ t }) {
     },
     {
       src: '/images/dgitalagency/5.png',
-      title: isKo ? '월 유지관리 & Facebook 광고 대행' : 'Bảo trì Hàng tháng & FB Ads',
-      badge: isKo ? '월 100만 회 노출 & CF 영상 (약 1,500,000 VND ~/월)' : 'QC FB 1tr lượt (~ 1.500.000 VND/tháng)'
+      title: isKo ? '월간 운영 및 유지관리 서비스' : 'Vận hành & Bảo trì Hàng tháng',
+      badge: isKo ? '월 350만 동 (4K 숏폼 8회 · KOC 10회 · 정밀광고 20만회)' : '3.500.000 VND/tháng (8 Shortform · 10 KOC)'
     },
     {
       src: '/images/dgitalagency/6.png',
@@ -1445,12 +1445,12 @@ export default function DigitalAgencyPage({ t }) {
                 <div className="flex items-center space-x-2">
                   <Megaphone className="w-5 h-5 text-gold-400" />
                   <div>
-                    <h4 className="text-sm font-bold text-white">{isKo ? '표준 월 유지관리 & 마케팅 서비스' : 'Bảo trì Tiêu chuẩn & Marketing'}</h4>
-                    <p className="text-xs text-slate-400">{isKo ? '기본 유지보수 + Facebook 마케팅 + 리뷰 관리 + 홍보 영상 지원' : 'Bảo trì cơ bản + FB Ads + Review'}</p>
+                    <h4 className="text-sm font-bold text-white">{isKo ? '월간 운영 및 유지관리 서비스 (정기 청구)' : 'Dịch vụ Vận hành & Bảo trì Hàng tháng'}</h4>
+                    <p className="text-xs text-slate-400">{isKo ? '4K 숏폼 8회 + AI KOC 바이럴 10회 + 광고 20만회 노출 + 챗봇/CRM 통합 유지관리' : '8 Video 4K + 10 KOC + 200k lượt hiển thị + Quản trị AI/CRM'}</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-lg font-black text-cyan-400 block">약 1,500,000 ~ <span className="text-xs text-slate-400 font-normal">VND / 월</span></span>
+                  <span className="text-lg font-black text-cyan-400 block">3,500,000 <span className="text-xs text-slate-400 font-normal">VND / 월</span></span>
                 </div>
               </div>
             </div>
@@ -1489,7 +1489,7 @@ export default function DigitalAgencyPage({ t }) {
                   {isKo ? '월간 정기 운영/유지관리비' : 'Chi phí Vận hành Hàng tháng'}
                 </span>
                 <span className="text-2xl sm:text-3xl font-black text-cyan-400 block mt-1">
-                  {quoteMode === 'baekje-vvip' ? '3,500,000' : '1,500,000 ~'} <span className="text-xs text-slate-300 font-normal">VND/월</span>
+                  3,500,000 <span className="text-xs text-slate-300 font-normal">VND/월</span>
                 </span>
               </div>
             </div>
