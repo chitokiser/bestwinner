@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FirefightingSection from '../components/BusinessUnits/FirefightingSection';
 import ContactUs from '../components/ContactUs';
+import SunVietnamSection, { SunVietnamRibbon } from '../components/BusinessUnits/SunVietnamSection';
 import { Flame, ArrowRight, ArrowLeft, ShieldCheck, Award } from 'lucide-react';
 
 export default function FirefightingPage({ t }) {
@@ -66,10 +67,14 @@ export default function FirefightingPage({ t }) {
         </div>
       </div>
 
+      <SunVietnamRibbon t={t} />
+
       <FirefightingSection t={t} onOpenConsult={(bu) => {
         const el = document.getElementById('contact');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }} />
+
+      <SunVietnamSection t={t} />
 
       <ContactUs t={t} initialBU="firefighting" />
     </div>
