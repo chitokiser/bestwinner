@@ -9,6 +9,7 @@ import {
   CheckCircle2, 
   Clock 
 } from 'lucide-react';
+import KoreaContact from './KoreaContact';
 
 export default function ContactUs({ t, initialBU = 'all' }) {
   const isVi = t?.lang === 'vi';
@@ -86,6 +87,8 @@ export default function ContactUs({ t, initialBU = 'all' }) {
                   <span>{t.contact.email}</span>
                 </div>
               </div>
+
+              <KoreaContact t={t} qrSize={132} />
 
               {/* Showroom Preview Graphic */}
               <div className="rounded-xl overflow-hidden border border-navy-700 relative">

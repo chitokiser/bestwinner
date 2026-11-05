@@ -469,7 +469,7 @@ export const translations = {
       hotline: "영업 문의: 0988-123-456",
       techSupport: "24시간 긴급 A/S: 0977-888-999",
       email: "이메일: contact@bestwinnervn.com",
-      formTitle: "통합 견적 / 파트너십 문의",
+      formTitle: "통합 견적 문의",
       selectBU: "관심 사업 부문 선택",
       allBU: "전 사업 부문 (종합 상담)",
       submitSuccess: "문의가 접수되었습니다. 15분 이내에 담당자가 연락드립니다."
@@ -707,7 +707,7 @@ export const translations = {
       hotline: "Sales Hotline: 0988-123-456",
       techSupport: "24/7 Technical & Emergency A/S: 0977-888-999",
       email: "Email: contact@bestwinnervn.com",
-      formTitle: "Request Quote / B2B Partnership",
+      formTitle: "Request a Quote",
       selectBU: "Select Business Area of Interest",
       allBU: "All 5 Business Units (Integrated Turnkey)",
       submitSuccess: "Thank you! A BEST winner specialist will contact you within 15 minutes."

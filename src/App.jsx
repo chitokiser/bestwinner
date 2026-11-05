@@ -196,7 +196,7 @@ export default function App() {
           </Routes>
         </main>
 
-        {/* Simplified Footer: 1. About | 2. 제휴문의 | 3. Contact */}
+        {/* Simplified Footer: 1. About | 2. Contact & Showroom */}
         <Footer 
           t={t} 
         />
