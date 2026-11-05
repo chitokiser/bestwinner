@@ -255,7 +255,7 @@ export default function WaterproofingSection({ t, onOpenConsult }) {
               <span>{isVi ? 'Xem video quảng bá chính thức' : '공식 홍보 동영상 시청'}</span>
             </a>
             <a
-              href="/docu/Waterproofing/방수액한글버전(수정)_1.pdf"
+              href="/docu/Waterproofing/K1_Waterproofing_Catalog_KR.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-navy-900 hover:bg-navy-800 text-gold-300 font-bold px-5 py-3.5 rounded-xl border border-gold-500/40 text-xs flex items-center space-x-2 transition-all"
@@ -487,7 +487,7 @@ export default function WaterproofingSection({ t, onOpenConsult }) {
               </div>
 
               <a
-                href="/docu/Waterproofing/방수액한글버전(수정)_1.pdf"
+                href="/docu/Waterproofing/K1_Waterproofing_Catalog_KR.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 sm:mt-0 bg-gold-500 hover:bg-gold-400 text-navy-950 font-extrabold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md flex items-center space-x-1.5 whitespace-nowrap"
@@ -771,7 +771,7 @@ export default function WaterproofingSection({ t, onOpenConsult }) {
                 </p>
                 <div className="flex space-x-3 w-full sm:w-auto">
                   <a
-                    href="/docu/Waterproofing/방수액한글버전(수정)_1.pdf"
+                    href="/docu/Waterproofing/K1_Waterproofing_Catalog_KR.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 sm:flex-none bg-navy-800 hover:bg-navy-700 text-gold-300 font-bold text-xs px-4 py-2.5 rounded-xl border border-navy-700 transition-colors flex items-center justify-center space-x-1.5"

@@ -168,7 +168,7 @@ export default function WaterproofingPage({ t }) {
               {/* Action Buttons */}
               <div className="pt-2 flex flex-wrap gap-2.5 items-center">
                 <a
-                  href="/docu/Waterproofing/방수액한글버전(수정)_1.pdf"
+                  href="/docu/Waterproofing/K1_Waterproofing_Catalog_KR.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-gold-500 hover:bg-gold-400 text-navy-950 font-black px-5 py-3 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center text-xs sm:text-sm whitespace-nowrap"
