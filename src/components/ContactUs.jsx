@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { 
   Building2, 
   MapPin, 
-  PhoneCall, 
-  Mail, 
+  PhoneCall,
   MessageSquare, 
   Send, 
   CheckCircle2, 
@@ -76,15 +75,7 @@ export default function ContactUs({ t, initialBU = 'all' }) {
 
                 <div className="flex items-start space-x-3">
                   <PhoneCall className="w-4 h-4 text-gold-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-bold text-white">{t.contact.hotline}</p>
-                    <p className="text-slate-400 mt-0.5">{t.contact.techSupport}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <Mail className="w-4 h-4 text-gold-400 flex-shrink-0 mt-0.5" />
-                  <span>{t.contact.email}</span>
+                  <p className="font-bold text-white">{t.contact.techSupport}</p>
                 </div>
               </div>
 

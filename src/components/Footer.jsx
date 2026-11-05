@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   Building2,
   ShieldCheck,
-  Mail,
-  PhoneCall,
   MapPin,
   Download,
   Users,
@@ -80,14 +78,6 @@ export default function Footer({ t }) {
               <div className="flex items-start space-x-2">
                 <MapPin className="w-4 h-4 text-gold-400 flex-shrink-0 mt-0.5" />
                 <span className="leading-snug">{t?.footer?.address || "NO 6B-LK46B service land area, Van Phuc ward, Ha Dong district, Hanoi city, Vietnam"}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <PhoneCall className="w-4 h-4 text-gold-400 flex-shrink-0" />
-                <span className="font-bold text-white">{t?.footer?.hotline || "Hotline: 0988-123-456"}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Mail className="w-4 h-4 text-gold-400 flex-shrink-0" />
-                <span>{t?.footer?.email || "Email: contact@bestwinnervn.com"}</span>
               </div>
             </div>
             <KoreaContact t={t} />

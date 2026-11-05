@@ -9,8 +9,7 @@ export const translations = {
       bestMall: "BEST Mall (쇼핑몰)",
       megazine: "BEST MEGAZINE (Tạp chí AI)",
       login: "Đăng nhập Google",
-      logout: "Đăng xuất",
-      callUs: "Hotline: 0988-123-456"
+      logout: "Đăng xuất"
     },
     footer: {
       aboutTitle: "Về BEST winner Group",
@@ -19,9 +18,7 @@ export const translations = {
       partnershipDesc: "Bộ Hồ sơ Kỹ thuật & Bản vẽ CAD/DWG/BIM dành riêng cho Kiến trúc sư & Nhà thầu Xây dựng.",
       contactTitle: "Liên hệ & Showroom",
       address: "NO 6B-LK46B service land area, Vạn Phúc, Hà Đông, Hà Nội (MST: 0110245813)",
-      hotline: "Hotline kinh doanh: 0988-123-456",
-      techSupport: "Hỗ trợ Kỹ thuật & A/S 24/7: 0977-888-999",
-      email: "Email: contact@bestwinnervn.com"
+      techSupport: "Hỗ trợ Kỹ thuật & A/S 24/7: 0977-888-999"
     },
     hero: {
       catchphrase: "Sự kết hợp hoàn hảo giữa công nghệ và cảm xúc, hoàn thiện trọn vẹn ngôi nhà bạn",
@@ -228,9 +225,7 @@ export const translations = {
       hanoiHQ: "Trụ sở chính & Hanoi Experience Center",
       address: "NO 6B-LK46B service land area, Vạn Phúc, Q. Hà Đông, Hà Nội",
       regAddress: "ĐKKD: NO 6B-LK46B Khu đất dịch vụ Vạn Phúc, P. Vạn Phúc, Q. Hà Đông, Hà Nội (Mã số thuế: 0110245813)",
-      hotline: "Hotline kinh doanh: 0988-123-456",
       techSupport: "Hỗ trợ Kỹ thuật & A/S 24/7: 0977-888-999",
-      email: "Email: contact@bestwinnervn.com",
       formTitle: "Gửi Yêu cầu Tư vấn / Báo giá",
       selectBU: "Chọn Lĩnh vực quan tâm",
       allBU: "Tất cả 5 Lĩnh vực (Dự án Tổng thể)",
@@ -247,8 +242,7 @@ export const translations = {
       bestMall: "BEST Mall (쇼핑몰)",
       megazine: "BEST MEGAZINE (AI 매거진)",
       login: "구글 로그인",
-      logout: "로그아웃",
-      callUs: "직통전화: 0988-123-456"
+      logout: "로그아웃"
     },
     footer: {
       aboutTitle: "BEST winner Group 소개",
@@ -257,9 +251,7 @@ export const translations = {
       partnershipDesc: "건축사무소, 시행사, 건설사를 위한 캐드 도면(DWG), BIM 모델, 기술 사양서 패키지.",
       contactTitle: "문의 & 쇼룸",
       address: "하노이시 하동구 완푹 심코 송다 2 C17호 (법인번호: 0110245813)",
-      hotline: "영업 문의: 0988-123-456",
-      techSupport: "24시간 긴급 A/S: 0977-888-999",
-      email: "이메일: contact@bestwinnervn.com"
+      techSupport: "24시간 긴급 A/S: 0977-888-999"
     },
     hero: {
       catchphrase: "기술과 감성의 융합, 당신의 마음을 완성하다",
@@ -466,9 +458,7 @@ export const translations = {
       hanoiHQ: "하노이 본사 & Showroom",
       address: "하노이시 하동구 완푹 서비스 토지 구역 NO 6B-LK46B (NO 6B-LK46B service land area, Van Phuc, Ha Dong, Hanoi)",
       regAddress: "법인 등록 주소: NO 6B-LK46B 완푹 서비스 토지 구역, 하동구, 하노이시 (법인등록번호: 0110245813)",
-      hotline: "영업 문의: 0988-123-456",
       techSupport: "24시간 긴급 A/S: 0977-888-999",
-      email: "이메일: contact@bestwinnervn.com",
       formTitle: "통합 견적 문의",
       selectBU: "관심 사업 부문 선택",
       allBU: "전 사업 부문 (종합 상담)",
@@ -485,8 +475,7 @@ export const translations = {
       bestMall: "BEST Mall",
       megazine: "BEST MEGAZINE (AI Expat Magazine)",
       login: "Google Login",
-      logout: "Logout",
-      callUs: "Hotline: 0988-123-456"
+      logout: "Logout"
     },
     footer: {
       aboutTitle: "About BEST winner Group",
@@ -495,9 +484,7 @@ export const translations = {
       partnershipDesc: "Complete CAD/DWG drawings, BIM models, and specification datasheets for architects & contractors.",
       contactTitle: "Contact & Showroom",
       address: "NO 6B-LK46B service land area, Van Phuc Ward, Ha Dong District, Hanoi, Vietnam (Tax ID: 0110245813)",
-      hotline: "Sales: 0988-123-456",
-      techSupport: "24/7 A/S: 0977-888-999",
-      email: "Email: contact@bestwinnervn.com"
+      techSupport: "24/7 A/S: 0977-888-999"
     },
     hero: {
       catchphrase: "The Fusion of Technology and Emotion, Completing Your Vision",
@@ -704,9 +691,7 @@ export const translations = {
       hanoiHQ: "Headquarters & Hanoi Experience Center",
       address: "NO 6B-LK46B service land area, Van Phuc Ward, Ha Dong District, Hanoi, Vietnam",
       regAddress: "Registered Office: NO 6B-LK46B Service Land Area, Van Phuc Ward, Ha Dong District, Hanoi, Vietnam (Tax ID: 0110245813)",
-      hotline: "Sales Hotline: 0988-123-456",
       techSupport: "24/7 Technical & Emergency A/S: 0977-888-999",
-      email: "Email: contact@bestwinnervn.com",
       formTitle: "Request a Quote",
       selectBU: "Select Business Area of Interest",
       allBU: "All 5 Business Units (Integrated Turnkey)",
