@@ -158,7 +158,7 @@ export default function ContactUs({ t, initialBU = 'all' }) {
                       <input 
                         type="tel" 
                         required
-                        placeholder="0988-xxx-xxx"
+                        placeholder="09xx-xxx-xxx"
                         value={contactForm.phone}
                         onChange={(e) => setContactForm({...contactForm, phone: e.target.value})}
                         className="w-full bg-navy-900 border border-navy-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500"
