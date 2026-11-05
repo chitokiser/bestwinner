@@ -15,6 +15,7 @@ import {
   Sparkles,
   ShieldCheck
 } from 'lucide-react';
+import { CoreStatsStrip, PlatformServicesRow } from './CoreBusinessExtras';
 
 export default function BusinessCardsSection({ t }) {
   const navigate = useNavigate();
@@ -179,6 +180,8 @@ export default function BusinessCardsSection({ t }) {
           </p>
         </div>
 
+        <CoreStatsStrip t={t} unitCount={cardsData.length} />
+
         {/* 5 Business Cards Grid with Metallic Chrome Border Accent */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {cardsData.map((card) => {
@@ -281,6 +284,8 @@ export default function BusinessCardsSection({ t }) {
             );
           })}
         </div>
+
+        <PlatformServicesRow t={t} />
 
       </div>
     </section>

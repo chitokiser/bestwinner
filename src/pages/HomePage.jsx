@@ -2,6 +2,7 @@ import React from 'react';
 import Hero from '../components/Hero';
 import AboutGroup from '../components/AboutGroup';
 import BusinessCardsSection from '../components/BusinessCardsSection';
+import BestMarioBanner from '../components/BestMarioBanner';
 import ElevatorCalculator from '../components/BusinessUnits/ElevatorCalculator';
 import ContactUs from '../components/ContactUs';
 
@@ -19,6 +20,9 @@ export default function HomePage({ t, onOpenCalculator }) {
 
       {/* 5 Business Unit Cards Section */}
       <BusinessCardsSection t={t} />
+
+      {/* BestMario 홍보 배너 */}
+      <BestMarioBanner t={t} />
 
       {/* Interactive Elevator Calculator */}
       <ElevatorCalculator 
