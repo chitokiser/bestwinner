@@ -206,6 +206,7 @@ export default function Footer({ t }) {
             ['/business/digital-agency', 'Digital Agency'],
             ['/services/ai-management', isKo ? 'AI 경영관리' : 'Quản trị AI'],
             ['/services/products', 'BEST Mall'],
+            ['/services/bestmario', isKo ? '베스트마리오' : 'BestMario'],
             ['/events', isKo ? '이벤트' : 'Sự kiện'],
             ['/megazine', 'BEST MEGAZINE'],
             ['/calculator', isKo ? '엘리베이터 견적' : 'Dự toán thang máy'],

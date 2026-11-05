@@ -76,7 +76,13 @@ export default function Header({ currentLang, setLang, t }) {
       id: 'bestclub-game', 
       path: '/services/bestclub-game', 
       name: isVi ? 'Game BestClub (Săn quái · Tìm kho báu)' : isKo ? '베스트클럽 게임 (몬스터 사냥·보물찾기)' : 'BestClub Game (Monsters & Treasure)', 
-      tag: 'GP → BM' 
+      tag: 'GP → BM'
+    },
+    {
+      id: 'bestmario',
+      path: '/services/bestmario',
+      name: isVi ? 'BestMario (Dịch vụ tại nhà Hà Nội)' : isKo ? '베스트마리오 (하노이 홈서비스)' : 'BestMario (Hanoi Home Services)',
+      tag: 'Home Service'
     },
   ];
 

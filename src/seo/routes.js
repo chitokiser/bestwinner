@@ -133,6 +133,13 @@ export const SEO_ROUTES = [
     changefreq: 'monthly',
   },
   {
+    path: '/services/bestmario',
+    title: '베스트마리오 (BestMario) - 하노이 홈서비스 전문 기술자 매칭',
+    description: '하노이 전기·배관·에어컨·인테리어 등 13개 분야 홈서비스. 신청하고 견적을 받아 안전하게 결제하세요. 한국어·영어·베트남어 지원.',
+    priority: 0.7,
+    changefreq: 'monthly',
+  },
+  {
     path: '/megazine',
     title: 'BEST MEGAZINE - 하노이 교민 라이프스타일 & 맛집 매거진',
     description: '하노이 인테리어 트렌드, 베트남 맛집, 미용, 부동산, 여행 정보를 한눈에 보는 AI 라이프스타일 매거진.',

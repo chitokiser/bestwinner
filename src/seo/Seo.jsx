@@ -47,6 +47,7 @@ const KO_TITLES = {
   '/services/events': '이벤트·쿠폰·바우처 | BEST winner Vn Group',
   '/services/bestclub': '베스트클럽 - 가맹점 연합 포인트 플랫폼 | BEST winner Vn Group',
   '/services/bestclub-game': '베스트클럽 게임 - 몬스터 사냥·보물찾기 | BEST winner Vn Group',
+  '/services/bestmario': '베스트마리오 - 하노이 홈서비스 기술자 매칭 | BEST winner Vn Group',
   '/megazine': 'BEST MEGAZINE - 하노이 생활 매거진 | BEST winner Vn Group',
   '/calculator': '엘리베이터 온라인 견적 | BEST winner Elevator Vn',
   '/contact': '문의·하노이 쇼룸 | BEST winner Vn Group',
