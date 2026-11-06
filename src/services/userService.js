@@ -5,6 +5,8 @@
 
 import { db, COLLECTIONS, addDocument } from '../lib/firebase';
 import { doc, getDoc, setDoc, serverTimestamp, collection, getDocs } from 'firebase/firestore';
+import { getApp } from 'firebase/app';
+import { getFunctions, httpsCallable } from 'firebase/functions';
 
 export const SUPER_ADMIN_EMAILS = [
   'daguri75@gamil.com',
@@ -68,6 +70,19 @@ export class UserService {
       }
 
       await setDoc(userRef, userRecord, { merge: true });
+
+      // 최초 가입이면 BestClub 서버에 신규 가입 보너스 요청 (구글 계정당 1회, 서버가 자격 확인)
+      if (!existingSnap.exists()) {
+        try {
+          const res = await httpsCallable(getFunctions(getApp(), 'us-central1'), 'claimSignupBonus')({ site: 'bestwinner' });
+          if (res?.data?.granted) {
+            const amount = Number(res.data.amount || 0).toLocaleString();
+            alert(`🎉 신규 가입 보너스 ${amount} GP가 지급되었습니다! (BestClub 계정에 적립)`);
+          }
+        } catch (bonusErr) {
+          console.warn('[UserService] signup bonus claim skipped:', bonusErr?.message || bonusErr);
+        }
+      }
       console.log(`[UserService] Successfully synced user ${userData.uid} to Firestore (AIM119: ${aim119Id}, JUMPER: ${jumperId})`);
 
       // Update LocalStorage Session with synced handles
