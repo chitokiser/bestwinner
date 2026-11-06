@@ -29,5 +29,8 @@
       "purpose": "maskable"
     }
   ],
-  "categories": ["business", "productivity", "utilities"]
+  "categories": ["business", "productivity", "utilities"],
+  "related_applications": [
+    { "platform": "webapp", "url": "https://bestwinnervn.com/manifest.json" }
+  ]
 }

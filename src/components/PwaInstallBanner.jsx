@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Download, X, Smartphone, Share, PlusSquare, Check } from 'lucide-react';
 
+// 한 번 설치한 기기는 다시는 설치 안내를 띄우지 않는다 (브라우저 탭으로 재접속해도 유지)
+const INSTALLED_KEY = 'pwa_installed';
+const wasInstalled = () => { try { return localStorage.getItem(INSTALLED_KEY) === '1'; } catch { return false; } };
+const markInstalled = () => { try { localStorage.setItem(INSTALLED_KEY, '1'); } catch { /* 저장 불가 환경 */ } };
+
 export default function PwaInstallBanner({ t }) {
   const isVi = t?.lang === 'vi' || !t?.lang;
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -10,10 +15,26 @@ export default function PwaInstallBanner({ t }) {
   const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
-    // Check if already in standalone app mode
-    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+    // 이미 설치했거나, 설치된 앱(독립 실행 모드)으로 열린 경우
+    if (wasInstalled()) {
       setIsInstalled(true);
       return;
+    }
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+      markInstalled();
+      setIsInstalled(true);
+      return;
+    }
+    // Chrome 계열: 이 사이트의 앱이 설치돼 있는지 확인 (지원 안 하면 무시)
+    let cancelled = false;
+    if (navigator.getInstalledRelatedApps) {
+      navigator.getInstalledRelatedApps().then((apps) => {
+        if (!cancelled && apps && apps.length > 0) {
+          markInstalled();
+          setIsInstalled(true);
+          setShowBanner(false);
+        }
+      }).catch(() => {});
     }
 
     // Check iOS Safari
@@ -43,6 +64,7 @@ export default function PwaInstallBanner({ t }) {
 
     // Listen for appinstalled
     const handleAppInstalled = () => {
+      markInstalled();
       setIsInstalled(true);
       setShowBanner(false);
       setDeferredPrompt(null);
@@ -50,6 +72,7 @@ export default function PwaInstallBanner({ t }) {
     window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
+      cancelled = true;
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
     };
@@ -66,6 +89,7 @@ export default function PwaInstallBanner({ t }) {
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     if (outcome === 'accepted') {
+      markInstalled();
       setIsInstalled(true);
       setShowBanner(false);
     }
