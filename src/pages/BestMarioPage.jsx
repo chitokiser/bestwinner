@@ -116,9 +116,11 @@ export default function BestMarioPage({ t }) {
       <style>{`
         @keyframes bm-float { 0%,100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-10px) rotate(-1.5deg); } }
         .bm-float { animation: bm-float 6s ease-in-out infinite; }
+        @keyframes bm-char-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .bm-char-float { animation: bm-char-float 5.5s ease-in-out infinite; }
         @keyframes bm-pop { 0% { opacity: 0; transform: translateY(8px) scale(.96); } 100% { opacity: 1; transform: none; } }
         .bm-pop { opacity: 0; animation: bm-pop .5s ease-out forwards; }
-        @media (prefers-reduced-motion: reduce) { .bm-float, .bm-pop { animation: none; opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) { .bm-float, .bm-char-float, .bm-pop { animation: none; opacity: 1; } }
       `}</style>
 
       {/* 경로 표시 */}
@@ -136,7 +138,7 @@ export default function BestMarioPage({ t }) {
       <section className="relative overflow-hidden bg-navy-950 border-b border-navy-800">
         <div className="pointer-events-none absolute -top-32 -left-24 w-[28rem] h-[28rem] rounded-full bg-amber-500/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-40 right-0 w-[32rem] h-[32rem] rounded-full bg-cyan-500/10 blur-3xl" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-24 grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-10 items-center">
           <div>
             <span className="inline-flex items-center gap-2 text-xs font-bold tracking-wide text-amber-300 bg-amber-500/10 border border-amber-500/30 rounded-full px-3 py-1.5">
               <MapPin className="w-3.5 h-3.5" />
@@ -182,37 +184,64 @@ export default function BestMarioPage({ t }) {
             </ul>
           </div>
 
-          {/* 휴대폰 화면 모형 (그림 파일 없이 CSS로 구성) */}
-          <div className="relative mx-auto w-full max-w-[19rem]" aria-hidden="true">
-            <div className="bm-float rounded-[2.2rem] border border-navy-700 bg-navy-900 p-3 shadow-2xl shadow-black/50">
-              <div className="rounded-[1.7rem] bg-navy-950 overflow-hidden border border-navy-800">
-                <div className="px-4 py-3 bg-gradient-to-r from-amber-500 to-gold-500 text-navy-950">
-                  <p className="text-[11px] font-bold opacity-80">BestMario</p>
-                  <p className="font-black text-sm">{L('Yêu cầu của tôi', '내 신청서', 'My request')}</p>
-                </div>
-                <div className="p-3 space-y-2.5">
-                  <div className="bm-pop rounded-xl bg-navy-900 border border-navy-800 p-3" style={{ animationDelay: '0.2s' }}>
-                    <div className="flex items-center gap-2 text-xs text-slate-300">
-                      <span className="text-base">❄️</span>
-                      <span className="font-bold text-white">{L('Điều hòa không lạnh', '에어컨이 시원하지 않아요', 'AC is not cooling')}</span>
+          {/* 베스트마리오 캐릭터 + 휴대폰 화면 모형 균형 배치 */}
+          <div className="relative mx-auto w-full max-w-[34rem] flex flex-col sm:flex-row items-center justify-center lg:justify-end gap-6 sm:gap-5">
+            {/* 캐릭터 로고 */}
+            <div className="relative flex justify-center items-end w-44 sm:w-48 lg:w-56 shrink-0">
+              <div
+                className="pointer-events-none absolute inset-x-0 bottom-2 h-44 rounded-full bg-gradient-to-t from-orange-500/45 via-amber-500/20 to-transparent blur-2xl"
+                aria-hidden="true"
+              />
+              <img
+                src="/images/bestmario/character.webp"
+                alt={L('Nhân vật BestMario giơ ngón tay cái', '엄지를 든 베스트마리오 캐릭터', 'BestMario mascot giving a thumbs up')}
+                width="320"
+                height="535"
+                className="bm-char-float relative w-full h-auto object-contain drop-shadow-[0_18px_28px_rgba(0,0,0,0.6)]"
+              />
+            </div>
+
+            {/* 휴대폰 화면 모형 */}
+            <div className="relative w-full max-w-[18.5rem] shrink-0" aria-hidden="true">
+              <div className="bm-float rounded-[2.2rem] border border-navy-700 bg-navy-900 p-3 shadow-2xl shadow-black/50">
+                <div className="rounded-[1.7rem] bg-navy-950 overflow-hidden border border-navy-800">
+                  <div className="px-4 py-3 bg-gradient-to-r from-amber-500 to-gold-500 text-navy-950 flex items-center justify-between">
+                    <div>
+                      <p className="text-[11px] font-bold opacity-80">BestMario</p>
+                      <p className="font-black text-sm">{L('Yêu cầu của tôi', '내 신청서', 'My request')}</p>
                     </div>
-                    <div className="mt-2 flex gap-1.5">
-                      <div className="h-10 flex-1 rounded-md bg-gradient-to-br from-slate-700 to-slate-800" />
-                      <div className="h-10 flex-1 rounded-md bg-gradient-to-br from-slate-600 to-slate-800" />
-                      <div className="h-10 flex-1 rounded-md bg-gradient-to-br from-slate-700 to-slate-900" />
+                    <img
+                      src="/images/bestmario/character.webp"
+                      alt=""
+                      width="32"
+                      height="53"
+                      className="w-7 h-7 rounded-full bg-navy-950/15 object-cover object-top border border-navy-950/20"
+                    />
+                  </div>
+                  <div className="p-3 space-y-2.5">
+                    <div className="bm-pop rounded-xl bg-navy-900 border border-navy-800 p-3" style={{ animationDelay: '0.2s' }}>
+                      <div className="flex items-center gap-2 text-xs text-slate-300">
+                        <span className="text-base">❄️</span>
+                        <span className="font-bold text-white">{L('Điều hòa không lạnh', '에어컨이 시원하지 않아요', 'AC is not cooling')}</span>
+                      </div>
+                      <div className="mt-2 flex gap-1.5">
+                        <div className="h-10 flex-1 rounded-md bg-gradient-to-br from-slate-700 to-slate-800" />
+                        <div className="h-10 flex-1 rounded-md bg-gradient-to-br from-slate-600 to-slate-800" />
+                        <div className="h-10 flex-1 rounded-md bg-gradient-to-br from-slate-700 to-slate-900" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="bm-pop rounded-xl bg-cyan-500/10 border border-cyan-500/30 p-3" style={{ animationDelay: '0.8s' }}>
-                    <p className="text-[11px] text-cyan-300 font-bold">{L('Báo giá mới', '새 견적 도착', 'New quote')}</p>
-                    <p className="mt-0.5 text-white font-black">450.000₫ <span className="text-xs font-semibold text-slate-400">· 2{L(' giờ', '시간', ' h')}</span></p>
-                  </div>
-                  <div className="bm-pop rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-3 flex items-center gap-2" style={{ animationDelay: '1.4s' }}>
-                    <CheckCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <p className="text-xs text-emerald-200 font-bold">{L('Đã xác nhận thanh toán', '입금 확인 완료', 'Payment confirmed')}</p>
-                  </div>
-                  <div className="bm-pop rounded-xl bg-navy-900 border border-navy-800 p-3 flex items-center gap-2" style={{ animationDelay: '2s' }}>
-                    <Wrench className="w-4 h-4 text-gold-400 shrink-0" />
-                    <p className="text-xs text-slate-300">{L('Kỹ thuật viên đang trên đường tới', '기술자가 방문 준비 중입니다', 'Technician is on the way')}</p>
+                    <div className="bm-pop rounded-xl bg-cyan-500/10 border border-cyan-500/30 p-3" style={{ animationDelay: '0.8s' }}>
+                      <p className="text-[11px] text-cyan-300 font-bold">{L('Báo giá mới', '새 견적 도착', 'New quote')}</p>
+                      <p className="mt-0.5 text-white font-black">450.000₫ <span className="text-xs font-semibold text-slate-400">· 2{L(' giờ', '시간', ' h')}</span></p>
+                    </div>
+                    <div className="bm-pop rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-3 flex items-center gap-2" style={{ animationDelay: '1.4s' }}>
+                      <CheckCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <p className="text-xs text-emerald-200 font-bold">{L('Đã xác nhận thanh toán', '입금 확인 완료', 'Payment confirmed')}</p>
+                    </div>
+                    <div className="bm-pop rounded-xl bg-navy-900 border border-navy-800 p-3 flex items-center gap-2" style={{ animationDelay: '2s' }}>
+                      <Wrench className="w-4 h-4 text-gold-400 shrink-0" />
+                      <p className="text-xs text-slate-300">{L('Kỹ thuật viên đang trên đường tới', '기술자가 방문 준비 중입니다', 'Technician is on the way')}</p>
+                    </div>
                   </div>
                 </div>
               </div>
